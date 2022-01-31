@@ -1,6 +1,6 @@
 """
-tasks
-Functions related to understanding task types.
+target
+Functions related to understanding the target and the type of task.
 
 Author: Matt Hall, agilescientific.com
 Licence: Apache 2.0

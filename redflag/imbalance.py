@@ -17,7 +17,6 @@ import numpy as np
 from .tasks import *
 from .utils import *
 
-
 def empirical_distribution(a):
     """
     Compute zeta and e. Equation 5 in Ortigosa-Hernandez et al. (2017).
@@ -146,3 +145,18 @@ def class_imbalance(a):
         return imbalance_degree(a)
     else:
         return None
+
+def minority_classes(a):
+    """
+    Get the minority classes.
+
+    TODO: Maybe return a dict with supports too?
+
+    Example
+    >>> minority_classes([1, 2, 2, 2, 3, 3, 3, 3, 4, 4])
+    array([1, 4])
+    """
+    a = np.asarray(a)
+    ζ, e = empirical_distribution(a)
+    classes = sorted_unique(a)
+    return classes[ζ < e]
