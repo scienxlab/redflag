@@ -5,6 +5,8 @@ Functions related to understanding task types.
 Author: Matt Hall, agilescientific.com
 Licence: Apache 2.0
 """
+import numpy as np
+
 def generate_data(counts):
     """
     >>> generate_data([3, 5])

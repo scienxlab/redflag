@@ -147,6 +147,12 @@ def zscore_outliers(a, sd=3, limit=4.89163847):
     xout, xratio = _find_zscore_outliers(z, threshold=limit)
     return ratio, xratio, out, xout
 
+def isolation_outliers(a):
+    raise NotImplementedError
+
+def local_outliers(a):
+    raise NotImplementedError
+
 def has_outliers(a, method='zscore'):
     """
     Returns significant outliers in the feature, if any (instances
@@ -166,4 +172,4 @@ def has_outliers(a, method='zscore'):
               }
     func = methods.get(method, method)
     ratio, xtreme_ratio, idx, xtreme_idx = func(a)
-    return a[xtreme_flag]
+    return a[xtreme_idx]
