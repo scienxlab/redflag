@@ -1,6 +1,6 @@
 # redflag
 
-[![Python package](https://github.com/agile-geoscience/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/agile-geoscience/redflag/actions/workflows/build-test.yml)
+[![Build and test](https://github.com/kwinkunks/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/kwinkunks/redflag/actions/workflows/build-test.yml)
 [![PyPI status](https://img.shields.io/pypi/status/redflag.svg)](https://pypi.org/project/redflag//)
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag//)
 [![PyPI license](https://img.shields.io/pypi/l/redflag.svg)](https://pypi.org/project/redflag/)
