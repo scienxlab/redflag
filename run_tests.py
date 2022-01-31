@@ -1,3 +1,3 @@
 import pytest
 
-pytest.main(['--cov'])
+pytest.main(['--doctest-modules', '--cov'])

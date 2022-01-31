@@ -55,6 +55,8 @@ def euclidean(ζ, e):
     """
     Euclidean (L2) distance between discrete probability distributions.
     Not recommended in Ortigosa-Hernandez et al. (2017).
+
+    Examples
     """
     return np.sqrt(np.sum((ζ - e)**2))
 
@@ -71,7 +73,8 @@ def kullback_leibler(ζ, e):
     Note that this function is not commutative.
     Not recommended in Ortigosa-Hernandez et al. (2017).
     """
-    return np.sum(ζ * np.log(ζ, e))
+    ϵ = 1e-12  # Avoid log of zero.
+    return np.sum(ζ * np.log((ζ + ϵ) / e))
 
 def total_variation(ζ, e):
     """
@@ -86,15 +89,14 @@ def furthest_distribution(a):
 
     Example
     >>> furthest_distribution([3,0,0,1,2,3,2,3,2,3,1,1,2,3,3,4,3,4,3,4,])
-    [0.8, 0, 0, 0.2, 0]
+    array([0.8, 0. , 0. , 0.2, 0. ])
     """
     ζ, e = empirical_distribution(a)
-    m = sum(ζ < e)
     # Construct the vector according to Eq 9.
     ι = [ei if ζi >= ei else 0 for ζi, ei in zip(ζ, e)]
     # Arbitrarily increase one of the non-zero probs to sum to 1.
     ι[np.argmax(ι)] += 1 - sum(ι)
-    return ι
+    return np.array(ι)
 
 def imbalance_degree(a, divergence='manhattan'):
     """
@@ -119,6 +121,9 @@ def imbalance_degree(a, divergence='manhattan'):
     >>> ID = imbalance_degree(generate_data([2, 81, 61, 4]), 'hellinger')
     >>> round(ID, 2)
     1.73
+    >>> ID = imbalance_degree(generate_data([2, 81, 61, 4]), 'kl')
+    >>> round(ID, 2)
+    1.65
     """
     divs = {
         'manhattan': manhattan,
@@ -137,7 +142,14 @@ def class_imbalance(a):
     """
     Binary classification: imbalance ratio (number of expected majority
     class samples to number of expected minority samples).
-    Multiclass classifications:
+    Multiclass classifications: imbalance degree metric, per
+    Ortigosa-Hernandez et al. (2017).
+
+    Examples
+    >>> class_imbalance([0, 0, 0, 1, 1, 1, 1, 1, 1])
+    2.0
+    >>> class_imbalance([0, 0, 0, 1, 1, 1, 1, 1, 1, 2])
+    1.4
     """
     if is_binary(a):
         return imbalance_ratio(a)

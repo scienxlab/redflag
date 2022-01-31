@@ -5,6 +5,8 @@ Functions related to understanding features.
 Author: Matt Hall, agilescientific.com
 Licence: Apache 2.0
 """
+from collections import namedtuple
+
 import numpy as np
 import scipy.stats as ss
 
@@ -51,6 +53,14 @@ DISTS = [
 def best_distribution(a, bins=None):
     """
     Model data by finding best fit distribution to data.
+
+    Returns the best fit distribution and its parameters.
+
+    Examples
+    >>> best_distribution([0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 8])
+    BestDistribution(name='norm', shape=[], loc=4.0, scale=1.8771812708978117)
+    >>> best_distribution([1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7])
+    BestDistribution(name='triang', shape=[0.5001419889107208], loc=0.3286356643172673, scale=7.3406453953773365)
     """
     if bins is None:
         bins = min(max(20, len(a) // 100), 200)
@@ -64,19 +74,27 @@ def best_distribution(a, bins=None):
     best_sse = np.inf
 
     for dist in dists:
-        *args, μ, σ = dist.fit(a)
-        n_pred = dist.pdf(x, loc=μ, scale=σ, *args)
+        *shape, μ, σ = dist.fit(a)
+        n_pred = dist.pdf(x, loc=μ, scale=σ, *shape)
         sse = np.sum((n - n_pred)**2)
         if 0 < sse < best_sse:
             best_dist = dist
-            best_params = args + [μ] + [σ]
+            best_params = shape + [μ] + [σ]
             best_sse = sse
 
-    return best_dist.name, best_params, best_sse
+    *shape, μ, σ = best_params
+    BestDistribution = namedtuple('BestDistribution', ['name', 'shape', 'loc', 'scale'])
+    return BestDistribution(best_dist.name, shape, μ, σ)
 
 def is_correlated(a, n=20, s=20, threshold=0.1):
     """
     Check if a dataset is correlated. Uses s chunks of n samples.
+
+    Examples
+    >>> is_correlated([7, 1, 6, 8, 7, 6, 2, 9, 4, 2])
+    False
+    >>> is_correlated([1, 2, 1, 7, 6, 8, 6, 2, 1, 1])
+    True
     """
     a = np.asarray(a)
 
@@ -90,7 +108,6 @@ def is_correlated(a, n=20, s=20, threshold=0.1):
     r = rng.choice(np.arange(len(chunks)), size=N_chunks, replace=False)
 
     # Loop over selected chunks and count ones with correlation.
-    trials = []
     acs = []
     for chunk in [c for i, c in enumerate(chunks) if i in r]:
         c = chunk[:L_chunks] - np.nanmean(chunk)
@@ -105,7 +122,7 @@ def is_correlated(a, n=20, s=20, threshold=0.1):
 
     return (p >= threshold) & (q >= 0)
 
-def _find_zscore_outliers(z, threshold):
+def _find_zscore_outliers(z, threshold=3):
     """
     Find outliers given samples and a threshold in multiples of stdev.
 
@@ -114,7 +131,15 @@ def _find_zscore_outliers(z, threshold):
     threshold. A ratio less than one indicates there are fewer outliers
     than expected; more than one means there are more. The larger the
     ratio, the worse the outlier situation.
+
+    Examples
+    >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
+    >>> _find_zscore_outliers(data)
+    (array([], dtype=int64), 0.0)
+    >>> _find_zscore_outliers(data + [100], threshold=3)
+    (array([11]), 30.866528945414302)
     """
+    z = np.asarray(z)
     outliers, = np.where((z < -threshold) | (z > threshold))
     n_outliers = outliers.size
     expect = 1 + ss.norm.cdf(-threshold) - ss.norm.cdf(threshold)
@@ -125,7 +150,16 @@ def zscore_outliers(a, sd=3, limit=4.89163847):
     """
     Find outliers using Z-scores.
 
-    Example
+    Expect points outside:
+        - 1 sd: expect 31.7 points in 100
+        - 2 sd: 4.55 in 100
+        - 3 sd: 2.70 in 1000
+        - 4 sd: 6.3 in 100,000
+        - 4.89163847 sd: 1 in 1 million
+        - 5 sd: 5.7 in 10 million datapoints
+        - 6 sd: 2.0 in 1 billion points
+
+    Examples
     >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
     >>> ratio, *_ = zscore_outliers(data)
     >>> ratio
@@ -134,14 +168,6 @@ def zscore_outliers(a, sd=3, limit=4.89163847):
     >>> idx
     array([11])
     """
-    # Expect points outside:
-    # 1 sd: expect 31.7 points in 100
-    # 2 sd: 4.55 in 100
-    # 3 sd: 2.70 in 1000
-    # 4 sd: 6.3 in 100,000
-    # 4.89163847 sd: 1 in 1 million
-    # 5 sd: 5.7 in 10 million datapoints
-    # 6 sd: 2.0 in 1 billion points
     z = (a - np.nanmean(a)) / np.nanstd(a)
     out, ratio = _find_zscore_outliers(z, threshold=sd)
     xout, xratio = _find_zscore_outliers(z, threshold=limit)
@@ -164,6 +190,13 @@ def has_outliers(a, method='zscore'):
 
     This is going to need some work to give the functions the same
     API and return pattern.
+
+    Examples
+    >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
+    >>> has_outliers(data)
+    array([], dtype=int64)
+    >>> has_outliers(3 * data + [100])
+    array([100])
     """
     a = np.asarray(a)
     methods = {'zscore': zscore_outliers,
