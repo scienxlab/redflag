@@ -14,7 +14,7 @@ from collections import Counter
 
 import numpy as np
 
-from .tasks import *
+from .feature import *
 from .utils import *
 
 def empirical_distribution(a):
