@@ -11,6 +11,7 @@ import numpy as np
 
 from .utils import *
 
+
 def is_regression(y):
     """
     Decide if this is most likely a regression problem.
