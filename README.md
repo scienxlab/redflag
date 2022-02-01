@@ -39,6 +39,8 @@ See the notebook[_Using_redflag.ipynb](https://github.com/agile-geoscience/redfl
 
 ## Contributing
 
+Please see [`CONTRIBUTING.md`](https://github.com/agile-geoscience/redflag/blob/main/CONTRIBUTING.md).
+
 
 ## Testing
 
