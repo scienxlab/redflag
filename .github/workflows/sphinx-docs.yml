@@ -19,9 +19,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install --use-feature=in-tree-build .[docs]
     - name: Update Sphinx docs
-      uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs/"
+      run: |
+        cd docs
+        make html
     - name: Commit documentation changes
       run: |
         git clone https://github.com/agile-geoscience/redflag.git --branch gh-pages --single-branch gh-pages
