@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>redflag &mdash; redflag  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Redflag: An Entrance Exam for Data" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> redflag
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">redflag</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experimental">Experimental</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#continuous-integration">Continuous integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redflag.html">redflag package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">redflag</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>redflag</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/readme.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="redflag">
+<h1>redflag<a class="headerlink" href="#redflag" title="Permalink to this headline"></a></h1>
+<p><a class="reference external" href="https://github.com/agile-geoscience/redflag/actions/workflows/build-test.yml"><img alt="Build and test" src="https://github.com/agile-geoscience/redflag/actions/workflows/build-test.yml/badge.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/redflag//"><img alt="PyPI status" src="https://img.shields.io/pypi/status/redflag.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/redflag//"><img alt="PyPI versions" src="https://img.shields.io/pypi/pyversions/redflag.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/redflag/"><img alt="PyPI license" src="https://img.shields.io/pypi/l/redflag.svg" /></a></p>
+<p>💡 <code class="docutils literal notranslate"><span class="pre">redflag</span></code> aims to be an automatic safety net for machine learning datasets. The vision i sto accept input of a Pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> or NumPy <code class="docutils literal notranslate"><span class="pre">ndarray</span></code> (one for each of the input <code class="docutils literal notranslate"><span class="pre">X</span></code> and target <code class="docutils literal notranslate"><span class="pre">y</span></code> in a machine learning task). <code class="docutils literal notranslate"><span class="pre">redflag</span></code> will provide an analysis of each feature, and of the target, including aspects such as class imbalance, outliers, anomalous data patterns, threats to the IID assumption, and so on. The goal is to complement other projects like <code class="docutils literal notranslate"><span class="pre">pandas-profiling</span></code> and <code class="docutils literal notranslate"><span class="pre">greatexpectations</span></code>.</p>
+<p>⚠️ <em>This project is very rough and does not do much yet. The API will very likely change without warning. Please consider contributing!</em></p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<p>You can install this package with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install redflag
+</pre></div>
+</div>
+<section id="experimental">
+<h3>Experimental<a class="headerlink" href="#experimental" title="Permalink to this headline"></a></h3>
+<p>Installing <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> allows you to access some extra options for outlier detection.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install redflag[sklearn]
+</pre></div>
+</div>
+</section>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">redflag</span></code> is currently just a collection of functions. Most of the useful ones take a single column of data (e.g. a 1D NumPy array) and run a single test. For example, we can do some outlier detection:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">redflag</span> <span class="kn">as</span> <span class="nn">rf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rf</span><span class="o">.</span><span class="n">has_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">array([], dtype=int64)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rf</span><span class="o">.</span><span class="n">has_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+<span class="go">array([100])</span>
+</pre></div>
+</div>
+<p>See the notebook <a class="reference external" href="https://github.com/agile-geoscience/redflag/blob/main/notebooks/Using_redflag.ipynb">Using_redflag.ipynb</a> for several other examples.</p>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline"></a></h2>
+<p>Please see <a class="reference external" href="https://github.com/agile-geoscience/redflag/blob/main/CONTRIBUTING.md"><code class="docutils literal notranslate"><span class="pre">CONTRIBUTING.md</span></code></a>.</p>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h2>
+<p>You can run the tests (requires <code class="docutils literal notranslate"><span class="pre">pytest</span></code> and <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code>) with</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python run_tests.py
+</pre></div>
+</div>
+<p>Most of the tests are run with <code class="docutils literal notranslate"><span class="pre">doctest</span></code>.</p>
+</section>
+<section id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline"></a></h2>
+<p>This repo uses PEP 517-style packaging. <a class="reference external" href="https://setuptools.pypa.io/en/latest/build_meta.html">Read more about this</a> and <a class="reference external" href="https://packaging.python.org/en/latest/tutorials/packaging-projects/">about Python packaging in general</a>.</p>
+<p>Building the project requires <code class="docutils literal notranslate"><span class="pre">build</span></code>, so first:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install build
+</pre></div>
+</div>
+<p>Then to build <code class="docutils literal notranslate"><span class="pre">redflag</span></code> locally:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m build
+</pre></div>
+</div>
+<p>The builds both <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> and <code class="docutils literal notranslate"><span class="pre">.whl</span></code> files, either of which you can install with <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+</section>
+<section id="continuous-integration">
+<h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline"></a></h2>
+<p>This repo has two GitHub ‘workflows’ or ‘actions’:</p>
+<ul class="simple">
+<li><p>Push to <code class="docutils literal notranslate"><span class="pre">main</span></code>: Run all tests on all version of Python. This is the <strong>Build and test</strong> workflow.</p></li>
+<li><p>Publish a new release: Build and upload to PyPI. This is the <strong>Publish to PyPI</strong> workflow. Publish using the GitHub interface, for example (<a class="reference external" href="https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository">read more</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Redflag: An Entrance Exam for Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Agile Scientific.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

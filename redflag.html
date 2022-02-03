@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>redflag package &mdash; redflag  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> redflag
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">redflag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">redflag package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-redflag.feature">redflag.feature module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-redflag.imbalance">redflag.imbalance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-redflag.redflag">redflag.redflag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-redflag.target">redflag.target module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-redflag.utils">redflag.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-redflag">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">redflag</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>redflag package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/redflag.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="redflag-package">
+<h1>redflag package<a class="headerlink" href="#redflag-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-redflag.feature">
+<span id="redflag-feature-module"></span><h2>redflag.feature module<a class="headerlink" href="#module-redflag.feature" title="Permalink to this headline"></a></h2>
+<p>feature
+Functions related to understanding features.</p>
+<p>Author: Matt Hall, agilescientific.com
+Licence: Apache 2.0</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.best_distribution">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">best_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.best_distribution" title="Permalink to this definition"></a></dt>
+<dd><p>Model data by finding best fit distribution to data.</p>
+<p>Returns the best fit distribution and its parameters.</p>
+<p>Examples
+&gt;&gt;&gt; best_distribution([0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 8])
+BestDistribution(name=’norm’, shape=[], loc=4.0, scale=1.8771812708978117)
+&gt;&gt;&gt; best_distribution([1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7])
+BestDistribution(name=’triang’, shape=[0.5001419889107208], loc=0.3286356643172673, scale=7.3406453953773365)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.clips">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">clips</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.clips" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the indices of values at the min and max.</p>
+<p>Example
+&gt;&gt;&gt; clips([-3, -3, -2, -1, 0, 2, 3])
+(array([0, 1]), None)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.has_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">has_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zscore'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.has_outliers" title="Permalink to this definition"></a></dt>
+<dd><p>Returns significant outliers in the feature, if any (instances
+whose numbers exceeds the expected number of samples more than
+4.89 standard deviations from the mean).</p>
+<p>Methods: zscore, isolation (requires sklearn) or pass a function
+that returns a Boolean array of outlier flags.</p>
+<p>This is going to need some work to give the functions the same
+API and return pattern.</p>
+<p>Examples
+&gt;&gt;&gt; data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
+&gt;&gt;&gt; has_outliers(data)
+array([], dtype=int64)
+&gt;&gt;&gt; has_outliers(3 * data + [100])
+array([100])</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.is_clipped">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">is_clipped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.is_clipped" title="Permalink to this definition"></a></dt>
+<dd><p>Decide if the data are likely clipped: If there are multiple
+values at the max and/or min, then the data may be clipped.</p>
+<p>Example
+&gt;&gt;&gt; is_clipped([-3, -3, -2, -1, 0, 2, 3])
+True</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.is_correlated">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">is_correlated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.is_correlated" title="Permalink to this definition"></a></dt>
+<dd><p>Check if a dataset is correlated. Uses s chunks of n samples.</p>
+<p>Examples
+&gt;&gt;&gt; is_correlated([7, 1, 6, 8, 7, 6, 2, 9, 4, 2])
+False
+&gt;&gt;&gt; is_correlated([1, 2, 1, 7, 6, 8, 6, 2, 1, 1])
+True</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.isolation_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">isolation_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.isolation_outliers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.local_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">local_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.local_outliers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.feature.zscore_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">zscore_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.89163847</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.zscore_outliers" title="Permalink to this definition"></a></dt>
+<dd><p>Find outliers using Z-scores.</p>
+<dl class="simple">
+<dt>Expect points outside:</dt><dd><ul class="simple">
+<li><p>1 sd: expect 31.7 points in 100</p></li>
+<li><p>2 sd: 4.55 in 100</p></li>
+<li><p>3 sd: 2.70 in 1000</p></li>
+<li><p>4 sd: 6.3 in 100,000</p></li>
+<li><p>4.89163847 sd: 1 in 1 million</p></li>
+<li><p>5 sd: 5.7 in 10 million datapoints</p></li>
+<li><p>6 sd: 2.0 in 1 billion points</p></li>
+</ul>
+</dd>
+</dl>
+<p>Examples
+&gt;&gt;&gt; data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
+&gt;&gt;&gt; ratio, _, _, _ = zscore_outliers(data)
+&gt;&gt;&gt; ratio
+0.0
+&gt;&gt;&gt; _, _, idx, _ = zscore_outliers(data + [100])
+&gt;&gt;&gt; idx
+array([11])</p>
+</dd></dl>
+
+</section>
+<section id="module-redflag.imbalance">
+<span id="redflag-imbalance-module"></span><h2>redflag.imbalance module<a class="headerlink" href="#module-redflag.imbalance" title="Permalink to this headline"></a></h2>
+<p>Imbalance metrics</p>
+<p>Author: Matt Hall, agilescientific.com
+Licence: Apache 2.0</p>
+<p>Reference:
+Jonathan Ortigosa-Hernandez, Inaki Inza, and Jose A. Lozano
+Measuring the Class-imbalance Extent of Multi-class Problems
+Pattern Recognition Letters 98 (2017)
+<a class="reference external" href="https://doi.org/10.1016/j.patrec.2017.08.002">https://doi.org/10.1016/j.patrec.2017.08.002</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.class_imbalance">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">class_imbalance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.class_imbalance" title="Permalink to this definition"></a></dt>
+<dd><p>Binary classification: imbalance ratio (number of expected majority
+class samples to number of expected minority samples).
+Multiclass classifications: imbalance degree metric, per
+Ortigosa-Hernandez et al. (2017).</p>
+<p>Examples
+&gt;&gt;&gt; class_imbalance([0, 0, 0, 1, 1, 1, 1, 1, 1])
+2.0
+&gt;&gt;&gt; class_imbalance([0, 0, 0, 1, 1, 1, 1, 1, 1, 2])
+1.4</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.empirical_distribution">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">empirical_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.empirical_distribution" title="Permalink to this definition"></a></dt>
+<dd><p>Compute zeta and e. Equation 5 in Ortigosa-Hernandez et al. (2017).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.euclidean">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">euclidean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ζ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.euclidean" title="Permalink to this definition"></a></dt>
+<dd><p>Euclidean (L2) distance between discrete probability distributions.
+Not recommended in Ortigosa-Hernandez et al. (2017).</p>
+<p>Examples</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.furthest_distribution">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">furthest_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.furthest_distribution" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).</p>
+<p>Example
+&gt;&gt;&gt; furthest_distribution([3,0,0,1,2,3,2,3,2,3,1,1,2,3,3,4,3,4,3,4,])
+array([0.8, 0. , 0. , 0.2, 0. ])</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.hellinger">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">hellinger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ζ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.hellinger" title="Permalink to this definition"></a></dt>
+<dd><p>Hellinger distance between discrete probability distributions.
+Recommended in Ortigosa-Hernandez et al. (2017).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.imbalance_degree">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">divergence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'manhattan'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.imbalance_degree" title="Permalink to this definition"></a></dt>
+<dd><p>Compute IR according to Eq 8 in Ortigosa-Hernandez et al. (2017).</p>
+<dl class="simple">
+<dt><cite>divergence</cite> can be a string from:</dt><dd><ul class="simple">
+<li><p>‘manhattan’: Manhattan distance or L1 norm</p></li>
+<li><p>‘euclidean’: Euclidean distance or L2 norm</p></li>
+<li><p>‘hellinger’: Hellinger distance</p></li>
+<li><p>‘tv’: total variation distance</p></li>
+<li><p>‘kl’: Kullback-Leibner divergence</p></li>
+</ul>
+</dd>
+</dl>
+<p>It can also be a function returning a divergence.</p>
+<p>Examples from Ortigosa-Hernandez et al. (2017)
+&gt;&gt;&gt; ID = imbalance_degree(generate_data([288, 49, 288]), ‘tv’)
+&gt;&gt;&gt; round(ID, 2)
+0.76
+&gt;&gt;&gt; ID = imbalance_degree(generate_data([629, 333, 511]), ‘euclidean’)
+&gt;&gt;&gt; round(ID, 2)
+0.3
+&gt;&gt;&gt; ID = imbalance_degree(generate_data([2, 81, 61, 4]), ‘hellinger’)
+&gt;&gt;&gt; round(ID, 2)
+1.73
+&gt;&gt;&gt; ID = imbalance_degree(generate_data([2, 81, 61, 4]), ‘kl’)
+&gt;&gt;&gt; round(ID, 2)
+1.65</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.imbalance_ratio">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.imbalance_ratio" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.kullback_leibler">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">kullback_leibler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ζ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.kullback_leibler" title="Permalink to this definition"></a></dt>
+<dd><p>Kulllback-Leibler divergence between discrete probability distributions.
+Note that this function is not commutative.
+Not recommended in Ortigosa-Hernandez et al. (2017).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.major_minor">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">major_minor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.major_minor" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of majority and minority classes.</p>
+<p>Example
+&gt;&gt;&gt; major_minor([1, 1, 2, 2, 3, 3, 3])
+(1, 2)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.manhattan">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">manhattan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ζ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.manhattan" title="Permalink to this definition"></a></dt>
+<dd><p>Manhattan (L1) distance between discrete probability distributions.
+Recommended in Ortigosa-Hernandez et al. (2017).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.minority_classes">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">minority_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.minority_classes" title="Permalink to this definition"></a></dt>
+<dd><p>Get the minority classes.</p>
+<p>TODO: Maybe return a dict with supports too?</p>
+<p>Example
+&gt;&gt;&gt; minority_classes([1, 2, 2, 2, 3, 3, 3, 3, 4, 4])
+array([1, 4])</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.total_variation">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">total_variation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ζ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.total_variation" title="Permalink to this definition"></a></dt>
+<dd><p>Total variation distance between discrete probability distributions.
+Recommended in Ortigosa-Hernandez et al. (2017).</p>
+</dd></dl>
+
+</section>
+<section id="module-redflag.redflag">
+<span id="redflag-redflag-module"></span><h2>redflag.redflag module<a class="headerlink" href="#module-redflag.redflag" title="Permalink to this headline"></a></h2>
+<p>redflag</p>
+<p>Author: Matt Hall, agilescientific.com
+Licence: Apache 2.0</p>
+</section>
+<section id="module-redflag.target">
+<span id="redflag-target-module"></span><h2>redflag.target module<a class="headerlink" href="#module-redflag.target" title="Permalink to this headline"></a></h2>
+<p>target
+Functions related to understanding the target and the type of task.</p>
+<p>Author: Matt Hall, agilescientific.com
+Licence: Apache 2.0</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.is_binary">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.is_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Decide if a single target is multiclass.</p>
+<p>Examples
+&gt;&gt;&gt; print(is_binary([1, 1, 1]))
+False
+&gt;&gt;&gt; is_binary([0, 1, 1])
+True
+&gt;&gt;&gt; is_binary([1, 2, 3])
+False</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.is_multiclass">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_multiclass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.is_multiclass" title="Permalink to this definition"></a></dt>
+<dd><p>Decide if a single target is multiclass.</p>
+<p>Examples
+&gt;&gt;&gt; print(is_multiclass([1, 1, 1]))
+False
+&gt;&gt;&gt; is_multiclass([0, 1, 1])
+False
+&gt;&gt;&gt; is_multiclass([1, 2, 3])
+True</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.is_multioutput">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_multioutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.is_multioutput" title="Permalink to this definition"></a></dt>
+<dd><p>Decide if a target array is multi-output.</p>
+<p>Raises TypeError if y has more than 2 dimensions.</p>
+<p>Examples
+&gt;&gt;&gt; is_multioutput([1, 2, 3])
+False
+&gt;&gt;&gt; is_multioutput([[1, 2], [3, 4]])
+True
+&gt;&gt;&gt; is_multioutput([[1], [2]])
+False
+&gt;&gt;&gt; is_multioutput([[[1], [2]],[[3], [4]]])
+Traceback (most recent call last):
+TypeError: Target array has too many dimensions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.is_regression">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_regression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.is_regression" title="Permalink to this definition"></a></dt>
+<dd><p>Decide if this is most likely a regression problem.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.n_classes">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">n_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.n_classes" title="Permalink to this definition"></a></dt>
+<dd><p>Count the classes.</p>
+<p>Examples
+&gt;&gt;&gt; n_classes([1, 1, 1])
+1
+&gt;&gt;&gt; n_classes([0, 1, 1])
+2
+&gt;&gt;&gt; n_classes([1, 2, 3])
+3</p>
+</dd></dl>
+
+</section>
+<section id="module-redflag.utils">
+<span id="redflag-utils-module"></span><h2>redflag.utils module<a class="headerlink" href="#module-redflag.utils" title="Permalink to this headline"></a></h2>
+<p>utils
+Functions related to understanding task types.</p>
+<p>Author: Matt Hall, agilescientific.com
+Licence: Apache 2.0</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.utils.generate_data">
+<span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">generate_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">counts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.utils.generate_data" title="Permalink to this definition"></a></dt>
+<dd><p>Generate data from a list of counts.</p>
+<p>Example
+&gt;&gt;&gt; generate_data([3, 5])
+[0, 0, 0, 1, 1, 1, 1, 1]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.utils.sorted_unique">
+<span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">sorted_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.utils.sorted_unique" title="Permalink to this definition"></a></dt>
+<dd><p>Unique items in appearance order.</p>
+<p>np.unique is sorted, set() is unordered.
+pd.unique() is fast, but we don’t have to rely on it.
+This does the job, and is not too slow.</p>
+<p>Example
+&gt;&gt;&gt; sorted_unique([3, 0, 0, 1, 3, 2, 3])
+array([3, 0, 1, 2])</p>
+</dd></dl>
+
+</section>
+<section id="module-redflag">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-redflag" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Agile Scientific.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
