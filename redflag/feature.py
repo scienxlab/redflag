@@ -161,10 +161,10 @@ def zscore_outliers(a, sd=3, limit=4.89163847):
 
     Examples
     >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-    >>> ratio, *_ = zscore_outliers(data)
+    >>> ratio, _, _, _ = zscore_outliers(data)
     >>> ratio
     0.0
-    >>> *_, idx, _ = zscore_outliers(data + [100])
+    >>> _, _, idx, _ = zscore_outliers(data + [100])
     >>> idx
     array([11])
     """

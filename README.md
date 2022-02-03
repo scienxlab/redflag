@@ -5,9 +5,9 @@
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag//)
 [![PyPI license](https://img.shields.io/pypi/l/redflag.svg)](https://pypi.org/project/redflag/)
 
-Automatic safety net for machine learning datasets.
+💡 `redflag` aims to be an automatic safety net for machine learning datasets. The vision i sto accept input of a Pandas `DataFrame` or NumPy `ndarray` (one for each of the input `X` and target `y` in a machine learning task). `redflag` will provide an analysis of each feature, and of the target, including aspects such as class imbalance, outliers, anomalous data patterns, threats to the IID assumption, and so on. The goal is to complement other projects like `pandas-profiling` and `greatexpectations`.
 
-#### :warning: This project is very rough and does not do much yet. The API will very likely change without warning.
+⚠️ *This project is very rough and does not do much yet. The API will very likely change without warning. Please consider contributing!*
 
 
 ## Installation
@@ -16,7 +16,7 @@ You can install this package with `pip`:
 
     pip install redflag
 
-### Experimental
+#### Experimental
 
 Installing `scikit-learn` allows you to access some extra options for outlier detection.
 
@@ -27,14 +27,16 @@ Installing `scikit-learn` allows you to access some extra options for outlier de
 
 `redflag` is currently just a collection of functions. Most of the useful ones take a single column of data (e.g. a 1D NumPy array) and run a single test. For example, we can do some outlier detection:
 
-    >>> import redflag as rf
-    >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-    >>> rf.has_outliers(data)
-    array([], dtype=int64)
-    >>> rf.has_outliers(3 * data + [100])
-    array([100])
+```python
+>>> import redflag as rf
+>>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
+>>> rf.has_outliers(data)
+array([], dtype=int64)
+>>> rf.has_outliers(3 * data + [100])
+array([100])
+```
 
-See the notebook[_Using_redflag.ipynb](https://github.com/agile-geoscience/redflag/blob/main/notebooks/Using_redflag.ipynb) for several other examples.
+See the notebook [Using_redflag.ipynb](https://github.com/agile-geoscience/redflag/blob/main/notebooks/Using_redflag.ipynb) for several other examples.
 
 
 ## Contributing
@@ -72,7 +74,3 @@ This repo has two GitHub 'workflows' or 'actions':
 
 - Push to `main`: Run all tests on all version of Python. This is the **Build and test** workflow.
 - Publish a new release: Build and upload to PyPI. This is the **Publish to PyPI** workflow. Publish using the GitHub interface, for example ([read more](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
-
----
-
-&copy; 2021 Agile Scientific, openly licenced under Apache 2.0
