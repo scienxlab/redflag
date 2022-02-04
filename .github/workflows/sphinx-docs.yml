@@ -1,10 +1,8 @@
 name: Build docs
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [published]
 
 jobs:
   build-docs:
@@ -17,24 +15,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install --use-feature=in-tree-build .[docs]
+        pip install .[docs]
     - name: Update Sphinx docs
-      uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs/"
-    - name: Commit documentation changes
       run: |
-        git clone https://github.com/agile-geoscience/redflag.git --branch gh-pages --single-branch gh-pages
-        cp -r docs/_build/html/* gh-pages/
-        cd gh-pages
-        touch .nojekyll
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Auto update documentation" -a || true
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+        cd docs
+        make html
+        touch _build/html/.nojekyll
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.2.3
       with:
         branch: gh-pages
-        directory: gh-pages
-        github_token: ${{ secrets.REPO_ACCESS }}
+        folder: docs/_build/html
