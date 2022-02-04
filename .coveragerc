@@ -1,2 +1,2 @@
 [run]
-omit = *tests*, *__init__.py, *__main__.py
+omit = *docs*, *tests*, *__init__.py, *__main__.py

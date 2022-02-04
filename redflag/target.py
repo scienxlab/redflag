@@ -20,12 +20,42 @@ limitations under the License.
 """
 import numpy as np
 
+from .utils import *
+
 
 def is_regression(y):
     """
     Decide if this is most likely a regression problem.
+
+    Args:
+        y (array): A target vector.
+
+    Returns:
+        bool: True if y is probably best suited to regression.
+
+    Examples:
+        >>> is_regression(10 * ['a', 'b'])
+        False
+        >>> is_regression(100 * [1, 2, 3])
+        False
+        >>> import numpy as np
+        >>> is_regression(np.random.random(size=100))
+        True
     """
-    numeric = 1
+    y = np.asanyarray(y)
+    numeric = is_numeric(y)
+    if not numeric:
+        return False
+
+    floating = np.issubdtype(y.dtype, np.floating)
+    wide = np.max(y) - np.min(y) > 10
+    large = np.unique(y) > 10
+    if not floating or (wide and large):
+        return False
+    
+    small_gaps = np.min(np.diff(y)) < np.min(y) / 100
+    many_gap_sizes = np.unique(np.diff(y)).size > np.unique(y).size / 10
+    return small_gaps and many_gap_sizes
 
 
 def n_classes(y):

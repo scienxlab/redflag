@@ -21,6 +21,26 @@ limitations under the License.
 import numpy as np
 
 
+def is_numeric(a):
+    """
+    Decide if a sequence is numeric.
+
+    Args:
+        a (array): A sequence.
+
+    Returns:
+        bool: True if a is numeric.
+
+    Example:
+        >>> is_numeric([1, 2, 3])
+        True
+        >>> is_numeric(['a', 'b', 'c'])
+        False
+    """
+    a = np.asarray(a)
+    return np.issubdtype(a.dtype, np.number)
+
+
 def generate_data(counts):
     """
     Generate data from a list of counts.

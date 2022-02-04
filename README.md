@@ -19,11 +19,11 @@ You can install this package with `pip`:
 
     pip install redflag
 
-#### Experimental
-
 Installing `scikit-learn` allows you to access some extra options for outlier detection.
 
     pip install redflag[sklearn]
+
+For developers, there are also options for installing `tests`, `docs` and `dev` dependencies.
 
 
 ## Example

@@ -139,11 +139,11 @@ def furthest_distribution(a):
 
 
 def imbalance_degree(a, method='manhattan'):
-    """
+    r"""
     Compute IR according to Eq 8 in Ortigosa-Hernandez et al. (2017).
 
     .. math::
-        \mathrm{ID}(\zeta) = \\frac{d_\mathrm{\Delta}(\mathbf{\zeta}, \mathbf{e})}
+        \mathrm{ID}(\zeta) = \frac{d_\mathrm{\Delta}(\mathbf{\zeta}, \mathbf{e})}
         {d_\mathrm{\Delta}(\mathbf{\iota}_m, \mathbf{e})} + (m - 1)
 
     `method` can be a string from:
