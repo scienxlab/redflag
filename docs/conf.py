@@ -1,11 +1,32 @@
 # Configuration file for redflag's Sphinx documentation builder.
 
+# -- Setup function ----------------------------------------------------------
+
+# Defines custom steps in the process.
+
+def autodoc_skip_member(app, what, name, obj, skip, options):
+    """Exclude all private attributes, methods, and dunder methods from Sphinx."""
+    import re
+    exclude = re.findall(r'\._.*', str(obj))
+    return skip or exclude
+
+def remove_module_docstring(app, what, name, obj, options, lines):
+    if what == "module":
+        del lines[:]
+    return
+
+def setup(app):
+    app.connect('autodoc-skip-member', autodoc_skip_member)
+    app.connect("autodoc-process-docstring", remove_module_docstring)
+    return
+
+
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
@@ -28,6 +49,8 @@ extensions = [
     'myst_parser', 
     'sphinx.ext.coverage', 
 ]
+ 
+myst_enable_extensions = ["dollarmath", "amsmath"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
