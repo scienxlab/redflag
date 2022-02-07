@@ -68,7 +68,7 @@ Then to build `redflag` locally:
 
     python -m build
 
-The builds both `.tar.gz` and `.whl` files, either of which you can install with `pip`.
+This builds both `.tar.gz` and `.whl` files, either of which you can install with `pip`.
 
 
 ## Continuous integration
