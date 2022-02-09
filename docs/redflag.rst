@@ -1,5 +1,5 @@
-API
-====
+redflag package
+===============
 
 Submodules
 ----------

@@ -15,7 +15,7 @@ caption: User Guide
 
 installation
 basic_usage
-examples
+notebooks/Using_redflag.ipynb
 development
 contributing
 authors
@@ -30,7 +30,7 @@ maxdepth: 2
 caption: API Reference
 ---
 
-api
+redflag
 ```
 ----
 
