@@ -1,3 +1,3 @@
 # Examples
 
-Ideally get this from Jupyter Notebook.
+Coming soon. Ideally we'll get this from one or more Jupyter Notebooks.

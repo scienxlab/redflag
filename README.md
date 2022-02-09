@@ -42,9 +42,14 @@ array([100])
 See the notebook [Using_redflag.ipynb](https://github.com/agile-geoscience/redflag/blob/main/notebooks/Using_redflag.ipynb) for several other examples.
 
 
+## Documentation
+
+[The documentation is online.](https://code.agilescientific.com/redflag)
+
+
 ## Contributing
 
-Please see [`CONTRIBUTING.md`](https://github.com/agile-geoscience/redflag/blob/main/CONTRIBUTING.md).
+Please see [`CONTRIBUTING.md`](https://github.com/agile-geoscience/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.agilescientific.com/redflag) about _Development_.
 
 
 ## Testing
@@ -54,26 +59,3 @@ You can run the tests (requires `pytest` and `pytest-cov`) with
     python run_tests.py
 
 Most of the tests are run with `doctest`.
-
-
-## Building
-
-This repo uses PEP 517-style packaging. [Read more about this](https://setuptools.pypa.io/en/latest/build_meta.html) and [about Python packaging in general](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
-
-Building the project requires `build`, so first:
-
-    pip install build
-
-Then to build `redflag` locally:
-
-    python -m build
-
-This builds both `.tar.gz` and `.whl` files, either of which you can install with `pip`.
-
-
-## Continuous integration
-
-This repo has two GitHub 'workflows' or 'actions':
-
-- Push to `main`: Run all tests on all version of Python. This is the **Build and test** workflow.
-- Publish a new release: Build and upload to PyPI. This is the **Publish to PyPI** workflow. Publish using the GitHub interface, for example ([read more](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)

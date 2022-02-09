@@ -1,5 +1,7 @@
 # Basic usage
 
+Redflag is a collection of functions. They currently run on single columns of data (one feature from `X` or one target of `y`). For example:
+
 ```python
 import redflag as rf
 
