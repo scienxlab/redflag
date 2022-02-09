@@ -1,6 +1,6 @@
 # Contributing
 
-### 🙌 Thank you for considering contributing to this project!
+**🙌 Thank you for considering contributing to this project!**
 
 There are several important ways you can help; here are some examples:
 
