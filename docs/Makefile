@@ -13,7 +13,8 @@ help:
 .PHONY: help html
 
 html:
-	$(SPHINXBUILD) -E -b html $(SPHINXOPTS) $(SOURCEDIR) $(BUILDDIR)/html 
-	python process_html.py $(BUILDDIR)/html
+	python pre_process_ipynb.py $(BUILDDIR)/notebooks
+	$(SPHINXBUILD) -E -b html $(SPHINXOPTS) $(SOURCEDIR) $(BUILDDIR)/html
+	python post_process_html.py $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
