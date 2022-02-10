@@ -11,8 +11,11 @@ def autodoc_skip_member(app, what, name, obj, skip, options):
     return skip or exclude
 
 def remove_module_docstring(app, what, name, obj, options, lines):
+    """Remove everything after 'Author: '."""
     if what == "module":
-        del lines[:]
+        keep = [i for i, line in enumerate(lines) if line.startswith("Author: ")]
+        if keep:
+            del lines[keep[0]:]
     return
 
 def setup(app):
@@ -45,6 +48,7 @@ author = 'Agile Scientific'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.githubpages',
     'sphinxcontrib.apidoc',
     'sphinx.ext.napoleon',
     'myst_nb',
@@ -62,15 +66,13 @@ apidoc_excluded_paths = []
 apidoc_toc_file = False
 apidoc_separate_modules = False
 
-
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'notebooks/_*.ipynb', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'notebooks/_*.ipynb']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -78,16 +80,24 @@ exclude_patterns = ['_build', 'notebooks/_*.ipynb', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-# html_theme = 'alabaster'
- 	
-html_theme = 'sphinx_rtd_theme'
+# https://sphinx-themes.org/sample-sites/furo/
+html_theme = 'furo'
+
+html_theme_options = {
+    "sidebar_hide_name": True,
+}
+
+html_logo = '_static/snowfake_logo.png'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-# The name of an image file (within the static path) to use as favicon of the
-# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
+html_css_files = [
+    'custom.css',
+]
+
+# Branding.
 html_favicon = '_static/favicon.ico'
+html_logo = '_static/redflag_logo.png'
