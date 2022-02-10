@@ -16,4 +16,4 @@ Installing `scikit-learn` allows you to access some extra options for outlier de
 
 For developers, there are also options for installing `tests`, `docs` and `dev` dependencies.
 
-If you want to help develop Redflag, please read [Development](development.html).
+If you want to help develop Redflag, please read [Development](development.md).
