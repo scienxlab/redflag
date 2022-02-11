@@ -46,8 +46,8 @@ jobs:
 
     - name: Build docs
       run: |
-        sphinx-build -E -b html docs docs/_build/html
-        touch docs/_build/html/.nojekyll
+        cd docs
+        make html
     - name: Publish docs
       uses: JamesIves/github-pages-deploy-action@v4.2.3
       with:
