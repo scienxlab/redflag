@@ -5,7 +5,7 @@ article p.caption {
 
 /* Styles the 'line block' https://docutils.sourceforge.io/docs/user/rst/quickref.html#line-blocks. */
 blockquote {
-    background: #ffffff;
+    background: none;
     border-left-width: 0px;
     padding: 0em;
 }
