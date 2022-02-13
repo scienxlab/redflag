@@ -10,15 +10,12 @@ def change_kernel(notebook):
     """
     Vanillafy the kernelspec.
     """
-    print(notebook['metadata']['kernelspec'])
     new_kernelspec = {
         "display_name": "Python 3 (ipykernel)",
         "language": "python",
         "name": "python3",
     }
     notebook['metadata']['kernelspec'].update(new_kernelspec)
-    print()
-    print(notebook['metadata']['kernelspec'])
     return notebook
 
 
