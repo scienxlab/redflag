@@ -12,7 +12,7 @@ You can install this package with `pip`. The `dev` option will install the packa
 
 ## Contributing
 
-If you'd like to contribute pull requests back to the main `redflag ` project, please see [`CONTRIBUTING.md`](https://github.com/agile-geoscience/redflag/blob/main/CONTRIBUTING.md).
+If you'd like to contribute pull requests back to the main `redflag ` project, please see [`CONTRIBUTING.md`](https://github.com/agilescientific/redflag/blob/main/CONTRIBUTING.md).
 
 
 ## Testing
@@ -26,7 +26,7 @@ Most of the tests are `doctest` tests, which are contained in the docstrings of 
 
 ## Building the package
 
-This repo uses PEP 517-style packaging. [Read more about this](https://setuptools.pypa.io/en/latest/build_meta.html) and [about Python packaging in general](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
+This repo uses PEP 518-style packaging. [Read more about this](https://setuptools.pypa.io/en/latest/build_meta.html) and [about Python packaging in general](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
 
 Building the project requires `build`, so first:
 
@@ -41,13 +41,14 @@ This builds both `.tar.gz` and `.whl` files, either of which you can install wit
 
 ## Building the docs
 
-You can build the docs with the following command in the root directory:
+You can build the docs with the following commands:
 
-    sphinx-build -E -b html docs docs/_build/html
+    cd docs
+    make html
 
-You can also run `make html` from the `docs` directory.
+Don't just run `sphinx-build` manually: there is other stuff happening in the `Makefile`.
 
-There is a continuous integration script to update redflag's docs on all published releases.
+There is a continuous integration script to update the docs on published releases.
 
 
 ## Continuous integration

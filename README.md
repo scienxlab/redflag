@@ -1,6 +1,7 @@
 # Redflag
 
-[![Build and test](https://github.com/agile-geoscience/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/agile-geoscience/redflag/actions/workflows/build-test.yml)
+[![Build and test](https://github.com/agilescientific/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/agilescientific/redflag/actions/workflows/build-test.yml)
+[![Build docs](https://github.com/agilescientific/redflag/actions/workflows/build-docs.yml/badge.svg)](https://github.com/agilescientific/redflag/actions/workflows/build-docs.yml)
 [![PyPI version](https://img.shields.io/pypi/v/redflag.svg)](https://pypi.org/project/redflag/)
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag/)
 [![PyPI license](https://img.shields.io/pypi/l/redflag.svg)](https://pypi.org/project/redflag/)
@@ -38,7 +39,7 @@ array([], dtype=int64)
 array([100])
 ```
 
-See the notebook [Using_redflag.ipynb](https://github.com/agile-geoscience/redflag/blob/main/notebooks/Using_redflag.ipynb) for several other examples.
+See the notebook [Using_redflag.ipynb](https://github.com/agilescientific/redflag/blob/main/notebooks/Using_redflag.ipynb) for several other examples.
 
 
 ## Documentation
@@ -48,7 +49,7 @@ See the notebook [Using_redflag.ipynb](https://github.com/agile-geoscience/redfl
 
 ## Contributing
 
-Please see [`CONTRIBUTING.md`](https://github.com/agile-geoscience/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.agilescientific.com/redflag) about _Development_.
+Please see [`CONTRIBUTING.md`](https://github.com/agilescientific/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.agilescientific.com/redflag) about _Development_.
 
 
 ## Testing
