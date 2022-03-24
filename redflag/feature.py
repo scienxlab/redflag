@@ -19,12 +19,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 from collections import namedtuple
+import warnings
 
 import numpy as np
 import scipy.stats as ss
+from scipy.spatial.distance import pdist
 
 
-def clips(a):
+def clipped(a):
     """
     Returns the indices of values at the min and max.
 
@@ -35,7 +37,7 @@ def clips(a):
         tuple: The indices of the min and max values.
 
     Example:
-        >>> clips([-3, -3, -2, -1, 0, 2, 3])
+        >>> clipped([-3, -3, -2, -1, 0, 2, 3])
         (array([0, 1]), None)
     """
     min_clips, = np.where(a==np.nanmin(a))
@@ -60,7 +62,7 @@ def is_clipped(a):
         >>> is_clipped([-3, -3, -2, -1, 0, 2, 3])
         True
     """
-    min_clips, max_clips = clips(a)
+    min_clips, max_clips = clipped(a)
     return (min_clips is not None) or (max_clips is not None)
 
 
@@ -281,3 +283,94 @@ def has_outliers(a, method='zscore'):
     func = methods.get(method, method)
     ratio, xtreme_ratio, idx, xtreme_idx = func(a)
     return xtreme_idx
+
+
+def is_standardized(a, atol=1e-5):
+    """
+    Returns True if the feature has zero mean and standard deviation of 1.
+    In other words, if the feature appears to be a Z-score.
+
+    Performance: this implementation was faster than np.isclose() on μ and σ,
+    or comparing with z-score of entire array using np.allclose().
+
+    Args:
+        a (array): The data.
+        atol (float): The absolute tolerance.
+
+    Returns:
+        bool: True if the feature appears to be a Z-score.
+    """
+    μ, σ = np.nanmean(a), np.nanstd(a)
+    return (np.abs(μ) < atol) and (np.abs(σ - 1) < atol)
+
+
+def zscore(X):
+    """
+    Transform array to Z-scores. If 2D, stats are computed
+    per column.
+
+    Example:
+    >>> zscore([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.        ,
+            0.38729833,  0.77459667,  1.161895  ,  1.54919334])
+    """
+    return (X - np.nanmean(X, axis=0)) / np.nanstd(X, axis=0)
+
+
+def cv(X):
+    """
+    Coefficient of variation, as a decimal fraction of the mean.
+
+    Args:
+        X (ndarray): The input data.
+
+    Returns:
+        float: The coefficient of variation.
+
+    Example:
+    >>> cv([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    0.5163977794943222
+    """
+    if abs(μ := np.nanmean(X, axis=0)) < 1e-12:
+        warnings.warn("Mean is close to zero, coefficient of variation may not be useful.")
+        μ += 1e-12
+    return np.nanstd(X, axis=0) / μ
+
+
+def has_low_distance_stdev(X, atol=0.1):
+    """
+    Returns True if the instances has a small relative standard deviation of
+    distances in the feature space.
+
+    Args:
+        X (ndarray): The input data.
+        atol (float): The cut-off coefficient of variation, default 0.1.
+
+    Returns:
+        bool
+    """
+    return cv(pdist(zscore(X))) < atol
+
+
+def has_few_samples(X):
+    """
+    Returns True if the number of samples is less than the square of the
+    number of features.
+
+    Args:
+        X (ndarray): The input data.
+
+    Returns:
+        bool
+
+    Example:
+    >>> import numpy as np
+    >>> X = np.ones((100, 5))
+    >>> has_few_samples(X)
+    False
+    >>> X = np.ones((100, 15))
+    >>> has_few_samples(X)
+    True
+    """
+    N, M = X.shape
+    return N < M**2
