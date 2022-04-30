@@ -31,7 +31,7 @@ from .target import is_regression
 from .utils import split_and_standardize
 
 
-def feature_importance(X, y=None, task=None, random_state=None):
+def feature_importance(X, y=None, task=None, random_state=None, n=3):
     """
     Measure feature importance on a task, given X and y.
 
@@ -48,6 +48,8 @@ def feature_importance(X, y=None, task=None, random_state=None):
         task (str or None): either 'classification' or 'regression'. If None,
             the task will be inferred from the labels and a warning will show
             the assumption being made.
+        n (int): the number of tests to average. Only the n tests with the
+            highest variance across features are kept.
 
     Returns:
         array: The importance of the features, in the order in which they
@@ -57,10 +59,10 @@ def feature_importance(X, y=None, task=None, random_state=None):
         - Add clustering case.
 
     Examples:
-    >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1]]
-    >>> y = [5, 15, 25, 35]
+    >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1], [0, 4, 0], [0, 5, 1]]
+    >>> y = [5, 15, 25, 35, 45, 55]
     >>> feature_importance(X, y, task='regression', random_state=0)
-    array([0.        , 0.92791856, 0.07208144])
+    array([ 0.        ,  0.97811006, -0.19385077])
     """
     if y is None:
         task = 'clustering'
@@ -68,7 +70,8 @@ def feature_importance(X, y=None, task=None, random_state=None):
         task = 'regression' if is_regression(y) else 'classification'
 
     # Split the data and ensure it is standardized.
-    X_train, X_val, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
+    if task != 'clustering':
+        X_train, X_val, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
 
     # Train three models and gather the importances.
     imps = []
@@ -76,20 +79,21 @@ def feature_importance(X, y=None, task=None, random_state=None):
         imps.append(LogisticRegression().fit(X, y).feature_importances_)
         imps.append(RandomForestClassifier(random_state=random_state).fit(X, y).feature_importances_)
         model = SVC(random_state=random_state).fit(X_train, y_train)
-        r = permutation_importance(model, X_val, y_val, n_repeats=20, scoring='f1_weighted', random_state=random_state)
+        r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='f1_weighted', random_state=random_state)
         imps.append(r.importances_mean)
     elif task == 'regression':
         imps.append(Lasso().fit(X, y).coef_)
         imps.append(RandomForestRegressor(random_state=random_state).fit(X, y).feature_importances_)
         model = SVR().fit(X_train, y_train)
-        r = permutation_importance(model, X_val, y_val, n_repeats=20, scoring='neg_mean_squared_error', random_state=random_state)
+        r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='neg_mean_squared_error', random_state=random_state)
         imps.append(r.importances_mean)
     else:
         raise NotImplementedError("Cannot handle clustering problems yet.")
-    imps = np.abs(imps)
+    imps = np.array(imps)
 
-    # Normalize the rows.
-    imps /= np.sum(imps + 1e-9, axis=1)[:, None]
+    # Normalize the rows by the sum of *only positive* elements.
+    normalizer = np.einsum('ij,ij->i', imps > 0, imps)
+    imps /= normalizer[:, None]
 
     # Drop imps with smallest variance and take mean of what's left.
-    return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-2:], axis=0)
+    return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-n:], axis=0)

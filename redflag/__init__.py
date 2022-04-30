@@ -1,7 +1,8 @@
-from .imbalance import *
-from .target import *
 from .utils import *
+from .target import *
 from .feature import *
+from .imbalance import *
+from .importance import *
 
 
 from pkg_resources import get_distribution, DistributionNotFound
