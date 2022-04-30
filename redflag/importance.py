@@ -18,7 +18,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-from sklearn.preprocessing import StandardScaler
+import numpy as np
 from sklearn.inspection import permutation_importance
 from sklearn.linear_model import Lasso
 from sklearn.ensemble import RandomForestRegressor
@@ -27,11 +27,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 
-from .feature import is_standardized
 from .target import is_regression
+from .utils import split_and_standardize
 
 
-def feature_importance(X, y=None, task=None):
+def feature_importance(X, y=None, task=None, random_state=None):
     """
     Measure feature importance on a task, given X and y.
 
@@ -54,36 +54,42 @@ def feature_importance(X, y=None, task=None):
             appear in X.
 
     TODO:
-        - Tests.
+        - Add clustering case.
+
+    Examples:
+    >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1]]
+    >>> y = [5, 15, 25, 35]
+    >>> feature_importance(X, y, task='regression', random_state=0)
+    array([0.        , 0.92791856, 0.07208144])
     """
     if y is None:
         task = 'clustering'
     elif task is None:
         task = 'regression' if is_regression(y) else 'classification'
 
-    X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=0)
+    # Split the data and ensure it is standardized.
+    X_train, X_val, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
 
-    if not is_standardized(X):
-        scaler = StandardScaler().fit(X, y)
-        X = scaler.transform(X)
-        scaler = StandardScaler().fit(X_train, y)
-        X_train = scaler.transform(X_train)
-        X_val = scaler.transform(X_val)
-
-    importances = []
+    # Train three models and gather the importances.
+    imps = []
     if task == 'classification':
-        importances.append(LogisticRegression().fit(X, y).feature_importances_)
-        importances.append(RandomForestClassifier().fit(X, y).feature_importances_)
-        model = SVC().fit(X_train, y_train)
-        r = permutation_importance(model, X_val, y_val, n_repeats=20, random_state=0)
-        importances.append(r.importances_mean)
+        imps.append(LogisticRegression().fit(X, y).feature_importances_)
+        imps.append(RandomForestClassifier(random_state=random_state).fit(X, y).feature_importances_)
+        model = SVC(random_state=random_state).fit(X_train, y_train)
+        r = permutation_importance(model, X_val, y_val, n_repeats=20, scoring='f1_weighted', random_state=random_state)
+        imps.append(r.importances_mean)
     elif task == 'regression':
-        importances.append(Lasso().fit(X, y).coef_)
-        importances.append(RandomForestRegressor().fit(X, y).feature_importances_)
+        imps.append(Lasso().fit(X, y).coef_)
+        imps.append(RandomForestRegressor(random_state=random_state).fit(X, y).feature_importances_)
         model = SVR().fit(X_train, y_train)
-        r = permutation_importance(model, X_val, y_val, n_repeats=20, random_state=0)
-        importances.append(r.importances_mean)
+        r = permutation_importance(model, X_val, y_val, n_repeats=20, scoring='neg_mean_squared_error', random_state=random_state)
+        imps.append(r.importances_mean)
+    else:
+        raise NotImplementedError("Cannot handle clustering problems yet.")
+    imps = np.abs(imps)
 
-    imps = np.array(importances)
-    imps /= np.sum(imps, axis=1)
-    return np.mean(sorted(imps, key=lambda row: np.stdev(row))[:2], axis=1)
+    # Normalize the rows.
+    imps /= np.sum(imps + 1e-9, axis=1)[:, None]
+
+    # Drop imps with smallest variance and take mean of what's left.
+    return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-2:], axis=0)

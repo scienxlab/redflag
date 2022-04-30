@@ -19,6 +19,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+from .feature import is_standardized
 
 
 def is_numeric(a):
@@ -79,3 +83,27 @@ def sorted_unique(a):
     a = np.asarray(a)
     _, idx = np.unique(a, return_index=True)
     return a[np.sort(idx)]
+
+
+def split_and_standardize(X, y, random_state=None):
+    """
+    Split a dataset, check if it's standardized, and scale if not.
+
+    Args:
+        X (array): The training examples.
+        y (array): The target or labels.
+        random_state (int or None): The seed for the split.
+
+    Returns:
+        tuple of ndarray: X_train, X_val, y_train, y_val
+    """
+    X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=random_state)
+
+    if not is_standardized(X):
+        scaler = StandardScaler().fit(X, y)
+        X = scaler.transform(X)
+        scaler = StandardScaler().fit(X_train, y)
+        X_train = scaler.transform(X_train)
+        X_val = scaler.transform(X_val)
+
+    return X_train, X_val, y_train, y_val
