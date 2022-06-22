@@ -20,10 +20,18 @@ limitations under the License.
 """
 from collections import namedtuple
 import warnings
+from functools import reduce
 
 import numpy as np
 import scipy.stats as ss
 from scipy.spatial.distance import pdist
+from scipy.stats import wasserstein_distance
+from sklearn.neighbors import LocalOutlierFactor
+from sklearn.ensemble import IsolationForest
+from sklearn.svm import OneClassSVM
+
+
+import utils
 
 
 def clipped(a):
@@ -171,41 +179,11 @@ def is_correlated(a, n=20, s=20, threshold=0.1):
     return (p >= threshold) & (q >= 0)
 
 
-def _find_zscore_outliers(z, threshold=3):
+def zscore_outliers(z, threshold=3):
     """
     Find outliers given samples and a threshold in multiples of stdev.
-
-    Returns a 
-
-    Args:
-        z (array): The samples as Z-scores.
-        threshold (float): The threshold in multiples of stdev.
-
-    Returns:
-        tuple (array, float): Boolean array identifying outliers, and the ratio
-            of the number of outliers to the expected number of outliers at that
-            threshold. A ratio less than one indicates there are fewer outliers
-            than expected; more than one means there are more. The larger the
-            ratio, the worse the outlier situation.
-
-    Examples:
-        >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-        >>> _find_zscore_outliers(data)
-        (array([], dtype=int64), 0.0)
-        >>> _find_zscore_outliers(data + [100], threshold=3)
-        (array([11]), 30.866528945414302)
-    """
-    z = np.asarray(z)
-    outliers, = np.where((z < -threshold) | (z > threshold))
-    n_outliers = outliers.size
-    expect = 1 + ss.norm.cdf(-threshold) - ss.norm.cdf(threshold)
-    ratio = (n_outliers / z.size) / expect
-    return outliers, ratio
-
-
-def zscore_outliers(a, sd=3, limit=4.89163847):
-    """
-    Find outliers using Z-scores.
+    This was the fastest thing I tried. Returns -1 for outliers and 1
+    for inliers. Kind of weird, but matches the sklearn outlier predictors.
 
     Expect points outside:
         - 1 sd: expect 31.7 points in 100
@@ -217,78 +195,80 @@ def zscore_outliers(a, sd=3, limit=4.89163847):
         - 6 sd: 2.0 in 1 billion points
 
     Args:
-        a (array): The data.
-        sd (float): The number of standard deviations to use as the threshold
-            for ordinary outliers.
-        limit (float): The number of standard deviations to use as the threshold
-            for 'extreme' outliers.
-    
+        z (array): The samples as Z-scores.
+        threshold (float): The threshold in multiples of stdev.
+
     Returns:
-        tuple: The ratio for outliers and extreme outliers, and the indices for
-            outliers and extreme outliers.
+        array: Boolean array identifying outliers.
 
     Examples:
         >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-        >>> ratio, _, _, _ = zscore_outliers(data)
-        >>> ratio
-        0.0
-        >>> _, _, idx, _ = zscore_outliers(data + [100])
-        >>> idx
-        array([11])
+        >>> _find_zscore_outliers(data)
+        (array([], dtype=int64), 0.0)
+        >>> _find_zscore_outliers(data + [100], threshold=3)
+        (array([11]), 30.866528945414302)
     """
-    z = (a - np.nanmean(a)) / np.nanstd(a)
-    out, ratio = _find_zscore_outliers(z, threshold=sd)
-    xout, xratio = _find_zscore_outliers(z, threshold=limit)
-    return ratio, xratio, out, xout
+    z = np.squeeze(z)
+    idx, = np.where((z < -threshold) | (z > threshold))
+    outliers = np.full(z.shape, 1)
+    outliers[idx] = -1
+    return outliers
 
 
-def isolation_outliers(a):
-    raise NotImplementedError
-
-def local_outliers(a):
-    raise NotImplementedError
-
-def has_outliers(a, method='zscore'):
+def get_outliers(a, method='iso', threshold=3):
     """
     Returns significant outliers in the feature, if any (instances whose
     numbers exceeds the expected number of samples more than 4.89 standard
     deviations from the mean).
 
-    Methods: 'zscore', 'isolation' (requires `sklearn`), 'lof' (requires
-    `sklearn`), or pass a function that returns a Boolean array of outlier
-    flags.
-
-    This is going to need some work to give the functions the same API and
-    return pattern.
+    Methods: 'zscore' (1-D data only), 'iso' (requires `sklearn`), 'lof' (requires
+    `sklearn`), 'svm' (requires `sklearn`), or pass a function that returns
+    a Boolean array of outlier flags. Note that the OneClassSVM method does
+    not always yield good results in my testing.
 
     Args:
         a (array): The data.
         method (str): The method to use. Only 'zscore' is supported.
+        threshold (float): The threshold in multiples of stdev.
 
     Returns:
-        array: The indices of the extreme outliers.
+        array: The indices of the outliers.
 
     Examples
         >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-        >>> has_outliers(data)
+        >>> has_outliers(data, method='iso)
         array([], dtype=int64)
         >>> has_outliers(3 * data + [100])
         array([33])
     """
     a = np.asarray(a)
-    methods = {'zscore': zscore_outliers,
-               'isolation': isolation_outliers,
-               'lof': local_outliers,
+    if a.ndim == 1:
+        a = a.reshape(-1, 1)
+    expect = 1 - utils.stdev_to_proportion(threshold)
+    methods = {'iso': IsolationForest(contamination=expect).fit_predict,
+               'svm': OneClassSVM(nu=expect).fit_predict,
+               'lof': LocalOutlierFactor(contamination=expect, novelty=False).fit_predict,
               }
-    func = methods.get(method, method)
-    ratio, xtreme_ratio, idx, xtreme_idx = func(a)
-    return xtreme_idx
+    if method == 'any':
+        results = [utils.get_idx(func(a)==-1) for func in methods.values()]
+        outliers = reduce(np.union1d, results)
+    elif method == 'all':
+        results = [utils.get_idx(func(a)==-1) for func in methods.values()]
+        outliers = reduce(np.intersect1d, results)
+    else:
+        func = methods.get(method, method)
+        outliers, = np.where(func(a) == -1)
+    return outliers
 
 
 def is_standardized(a, atol=1e-5):
     """
     Returns True if the feature has zero mean and standard deviation of 1.
     In other words, if the feature appears to be a Z-score.
+
+    Note that if a dataset was standardized using the mean and stdev of
+    another dataset (for example, a training set), then the test set will
+    not itself have a mean of zero and stdev of 1.
 
     Performance: this implementation was faster than np.isclose() on μ and σ,
     or comparing with z-score of entire array using np.allclose().

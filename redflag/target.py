@@ -23,38 +23,39 @@ import numpy as np
 from .utils import *
 
 
-def is_regression(y):
+def is_continuous(arr):
     """
-    Decide if this is most likely a regression problem.
+    Decide if this is most likely a continuous variable (and thus, if this is
+    the target, for example, most likely a regression task).
 
     Args:
-        y (array): A target vector.
+        arr (array): A target vector.
 
     Returns:
-        bool: True if y is probably best suited to regression.
+        bool: True if arr is probably best suited to regression.
 
     Examples:
-        >>> is_regression(10 * ['a', 'b'])
+        >>> is_continuous(10 * ['a', 'b'])
         False
-        >>> is_regression(100 * [1, 2, 3])
+        >>> is_continuous(100 * [1, 2, 3])
         False
         >>> import numpy as np
-        >>> is_regression(np.random.random(size=100))
+        >>> is_continuous(np.random.random(size=100))
         True
     """
-    y = np.asanyarray(y)
-    numeric = is_numeric(y)
+    y = np.asanyarray(arr)
+    numeric = is_numeric(arr)
     if not numeric:
         return False
 
-    floating = np.issubdtype(y.dtype, np.floating)
-    wide = np.max(y) - np.min(y) > 10
-    large = np.unique(y) > 10
-    if not floating or (wide and large):
+    floating = np.issubdtype(arr.dtype, np.floating)
+    wide = np.max(arr) - np.min(arr) > 10
+    large = np.unique(arr).size > 10
+    if (not floating) or (not (wide and large)):
         return False
     
-    small_gaps = np.min(np.diff(y)) < np.min(y) / 100
-    many_gap_sizes = np.unique(np.diff(y)).size > np.unique(y).size / 10
+    small_gaps = np.min(np.diff(arr)) < np.min(arr) / 100
+    many_gap_sizes = np.unique(np.diff(arr)).size > np.unique(arr).size / 10
     return small_gaps and many_gap_sizes
 
 
