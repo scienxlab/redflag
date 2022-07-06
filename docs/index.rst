@@ -46,8 +46,7 @@ User guide
     :caption: User guide
 
     installation
-    basic_usage
-    _notebooks/Using_redflag.ipynb
+    _notebooks/Basic_usage.ipynb
 
 
 API reference

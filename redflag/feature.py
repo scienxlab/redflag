@@ -21,6 +21,7 @@ limitations under the License.
 from collections import namedtuple
 from functools import reduce
 from itertools import combinations
+import warnings
 
 import numpy as np
 import scipy.stats as ss
@@ -31,7 +32,7 @@ from sklearn.ensemble import IsolationForest
 from sklearn.svm import OneClassSVM
 from sklearn.covariance import EllipticEnvelope
 
-from .utils import stdev_to_proportion
+from .utils import is_standardized, stdev_to_proportion
 from .utils import get_idx
 from .utils import iter_groups
 
@@ -229,7 +230,7 @@ def get_outliers(a, method='iso', threshold=3):
     return outliers
 
         
-def wasserstein_ovr(a, groups=None, standardize=True):
+def wasserstein_ovr(a, groups=None, standardize=False):
     """
     First Wasserstein distance between each group in `a` vs the rest of `a`
     ('one vs rest' or OVR).
@@ -237,15 +238,14 @@ def wasserstein_ovr(a, groups=None, standardize=True):
     The results are in `np.unique(a)` order.
     
     Data should be standardized for results you can compare across different
-    measurements. The function applies standardization by default; this has no
-    effect on data that is already standardized using its own statistics.
+    measurements. The function does not apply standardization by default.
     
     Returns K scores for K groups.
 
     Args:
         a (array): The data.
         groups (array): The group labels.
-        standardize (bool): Whether to standardize the data. Default True.
+        standardize (bool): Whether to standardize the data. Default False.
 
     Returns:
         array: The Wasserstein distance scores in `np.unique(a)` order.
@@ -253,7 +253,7 @@ def wasserstein_ovr(a, groups=None, standardize=True):
     Examples:
         >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
         >>> groups = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
-        >>> wasserstein_ovr(data, groups=groups)
+        >>> wasserstein_ovr(data, groups=groups, standardize=True)
         array([0.97490053, 0.1392715 , 1.11417203])
     """
     if standardize:
@@ -265,7 +265,7 @@ def wasserstein_ovr(a, groups=None, standardize=True):
     return np.array(dists)
 
 
-def wasserstein_ovo(a, groups=None, standardize=True):
+def wasserstein_ovo(a, groups=None, standardize=False):
     """
     First Wasserstein distance between each group in `a` vs each other group
     ('one vs one' or OVO).
@@ -274,15 +274,14 @@ def wasserstein_ovo(a, groups=None, standardize=True):
     r=2)`, which matches the order of `scipy.spatial.distance` metrics.
     
     Data should be standardized for results you can compare across different
-    measurements. The function applies standardization by default; this has no
-    effect on data that is already standardized using its own statistics.
+    measurements. The function does not apply standardization by default.
     
     Returns K(K-1)/2 scores for K groups.
 
     Args:
         a (array): The data.
         groups (array): The group labels.
-        standardize (bool): Whether to standardize the data. Defaults to True.
+        standardize (bool): Whether to standardize the data. Defaults to False.
 
     Returns:
         array: The Wasserstein distance scores. Note that the order is the
@@ -293,9 +292,9 @@ def wasserstein_ovo(a, groups=None, standardize=True):
     Examples:
         >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
         >>> groups = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
-        >>> wasserstein_ovo(data, groups=groups)
+        >>> wasserstein_ovo(data, groups=groups, standardize=True)
         array([0.55708601, 1.39271504, 0.83562902])
-        >>> squareform(wasserstein_ovo(data, groups=groups))
+        >>> squareform(wasserstein_ovo(data, groups=groups, standardize=True))
         array([[0.        , 0.55708601, 1.39271504],
                [0.55708601, 0.        , 0.83562902],
                [1.39271504, 0.83562902, 0.        ]])
@@ -309,7 +308,7 @@ def wasserstein_ovo(a, groups=None, standardize=True):
     return np.array(dists)
 
 
-def wasserstein(X, groups=None, method='ovr', standardize=True, reducer=None):
+def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
     """
     Step over all features and apply the distance function to the groups.
     
@@ -328,7 +327,7 @@ def wasserstein(X, groups=None, method='ovr', standardize=True, reducer=None):
         groups (array): The group labels.
         method (str or func): The method to use. Can be 'ovr', 'ovo', or a
             function.
-        standardize (bool): Whether to standardize the data. Default True.
+        standardize (bool): Whether to standardize the data. Default False.
         reducer (func): The function to reduce the ovo result to one value
             per group. Default: `np.mean`.
 
@@ -338,11 +337,11 @@ def wasserstein(X, groups=None, method='ovr', standardize=True, reducer=None):
     Examples:
         >>> data = np.array([1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3])
         >>> groups = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
-        >>> wasserstein(data.reshape(-1, 1), groups=groups)
+        >>> wasserstein(data.reshape(-1, 1), groups=groups, standardize=True)
         array([[0.97490053],
                [0.1392715 ],
                [1.11417203]])
-        >>> wasserstein(data.reshape(-1, 1), groups=groups, method='ovo')
+        >>> wasserstein(data.reshape(-1, 1), groups=groups, method='ovo', standardize=True)
         array([[0.97490053],
                [0.69635752],
                [1.11417203]])
@@ -355,13 +354,19 @@ def wasserstein(X, groups=None, method='ovr', standardize=True, reducer=None):
         # Probably a DataFrame.
         first = np.asarray(X)[0]
 
+    stacked = False
     try:
         if first.ndim == 2:
-            groups = np.hstack([len(dataset)*[i] for i, dataset in enumerate(X)])
-            X = np.vstack(X)
+            stacked = True
     except AttributeError:
         # It's probably a 1D array or list.
         pass
+    
+    if stacked:
+        if not is_standardized(first):
+            warnings.warn('First group does not appear to be standardized.', stacklevel=2)
+        groups = np.hstack([len(dataset)*[i] for i, dataset in enumerate(X)])
+        X = np.vstack(X)
 
     # Now we can certainly treat X as a 2D array.
     X = np.asarray(X)
