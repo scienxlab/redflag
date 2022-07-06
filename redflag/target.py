@@ -23,17 +23,14 @@ import numpy as np
 from .utils import *
 
 
-def is_continuous(arr):
+def is_continuous(a, n=10):
     """
     Decide if this is most likely a continuous variable (and thus, if this is
     the target, for example, most likely a regression task).
-
     Args:
-        arr (array): A target vector.
-
+        a (array): A target vector.
     Returns:
         bool: True if arr is probably best suited to regression.
-
     Examples:
         >>> is_continuous(10 * ['a', 'b'])
         False
@@ -43,17 +40,20 @@ def is_continuous(arr):
         >>> is_continuous(np.random.random(size=100))
         True
     """
-    y = np.asanyarray(arr)
-    numeric = is_numeric(arr)
-    if not numeric:
+    arr = np.array(a)
+    if not is_numeric(arr):
         return False
 
-    floating = np.issubdtype(arr.dtype, np.floating)
-    wide = np.max(arr) - np.min(arr) > 10
-    large = np.unique(arr).size > 10
-    if (not floating) or (not (wide and large)):
+    # If we have non-floats and there are a lot of values over a large range,
+    # then it's probably not categorical.
+    nonfloats = not np.issubdtype(arr.dtype, np.floating)
+    wide = np.max(arr) - np.min(arr) > n
+    large = np.unique(arr).size > n
+    if nonfloats and not (wide and large):
         return False
     
+    # If we have small gaps between values and there are a lot of different
+    # gap sizes, it's probably not categorical.
     small_gaps = np.min(np.diff(arr)) < np.min(arr) / 100
     many_gap_sizes = np.unique(np.diff(arr)).size > np.unique(arr).size / 10
     return small_gaps and many_gap_sizes
