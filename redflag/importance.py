@@ -38,8 +38,7 @@ def feature_importances(X, y=None, task=None, random_state=None, n=3):
     Classification tasks are assessed with logistic regression, a random
     forest, and SVM permutation importance. Regression tasks are assessed with
     lasso regression, a random forest, and SVM permutation importance. In each
-    case, the normalized features importances are compared, the one with
-    the least variance is discarded, and the other two are averaged.
+    case, the `n` normalized importances with the most variance are averaged.
 
     Args:
         X (array): an array representing the data.
@@ -61,7 +60,7 @@ def feature_importances(X, y=None, task=None, random_state=None, n=3):
     Examples:
         >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1], [0, 4, 0], [0, 5, 1]]
         >>> y = [5, 15, 25, 35, 45, 55]
-        >>> feature_importance(X, y, task='regression', random_state=0)
+        >>> feature_importances(X, y, task='regression', random_state=0)
         array([ 0.        ,  0.97811006, -0.19385077])
     """
     if y is None:
