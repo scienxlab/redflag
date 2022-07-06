@@ -18,17 +18,33 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+import warnings
+
 import numpy as np
-import scipy.stats
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-
-from .feature import is_standardized
+from scipy.stats import beta
+from scipy.optimize import fsolve
+from scipy.spatial.distance import pdist
 
 
 def get_idx(cond):
     idx, = np.where(cond)
     return idx
+
+
+def expected_outliers(N, threshold=3):
+    """
+    Expected number of outliers in a dataset.
+    
+    Args:
+        N (int): The number of samples.
+        threshold (float): The number of standard deviations from the mean.
+            
+    Returns:
+        int: The expected number of outliers.
+    """
+    return int(N * (1 - stdev_to_proportion(threshold)))
 
 
 def is_numeric(a):
@@ -69,7 +85,7 @@ def generate_data(counts):
     return [item for sublist in data for item in sublist]
 
 
-def sorted_unique(a):
+def ordered_unique(a):
     """
     Unique items in appearance order.
 
@@ -83,7 +99,7 @@ def sorted_unique(a):
         array: The unique items, in order of first appearance.
 
     Example:
-        >>> sorted_unique([3, 0, 0, 1, 3, 2, 3])
+        >>> ordered_unique([3, 0, 0, 1, 3, 2, 3])
         array([3, 0, 1, 2])
     """
     a = np.asarray(a)
@@ -150,17 +166,238 @@ def ecdf(arr, start='1/N', downsample=None):
     return x, y
 
 
-def stdev_to_proportion(threshold: float=1) -> float:
+def stdev_to_proportion(threshold: float, D: float=1, N: float=1e9) -> float:
     """
-    Convert a number of standard deviations into
-    the proportion of samples in the interval. For
-    example, 68.27% of samples lie within ±1 stdev
-    of the mean in the normal distribution.
+    Estimate the confidence level of the scaled standard deviational
+    hyperellipsoid (SDHE). This is the proportion of points whose Mahalanobis
+    distance is within `threshold` standard deviations, for the given number of
+    dimensions `D`.
+
+    For example, 68.27% of samples lie within ±1 stdev of the mean in the
+    univariate normal distribution. For two dimensions, `D` = 2 and 39.35% of
+    the samples are within ±1 stdev of the mean.
+
+    This is an approximation good to about 6 significant figures (depending on
+    N). It uses the beta distribution to model the true distribution; for more
+    about this see the following paper:
+    http://poseidon.csd.auth.gr/papers/PUBLISHED/JOURNAL/pdf/Ververidis08a.pdf
+
+    For a table of test cases see Table 1 in:
+    https://doi.org/10.1371/journal.pone.0118537
+
+    Args:
+        threshold (float): The number of standard deviations (or 'magnification
+            ratio').
+        D (float): The number of dimensions.
+        N (float): The number of instances; just needs to be large for a
+            proportion with decent precision.
+
+    Returns:
+        float. The confidence level.
+
+    Example:
+        >>> stdev_to_proportion(1)  # Exact result: 0.6826894921370859
+        0.6826894916531445
+        >>> stdev_to_proportion(3)  # Exact result: 0.9973002039367398
+        0.9973002039633309
+        >>> stdev_to_proportion(1, D=2)
+        0.39346933952920327
+        >>> stdev_to_proportion(5, D=10)
+        0.9946544947734935
+    """
+    return beta.cdf(x=1/N, a=D/2, b=(N-D-1)/2, scale=1/threshold**2)
+
+
+def proportion_to_stdev(p: float, D: float=1, N: float=1e9) -> float:
+    """
+    The inverse of `stdev_to_proportion`.
+
+    Estimate the 'magnification ratio' (number of standard deviations) of the
+    scaled standard deviational hyperellipsoid (SDHE) at the given confidence
+    level and for the given number of dimensions, `D`.
+
+    This tells us the number of standard deviations containing the given
+    proportion of instances. For example, 80% of samples lie within ±1.2816
+    standard deviations.
+
+    For more about this and a table of test cases (Table 2) see:
+    https://doi.org/10.1371/journal.pone.0118537
+
+    Args:
+        p (float): The confidence level as a decimal fraction, e.g. 0.8.
+        D (float): The number of dimensions. Default 1 (the univariate Gaussian
+            distribution).
+        N (float): The number of instances; just needs to be large for a
+            proportion with decent precision. `Default 1e9`.
+
+    Returns:
+        float. The estimated number of standard deviations ('magnification ratio').
+
+    Examples:
+        >>> proportion_to_stdev(0.99, D=1)
+        2.575829302496098
+        >>> proportion_to_stdev(0.90, D=5)
+        3.039137525465009
+        >>> stdev_to_proportion(proportion_to_stdev(0.80, D=1))
+        0.8000000000000003
+    """
+    func = lambda r_, D_, N_: stdev_to_proportion(r_, D_, N_) - p
+    r_hat , = fsolve(func, x0=2, args=(D, N))
+    return r_hat
+
+
+def is_standardized(a, atol=1e-5):
+    """
+    Returns True if the feature has zero mean and standard deviation of 1.
+    In other words, if the feature appears to be a Z-score.
+
+    Note that if a dataset was standardized using the mean and stdev of
+    another dataset (for example, a training set), then the test set will
+    not itself have a mean of zero and stdev of 1.
+
+    Performance: this implementation was faster than np.isclose() on μ and σ,
+    or comparing with z-score of entire array using np.allclose().
+
+    Args:
+        a (array): The data.
+        atol (float): The absolute tolerance.
+
+    Returns:
+        bool: True if the feature appears to be a Z-score.
+    """
+    μ, σ = np.nanmean(a), np.nanstd(a)
+    return (np.abs(μ) < atol) and (np.abs(σ - 1) < atol)
+
+
+def zscore(X):
+    """
+    Transform array to Z-scores. If 2D, stats are computed
+    per column.
+
+    Example:
+    >>> zscore([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.        ,
+            0.38729833,  0.77459667,  1.161895  ,  1.54919334])
+    """
+    return (X - np.nanmean(X, axis=0)) / np.nanstd(X, axis=0)
+
+
+def cv(X):
+    """
+    Coefficient of variation, as a decimal fraction of the mean.
+
+    Args:
+        X (ndarray): The input data.
+
+    Returns:
+        float: The coefficient of variation.
+
+    Example:
+    >>> cv([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    0.5163977794943222
+    """
+    if abs(μ := np.nanmean(X, axis=0)) < 1e-12:
+        warnings.warn("Mean is close to zero, coefficient of variation may not be useful.")
+        μ += 1e-12
+    return np.nanstd(X, axis=0) / μ
+
+
+def has_low_distance_stdev(X, atol=0.1):
+    """
+    Returns True if the instances has a small relative standard deviation of
+    distances in the feature space.
+
+    Args:
+        X (ndarray): The input data.
+        atol (float): The cut-off coefficient of variation, default 0.1.
+
+    Returns:
+        bool
+    """
+    return cv(pdist(zscore(X))) < atol
+
+
+def has_few_samples(X):
+    """
+    Returns True if the number of samples is less than the square of the
+    number of features.
+
+    Args:
+        X (ndarray): The input data.
+
+    Returns:
+        bool
+
+    Example:
+    >>> import numpy as np
+    >>> X = np.ones((100, 5))
+    >>> has_few_samples(X)
+    False
+    >>> X = np.ones((100, 15))
+    >>> has_few_samples(X)
+    True
+    """
+    N, M = X.shape
+    return N < M**2
+
+
+def clipped(a):
+    """
+    Returns the indices of values at the min and max.
+
+    Args:
+        a (array): The data.
+
+    Returns:
+        tuple: The indices of the min and max values.
+
+    Example:
+        >>> clipped([-3, -3, -2, -1, 0, 2, 3])
+        (array([0, 1]), None)
+    """
+    min_clips, = np.where(a==np.nanmin(a))
+    max_clips, = np.where(a==np.nanmax(a))
+    min_clips = min_clips if len(min_clips) > 1 else None
+    max_clips = max_clips if len(max_clips) > 1 else None
+    return min_clips, max_clips
+
+
+def is_clipped(a):
+    """
+    Decide if the data are likely clipped: If there are multiple
+    values at the max and/or min, then the data may be clipped.
+
+    Args:
+        a (array): The data.
+
+    Returns:
+        bool: True if the data are likely clipped.
+
+    Example:
+        >>> is_clipped([-3, -3, -2, -1, 0, 2, 3])
+        True
+    """
+    min_clips, max_clips = clipped(a)
+    return (min_clips is not None) or (max_clips is not None)
+
+
+def iter_groups(groups):
+    """
+    Allow iterating over groups, getting boolean array for each.
+    
+    Equivalent to `(groups==group for group in np.unique(groups))`.
+
+    Args:
+        groups (array): The group labels.
+
+    Yields:
+        array: The boolean mask array for each group.
     
     Example:
-        >>> stdev_to_proportion(1)
-        0.6826894921370859
-        >>> stdev_to_proportion(3)
-        0.9973002039367398
+    >>> for group in iter_groups([1, 1, 1, 2, 2]):
+    ...     print(group)
+    [ True  True  True False False]
+    [False False False  True  True]
     """
-    return 2 * scipy.stats.norm.cdf(threshold) - 1
+    for group in np.unique(groups):
+        yield groups == group

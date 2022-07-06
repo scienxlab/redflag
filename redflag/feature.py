@@ -19,59 +19,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 from collections import namedtuple
-import warnings
 from functools import reduce
+from itertools import combinations
 
 import numpy as np
 import scipy.stats as ss
-from scipy.spatial.distance import pdist
 from scipy.stats import wasserstein_distance
+from scipy.spatial.distance import squareform
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.svm import OneClassSVM
+from sklearn.covariance import EllipticEnvelope
 
-
-import utils
-
-
-def clipped(a):
-    """
-    Returns the indices of values at the min and max.
-
-    Args:
-        a (array): The data.
-
-    Returns:
-        tuple: The indices of the min and max values.
-
-    Example:
-        >>> clipped([-3, -3, -2, -1, 0, 2, 3])
-        (array([0, 1]), None)
-    """
-    min_clips, = np.where(a==np.nanmin(a))
-    max_clips, = np.where(a==np.nanmax(a))
-    min_clips = min_clips if len(min_clips) > 1 else None
-    max_clips = max_clips if len(max_clips) > 1 else None
-    return min_clips, max_clips
-
-
-def is_clipped(a):
-    """
-    Decide if the data are likely clipped: If there are multiple
-    values at the max and/or min, then the data may be clipped.
-
-    Args:
-        a (array): The data.
-
-    Returns:
-        bool: True if the data are likely clipped.
-
-    Example:
-        >>> is_clipped([-3, -3, -2, -1, 0, 2, 3])
-        True
-    """
-    min_clips, max_clips = clipped(a)
-    return (min_clips is not None) or (max_clips is not None)
+from .utils import stdev_to_proportion
+from .utils import get_idx
+from .utils import iter_groups
 
 
 DISTS = [
@@ -183,7 +145,7 @@ def zscore_outliers(z, threshold=3):
     """
     Find outliers given samples and a threshold in multiples of stdev.
     This was the fastest thing I tried. Returns -1 for outliers and 1
-    for inliers. Kind of weird, but matches the sklearn outlier predictors.
+    for inliers (to match the sklearn outlier predictor API).
 
     Expect points outside:
         - 1 sd: expect 31.7 points in 100
@@ -203,10 +165,10 @@ def zscore_outliers(z, threshold=3):
 
     Examples:
         >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-        >>> _find_zscore_outliers(data)
-        (array([], dtype=int64), 0.0)
-        >>> _find_zscore_outliers(data + [100], threshold=3)
-        (array([11]), 30.866528945414302)
+        >>> zscore_outliers(data)
+        array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+        >>> zscore_outliers(data + [100], threshold=3)
+        array([ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1])
     """
     z = np.squeeze(z)
     idx, = np.where((z < -threshold) | (z > threshold))
@@ -217,14 +179,19 @@ def zscore_outliers(z, threshold=3):
 
 def get_outliers(a, method='iso', threshold=3):
     """
-    Returns significant outliers in the feature, if any (instances whose
-    numbers exceeds the expected number of samples more than 4.89 standard
-    deviations from the mean).
+    Returns outliers in the data, considering all of the features. What counts
+    as an outlier is determined by the threshold, which is in multiples of
+    the standard deviation. (The conversion to 'contamination' is approximate.)
 
-    Methods: 'zscore' (1-D data only), 'iso' (requires `sklearn`), 'lof' (requires
-    `sklearn`), 'svm' (requires `sklearn`), or pass a function that returns
+    This function requires the scikit-learn package.
+
+    Methods: 'iso' (isolation forest), 'lof' (local outlier factor), 'svm'
+    (one-class support vvector machine), or pass a function that returns
     a Boolean array of outlier flags. Note that the OneClassSVM method does
-    not always yield good results in my testing.
+    not always yield good results in my testing. You can also pass 'any', which
+    will try all three outlier detection methods and return the outliers which
+    are detected by any of them, or 'all', which will return the outliers which
+    are common to all three methods.
 
     Args:
         a (array): The data.
@@ -234,123 +201,196 @@ def get_outliers(a, method='iso', threshold=3):
     Returns:
         array: The indices of the outliers.
 
-    Examples
+    Examples:
         >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-        >>> has_outliers(data, method='iso)
+        >>> get_outliers(3 * data)
         array([], dtype=int64)
-        >>> has_outliers(3 * data + [100])
+        >>> get_outliers(3 * data + [100])
         array([33])
     """
     a = np.asarray(a)
     if a.ndim == 1:
         a = a.reshape(-1, 1)
-    expect = 1 - utils.stdev_to_proportion(threshold)
+    expect = 1 - stdev_to_proportion(threshold)
     methods = {'iso': IsolationForest(contamination=expect).fit_predict,
                'svm': OneClassSVM(nu=expect).fit_predict,
                'lof': LocalOutlierFactor(contamination=expect, novelty=False).fit_predict,
+               'mah': EllipticEnvelope(contamination=expect).fit_predict,
               }
     if method == 'any':
-        results = [utils.get_idx(func(a)==-1) for func in methods.values()]
+        results = [get_idx(func(a)==-1) for func in methods.values()]
         outliers = reduce(np.union1d, results)
     elif method == 'all':
-        results = [utils.get_idx(func(a)==-1) for func in methods.values()]
+        results = [get_idx(func(a)==-1) for func in methods.values()]
         outliers = reduce(np.intersect1d, results)
     else:
         func = methods.get(method, method)
         outliers, = np.where(func(a) == -1)
     return outliers
 
-
-def is_standardized(a, atol=1e-5):
+        
+def wasserstein_ovr(a, groups=None, standardize=True):
     """
-    Returns True if the feature has zero mean and standard deviation of 1.
-    In other words, if the feature appears to be a Z-score.
-
-    Note that if a dataset was standardized using the mean and stdev of
-    another dataset (for example, a training set), then the test set will
-    not itself have a mean of zero and stdev of 1.
-
-    Performance: this implementation was faster than np.isclose() on μ and σ,
-    or comparing with z-score of entire array using np.allclose().
+    First Wasserstein distance between each group in `a` vs the rest of `a`
+    ('one vs rest' or OVR).
+    
+    The results are in `np.unique(a)` order.
+    
+    Data should be standardized for results you can compare across different
+    measurements. The function applies standardization by default; this has no
+    effect on data that is already standardized using its own statistics.
+    
+    Returns K scores for K groups.
 
     Args:
         a (array): The data.
-        atol (float): The absolute tolerance.
+        groups (array): The group labels.
+        standardize (bool): Whether to standardize the data. Default True.
 
     Returns:
-        bool: True if the feature appears to be a Z-score.
+        array: The Wasserstein distance scores in `np.unique(a)` order.
+
+    Examples:
+        >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
+        >>> groups = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+        >>> wasserstein_ovr(data, groups=groups)
+        array([0.97490053, 0.1392715 , 1.11417203])
     """
-    μ, σ = np.nanmean(a), np.nanstd(a)
-    return (np.abs(μ) < atol) and (np.abs(σ - 1) < atol)
+    if standardize:
+        a = (a - np.nanmean(a)) / np.nanstd(a)
+    dists = []
+    for group in iter_groups(groups):
+        dist = wasserstein_distance(a[group], a[~group])
+        dists.append(dist)
+    return np.array(dists)
 
 
-def zscore(X):
+def wasserstein_ovo(a, groups=None, standardize=True):
     """
-    Transform array to Z-scores. If 2D, stats are computed
-    per column.
-
-    Example:
-    >>> zscore([1, 2, 3, 4, 5, 6, 7, 8, 9])
-    array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.        ,
-            0.38729833,  0.77459667,  1.161895  ,  1.54919334])
-    """
-    return (X - np.nanmean(X, axis=0)) / np.nanstd(X, axis=0)
-
-
-def cv(X):
-    """
-    Coefficient of variation, as a decimal fraction of the mean.
+    First Wasserstein distance between each group in `a` vs each other group
+    ('one vs one' or OVO).
+    
+    The results are in the order given by `combinations(np.unique(groups),
+    r=2)`, which matches the order of `scipy.spatial.distance` metrics.
+    
+    Data should be standardized for results you can compare across different
+    measurements. The function applies standardization by default; this has no
+    effect on data that is already standardized using its own statistics.
+    
+    Returns K(K-1)/2 scores for K groups.
 
     Args:
-        X (ndarray): The input data.
+        a (array): The data.
+        groups (array): The group labels.
+        standardize (bool): Whether to standardize the data. Defaults to True.
 
     Returns:
-        float: The coefficient of variation.
+        array: The Wasserstein distance scores. Note that the order is the
+            same as you would get from `scipy.spatial.distance` metrics. You
+            can pass the result to `scipy.spatial.distance.squareform` to
+            get a square matrix.
 
-    Example:
-    >>> cv([1, 2, 3, 4, 5, 6, 7, 8, 9])
-    0.5163977794943222
+    Examples:
+        >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
+        >>> groups = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+        >>> wasserstein_ovo(data, groups=groups)
+        array([0.55708601, 1.39271504, 0.83562902])
+        >>> squareform(wasserstein_ovo(data, groups=groups))
+        array([[0.        , 0.55708601, 1.39271504],
+               [0.55708601, 0.        , 0.83562902],
+               [1.39271504, 0.83562902, 0.        ]])
     """
-    if abs(μ := np.nanmean(X, axis=0)) < 1e-12:
-        warnings.warn("Mean is close to zero, coefficient of variation may not be useful.")
-        μ += 1e-12
-    return np.nanstd(X, axis=0) / μ
+    if standardize:
+        a = (a - np.nanmean(a)) / np.nanstd(a)
+    dists = []
+    for (group_1, group_2) in combinations(np.unique(groups), r=2):
+        dist = wasserstein_distance(a[groups==group_1], a[groups==group_2])
+        dists.append(dist)
+    return np.array(dists)
 
 
-def has_low_distance_stdev(X, atol=0.1):
+def wasserstein(X, groups=None, method='ovr', standardize=True, reducer=None):
     """
-    Returns True if the instances has a small relative standard deviation of
-    distances in the feature space.
+    Step over all features and apply the distance function to the groups.
+    
+    Method can be 'ovr', 'ovo', or a function.
+    
+    The function `reducer` is applied to the ovo result to reduce it to one
+    value per group per feature. If you want the full array of each group
+    against each other, either pass the identity function (`lambda x: x`,
+    which adds an axis) or use `wasserstein_ovo()` directly, one feature at
+    a time. Default function: `np.mean`.
 
     Args:
-        X (ndarray): The input data.
-        atol (float): The cut-off coefficient of variation, default 0.1.
+        X (array): The data. Must be a 2D array, or a sequence of 2D arrays.
+            If the latter, then the groups are implicitly assumed to be the
+            datasets in the sequence and the `groups` argument is ignored.
+        groups (array): The group labels.
+        method (str or func): The method to use. Can be 'ovr', 'ovo', or a
+            function.
+        standardize (bool): Whether to standardize the data. Default True.
+        reducer (func): The function to reduce the ovo result to one value
+            per group. Default: `np.mean`.
 
     Returns:
-        bool
+        array: The 2D array of Wasserstein distance scores.
+
+    Examples:
+        >>> data = np.array([1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3])
+        >>> groups = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+        >>> wasserstein(data.reshape(-1, 1), groups=groups)
+        array([[0.97490053],
+               [0.1392715 ],
+               [1.11417203]])
+        >>> wasserstein(data.reshape(-1, 1), groups=groups, method='ovo')
+        array([[0.97490053],
+               [0.69635752],
+               [1.11417203]])
     """
-    return cv(pdist(zscore(X))) < atol
+    # If the data is a sequence of arrays, then assume the groups are the
+    # datasets in the sequence and the `groups` argument is ignored.
+    try:
+        first = X[0]
+    except KeyError:
+        # Probably a DataFrame.
+        first = np.asarray(X)[0]
 
+    try:
+        if first.ndim == 2:
+            groups = np.hstack([len(dataset)*[i] for i, dataset in enumerate(X)])
+            X = np.vstack(X)
+    except AttributeError:
+        # It's probably a 1D array or list.
+        pass
 
-def has_few_samples(X):
-    """
-    Returns True if the number of samples is less than the square of the
-    number of features.
+    # Now we can certainly treat X as a 2D array.
+    X = np.asarray(X)
+    if X.ndim != 2:
+        raise ValueError("X must be a 2D array-like.")
+    
+    if groups is None:
+        raise ValueError("Must provide a 1D array of group labels if X is a 2D array.")
+    n_groups = np.unique(groups).size
 
-    Args:
-        X (ndarray): The input data.
+    if n_groups < 2:
+        raise ValueError("Must have 2 or more groups.")
 
-    Returns:
-        bool
+    methods = {
+        'ovr': wasserstein_ovr,
+        'ovo': wasserstein_ovo,
+    }
+    func = methods.get(method, method)
+    
+    if reducer is None:
+        reducer = np.mean
 
-    Example:
-    >>> import numpy as np
-    >>> X = np.ones((100, 5))
-    >>> has_few_samples(X)
-    False
-    >>> X = np.ones((100, 15))
-    >>> has_few_samples(X)
-    True
-    """
-    N, M = X.shape
-    return N < M**2
+    dist_arrs = []
+    for feature in X.T:
+        dists = func(feature, groups=groups, standardize=standardize)
+        if method == 'ovo':
+            dists = squareform(dists)
+            dists = dists[~np.eye(n_groups, dtype=bool)].reshape(n_groups, -1)
+            dists = [reducer(d) for d in dists]
+        dist_arrs.append(dists)
+
+    return np.swapaxes(dist_arrs, 0, 1)
