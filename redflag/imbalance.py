@@ -27,6 +27,7 @@ Pattern Recognition Letters 98 (2017)
 https://doi.org/10.1016/j.patrec.2017.08.002
 """
 from collections import Counter
+import warnings
 
 import numpy as np
 
@@ -34,42 +35,84 @@ from .target import *
 from .utils import *
 
 
-def empirical_distribution(a):
+def get_counts(a, classes=None):
+    """
+    Make a Counter of the class labels in `classes`, or in `a` if `classes`
+    is None.
+
+    Args:
+        a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
+
+    Returns:
+        dict. The counts, in the order in which classes are encountered in
+            `classes` (if `classes is not `None`) or `a`.
+
+    Example:
+    >>> get_counts([1, 3, 2, 2, 3, 3])
+    {1: 1, 3: 3, 2: 2}
+    """
+    counts = Counter(a)
+
+    if classes is None:
+        classes = counts.keys()
+
+    if len(counts) < len(classes):
+        message = 'Some classes in the data are not in the list of classes.'
+        warnings.warn(message, stacklevel=2)
+
+    return {k: counts[k] for k in classes}
+
+
+def empirical_distribution(a, classes=None):
     """
     Compute zeta and e. Equation 5 in Ortigosa-Hernandez et al. (2017).
 
     Args:
         a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
-        tuple: (zeta, e).
+        tuple: (zeta, e). Both arrays are length K, where K is the number of
+            classes discovered in `a` (if `classes` is None) or named in 
+            `classes` otherwise.
     """
-    c = Counter(a)
+    c = get_counts(a, classes=classes)
     ζ = np.array([v / sum(c.values()) for v in c.values()])
     e = np.array([1 / len(c) for _ in c.values()])
     return ζ, e
 
 
-def imbalance_ratio(a):
+def imbalance_ratio(a, classes=None):
     """
     Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
 
     Args:
         a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
         float: The imbalance ratio.
     """
-    ζ, _ = empirical_distribution(a)
+    ζ, _ = empirical_distribution(a, classes=classes)
     return max(ζ) / min(ζ)
 
 
-def major_minor(a):
+def major_minor(a, classes=None):
     """
     Returns the number of majority and minority classes.
 
     Args:
         a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
         tuple: (maj, min), the number of majority and minority classes.
@@ -78,7 +121,7 @@ def major_minor(a):
     >>> major_minor([1, 1, 2, 2, 3, 3, 3])
     (1, 2)
     """
-    ζ, e = empirical_distribution(a)
+    ζ, e = empirical_distribution(a, classes=classes)
     return sum(ζ >= e), sum(ζ < e)
 
 
@@ -116,12 +159,15 @@ def divergence(method='hellinger'):
     return functions.get(method, method)
 
 
-def furthest_distribution(a):
+def furthest_distribution(a, classes=None):
     """
     Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
 
     Args:
         a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
         array: The furthest distribution.
@@ -130,7 +176,7 @@ def furthest_distribution(a):
         >>> furthest_distribution([3,0,0,1,2,3,2,3,2,3,1,1,2,3,3,4,3,4,3,4,])
         array([0.8, 0. , 0. , 0.2, 0. ])
     """
-    ζ, e = empirical_distribution(a)
+    ζ, e = empirical_distribution(a, classes=classes)
     # Construct the vector according to Eq 9.
     i = [ei if ζi >= ei else 0 for ζi, ei in zip(ζ, e)]
     # Arbitrarily increase one of the non-zero probs to sum to 1.
@@ -138,7 +184,7 @@ def furthest_distribution(a):
     return np.array(i)
 
 
-def imbalance_degree(a, method='manhattan'):
+def imbalance_degree(a, method='manhattan', classes=None):
     r"""
     Compute IR according to Eq 8 in Ortigosa-Hernandez et al. (2017).
 
@@ -158,6 +204,9 @@ def imbalance_degree(a, method='manhattan'):
     Args:
         a (array): A list of class labels.
         method (str or function): The method to use.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
         float: The imbalance degree.
@@ -176,14 +225,14 @@ def imbalance_degree(a, method='manhattan'):
         >>> round(ID, 2)
         1.65
     """
-    ζ, e = empirical_distribution(a)
+    ζ, e = empirical_distribution(a, classes=classes)
     m = sum(ζ < e)
-    i = furthest_distribution(a)
+    i = furthest_distribution(a, classes=classes)
     div = divergence(method)
     return (div(ζ, e) / div(i, e)) + (m - 1)
 
 
-def class_imbalance(a):
+def class_imbalance(a, classes=None):
     """
     Binary classification: imbalance ratio (number of expected majority class
     samples to number of expected minority samples).
@@ -193,6 +242,9 @@ def class_imbalance(a):
 
     Args:
         a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
         float: The imbalance ratio (binary  tasks) or imbalance degree
@@ -205,19 +257,22 @@ def class_imbalance(a):
         1.4
     """
     if is_binary(a):
-        return imbalance_ratio(a)
+        return imbalance_ratio(a, classes=classes)
     elif is_multiclass(a):
-        return imbalance_degree(a)
+        return imbalance_degree(a, classes=classes)
     else:
         return None
 
 
-def minority_classes(a):
+def minority_classes(a, classes=None):
     """
     Get the minority classes.
 
     Args:
         a (array): A list of class labels.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
 
     Returns:
         array: The minority classes.
@@ -227,6 +282,13 @@ def minority_classes(a):
         array([1, 4])
     """
     a = np.asarray(a)
-    ζ, e = empirical_distribution(a)
-    classes = sorted_unique(a)
-    return classes[ζ < e]
+    ζ, e = empirical_distribution(a, classes=classes)
+
+    # We can suppress this warning (if any) because it would already have
+    # been raised by `empirical_distribution`.
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        classes = get_counts(a, classes=classes).keys()
+
+    # Return the minority classes in order, smallest first.
+    return np.array([c for ζi, ei, c in sorted(zip(ζ, e, classes)) if ζi < ei])
