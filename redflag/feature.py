@@ -27,10 +27,13 @@ import numpy as np
 import scipy.stats as ss
 from scipy.stats import wasserstein_distance
 from scipy.spatial.distance import squareform
+from scipy.signal import find_peaks
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.svm import OneClassSVM
 from sklearn.covariance import EllipticEnvelope
+from sklearn.neighbors import KernelDensity
+from sklearn.model_selection import GridSearchCV
 
 from .utils import is_standardized, stdev_to_proportion
 from .utils import get_idx
@@ -345,7 +348,12 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
         array([[0.97490053],
                [0.69635752],
                [1.11417203]])
-    """
+        >>> data = [[[1], [1.22475], [-1.22475], [0], [1], [-1], [-1]], [[1], [0], [1]], [[1], [0], [-1]]]
+        >>> wasserstein(data, standardize=False)
+        array([[0.39754762],
+               [0.71161667],
+               [0.24495   ]])
+        """
     # If the data is a sequence of arrays, then assume the groups are the
     # datasets in the sequence and the `groups` argument is ignored.
     try:
@@ -355,6 +363,7 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
         first = np.asarray(X)[0]
 
     stacked = False
+    first = np.asarray(first)
     try:
         if first.ndim == 2:
             stacked = True
@@ -410,8 +419,13 @@ def bw_silverman(a):
     
     Returns:
         float: The Silverman bandwidth.
+
+    Examples:
+        >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
+        >>> bw_silverman(data)
+        0.581810759152688
     """
-    n, d = a.shape
+    n, d = np.array(a).size, 1
     return np.power(n, -1 / (d + 4))
 
     
@@ -424,21 +438,35 @@ def bw_scott(a):
     
     Returns:
         float: The Scott bandwidth.
-    """
-    n, d = a.shape
-    return np.power(n * (d + 2) / 4, -1 / (d + 4))
 
-from sklearn.neighbors import KernelDensity
-from sklearn.model_selection import GridSearchCV
-from scipy.signal import find_peaks
-from collections import namedtuple
+    Examples:
+        >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
+        >>> bw_scott(data)
+        0.6162678270732356
+    """
+    n, d = np.array(a).size, 1
+    return np.power(n * (d + 2) / 4, -1 / (d + 4))
 
 
 def cv_kde(a, n_bandwidths=20, cv=10):
     """
-    Run a cross validation grid search to identify the optimal bandwidth for the kernel density
-    estimation.
+    Run a cross validation grid search to identify the optimal bandwidth for
+    the kernel density estimation.
+
+    Args:
+        a (array): The data.
+        n_bandwidths (int): The number of bandwidths to try. Default 20.
+        cv (int): The number of cross validation folds. Default 10.
+
+    Returns:
+        float. The optimal bandwidth.
+
+    Examples:
+        >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
+        >>> cv_kde(data, n_bandwidths=3, cv=3)
+        0.290905379576344
     """
+    a = np.asarray(a).reshape(-1, 1)
     silverman = bw_silverman(a)
     scott = bw_scott(a)
     start = min(silverman, scott)/2
@@ -448,21 +476,90 @@ def cv_kde(a, n_bandwidths=20, cv=10):
     model.fit(a)
     return model.best_params_['bandwidth']
 
+
 def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
+    """
+    Fit a kernel density estimation to the data.
+    
+    Args:
+        a (array): The data.
+        bandwidth (float): The bandwidth. Default 1.0.
+        kernel (str): The kernel. Default 'gaussian'.
+
+    Returns:
+        tuple: (x, kde).
+
+    Examples:
+        >>> data = [-3, 1, -2, -2, -2, -2, 1, 2, 2, 1, 1, 2, 0, 0, 2, 2, 3, 3]
+        >>> x, kde = fit_kde(data)
+        >>> x[0]
+        -4.5
+        >>> kde[0]
+        0.011092399847113696
+        >>> len(kde)
+        200
+        """
+    a = np.asarray(a)
     model = KernelDensity(kernel=kernel, bandwidth=bandwidth)
     model.fit(a.reshape(-1, 1))
     mima = 1.5 * np.abs(a).max()
     x = np.linspace(-mima, mima, 200).reshape(-1, 1)
     log_density = model.score_samples(x)
-    return x, np.exp(log_density)
+    return np.squeeze(x), np.exp(log_density)
+
 
 def get_kde(a, method='scott'):
+    """
+    Get the kernel density estimation for the data.
+
+    Args:
+        a (array): The data.
+        method (str): The rule of thumb for bandwidth estimation.
+            Default 'scott'.
+
+    Returns:
+        tuple: (x, kde).
+
+    Examples:
+        >>> data = [-3, 1, -2, -2, -2, -2, 1, 2, 2, 1, 1, 2, 0, 0, 2, 2, 3, 3]
+        >>> x, kde = get_kde(data)
+        >>> x[0]
+        -4.5
+        >>> kde[0]
+        0.0015627693633590066
+        >>> len(kde)
+        200
+    """
     methods = {'silverman': bw_silverman, 'scott': bw_scott, 'cv': cv_kde}
     bw = methods.get(method)(a)
-    x, kde = fit_kde(a, bandwidth=bw)
-    return x, kde
+    return fit_kde(a, bandwidth=bw)
+
 
 def find_large_peaks(x, y, threshold=0.1):
+    """
+    Find the peaks in the array. Returns the values of x and y at the largest
+    peaks, using threshold &times; max(peak amplitudes) as the cut-off. That is,
+    peaks smaller than that are not returned.
+
+    Args:
+        x (array): The x values.
+        y (array): The y values.
+        threshold (float): The threshold for peak amplitude. Default 0.1.
+
+    Returns:
+        tuple: (x_peaks, y_peaks). Arrays representing the x and y values of
+            the peaks.
+
+    Examples:
+        >>> x = [1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11, 12]
+        >>> y = [1, 2, 3, 2, 1, 2, 15, 40, 19,  2,  1,  1]
+        >>> x_peaks, y_peaks = find_large_peaks(x, y)
+        >>> x_peaks
+        array([8.])
+        >>> y_peaks
+        array([40.])
+    """
+    x, y = np.asarray(x), np.asarray(y)
     pos, hts = find_peaks(y, height=y)
     hts = hts['peak_heights']
     z, h = np.array([(x[p].item(), h) for p, h in zip(pos, hts) if h > threshold * hts.max()]).T
@@ -470,4 +567,25 @@ def find_large_peaks(x, y, threshold=0.1):
     return Peaks(z, h)
 
 def kde_peaks(a, method='scott', threshold=0.1):
+    """
+    Find the peaks in the kernel density estimation.
+
+    Args:
+        a (array): The data.
+        method (str): The rule of thumb for bandwidth estimation.
+            Default 'scott'.
+        threshold (float): The threshold for peak amplitude. Default 0.1.
+
+    Returns:
+        tuple: (x_peaks, y_peaks). Arrays representing the x and y values of
+            the peaks.
+
+    Examples:
+        >>> data = [-3, 1, -2, -2, -2, -2, 1, 2, 2, 1, 1, 2, 0, 0, 2, 2, 3, 3]
+        >>> x_peaks, y_peaks = kde_peaks(data)
+        >>> x_peaks
+        array([-2.05778894,  1.74120603])
+        >>> y_peaks
+        array([0.15929031, 0.24708215])
+    """
     return find_large_peaks(*get_kde(a, method), threshold=threshold)

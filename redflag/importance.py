@@ -31,7 +31,7 @@ from .target import is_continuous
 from .utils import split_and_standardize
 
 
-def feature_importances(X, y=None, task=None, random_state=None, n=3):
+def feature_importances(X, y=None, n=3, task=None, random_state=None, standardize=True):
     """
     Measure feature importances on a task, given X and y.
 
@@ -44,32 +44,32 @@ def feature_importances(X, y=None, task=None, random_state=None, n=3):
         X (array): an array representing the data.
         y (array or None): an array representing the target. If None, the task
             is assumed to be an unsupervised clustering task.
+        n (int): the number of tests to average. Only the n tests with the
+            highest variance across features are kept.
         task (str or None): either 'classification' or 'regression'. If None,
             the task will be inferred from the labels and a warning will show
             the assumption being made.
-        n (int): the number of tests to average. Only the n tests with the
-            highest variance across features are kept.
+        random_state (int or None): the random state to use.
+        standardize (bool): whether to standardize the data. Default is True.
 
     Returns:
         array: The importance of the features, in the order in which they
             appear in X.
-
-    TODO:
-        - Add clustering case.
 
     Examples:
         >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1], [0, 4, 0], [0, 5, 1]]
         >>> y = [5, 15, 25, 35, 45, 55]
         >>> feature_importances(X, y, task='regression', random_state=0)
         array([ 0.        ,  0.97811006, -0.19385077])
+        >>> y = ['a', 'a', 'a', 'b', 'b', 'b']
+        >>> feature_importances(X, y, task='classification', random_state=0)
+        array([ 0.        ,  0.89013985, -0.55680651])
     """
-    if y is None:
-        task = 'clustering'
-    elif task is None:
+    if task is None:
         task = 'regression' if is_continuous(y) else 'classification'
 
     # Split the data and ensure it is standardized.
-    if task != 'clustering':
+    if standardize:
         X, X_train, X_val, y, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
 
     # Train three models and gather the importances.
@@ -86,8 +86,7 @@ def feature_importances(X, y=None, task=None, random_state=None, n=3):
         model = SVR().fit(X_train, y_train)
         r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='neg_mean_squared_error', random_state=random_state)
         imps.append(r.importances_mean)
-    else:
-        raise NotImplementedError("Cannot handle clustering problems yet.")
+
     imps = np.array(imps)
 
     # Normalize the rows by the sum of *only positive* elements.
@@ -95,6 +94,4 @@ def feature_importances(X, y=None, task=None, random_state=None, n=3):
     imps /= normalizer[:, None]
 
     # Drop imps with smallest variance and take mean of what's left.
-    result = np.nanmean(sorted(imps, key=lambda row: np.std(row))[-n:], axis=0)
-
-    return result
+    return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-n:], axis=0)
