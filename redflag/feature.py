@@ -399,3 +399,75 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
         dist_arrs.append(dists)
 
     return np.swapaxes(dist_arrs, 0, 1)
+
+
+def bw_silverman(a):
+    """
+    Calculate the Silverman bandwidth.
+    
+    Args:
+        a (array): The data.
+    
+    Returns:
+        float: The Silverman bandwidth.
+    """
+    n, d = a.shape
+    return np.power(n, -1 / (d + 4))
+
+    
+def bw_scott(a):
+    """
+    Calculate the Scott bandwidth.
+    
+    Args:
+        a (array): The data.
+    
+    Returns:
+        float: The Scott bandwidth.
+    """
+    n, d = a.shape
+    return np.power(n * (d + 2) / 4, -1 / (d + 4))
+
+from sklearn.neighbors import KernelDensity
+from sklearn.model_selection import GridSearchCV
+from scipy.signal import find_peaks
+from collections import namedtuple
+
+
+def cv_kde(a, n_bandwidths=20, cv=10):
+    """
+    Run a cross validation grid search to identify the optimal bandwidth for the kernel density
+    estimation.
+    """
+    silverman = bw_silverman(a)
+    scott = bw_scott(a)
+    start = min(silverman, scott)/2
+    stop = max(silverman, scott)*2
+    params = {'bandwidth': np.linspace(start, stop, n_bandwidths)}
+    model = GridSearchCV(KernelDensity(), params, cv=cv) 
+    model.fit(a)
+    return model.best_params_['bandwidth']
+
+def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
+    model = KernelDensity(kernel=kernel, bandwidth=bandwidth)
+    model.fit(a.reshape(-1, 1))
+    mima = 1.5 * np.abs(a).max()
+    x = np.linspace(-mima, mima, 200).reshape(-1, 1)
+    log_density = model.score_samples(x)
+    return x, np.exp(log_density)
+
+def get_kde(a, method='scott'):
+    methods = {'silverman': bw_silverman, 'scott': bw_scott, 'cv': cv_kde}
+    bw = methods.get(method)(a)
+    x, kde = fit_kde(a, bandwidth=bw)
+    return x, kde
+
+def find_large_peaks(x, y, threshold=0.1):
+    pos, hts = find_peaks(y, height=y)
+    hts = hts['peak_heights']
+    z, h = np.array([(x[p].item(), h) for p, h in zip(pos, hts) if h > threshold * hts.max()]).T
+    Peaks = namedtuple('Peaks', ['positions', 'heights'])
+    return Peaks(z, h)
+
+def kde_peaks(a, method='scott', threshold=0.1):
+    return find_large_peaks(*get_kde(a, method), threshold=threshold)

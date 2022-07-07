@@ -26,9 +26,34 @@ from sklearn.preprocessing import StandardScaler
 from scipy.stats import beta
 from scipy.optimize import fsolve
 from scipy.spatial.distance import pdist
+import matplotlib.cbook as cbook
+
+
+def flatten(L):
+    """
+    Flattens a list. For example:
+        >> flatten_list([1, 2, [3, 4], [5, [6, 7]]])
+        [1, 2, 3, 4, 5, 6, 7]
+    """
+    return list(cbook.flatten(L)) if L else L
 
 
 def get_idx(cond):
+    """
+    Get the True indices of a 1D boolean array.
+
+    Args:
+
+        cond (array): A 1D boolean array.
+
+    Returns:
+        array: The indices of the True values.
+
+    Example:
+        >>> a = np.array([10, 20, 30, 40])
+        >>> get_idx(a > 30)
+        array([3])
+    """
     idx, = np.where(cond)
     return idx
 
@@ -355,8 +380,8 @@ def clipped(a):
         >>> clipped([-3, -3, -2, -1, 0, 2, 3])
         (array([0, 1]), None)
     """
-    min_clips, = np.where(a==np.nanmin(a))
-    max_clips, = np.where(a==np.nanmax(a))
+    min_clips = get_idx(a==np.nanmin(a))
+    max_clips = get_idx(a==np.nanmax(a))
     min_clips = min_clips if len(min_clips) > 1 else None
     max_clips = max_clips if len(max_clips) > 1 else None
     return min_clips, max_clips
@@ -401,3 +426,92 @@ def iter_groups(groups):
     """
     for group in np.unique(groups):
         yield groups == group
+
+
+def has_nans(a):
+    """
+    Returns the indices of any NaNs.
+
+    Args:
+        a (array): The data, a 1D array.
+
+    Returns:
+        ndarray: The indices of any NaNs.
+
+    Example:
+        >>> has_nans([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        array([], dtype=int64)
+        >>> has_nans([1, 2, np.nan, 4, 5, 6, 7, 8, 9])
+        array([2])
+    """
+    return np.nonzero(np.isnan(a))[0]
+
+
+def consecutive(a, stepsize=1):
+    """
+    Splits an array into groups of consecutive values.
+    
+    Args:
+        data (array): The data.
+        stepsize (int): The step size.
+
+    Returns:
+        list of arrays.
+    
+    Example:
+    >>> consecutive([0, 0, 1, 2, 3, 3])
+    [array([0]), array([0, 1, 2, 3]), array([3])]
+    """
+    return np.split(a, get_idx(np.diff(a) != stepsize) + 1)
+
+
+def has_flat(a, tolerance=3):
+    """
+    Returns True if the array has any flat values.
+
+    Args:
+        a (array): The data, a 1D array.
+        tolerance (int): The maximum length of a 'flat' that will be allowed.
+
+    Returns:
+        ndarray: The indices of any flat intervals.
+
+    Example:
+        >>> has_flat([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        array([], dtype=int64)
+        >>> has_flat([1, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9], tolerance=3)
+        array([], dtype=int64)
+        >>> has_flat([1, 2, 3, 4, 5, 5, 5, 5, 6, 7, 8, 9], tolerance=3)
+        array([4, 5, 6, 7])
+    """
+    zeros = get_idx(np.diff(a) == 0)
+    flats = [list(x)+[x[-1]+1] for x in consecutive(zeros) if x.size >= tolerance]
+    return np.array(flatten(flats), dtype=int)
+
+
+def has_monotonic(a, tolerance=3):
+    """
+    Returns True if the array is monotonic.
+
+    Args:
+        a (array): The data, a 1D array.
+        tolerance (int): The maximum length of a monotonic interval that will
+            be allowed.
+
+    Returns:
+        ndarray: The indices of any monotonic intervals.
+
+    Example:
+        >>> has_monotonic([1, 1, 1, 1, 2, 2, 2, 2])
+        array([], dtype=int64)
+        >>> has_monotonic([1, 1, 1, 2, 3, 4, 4, 4])
+        array([], dtype=int64)
+        >>> has_monotonic([1, 1, 1, 2, 3, 4, 5, 5, 5])
+        array([2, 3, 4, 5, 6])
+        >>> has_monotonic([1, 1, 1, 2, 3, 4, 5, 5, 5])
+        array([2, 3, 4, 5, 6])
+    """
+    a = np.diff(a)
+    zeros = get_idx(np.diff(a) == 0)
+    flats = [list(x)+[x[-1]+1, x[-1]+2] for x in consecutive(zeros) if x.size >= tolerance]
+    return np.array(flatten(flats), dtype=int)
