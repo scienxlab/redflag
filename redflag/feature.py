@@ -495,8 +495,8 @@ def bw_silverman(a):
 
     Examples:
         >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
-        >>> bw_silverman(data)
-        0.581810759152688
+        >>> abs(bw_silverman(data) - 0.581810759152688) < 1e-9
+        True
     """
     n, d = np.array(a).size, 1
     return np.power(n, -1 / (d + 4))
@@ -514,8 +514,8 @@ def bw_scott(a):
 
     Examples:
         >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
-        >>> bw_scott(data)
-        0.6162678270732356
+        >>> abs(bw_scott(data) - 0.6162678270732356) < 1e-9
+        True
     """
     n, d = np.array(a).size, 1
     return np.power(n * (d + 2) / 4, -1 / (d + 4))
@@ -536,8 +536,8 @@ def cv_kde(a, n_bandwidths=20, cv=10):
 
     Examples:
         >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
-        >>> cv_kde(data, n_bandwidths=3, cv=3)
-        0.290905379576344
+        >>> abs(cv_kde(data, n_bandwidths=3, cv=3) - 0.290905379576344) < 1e-9
+        True
     """
     a = np.asarray(a).reshape(-1, 1)
     silverman = bw_silverman(a)
@@ -567,8 +567,8 @@ def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
         >>> x, kde = fit_kde(data)
         >>> x[0]
         -4.5
-        >>> kde[0]
-        0.011092399847113696
+        >>> abs(kde[0] - 0.011092399847113) < 1e-9
+        True
         >>> len(kde)
         200
         """
@@ -598,8 +598,8 @@ def get_kde(a, method='scott'):
         >>> x, kde = get_kde(data)
         >>> x[0]
         -4.5
-        >>> kde[0]
-        0.0015627693633590066
+        >>> abs(kde[0] - 0.0015627693633590066) < 1e-09
+        True
         >>> len(kde)
         200
     """
