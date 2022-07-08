@@ -22,4 +22,4 @@ If you contribute a pull request to the project and you wish to be identified as
 
 ## License
 
-By making a contribution, you agree that it shall be governed by the terms of [the license](LICENSE) unless another, specific agreement is made with Agile.
+By making a contribution, you agree that it shall be governed by the terms of the license unless another, specific agreement is made with Agile.
