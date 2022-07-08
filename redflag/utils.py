@@ -43,7 +43,6 @@ def flatten(L):
                 yield sub_x
         else:
             yield x
-            
 
 
 def get_idx(cond):
