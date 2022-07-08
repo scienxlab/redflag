@@ -57,19 +57,46 @@ def get_idx(cond):
     idx, = np.where(cond)
     return idx
 
+bool_to_index = get_idx
 
-def expected_outliers(N, threshold=3):
+
+def index_to_bool(idx, n=None):
+    """
+    Convert an index to a boolean array.
+
+    Args:
+        idx (array): The indices that are True.
+        n (int): The number of elements in the array.
+
+    Returns:
+        array: The boolean array.
+
+    Example:
+        >>> index_to_bool([0, 2], n=5)
+        array([ True, False,  True, False, False])
+    """
+    if n is None:
+        n = len(idx)
+    return np.array([i in idx for i in range(n)])
+
+
+def expected_outliers(n, d, threshold=3):
     """
     Expected number of outliers in a dataset.
     
     Args:
-        N (int): The number of samples.
+        n (int): The number of samples.
+        d (int): The number of features.
         threshold (float): The number of standard deviations from the mean.
             
     Returns:
         int: The expected number of outliers.
+
+    Example:
+        >>> expected_outliers(10_000, 6, threshold=4)
+        137
     """
-    return int(N * (1 - stdev_to_proportion(threshold)))
+    return int(n * (1 - stdev_to_proportion(threshold, d)))
 
 
 def is_numeric(a):
@@ -199,15 +226,15 @@ def ecdf(arr, start='1/N', downsample=None):
     return x, y
 
 
-def stdev_to_proportion(threshold: float, D: float=1, N: float=1e9) -> float:
+def stdev_to_proportion(threshold: float, d: float=1, n: float=1e9) -> float:
     """
     Estimate the confidence level of the scaled standard deviational
     hyperellipsoid (SDHE). This is the proportion of points whose Mahalanobis
     distance is within `threshold` standard deviations, for the given number of
-    dimensions `D`.
+    dimensions `d`.
 
     For example, 68.27% of samples lie within ±1 stdev of the mean in the
-    univariate normal distribution. For two dimensions, `D` = 2 and 39.35% of
+    univariate normal distribution. For two dimensions, `d` = 2 and 39.35% of
     the samples are within ±1 stdev of the mean.
 
     This is an approximation good to about 6 significant figures (depending on
@@ -221,8 +248,8 @@ def stdev_to_proportion(threshold: float, D: float=1, N: float=1e9) -> float:
     Args:
         threshold (float): The number of standard deviations (or 'magnification
             ratio').
-        D (float): The number of dimensions.
-        N (float): The number of instances; just needs to be large for a
+        d (float): The number of dimensions.
+        n (float): The number of instances; just needs to be large for a
             proportion with decent precision.
 
     Returns:
@@ -233,21 +260,21 @@ def stdev_to_proportion(threshold: float, D: float=1, N: float=1e9) -> float:
         0.6826894916531445
         >>> stdev_to_proportion(3)  # Exact result: 0.9973002039367398
         0.9973002039633309
-        >>> stdev_to_proportion(1, D=2)
+        >>> stdev_to_proportion(1, d=2)
         0.39346933952920327
-        >>> stdev_to_proportion(5, D=10)
+        >>> stdev_to_proportion(5, d=10)
         0.9946544947734935
     """
-    return beta.cdf(x=1/N, a=D/2, b=(N-D-1)/2, scale=1/threshold**2)
+    return beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2)
 
 
-def proportion_to_stdev(p: float, D: float=1, N: float=1e9) -> float:
+def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
     """
     The inverse of `stdev_to_proportion`.
 
     Estimate the 'magnification ratio' (number of standard deviations) of the
     scaled standard deviational hyperellipsoid (SDHE) at the given confidence
-    level and for the given number of dimensions, `D`.
+    level and for the given number of dimensions, `d`.
 
     This tells us the number of standard deviations containing the given
     proportion of instances. For example, 80% of samples lie within ±1.2816
@@ -258,24 +285,24 @@ def proportion_to_stdev(p: float, D: float=1, N: float=1e9) -> float:
 
     Args:
         p (float): The confidence level as a decimal fraction, e.g. 0.8.
-        D (float): The number of dimensions. Default 1 (the univariate Gaussian
+        d (float): The number of dimensions. Default 1 (the univariate Gaussian
             distribution).
-        N (float): The number of instances; just needs to be large for a
+        n (float): The number of instances; just needs to be large for a
             proportion with decent precision. `Default 1e9`.
 
     Returns:
         float. The estimated number of standard deviations ('magnification ratio').
 
     Examples:
-        >>> proportion_to_stdev(0.99, D=1)
+        >>> proportion_to_stdev(0.99, d=1)
         2.575829302496098
-        >>> proportion_to_stdev(0.90, D=5)
+        >>> proportion_to_stdev(0.90, d=5)
         3.039137525465009
-        >>> stdev_to_proportion(proportion_to_stdev(0.80, D=1))
+        >>> stdev_to_proportion(proportion_to_stdev(0.80, d=1))
         0.8000000000000003
     """
-    func = lambda r_, D_, N_: stdev_to_proportion(r_, D_, N_) - p
-    r_hat , = fsolve(func, x0=2, args=(D, N))
+    func = lambda r_, d_, n_: stdev_to_proportion(r_, d_, n_) - p
+    r_hat , = fsolve(func, x0=2, args=(d, n))
     return r_hat
 
 

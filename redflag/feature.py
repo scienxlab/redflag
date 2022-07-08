@@ -19,7 +19,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 from collections import namedtuple
-from functools import reduce
+from functools import reduce, partial
 from itertools import combinations
 import warnings
 
@@ -30,12 +30,13 @@ from scipy.spatial.distance import squareform
 from scipy.signal import find_peaks
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
-from sklearn.svm import OneClassSVM
+# from sklearn.svm import OneClassSVM
 from sklearn.covariance import EllipticEnvelope
 from sklearn.neighbors import KernelDensity
 from sklearn.model_selection import GridSearchCV
 
-from .utils import is_standardized, stdev_to_proportion
+from .utils import is_standardized
+from .utils import stdev_to_proportion, proportion_to_stdev
 from .utils import get_idx
 from .utils import iter_groups
 
@@ -145,13 +146,46 @@ def is_correlated(a, n=20, s=20, threshold=0.1):
     return (p >= threshold) & (q >= 0)
 
 
-def zscore_outliers(z, threshold=3):
+def mahalanobis(X, correction=False):
+    """
+    Compute the Mahalanobis distances of a dataset.
+
+    The empirical covariance correction factor suggested by Rousseeuw and
+    Van Driessen may be optionally applied by setting `correction=True`.
+
+    Args:
+        X (array): The data. Must be a 2D array, shape (n_samples, n_features).
+        correction (bool): Whether to apply the empirical covariance correction.
+
+    Returns:
+        array: The Mahalanobis distances.
+
+    Examples:
+        >>> data = np.array([-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]).reshape(-1, 1)
+        >>> mahalanobis(data)
+        array([1.6583124, 1.1055416, 1.1055416, 0.5527708, 0.       , 0.       ,
+               0.       , 0.5527708, 1.1055416, 1.1055416, 1.6583124])
+        >>> mahalanobis(data, correction=True)
+        array([1.01173463, 0.67448975, 0.67448975, 0.33724488, 0.        ,
+               0.        , 0.        , 0.33724488, 0.67448975, 0.67448975,
+               1.01173463])
+    """
+    X = np.asarray(X)
+
+    ee = EllipticEnvelope(support_fraction=1.0).fit(X)
+
+    if correction:
+        ee.correct_covariance(X)
+
+    return np.sqrt(ee.dist_)
+
+
+def mahalanobis_outliers(X, p=0.99, threshold=None):
     """
     Find outliers given samples and a threshold in multiples of stdev.
-    This was the fastest thing I tried. Returns -1 for outliers and 1
-    for inliers (to match the sklearn outlier predictor API).
+    Returns -1 for outliers and 1 for inliers (to match the sklearn API).
 
-    Expect points outside:
+    For univariate data, we expect this many points outside:
         - 1 sd: expect 31.7 points in 100
         - 2 sd: 4.55 in 100
         - 3 sd: 2.70 in 1000
@@ -161,27 +195,47 @@ def zscore_outliers(z, threshold=3):
         - 6 sd: 2.0 in 1 billion points
 
     Args:
-        z (array): The samples as Z-scores.
-        threshold (float): The threshold in multiples of stdev.
+        X (array): The data. Can be a 2D array, shape (n_samples, n_features),
+            or a 1D array, shape (n_samples).
+        p (float): The probability threshold, in the range [0, 1]. This value
+            is ignored if `threshold` is not None; in this case, `p` will be
+            computed using `utils.stdev_to_proportion(threshold)`.
+        threshold (float): The threshold in Mahalanobis distance, analogous to
+            multiples of standard deviation for a single variable. If not None,
+            the threshold will be used to compute `p`.
 
     Returns:
-        array: Boolean array identifying outliers.
+        array: Array identifying outliers; -1 for outliers and 1 for inliers.
 
     Examples:
         >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
-        >>> zscore_outliers(data)
+        >>> mahalanobis_outliers(data)
         array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-        >>> zscore_outliers(data + [100], threshold=3)
+        >>> mahalanobis_outliers(data + [100], threshold=3)
         array([ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1])
     """
-    z = np.squeeze(z)
+    X = np.asarray(X)
+    if X.ndim == 1:
+        X = X.reshape(-1, 1)
+
+    _, d = X.shape
+        
+    # Determine the Mahalanobis distance for the given confidence level.
+    if threshold is None:
+        threshold = proportion_to_stdev(p=p, d=d)
+
+    # Compute the Mahalanobis distance.
+    z = mahalanobis(X)
+
+    # Decide whether each point is an outlier or not.
     idx, = np.where((z < -threshold) | (z > threshold))
     outliers = np.full(z.shape, 1)
     outliers[idx] = -1
+
     return outliers
 
 
-def get_outliers(a, method='iso', threshold=3):
+def get_outliers(a, method='iso', p=0.99, threshold=None):
     """
     Returns outliers in the data, considering all of the features. What counts
     as an outlier is determined by the threshold, which is in multiples of
@@ -189,18 +243,24 @@ def get_outliers(a, method='iso', threshold=3):
 
     This function requires the scikit-learn package.
 
-    Methods: 'iso' (isolation forest), 'lof' (local outlier factor), 'svm'
-    (one-class support vvector machine), or pass a function that returns
-    a Boolean array of outlier flags. Note that the OneClassSVM method does
-    not always yield good results in my testing. You can also pass 'any', which
-    will try all three outlier detection methods and return the outliers which
-    are detected by any of them, or 'all', which will return the outliers which
-    are common to all three methods.
+    Methods: 'iso' (isolation forest), 'lof' (local outlier factor), 'ee'
+    (elliptic envelope), or 'mah' (Mahanalobis distance), or pass a function
+    that returns an array of outlier flags (-1 for outliers and 1 for inliers,
+    matching the `sklearn` convention). You can also pass 'any', which will
+    try all three outlier detection methods and return the outliers which are
+    detected by any of them, or 'all', which will return the outliers which
+    are common to all four methods.
 
     Args:
         a (array): The data.
-        method (str): The method to use. Only 'zscore' is supported.
-        threshold (float): The threshold in multiples of stdev.
+        method (str): The method to use. Can be 'iso', 'lof', 'svm', 'mah',
+            or a function that returns a Boolean array of outlier flags.
+        p (float): The probability threshold, in the range [0, 1]. This value
+            is ignored if `threshold` is not None; in this case, `p` will be
+            computed using `utils.stdev_to_proportion(threshold)`.
+        threshold (float): The threshold in Mahalanobis distance, analogous to
+            multiples of standard deviation for a single variable. If not None,
+            the threshold will be used to compute `p`.
 
     Returns:
         array: The indices of the outliers.
@@ -211,15 +271,28 @@ def get_outliers(a, method='iso', threshold=3):
         array([], dtype=int64)
         >>> get_outliers(3 * data + [100])
         array([33])
+        >>> get_outliers(3 * data + [100], method='mah')
+        array([33])
+        >>> get_outliers(3 * data + [100], method='any')
+        array([33])
+        >>> get_outliers(3 * data + [100], method='all')
+        array([33])
     """
+    if p >= 1 or p < 0:
+        raise ValueError('p must be in the range [0, 1).')
     a = np.asarray(a)
     if a.ndim == 1:
         a = a.reshape(-1, 1)
-    expect = 1 - stdev_to_proportion(threshold)
+    if threshold is None:
+        expect = 1 - p
+    else:
+        expect = 1 - stdev_to_proportion(threshold)
+        p = 1 - expect
     methods = {'iso': IsolationForest(contamination=expect).fit_predict,
-               'svm': OneClassSVM(nu=expect).fit_predict,
+            #    'svm': OneClassSVM(nu=expect).fit_predict,  # Does not seem reliable.
                'lof': LocalOutlierFactor(contamination=expect, novelty=False).fit_predict,
-               'mah': EllipticEnvelope(contamination=expect).fit_predict,
+               'ee': EllipticEnvelope(contamination=expect).fit_predict,
+               'mah': partial(mahalanobis_outliers, p=p, threshold=threshold),
               }
     if method == 'any':
         results = [get_idx(func(a)==-1) for func in methods.values()]

@@ -1,6 +1,11 @@
-# Version file autocreated in pyproject.toml and snowfake/__init__.py
+# Version file autocreated in pyproject.toml and redflag/__init__.py
 _version.py
+
+# Processed docs
 _notebooks
+
+# Other
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
