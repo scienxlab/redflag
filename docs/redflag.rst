@@ -20,6 +20,14 @@ redflag.imbalance module
    :undoc-members:
    :show-inheritance:
 
+redflag.importance module
+-------------------------
+
+.. automodule:: redflag.importance
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 redflag.redflag module
 ----------------------
 
