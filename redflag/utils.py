@@ -19,6 +19,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import warnings
+from typing import Iterable 
 
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -26,16 +27,23 @@ from sklearn.preprocessing import StandardScaler
 from scipy.stats import beta
 from scipy.optimize import fsolve
 from scipy.spatial.distance import pdist
-import matplotlib.cbook as cbook
 
 
 def flatten(L):
     """
     Flattens a list. For example:
-        >> flatten_list([1, 2, [3, 4], [5, [6, 7]]])
+
+    Example:
+        >>> list(flatten([1, 2, [3, 4], [5, [6, 7]]]))
         [1, 2, 3, 4, 5, 6, 7]
     """
-    return list(cbook.flatten(L)) if L else L
+    for x in L:
+        if isinstance(x, Iterable) and not isinstance(x, (str, bytes)):
+            for sub_x in flatten(x):
+                yield sub_x
+        else:
+            yield x
+            
 
 
 def get_idx(cond):
@@ -521,7 +529,7 @@ def has_flat(a, tolerance=3):
     """
     zeros = get_idx(np.diff(a) == 0)
     flats = [list(x)+[x[-1]+1] for x in consecutive(zeros) if x.size >= tolerance]
-    return np.array(flatten(flats), dtype=int)
+    return np.array(list(flatten(flats)), dtype=int)
 
 
 def has_monotonic(a, tolerance=3):
@@ -549,4 +557,4 @@ def has_monotonic(a, tolerance=3):
     a = np.diff(a)
     zeros = get_idx(np.diff(a) == 0)
     flats = [list(x)+[x[-1]+1, x[-1]+2] for x in consecutive(zeros) if x.size >= tolerance]
-    return np.array(flatten(flats), dtype=int)
+    return np.array(list(flatten(flats)), dtype=int)
