@@ -22,10 +22,13 @@ import warnings
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils import check_array
+from sklearn.pipeline import Pipeline
 from scipy.stats import wasserstein_distance
 from scipy.stats import cumfreq
 
 from .utils import is_clipped
+from .target import is_continuous
+from .target import is_multioutput
 from .feature import is_correlated
 
 
@@ -35,44 +38,78 @@ def formatwarning(message, *args, **kwargs):
     """
     return f"{message}\n"
 
+class BaseRedflagDetector(BaseEstimator, TransformerMixin):
 
-class ClipDetector(BaseEstimator, TransformerMixin):
+    def __init__(self, func, warning):
+        self.func = func
+        self.warning = warning
 
     def fit(self, X, y=None):
         return self
 
     def transform(self, X, y=None):
+        """
+        Checks X (and y, if it is continuous data) for suspect values.
+        """
         X = check_array(X)
 
-        clipped = [i for i, feature in enumerate(X.T) if is_clipped(feature)]
+        warnings.formatwarning = formatwarning
+
+        clipped = [i for i, feature in enumerate(X.T) if self.func(feature)]
         if n := len(clipped):
-            clipped_str = ', '.join(str(c) for c in clipped)
-            warnings.formatwarning = formatwarning
-            warnings.warn(f"Feature{'s' if n > 1 else ''} {clipped_str} may have clipped values.")
+            pos = ', '.join(str(c) for c in clipped)
+            warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} may have {self.warning} values.")
+
+        if (y is not None) and is_continuous(y):
+            if np.asarray(y).ndim == 1:
+                y_ = y.reshape(-1, 1)
+            for i, target in enumerate(y_.T):
+                if is_clipped(target):
+                    warnings.warn(f"🚩 Target {i} may have {self.warning} values.")
 
         return X
 
 
-class CorrelationDetector(BaseEstimator, TransformerMixin):
+class ClipDetector(BaseRedflagDetector):
+    """
+    Transformer that detects features with clipped values.
 
-    def fit(self, X, y=None):
-        return self
+    Example:
+        >>> from sklearn.pipeline import make_pipeline
+        >>> pipe = make_pipeline(ClipDetector())
+        >>> X = np.array([[2, 1], [3, 2], [4, 3], [5, 3]])
+        >>> pipe.fit_transform(X)  # doctest: +SKIP
+        redflag/sklearn.py::redflag.sklearn.ClipDetector
+          🚩 Feature 1 may have clipped values.
+        array([[2, 1],
+               [3, 2],
+               [4, 3],
+               [5, 3]])
+    """
+    def __init__(self):
+        super().__init__(is_clipped, "clipped")
 
-    def transform(self, X, y=None):
-        X = check_array(X)
 
-        # If there aren't enough samples, just return X.
-        # training_examples = self.hist_counts[0][-1]
-        if len(X) <  10:
-            return X
+class CorrelationDetector(BaseRedflagDetector):
+    """
+    Transformer that detects features correlated to themselves.
 
-        correlated = [i for i, feature in enumerate(X.T) if is_correlated(feature)]
-        if n := len(correlated):
-            correlated_str = ', '.join(str(c) for c in correlated)
-            warnings.formatwarning = formatwarning
-            warnings.warn(f"Feature{'s' if n > 1 else ''} {correlated_str} may have non-independent records.")
-
-        return X
+    Example:
+        >>> from sklearn.pipeline import make_pipeline
+        >>> pipe = make_pipeline(CorrelationDetector())
+        >>> rng = np.random.default_rng(0)
+        >>> X = np.stack([rng.uniform(size=20), np.sin(np.linspace(0, 1, 20))]).T
+        >>> pipe.fit_transform(X)  # doctest: +SKIP
+        redflag/sklearn.py::redflag.sklearn.CorrelationDetector
+          🚩 Feature 1 may have correlated values.
+        array([[0.38077051, 0.        ],
+               [0.42977406, 0.05260728]
+               ...
+               [0.92571458, 0.81188195],
+               [0.7482485 , 0.84147098]])
+    """
+    def __init__(self):
+        super().__init__(is_correlated, "correlated")
 
 
 class DistributionComparator(BaseEstimator, TransformerMixin):
@@ -161,13 +198,13 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
 
             if w == 0 and self.warn_if_zero:
                 warnings.formatwarning = formatwarning
-                warnings.warn(f"Feature {i} is identical to the training data.")
+                warnings.warn(f"🚩 Feature {i} is identical to the training data.")
             elif w > self.threshold:
                 if self.warn:
                     warnings.formatwarning = formatwarning
-                    warnings.warn(f"Feature {i} has a distribution that is different from training.")
+                    warnings.warn(f"🚩 Feature {i} has a distribution that is different from training.")
                 else:
-                    raise ValueError(f"Feature {i} has a distribution that is different from training.")
+                    raise ValueError(f"🚩 Feature {i} has a distribution that is different from training.")
 
         return X
     
@@ -184,9 +221,17 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
         Returns:
             X.
         """
-        
         # Call fit() to learn the distributions.
         self = self.fit(X, y=y)
         
         # When fitting, we do not run transform() (actually a test).
         return X
+
+
+pipeline = Pipeline(
+    steps=[
+        ("rf.clip", ClipDetector()),
+        ("rf.corr", CorrelationDetector()),
+        ("rf.dist", DistributionComparator()),
+    ]
+)

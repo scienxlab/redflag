@@ -47,6 +47,7 @@ User guide
 
     installation
     _notebooks/Basic_usage.ipynb
+    _notebooks/Using_redflag_with_sklearn.ipynb
 
 
 API reference

@@ -36,6 +36,14 @@ redflag.redflag module
    :undoc-members:
    :show-inheritance:
 
+redflag.sklearn module
+----------------------
+
+.. automodule:: redflag.sklearn
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 redflag.target module
 ---------------------
 
