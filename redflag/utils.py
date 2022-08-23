@@ -87,24 +87,6 @@ def index_to_bool(idx, n=None):
     return np.array([i in idx for i in range(n)])
 
 
-def expected_outliers(n, d, threshold=3):
-    """
-    Expected number of outliers in a dataset.
-    
-    Args:
-        n (int): The number of samples.
-        d (int): The number of features.
-        threshold (float): The number of standard deviations from the mean.
-            
-    Returns:
-        int: The expected number of outliers.
-
-    Example:
-        >>> expected_outliers(10_000, 6, threshold=4)
-        137
-    """
-    return int(n * (1 - stdev_to_proportion(threshold, d)))
-
 
 def is_numeric(a):
     """

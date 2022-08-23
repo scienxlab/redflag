@@ -4,10 +4,10 @@ redflag package
 Submodules
 ----------
 
-redflag.feature module
-----------------------
+redflag.distributions module
+----------------------------
 
-.. automodule:: redflag.feature
+.. automodule:: redflag.distributions
    :members:
    :undoc-members:
    :show-inheritance:
@@ -24,6 +24,22 @@ redflag.importance module
 -------------------------
 
 .. automodule:: redflag.importance
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+redflag.independence module
+---------------------------
+
+.. automodule:: redflag.independence
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+redflag.outliers module
+-----------------------
+
+.. automodule:: redflag.outliers
    :members:
    :undoc-members:
    :show-inheritance:

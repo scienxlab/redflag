@@ -2,13 +2,19 @@
 
 ## 0.1.9, in progress
 
-- More docs!
+- Added some experimental `sklearn` transformers that implement various `redflag` tests. These do not transform the data in any way, they just inspect the data and emit warnings if tests fail. The main ones are: `redflag.sklearn.ClipDetector`, `redflag.sklearn.OutlierDetector`, `redflag.sklearn.CorrelationDetector`, and `redflag.sklearn.DistributionComparator`.
+- Added tests for the `sklearn` transformers. These are in `redflag/tests/test_redflag.py` file, whereas all other tests are doctests. You can run all the tests at once with `pytest`; coverage is currently 94%.
+- Added `docs/notebooks/Using_redflag_with_sklearn.ipynb` to show how to use these new objects in an `sklearn` pipeline.
+- Added `redflag.has_outliers()` to make it easier to check for excessive outliers in a dataset. This function only uses Mahalanobis distance and always works in a multivariate sense.
+- Reorganized the `redflag.features` module into new modules: `redflag.distributions`, `redflag.outliers`, and `redflag.independence`. All of the functions are still imported into the `redflag` namespace, so this doesn't affect existing code.
+- Added examples to `docs/notebooks/Basic_usage.ipynb`.
+
 
 ## 0.1.8, 8 July 2022
 
 - Added Wasserstein distance comparisons for univariate and multivariate distributions. This works for either a `groups` array, or for multiple dataset splits if that's more convenient.
 - Improved `get_outliers()`, removing OneClassSVM method and adding EllipticEnvelope and Mahalanobis distance.
-- Added Mahalanobis distance outlier detection function to serve `get_outlier()` or be used on its own. Reproduces the results `zscore_outliers()` used to give for univariate data, so removed that.
+- Added Mahalanobis distance outlier detection function to serve `get_outliers()` or be used on its own. Reproduces the results `zscore_outliers()` used to give for univariate data, so removed that.
 - Added `kde_peaks()` function to find peaks in a kernel density estimate. This also needed some other functions, including `fit_kde()`, `get_kde()`, `find_large_peaks()`, and the bandwidth estimators, `bw_silverman()` and `bw_scott()`.
 - Added `classes` argument to the class imbalance function, in case there are classes with no data, or to override the classes in the data.
 - Fixed a bug in the `feature_importances()` function.

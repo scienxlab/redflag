@@ -1,9 +1,16 @@
 from .utils import *
-from .target import *
 from .sklearn import *
-from .feature import *
+
+# Targets
+from .target import *
 from .imbalance import *
+
+# Features
+from .distributions import *
+from .independence import *
 from .importance import *
+from .outliers import *
+
 
 from pkg_resources import get_distribution, DistributionNotFound
 try:

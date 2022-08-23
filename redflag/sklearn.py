@@ -23,13 +23,14 @@ import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils import check_array
 from sklearn.pipeline import Pipeline
+from sklearn.covariance import EllipticEnvelope
 from scipy.stats import wasserstein_distance
 from scipy.stats import cumfreq
 
-from .utils import is_clipped
+from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
 from .target import is_continuous
-from .target import is_multioutput
-from .feature import is_correlated
+from .independence import is_correlated
+from .outliers import has_outliers, expected_outliers
 
 
 def formatwarning(message, *args, **kwargs):
@@ -38,10 +39,13 @@ def formatwarning(message, *args, **kwargs):
     """
     return f"{message}\n"
 
+warnings.formatwarning = formatwarning
+
+
 class BaseRedflagDetector(BaseEstimator, TransformerMixin):
 
-    def __init__(self, func, warning):
-        self.func = func
+    def __init__(self, func, warning, **kwargs):
+        self.func = lambda X: func(X, **kwargs)
         self.warning = warning
 
     def fit(self, X, y=None):
@@ -53,19 +57,17 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
         """
         X = check_array(X)
 
-        warnings.formatwarning = formatwarning
-
-        clipped = [i for i, feature in enumerate(X.T) if self.func(feature)]
-        if n := len(clipped):
-            pos = ', '.join(str(c) for c in clipped)
-            warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} may have {self.warning} values.")
+        positive = [i for i, feature in enumerate(X.T) if self.func(feature)]
+        if n := len(positive):
+            pos = ', '.join(str(i) for i in positive)
+            warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} may have {self.warning}.")
 
         if (y is not None) and is_continuous(y):
             if np.asarray(y).ndim == 1:
                 y_ = y.reshape(-1, 1)
             for i, target in enumerate(y_.T):
-                if is_clipped(target):
-                    warnings.warn(f"🚩 Target {i} may have {self.warning} values.")
+                if self.func(target):
+                    warnings.warn(f"🚩 Target {i} may have {self.warning}.")
 
         return X
 
@@ -87,7 +89,7 @@ class ClipDetector(BaseRedflagDetector):
                [5, 3]])
     """
     def __init__(self):
-        super().__init__(is_clipped, "clipped")
+        super().__init__(is_clipped, "clipped values")
 
 
 class CorrelationDetector(BaseRedflagDetector):
@@ -109,7 +111,108 @@ class CorrelationDetector(BaseRedflagDetector):
                [0.7482485 , 0.84147098]])
     """
     def __init__(self):
-        super().__init__(is_correlated, "correlated")
+        super().__init__(is_correlated, "correlated values")
+
+
+class UnivariateOutlierDetector(BaseRedflagDetector):
+    """
+    Transformer that detects if there are more than the expected number of
+    outliers in each feature considered separately. (To consider all features
+    together, use the `OutlierDetector` instead.)
+
+    **kwargs are passed to `has_outliers`.
+
+    Example:
+        >>> from sklearn.pipeline import make_pipeline
+        >>> pipe = make_pipeline(UnivariateOutlierDetector())
+        >>> rng = np.random.default_rng(0)
+        >>> X = rng.normal(size=(1_000, 2))
+        >>> pipe.fit_transform(X)  # doctest: +SKIP
+        redflag/sklearn.py::redflag.sklearn.UnivariateOutlierDetector
+          🚩 Features 0, 1 may have more outliers (in a univariate sense) than expected.
+        array([[ 0.12573022, -0.13210486],
+               [ 0.64042265,  0.10490012],
+               [-0.53566937,  0.36159505],
+               ...,
+               [ 1.24972527,  0.75063397],
+               [-0.55581573, -2.01881162],
+               [-0.90942756,  0.36922933]])
+        >>> pipe = make_pipeline(UnivariateOutlierDetector(factor=2))
+        >>> pipe.fit_transform(X)  # No warning.
+        array([[ 0.12573022, -0.13210486],
+               [ 0.64042265,  0.10490012],
+               [-0.53566937,  0.36159505],
+               ...,
+               [ 1.24972527,  0.75063397],
+               [-0.55581573, -2.01881162],
+               [-0.90942756,  0.36922933]])
+    """
+    def __init__(self, **kwargs):
+        super().__init__(has_outliers, "more outliers (in a univariate sense) than expected", **kwargs)
+
+
+class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
+    """
+    Transformer that detects if there are more than the expected number of
+    outliers when the dataset is considered as a whole, in a mutlivariate
+    sense. (To consider feature distributions separately, use the
+    `UnivariateOutlierDetector` instead.)
+
+    Example:
+        >>> from sklearn.pipeline import make_pipeline
+        >>> pipe = make_pipeline(MultivariateOutlierDetector())
+        >>> rng = np.random.default_rng(0)
+        >>> X = rng.normal(size=(1_000, 2))
+        >>> pipe.fit_transform(X)  # doctest: +SKIP
+        redflag/sklearn.py::redflag.sklearn.MultivariateOutlierDetector
+          🚩 Dataset may have more outliers (in a multivariate sense) than expected.
+        array([[ 0.12573022, -0.13210486],
+               [ 0.64042265,  0.10490012],
+               [-0.53566937,  0.36159505],
+               ...,
+               [ 1.24972527,  0.75063397],
+               [-0.55581573, -2.01881162],
+               [-0.90942756,  0.36922933]])
+        >>> pipe = make_pipeline(MultivariateOutlierDetector(factor=2))
+        >>> pipe.fit_transform(X)  # No warning.
+        array([[ 0.12573022, -0.13210486],
+               [ 0.64042265,  0.10490012],
+               [-0.53566937,  0.36159505],
+               ...,
+               [ 1.24972527,  0.75063397],
+               [-0.55581573, -2.01881162],
+               [-0.90942756,  0.36922933]])
+    """
+    def __init__(self, p=0.99, threshold=None, factor=1):
+        self.p = p if threshold is None else None
+        self.threshold = threshold
+        self.factor = factor
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        """
+        Checks X (and y, if it is continuous data) for outlier values.
+        """
+        X = check_array(X)
+
+        if X.shape[1] < 2:
+            warnings.warn("MultiVariateOutlierDetector requires at least 2 features; use UnivariateOutlierDetector on this dataset.")
+            return X
+
+        outliers = has_outliers(X, p=self.p, threshold=self.threshold, factor=self.factor)
+
+        if outliers:
+            warnings.warn(f"🚩 Dataset may have more outliers (in a multivariate sense) than expected.")
+
+        if (y is not None) and is_continuous(y):
+            if np.asarray(y).ndim == 1:
+                y_ = y.reshape(-1, 1)
+            if has_outliers(y_, p=self.p, threshold=self.threshold, factor=self.factor):
+                    warnings.warn(f"🚩 Target may have more outliers (in a multivariate sense) than expected.")
+
+        return X
 
 
 class DistributionComparator(BaseEstimator, TransformerMixin):
@@ -186,6 +289,7 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
             return X
 
         # If we have enough samples, let's carry on.
+        wasserstein_distances = []
         for i, (weights, lowerlimit, binsize, feature) in enumerate(zip(self.hist_counts, self.hist_lowerlimits, self.hist_binsizes, X.T)):
 
             values = lowerlimit + np.linspace(0, binsize*weights.size, weights.size)
@@ -195,16 +299,19 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
             f_values = hist.lowerlimit + np.linspace(0, hist.binsize*f_weights.size, f_weights.size)
 
             w = wasserstein_distance(values, f_values, weights, f_weights)
+            wasserstein_distances.append(w)
 
-            if w == 0 and self.warn_if_zero:
-                warnings.formatwarning = formatwarning
-                warnings.warn(f"🚩 Feature {i} is identical to the training data.")
-            elif w > self.threshold:
-                if self.warn:
-                    warnings.formatwarning = formatwarning
-                    warnings.warn(f"🚩 Feature {i} has a distribution that is different from training.")
-                else:
-                    raise ValueError(f"🚩 Feature {i} has a distribution that is different from training.")
+        zeros = np.where(np.array(wasserstein_distances)==0)[0]
+        if n := zeros.size and self.warn_if_zero:
+            warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} {'are' if n > 1 else 'is'} identical to the training data.")
+
+        positive = np.where(np.array(wasserstein_distances) > self.threshold)[0]
+        if n := positive.size:
+            pos = ', '.join(str(i) for i in positive)
+            if self.warn:
+                warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} {'have distributions that are' if n > 1 else 'has a distribution that is'} different from training.")
+            else:
+                raise ValueError(f"🚩 Feature{'s' if n > 1 else ''} {pos} {'have distributions that are' if n > 1 else 'has a distribution that is'} different from training.")
 
         return X
     
@@ -228,9 +335,131 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
         return X
 
 
+class OutlierDetector(BaseEstimator, TransformerMixin):
+    """
+    Transformer that raises warnings if data has more outliers than expected
+    for the size and dimensionality of dataset. The data are considered in a
+    multivariate sense.
+
+    Methods:
+        fit_transform(): Called when fitting. In this transformer, we don't
+            transform the data, we just learn the distribution's properties.
+        transform(): Called when transforming validation or prediction data.
+        fit(): Called by fit_transform() when fitting the training data.
+    """
+    def __init__(self, p=0.99, threshold=None, factor=1.0):
+        """
+        Constructor for the class.
+
+        Args:
+            p (float): The confidence level.
+            threshold (float): The threshold for the Wasserstein distance.
+        """
+        self.threshold = threshold
+        self.p = p if threshold is None else None
+        self.factor = factor
+
+    def _actual_vs_expected(self, z, n, d):
+        """
+        Calculate the expected number of outliers in the data.
+        """
+        # Calculate the Mahalanobis distance threshold if necessary.
+        if self.threshold is None:
+            self.threshold = proportion_to_stdev(p=self.p, d=d)
+        else:
+            self.p = stdev_to_proportion(self.threshold, d=d)
+
+        # Decide whether each point is an outlier or not.
+        idx, = np.where((z < -self.threshold) | (z > self.threshold))
+
+        # Calculate the expected number of outliers in the training data.
+        expected = int(self.factor * expected_outliers(n, d, threshold=self.threshold))
+
+        # If the number of outliers is greater than the expected number, raise a warning.
+        return idx.size, expected
+
+    def fit(self, X, y=None):
+        """
+        Record the robust location and covariance.
+
+        Args:
+            X (np.ndarray): The data to learn the distributions from.
+            y (np.ndarray): The labels for the data. Not used for anything.
+
+        Returns:
+            self.
+        """
+        X = check_array(X)
+        n, d = X.shape
+
+        # Fit the distributions.
+        self.ee = EllipticEnvelope(support_fraction=1.0).fit(X)
+
+        # Compute the Mahalanobis distance of the training data.
+        z = np.sqrt(self.ee.dist_)
+
+        actual, expected = self._actual_vs_expected(z, n, d)
+        if actual > expected:
+            warnings.warn(f"🚩 There are more outliers than expected in the training data ({actual} vs {expected}).")
+
+        return self
+
+
+    def transform(self, X, y=None):
+        """
+        Compute the Mahalanobis distances using the location and covarianced
+        learned from the training data.
+
+        This transformer does not transform the data, it just compares the
+        distributions and raises a warning if there are more outliers than
+        expected, given the confidence level or threshold specified at
+        instantiation.
+
+        Args:
+            X (np.ndarray): The data to compare to the training data.
+            y (np.ndarray): The labels for the data. Not used for anything.
+
+        Returns:
+            X.
+        """
+        X = check_array(X)
+        n, d = X.shape
+
+        # Compute the Mahalanobis distances for the given data, using the
+        # learned location and covariance.
+        z = np.sqrt(self.ee.mahalanobis(X))
+
+        actual, expected = self._actual_vs_expected(z, n, d)
+        if actual > expected:
+            warnings.warn(f"🚩 There are more outliers than expected in the data ({actual} vs {expected}).")
+
+        return X
+    
+    def fit_transform(self, X, y=None):
+        """
+        This is called when fitting, if it is present. We can make our call to self.fit()
+        and not bother calling self.transform(), because we're not actually transforming
+        anything, we're just getting set up for applying our test later during prediction.
+        The warning about outliers in the data will come from self.fit().
+
+        Args:
+            X (np.ndarray): The data to compare to the training data.
+            y (np.ndarray): The labels for the data. Not used for anything.
+
+        Returns:
+            X.
+        """
+        # Call fit() to learn the distributions.
+        self = self.fit(X, y=y)
+        
+        # When fitting, we do not run transform() (actually a test).
+        return X
+
+
 pipeline = Pipeline(
     steps=[
         ("rf.clip", ClipDetector()),
+        ("rf.outlier", OutlierDetector()),
         ("rf.corr", CorrelationDetector()),
         ("rf.dist", DistributionComparator()),
     ]
