@@ -3,9 +3,9 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="redflag package" href="../redflag.html" /><link rel="prev" title="Installation" href="../installation.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Using redflag with sklearn" href="Using_redflag_with_sklearn.html" /><link rel="prev" title="Installation" href="../installation.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
         <title>🚩 Basic usage - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
@@ -163,6 +163,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">🚩 Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Using_redflag_with_sklearn.html">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -238,7 +239,21 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.8&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.9rc1&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">redflag</span> <span class="k">as</span> <span class="nn">rf</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">get_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([10])
 </pre></div>
 </div>
 </div>
@@ -255,153 +270,17 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="nn">Input In [3],</span> in <span class="ni">&lt;cell line: 1&gt;</span><span class="nt">()</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://geocomp.s3.amazonaws.com/data/Panoma_training_data.csv&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Well Name</th>
-      <th>Depth</th>
-      <th>Formation</th>
-      <th>RelPos</th>
-      <th>Marine</th>
-      <th>GR</th>
-      <th>ILD</th>
-      <th>DeltaPHI</th>
-      <th>PHIND</th>
-      <th>PE</th>
-      <th>Facies</th>
-      <th>LATITUDE</th>
-      <th>LONGITUDE</th>
-      <th>ILD_log10</th>
-      <th>Lithology</th>
-      <th>RHOB</th>
-      <th>Mineralogy</th>
-      <th>Siliciclastic</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>SHRIMPLIN</td>
-      <td>851.3064</td>
-      <td>A1 SH</td>
-      <td>1.000</td>
-      <td>1</td>
-      <td>77.45</td>
-      <td>4.613176</td>
-      <td>9.9</td>
-      <td>11.915</td>
-      <td>4.6</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.664</td>
-      <td>siltstone</td>
-      <td>2393.499945</td>
-      <td>siliciclastic</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>SHRIMPLIN</td>
-      <td>851.4588</td>
-      <td>A1 SH</td>
-      <td>0.979</td>
-      <td>1</td>
-      <td>78.26</td>
-      <td>4.581419</td>
-      <td>14.2</td>
-      <td>12.565</td>
-      <td>4.1</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.661</td>
-      <td>siltstone</td>
-      <td>2416.119814</td>
-      <td>siliciclastic</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>SHRIMPLIN</td>
-      <td>851.6112</td>
-      <td>A1 SH</td>
-      <td>0.957</td>
-      <td>1</td>
-      <td>79.05</td>
-      <td>4.549881</td>
-      <td>14.8</td>
-      <td>13.050</td>
-      <td>3.6</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.658</td>
-      <td>siltstone</td>
-      <td>2404.576056</td>
-      <td>siliciclastic</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>SHRIMPLIN</td>
-      <td>851.7636</td>
-      <td>A1 SH</td>
-      <td>0.936</td>
-      <td>1</td>
-      <td>86.10</td>
-      <td>4.518559</td>
-      <td>13.9</td>
-      <td>13.115</td>
-      <td>3.5</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.655</td>
-      <td>siltstone</td>
-      <td>2393.249071</td>
-      <td>siliciclastic</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>SHRIMPLIN</td>
-      <td>851.9160</td>
-      <td>A1 SH</td>
-      <td>0.915</td>
-      <td>1</td>
-      <td>74.58</td>
-      <td>4.436086</td>
-      <td>13.5</td>
-      <td>13.300</td>
-      <td>3.4</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.647</td>
-      <td>siltstone</td>
-      <td>2382.602601</td>
-      <td>siliciclastic</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="imbalance-metrics">
@@ -409,7 +288,7 @@
 <p>First, we’ll look at measuring imbalance in the target using <code class="docutils literal notranslate"><span class="pre">rf.class_imbalance()</span></code>. For binary targets, the metric is imbalace ratio (ratio between majority and minority class). For multiclass targets, the metric is imbalance degree <a class="reference external" href="https://doi.org/10.1016/j.patrec.2017.08.002">(Ortigosa-Hernandez et al, 2017)</a>, a single-value measure that explains (a) how many minority classes there are and (b) how skewed the supports are.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">class_imbalance</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">imbalance_degree</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -464,20 +343,18 @@
 <p>We can also inspect the distribution using Pandas; note that this display is sorted by count:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 
 <span class="c1"># Add a line at the expectation level, which is the same for all classes.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f7a84283d90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7fd4c4787910&gt;
 </pre></div>
 </div>
-<img alt="../_images/c8e5cbd942e4fb94239ca5beb2672cd729bf604aea16562a1ce85743f77a29eb.png" src="../_images/c8e5cbd942e4fb94239ca5beb2672cd729bf604aea16562a1ce85743f77a29eb.png" />
+<img alt="../_images/41d377ac8a3075388147c7da4b3d33769d941f54973c8e20999d1b39c63d2853.png" src="../_images/41d377ac8a3075388147c7da4b3d33769d941f54973c8e20999d1b39c63d2853.png" />
 </div>
 </div>
 </section>
@@ -514,7 +391,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/e59f26fdc7a33dd71e8ea764f2b58375f33c8a02349cad6ae6c1a87f17df7fde.png" src="../_images/e59f26fdc7a33dd71e8ea764f2b58375f33c8a02349cad6ae6c1a87f17df7fde.png" />
+<img alt="../_images/fa2225113c2debc69385bc53ada322f0a5c92c3de09510bd447204ab55b49121.png" src="../_images/fa2225113c2debc69385bc53ada322f0a5c92c3de09510bd447204ab55b49121.png" />
 </div>
 </div>
 <p>By default it uses an <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#isolation-forest"><strong>isolation forest</strong></a> to detect the outliers at the 99% confidence level, but you can also opt to use <strong>local outlier factor</strong>, <strong>elliptic envelope</strong>, or <strong>Mahalanobis distance</strong>, setting the confidence level to choose how many outliers you will see, or (equivalently) setting the <code class="docutils literal notranslate"><span class="pre">threshold</span></code> to the number of standard deviations away from the mean you regard as signal.</p>
@@ -530,10 +407,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7f7a829db550&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7fd4c46f6c70&gt;
 </pre></div>
 </div>
-<img alt="../_images/0686479a03bb6f4841ff6487254a90923540bdf32ce7e68c9c802988145e143f.png" src="../_images/0686479a03bb6f4841ff6487254a90923540bdf32ce7e68c9c802988145e143f.png" />
+<img alt="../_images/f97be8fa3c56b76b02bd3b9179ae7f929d8eeb2b0734237fc2b6bbae2c672afa.png" src="../_images/f97be8fa3c56b76b02bd3b9179ae7f929d8eeb2b0734237fc2b6bbae2c672afa.png" />
 </div>
 </div>
 <p>A helper function can compute the number of expected outliers, given the dataset size and assuming a Gaussian distribution of samples.</p>
@@ -553,7 +430,57 @@
 </div>
 </div>
 </div>
-<p>So we have more than expected — because the distribution of GR has a lot of clipped samples at a value of 200.</p>
+<p>So we have more than expected — because the distribution of GR has a lot of clipped samples at a value of 200. A dataset with truncated tails will have fewer than expected outliers; we can test this directly with the <code class="docutils literal notranslate"><span class="pre">has_outliers()</span></code> function, which compares the results of <code class="docutils literal notranslate"><span class="pre">expected_outliers()</span></code> with <code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
+
+<span class="n">rf</span><span class="o">.</span><span class="n">expected_outliers</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.99</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Truncate</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[(</span><span class="o">-</span><span class="mf">2.5</span> <span class="o">&lt;</span> <span class="n">data</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span> <span class="o">&lt;</span>  <span class="mf">2.5</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fd4c45b0910&gt;
+</pre></div>
+</div>
+<img alt="../_images/c33cc8db4affec579707a0c57116f83e223408741a4a40bca0512ceaec1f46a4.png" src="../_images/c33cc8db4affec579707a0c57116f83e223408741a4a40bca0512ceaec1f46a4.png" />
+</div>
+</div>
+<p>This truncated normal distribution has no outliers (there are only about 60, compared to the 100 we expect at this confidence level of 99% on this dataset of 10,000 records).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">has_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.99</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="clipping">
 <h2>Clipping<a class="headerlink" href="#clipping" title="Permalink to this heading">#</a></h2>
@@ -579,10 +506,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f7a804c3c70&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fd4c4757bb0&gt;
 </pre></div>
 </div>
-<img alt="../_images/a49e47148c43cfba8919cb25e9e3d0beb94be0a13f6b0d189947bf827369075e.png" src="../_images/a49e47148c43cfba8919cb25e9e3d0beb94be0a13f6b0d189947bf827369075e.png" />
+<img alt="../_images/15aaa6f274695a2b8fc158a59ae302f97d2f5d3209530e422edd84469828a9ed.png" src="../_images/15aaa6f274695a2b8fc158a59ae302f97d2f5d3209530e422edd84469828a9ed.png" />
 </div>
 </div>
 </section>
@@ -636,10 +563,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f7a82992d10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fd4c4394310&gt;
 </pre></div>
 </div>
-<img alt="../_images/778dc52132f24cdf848962f2b823db05a3b0070734fff681ca36c0256d111adc.png" src="../_images/778dc52132f24cdf848962f2b823db05a3b0070734fff681ca36c0256d111adc.png" />
+<img alt="../_images/d29917f3bd4dab7f91906cd4bef1b4ef2890cddde5bc69bc9cada914ded1d39b.png" src="../_images/d29917f3bd4dab7f91906cd4bef1b4ef2890cddde5bc69bc9cada914ded1d39b.png" />
 </div>
 </div>
 </section>
@@ -674,9 +601,7 @@
 <p>You could plot this as a heatmap:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">wells</span><span class="p">),</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">wells</span><span class="p">),</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -684,7 +609,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/cd19c76200c3e47414ae4894d157eccad80c5eb9757a2e66da3c47d27620dccd.png" src="../_images/cd19c76200c3e47414ae4894d157eccad80c5eb9757a2e66da3c47d27620dccd.png" />
+<img alt="../_images/cab75b111779a86b1d0aaad35a8ad28e4ba87d0a2a62b9d9430018969eb9d004.png" src="../_images/cab75b111779a86b1d0aaad35a8ad28e4ba87d0a2a62b9d9430018969eb9d004.png" />
 </div>
 </div>
 <p>This shows us that the distributions of the PE log in well indices 6 and 7 are somewhat different and may be anomalous. It also suggests that the CROSS H CATTLE well is different from the others.</p>
@@ -747,9 +672,7 @@
 <p>This is order-dependent. That is, shuffling the data removes the correlation, but does not mean the records are independent.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="n">gr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">gr</span><span class="p">)</span>
 <span class="n">rf</span><span class="o">.</span><span class="n">is_correlated</span><span class="p">(</span><span class="n">gr</span><span class="p">)</span>
 </pre></div>
@@ -787,7 +710,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.17817028, 0.41959473, 0.10252012, 0.23278068, 0.06480589])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.21478312, 0.31201638, 0.14080685, 0.24133745, 0.0910562 ])
 </pre></div>
 </div>
 </div>
@@ -806,7 +729,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.08479357, 0.4267583 , 0.4621288 , 0.02426897])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.09404298, 0.42665345, 0.45316414, 0.02613944])
 </pre></div>
 </div>
 </div>
@@ -820,12 +743,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../redflag.html">
+          <a class="next-page" href="Using_redflag_with_sklearn.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">redflag package</div>
+                <div class="title">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>

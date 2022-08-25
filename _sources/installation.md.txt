@@ -10,10 +10,6 @@ Or, if you use Conda environments:
     $ conda activate redflag
     $ pip install redflag
 
-Installing `scikit-learn` allows you to access some extra options for outlier detection:
-
-    pip install redflag[sklearn]
-
-For developers, there are also options for installing `tests`, `docs` and `dev` dependencies.
+For developers, there are also options for installing `tests`, `docs` and `dev` dependencies, e.g. `pip install redflag[dev]` to install all testing and documentation packages.
 
 If you want to help develop Redflag, please read [Development](development.md).

@@ -3,9 +3,9 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Development" href="development.html" /><link rel="prev" title="🚩 Basic usage" href="_notebooks/Basic_usage.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Development" href="development.html" /><link rel="prev" title="Using redflag with sklearn" href="_notebooks/Using_redflag_with_sklearn.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
         <title>redflag package - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
@@ -163,6 +163,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Basic_usage.html">🚩 Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul class="current">
@@ -222,12 +223,12 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="module-redflag.feature">
-<span id="redflag-feature-module"></span><h2>redflag.feature module<a class="headerlink" href="#module-redflag.feature" title="Permalink to this heading">#</a></h2>
-<p>Functions related to understanding features.</p>
+<section id="module-redflag.distributions">
+<span id="redflag-distributions-module"></span><h2>redflag.distributions module<a class="headerlink" href="#module-redflag.distributions" title="Permalink to this heading">#</a></h2>
+<p>Functions related to understanding distributions.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.best_distribution">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">best_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.best_distribution" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.best_distribution">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">best_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.best_distribution" title="Permalink to this definition">#</a></dt>
 <dd><p>Model data by finding best fit distribution to data.</p>
 <p>Returns the best fit distribution and its parameters.</p>
 <dl class="field-list simple">
@@ -255,8 +256,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.bw_scott">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">bw_scott</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.bw_scott" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.bw_scott">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">bw_scott</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.bw_scott" title="Permalink to this definition">#</a></dt>
 <dd><p>Calculate the Scott bandwidth.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -278,8 +279,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.bw_silverman">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">bw_silverman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.bw_silverman" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.bw_silverman">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">bw_silverman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.bw_silverman" title="Permalink to this definition">#</a></dt>
 <dd><p>Calculate the Silverman bandwidth.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -301,8 +302,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.cv_kde">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">cv_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bandwidths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.cv_kde" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.cv_kde">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">cv_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bandwidths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.cv_kde" title="Permalink to this definition">#</a></dt>
 <dd><p>Run a cross validation grid search to identify the optimal bandwidth for
 the kernel density estimation.</p>
 <dl class="field-list simple">
@@ -326,8 +327,8 @@ the kernel density estimation.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.find_large_peaks">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">find_large_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.find_large_peaks" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.find_large_peaks">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">find_large_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.find_large_peaks" title="Permalink to this definition">#</a></dt>
 <dd><p>Find the peaks in the array. Returns the values of x and y at the largest
 peaks, using threshold &amp;times; max(peak amplitudes) as the cut-off. That is,
 peaks smaller than that are not returned.</p>
@@ -363,8 +364,8 @@ peaks smaller than that are not returned.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.fit_kde">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">fit_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gaussian'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.fit_kde" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.fit_kde">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">fit_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gaussian'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.fit_kde" title="Permalink to this definition">#</a></dt>
 <dd><p>Fit a kernel density estimation to the data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -395,8 +396,8 @@ peaks smaller than that are not returned.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.get_kde">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">get_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scott'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.get_kde" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.get_kde">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">get_kde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scott'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.get_kde" title="Permalink to this definition">#</a></dt>
 <dd><p>Get the kernel density estimation for the data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -427,88 +428,8 @@ Default ‘scott’.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.get_outliers">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">get_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iso'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.get_outliers" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns outliers in the data, considering all of the features. What counts
-as an outlier is determined by the threshold, which is in multiples of
-the standard deviation. (The conversion to ‘contamination’ is approximate.)</p>
-<p>This function requires the scikit-learn package.</p>
-<p>Methods: ‘iso’ (isolation forest), ‘lof’ (local outlier factor), ‘ee’
-(elliptic envelope), or ‘mah’ (Mahanalobis distance), or pass a function
-that returns an array of outlier flags (-1 for outliers and 1 for inliers,
-matching the <cite>sklearn</cite> convention). You can also pass ‘any’, which will
-try all three outlier detection methods and return the outliers which are
-detected by any of them, or ‘all’, which will return the outliers which
-are common to all four methods.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
-<li><p><strong>method</strong> (<em>str</em>) – The method to use. Can be ‘iso’, ‘lof’, ‘svm’, ‘mah’,
-or a function that returns a Boolean array of outlier flags.</p></li>
-<li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
-is ignored if <cite>threshold</cite> is not None; in this case, <cite>p</cite> will be
-computed using <cite>utils.stdev_to_proportion(threshold)</cite>.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em>) – The threshold in Mahalanobis distance, analogous to
-multiples of standard deviation for a single variable. If not None,
-the threshold will be used to compute <cite>p</cite>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The indices of the outliers.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>array</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span><span class="p">)</span>
-<span class="go">array([], dtype=int64)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
-<span class="go">array([33])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mah&#39;</span><span class="p">)</span>
-<span class="go">array([33])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
-<span class="go">array([33])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
-<span class="go">array([33])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.is_correlated">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">is_correlated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.is_correlated" title="Permalink to this definition">#</a></dt>
-<dd><p>Check if a dataset is correlated. Uses s chunks of n samples.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – The number of samples per chunk.</p></li>
-<li><p><strong>s</strong> (<em>int</em>) – The number of chunks.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em>) – The auto-correlation threshold.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the data are correlated.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.kde_peaks">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">kde_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scott'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.kde_peaks" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.kde_peaks">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">kde_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scott'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.kde_peaks" title="Permalink to this definition">#</a></dt>
 <dd><p>Find the peaks in the kernel density estimation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -542,88 +463,8 @@ Default ‘scott’.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.mahalanobis">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">mahalanobis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.mahalanobis" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute the Mahalanobis distances of a dataset.</p>
-<p>The empirical covariance correction factor suggested by Rousseeuw and
-Van Driessen may be optionally applied by setting <cite>correction=True</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>array</em>) – The data. Must be a 2D array, shape (n_samples, n_features).</p></li>
-<li><p><strong>correction</strong> (<em>bool</em>) – Whether to apply the empirical covariance correction.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The Mahalanobis distances.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>array</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">array([1.6583124, 1.1055416, 1.1055416, 0.5527708, 0.       , 0.       ,</span>
-<span class="go">       0.       , 0.5527708, 1.1055416, 1.1055416, 1.6583124])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">array([1.01173463, 0.67448975, 0.67448975, 0.33724488, 0.        ,</span>
-<span class="go">       0.        , 0.        , 0.33724488, 0.67448975, 0.67448975,</span>
-<span class="go">       1.01173463])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.mahalanobis_outliers">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">mahalanobis_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.mahalanobis_outliers" title="Permalink to this definition">#</a></dt>
-<dd><p>Find outliers given samples and a threshold in multiples of stdev.
-Returns -1 for outliers and 1 for inliers (to match the sklearn API).</p>
-<dl class="simple">
-<dt>For univariate data, we expect this many points outside:</dt><dd><ul class="simple">
-<li><p>1 sd: expect 31.7 points in 100</p></li>
-<li><p>2 sd: 4.55 in 100</p></li>
-<li><p>3 sd: 2.70 in 1000</p></li>
-<li><p>4 sd: 6.3 in 100,000</p></li>
-<li><p>4.89163847 sd: 1 in 1 million</p></li>
-<li><p>5 sd: 5.7 in 10 million datapoints</p></li>
-<li><p>6 sd: 2.0 in 1 billion points</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>array</em>) – The data. Can be a 2D array, shape (n_samples, n_features),
-or a 1D array, shape (n_samples).</p></li>
-<li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
-is ignored if <cite>threshold</cite> is not None; in this case, <cite>p</cite> will be
-computed using <cite>utils.stdev_to_proportion(threshold)</cite>.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em>) – The threshold in Mahalanobis distance, analogous to
-multiples of standard deviation for a single variable. If not None,
-the threshold will be used to compute <cite>p</cite>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Array identifying outliers; -1 for outliers and 1 for inliers.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>array</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="go">array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis_outliers</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">array([ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.wasserstein">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">wasserstein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ovr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reducer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.wasserstein" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.wasserstein">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">wasserstein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ovr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reducer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.wasserstein" title="Permalink to this definition">#</a></dt>
 <dd><p>Step over all features and apply the distance function to the groups.</p>
 <p>Method can be ‘ovr’, ‘ovo’, or a function.</p>
 <p>The function <cite>reducer</cite> is applied to the ovo result to reduce it to one
@@ -673,8 +514,8 @@ per group. Default: <cite>np.mean</cite>.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.wasserstein_ovo">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">wasserstein_ovo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.wasserstein_ovo" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.wasserstein_ovo">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">wasserstein_ovo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.wasserstein_ovo" title="Permalink to this definition">#</a></dt>
 <dd><p>First Wasserstein distance between each group in <cite>a</cite> vs each other group
 (‘one vs one’ or OVO).</p>
 <p>The results are in the order given by <cite>combinations(np.unique(groups),
@@ -717,8 +558,8 @@ get a square matrix.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.feature.wasserstein_ovr">
-<span class="sig-prename descclassname"><span class="pre">redflag.feature.</span></span><span class="sig-name descname"><span class="pre">wasserstein_ovr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.feature.wasserstein_ovr" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.distributions.wasserstein_ovr">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">wasserstein_ovr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.wasserstein_ovr" title="Permalink to this definition">#</a></dt>
 <dd><p>First Wasserstein distance between each group in <cite>a</cite> vs the rest of <cite>a</cite>
 (‘one vs rest’ or OVR).</p>
 <p>The results are in <cite>np.unique(a)</cite> order.</p>
@@ -754,12 +595,10 @@ measurements. The function does not apply standardization by default.</p>
 <span id="redflag-imbalance-module"></span><h2>redflag.imbalance module<a class="headerlink" href="#module-redflag.imbalance" title="Permalink to this heading">#</a></h2>
 <p>Imbalance metrics.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.imbalance.class_imbalance">
-<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">class_imbalance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.class_imbalance" title="Permalink to this definition">#</a></dt>
-<dd><p>Binary classification: imbalance ratio (number of expected majority class
-samples to number of expected minority samples).</p>
-<p>Multiclass classifications: imbalance degree metric, per Ortigosa-Hernandez
-et al. (2017).</p>
+<dt class="sig sig-object py" id="redflag.imbalance.class_counts">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">class_counts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.class_counts" title="Permalink to this definition">#</a></dt>
+<dd><p>Make a Counter of the class labels in <cite>classes</cite>, or in <cite>a</cite> if <cite>classes</cite>
+is None.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -770,20 +609,16 @@ in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The imbalance ratio (binary  tasks) or imbalance degree
-(multiclass tasks).</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>dict. The counts, in the order in which classes are encountered in</dt><dd><p><cite>classes</cite> (if <cite>classes is not `None</cite>) or <cite>a</cite>.</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">class_imbalance</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">2.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">class_imbalance</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">1.4</span>
-</pre></div>
-</div>
+</p>
+</dd>
+</dl>
+<p>Example:
+&gt;&gt;&gt; class_counts([1, 3, 2, 2, 3, 3])
+{1: 1, 3: 3, 2: 2}</p>
 </dd></dl>
 
 <dl class="py function">
@@ -877,36 +712,14 @@ in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="redflag.imbalance.get_counts">
-<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">get_counts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.get_counts" title="Permalink to this definition">#</a></dt>
-<dd><p>Make a Counter of the class labels in <cite>classes</cite>, or in <cite>a</cite> if <cite>classes</cite>
-is None.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>array</em>) – A list of class labels.</p></li>
-<li><p><strong>classes</strong> (<em>array</em>) – A list of classes, in the event that <cite>a</cite> does not
-contain all of the classes, or if you want to ignore some classes
-in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>dict. The counts, in the order in which classes are encountered in</dt><dd><p><cite>classes</cite> (if <cite>classes is not `None</cite>) or <cite>a</cite>.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-<p>Example:
-&gt;&gt;&gt; get_counts([1, 3, 2, 2, 3, 3])
-{1: 1, 3: 3, 2: 2}</p>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="redflag.imbalance.imbalance_degree">
-<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'manhattan'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.imbalance_degree" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute IR according to Eq 8 in Ortigosa-Hernandez et al. (2017).</p>
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.imbalance_degree" title="Permalink to this definition">#</a></dt>
+<dd><p>The imbalance degree reflects the degree to which the distribution of
+classes is imbalanced. The integer part of the imbalance degree is the
+number of minority classes minus 1 (m - 1, below). The fractional part
+is the distance between the actual (empirical) and expected distributions.
+The distance can be defined in different ways, depending on the method.</p>
+<p>IR is defined according to Eq 8 in Ortigosa-Hernandez et al. (2017).</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{ID}(\zeta) = \frac{d_\mathrm{\Delta}(\mathbf{\zeta}, \mathbf{e})}
@@ -916,8 +729,8 @@ in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
 <dt><cite>method</cite> can be a string from:</dt><dd><ul class="simple">
 <li><p>‘manhattan’: Manhattan distance or L1 norm</p></li>
 <li><p>‘euclidean’: Euclidean distance or L2 norm</p></li>
-<li><p>‘hellinger’: Hellinger distance</p></li>
-<li><p>‘tv’: total variation distance</p></li>
+<li><p>‘hellinger’: Hellinger distance, recommended by Ortigosa-Hernandez et al. (2017)</p></li>
+<li><p>‘tv’: total variation distance, recommended by Ortigosa-Hernandez et al. (2017)</p></li>
 <li><p>‘kl’: Kullback-Leibner divergence</p></li>
 </ul>
 </dd>
@@ -961,6 +774,7 @@ in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
 <dt class="sig sig-object py" id="redflag.imbalance.imbalance_ratio">
 <span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.imbalance.imbalance_ratio" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).</p>
+<p>This measure is useful for binary problems, but not for multiclass problems.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1082,9 +896,625 @@ the assumption being made.</p></li>
 </dd></dl>
 
 </section>
+<section id="module-redflag.independence">
+<span id="redflag-independence-module"></span><h2>redflag.independence module<a class="headerlink" href="#module-redflag.independence" title="Permalink to this heading">#</a></h2>
+<p>Functions related to understanding row independence.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.independence.is_correlated">
+<span class="sig-prename descclassname"><span class="pre">redflag.independence.</span></span><span class="sig-name descname"><span class="pre">is_correlated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.independence.is_correlated" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a dataset is correlated. Uses s chunks of n samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of samples per chunk.</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – The number of chunks.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The auto-correlation threshold.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the data are correlated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-redflag.outliers">
+<span id="redflag-outliers-module"></span><h2>redflag.outliers module<a class="headerlink" href="#module-redflag.outliers" title="Permalink to this heading">#</a></h2>
+<p>Functions related to understanding features.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.outliers.expected_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">expected_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.outliers.expected_outliers" title="Permalink to this definition">#</a></dt>
+<dd><p>Expected number of outliers in a dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – The number of samples.</p></li>
+<li><p><strong>d</strong> (<em>int</em>) – The number of features. Note that if threshold is None, this
+value is not used in the calculation. Default: 1.</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
+is ignored if <cite>threshold</cite> is not None and <cite>p</cite> will be computed
+using <cite>utils.stdev_to_proportion(threshold)</cite>. Default: 0.99.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The threshold in Mahalanobis distance, analogous to
+multiples of standard deviation for a single variable. If not None,
+the threshold will be used to compute <cite>p</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The expected number of outliers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expected_outliers</span><span class="p">(</span><span class="mi">10_000</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">137</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.outliers.get_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">get_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iso'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.outliers.get_outliers" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns outliers in the data, considering all of the features. What counts
+as an outlier is determined by the threshold, which is in multiples of
+the standard deviation. (The conversion to ‘contamination’ is approximate.)</p>
+<p>This function requires the scikit-learn package.</p>
+<p>Methods: ‘iso’ (isolation forest), ‘lof’ (local outlier factor), ‘ee’
+(elliptic envelope), or ‘mah’ (Mahanalobis distance), or pass a function
+that returns an array of outlier flags (-1 for outliers and 1 for inliers,
+matching the <cite>sklearn</cite> convention). You can also pass ‘any’, which will
+try all three outlier detection methods and return the outliers which are
+detected by any of them, or ‘all’, which will return the outliers which
+are common to all four methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – The method to use. Can be ‘iso’, ‘lof’, ‘svm’, ‘mah’,
+or a function that returns a Boolean array of outlier flags.</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
+is ignored if <cite>threshold</cite> is not None; in this case, <cite>p</cite> will be
+computed using <cite>utils.stdev_to_proportion(threshold)</cite>.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The threshold in Mahalanobis distance, analogous to
+multiples of standard deviation for a single variable. If not None,
+the threshold will be used to compute <cite>p</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The indices of the outliers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span><span class="p">)</span>
+<span class="go">array([], dtype=int64)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
+<span class="go">array([33])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;mah&#39;</span><span class="p">)</span>
+<span class="go">array([33])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;any&#39;</span><span class="p">)</span>
+<span class="go">array([33])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_outliers</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="go">array([33])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.outliers.has_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">has_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.outliers.has_outliers" title="Permalink to this definition">#</a></dt>
+<dd><p>Use Mahalanobis distance to determine if there are more outliers than
+expected at the given confidence level or Mahalanobis distance threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
+is ignored if <cite>threshold</cite> is not None and <cite>p</cite> will be computed
+using <cite>utils.stdev_to_proportion(threshold)</cite>. Default: 0.99.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The threshold in Mahalanobis distance, analogous to
+multiples of standard deviation for a single variable. If not None,
+the threshold will be used to compute <cite>p</cite>.</p></li>
+<li><p><strong>factor</strong> (<em>float</em>) – The factor by which to multiply the expected number of
+outliers before comparing to the actual number of outliers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>True if there are more outliers than expected at the given</dt><dd><p>confidence level.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.outliers.is_correlated">
+<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">is_correlated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.outliers.is_correlated" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a dataset is correlated. Uses s chunks of n samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of samples per chunk.</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – The number of chunks.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The auto-correlation threshold.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the data are correlated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.outliers.mahalanobis">
+<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">mahalanobis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.outliers.mahalanobis" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Mahalanobis distances of a dataset.</p>
+<p>The empirical covariance correction factor suggested by Rousseeuw and
+Van Driessen may be optionally applied by setting <cite>correction=True</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em>) – The data. Must be a 2D array, shape (n_samples, n_features).</p></li>
+<li><p><strong>correction</strong> (<em>bool</em>) – Whether to apply the empirical covariance correction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Mahalanobis distances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">array([1.6583124, 1.1055416, 1.1055416, 0.5527708, 0.       , 0.       ,</span>
+<span class="go">       0.       , 0.5527708, 1.1055416, 1.1055416, 1.6583124])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">array([1.01173463, 0.67448975, 0.67448975, 0.33724488, 0.        ,</span>
+<span class="go">       0.        , 0.        , 0.33724488, 0.67448975, 0.67448975,</span>
+<span class="go">       1.01173463])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.outliers.mahalanobis_outliers">
+<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">mahalanobis_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.outliers.mahalanobis_outliers" title="Permalink to this definition">#</a></dt>
+<dd><p>Find outliers given samples and a threshold in multiples of stdev.
+Returns -1 for outliers and 1 for inliers (to match the sklearn API).</p>
+<dl class="simple">
+<dt>For univariate data, we expect this many points outside:</dt><dd><ul class="simple">
+<li><p>1 sd: expect 31.7 points in 100</p></li>
+<li><p>2 sd: 4.55 in 100</p></li>
+<li><p>3 sd: 2.70 in 1000</p></li>
+<li><p>4 sd: 6.3 in 100,000</p></li>
+<li><p>4.89163847 sd: 1 in 1 million</p></li>
+<li><p>5 sd: 5.7 in 10 million datapoints</p></li>
+<li><p>6 sd: 2.0 in 1 billion points</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em>) – The data. Can be a 2D array, shape (n_samples, n_features),
+or a 1D array, shape (n_samples).</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
+is ignored if <cite>threshold</cite> is not None; in this case, <cite>p</cite> will be
+computed using <cite>utils.stdev_to_proportion(threshold)</cite>.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The threshold in Mahalanobis distance, analogous to
+multiples of standard deviation for a single variable. If not None,
+the threshold will be used to compute <cite>p</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array identifying outliers; -1 for outliers and 1 for inliers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis_outliers</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis_outliers</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">array([ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
 <section id="module-redflag.redflag">
 <span id="redflag-redflag-module"></span><h2>redflag.redflag module<a class="headerlink" href="#module-redflag.redflag" title="Permalink to this heading">#</a></h2>
 <p>Core functions</p>
+</section>
+<section id="module-redflag.sklearn">
+<span id="redflag-sklearn-module"></span><h2>redflag.sklearn module<a class="headerlink" href="#module-redflag.sklearn" title="Permalink to this heading">#</a></h2>
+<p>Scikit-learn components.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">BaseRedflagDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks X (and y, if it is continuous data) for suspect values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.ClipDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ClipDetector</span></span><a class="headerlink" href="#redflag.sklearn.ClipDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
+<p>Transformer that detects features with clipped values.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">ClipDetector</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  
+<span class="go">redflag/sklearn.py::redflag.sklearn.ClipDetector</span>
+<span class="go">  🚩 Feature 1 may have clipped values.</span>
+<span class="go">array([[2, 1],</span>
+<span class="go">       [3, 2],</span>
+<span class="go">       [4, 3],</span>
+<span class="go">       [5, 3]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.CorrelationDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">CorrelationDetector</span></span><a class="headerlink" href="#redflag.sklearn.CorrelationDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
+<p>Transformer that detects features correlated to themselves.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">CorrelationDetector</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  
+<span class="go">redflag/sklearn.py::redflag.sklearn.CorrelationDetector</span>
+<span class="go">  🚩 Feature 1 may have correlated values.</span>
+<span class="go">array([[0.38077051, 0.        ],</span>
+<span class="go">       [0.42977406, 0.05260728]</span>
+<span class="go">       ...</span>
+<span class="go">       [0.92571458, 0.81188195],</span>
+<span class="go">       [0.7482485 , 0.84147098]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">DistributionComparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn_if_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<p>Transformer that raises warnings if validation or prediction data is not
+in the same distribution as the training data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when fitting. In this transformer, we don’t
+transform the data, we just learn the distributions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when transforming validation or prediction data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Called by fit_transform() when fitting the training data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">#</a></dt>
+<dd><p>Record the histograms of the input data, using 200 bins by default.</p>
+<p>Normally we’d compute Wasserstein distance directly from the data,
+but that seems memory-expensive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to learn the distributions from.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition">#</a></dt>
+<dd><p>This is called when fitting, if it is present. We can make our call to self.fit()
+and not bother calling self.transform(), because we’re not actually transforming
+anything, we’re just getting set up for applying our test later during prediction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition">#</a></dt>
+<dd><p>Compare the histograms of the input data X to the histograms of the
+training data. We use the Wasserstein distance to compare the
+distributions.</p>
+<p>This transformer does not transform the data, it just compares the
+distributions and raises a warning if the Wasserstein distance is
+above the threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks y for imbalance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.MultivariateOutlierDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">MultivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<p>Transformer that detects if there are more than the expected number of
+outliers when the dataset is considered as a whole, in a mutlivariate
+sense. (To consider feature distributions separately, use the
+<cite>UnivariateOutlierDetector</cite> instead.)</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">MultivariateOutlierDetector</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  
+<span class="go">redflag/sklearn.py::redflag.sklearn.MultivariateOutlierDetector</span>
+<span class="go">  🚩 Dataset may have more outliers (in a multivariate sense) than expected.</span>
+<span class="go">array([[ 0.12573022, -0.13210486],</span>
+<span class="go">       [ 0.64042265,  0.10490012],</span>
+<span class="go">       [-0.53566937,  0.36159505],</span>
+<span class="go">       ...,</span>
+<span class="go">       [ 1.24972527,  0.75063397],</span>
+<span class="go">       [-0.55581573, -2.01881162],</span>
+<span class="go">       [-0.90942756,  0.36922933]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">MultivariateOutlierDetector</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># No warning.</span>
+<span class="go">array([[ 0.12573022, -0.13210486],</span>
+<span class="go">       [ 0.64042265,  0.10490012],</span>
+<span class="go">       [-0.53566937,  0.36159505],</span>
+<span class="go">       ...,</span>
+<span class="go">       [ 1.24972527,  0.75063397],</span>
+<span class="go">       [-0.55581573, -2.01881162],</span>
+<span class="go">       [-0.90942756,  0.36922933]])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.MultivariateOutlierDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.MultivariateOutlierDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks X (and y, if it is continuous data) for outlier values.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">OutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<p>Transformer that raises warnings if data has more outliers than expected
+for the size and dimensionality of dataset. The data are considered in a
+multivariate sense.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when fitting. In this transformer, we don’t
+transform the data, we just learn the distribution’s properties.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Called when transforming validation or prediction data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Called by fit_transform() when fitting the training data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition">#</a></dt>
+<dd><p>Record the robust location and covariance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to learn the distributions from.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Permalink to this definition">#</a></dt>
+<dd><p>This is called when fitting, if it is present. We can make our call to self.fit()
+and not bother calling self.transform(), because we’re not actually transforming
+anything, we’re just getting set up for applying our test later during prediction.
+The warning about outliers in the data will come from self.fit().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Mahalanobis distances using the location and covarianced
+learned from the training data.</p>
+<p>This transformer does not transform the data, it just compares the
+distributions and raises a warning if there are more outliers than
+expected, given the confidence level or threshold specified at
+instantiation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.UnivariateOutlierDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">UnivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.UnivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
+<p>Transformer that detects if there are more than the expected number of
+outliers in each feature considered separately. (To consider all features
+together, use the <cite>OutlierDetector</cite> instead.)</p>
+<p><a href="#id6"><span class="problematic" id="id7">**</span></a>kwargs are passed to <cite>has_outliers</cite>.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">UnivariateOutlierDetector</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  
+<span class="go">redflag/sklearn.py::redflag.sklearn.UnivariateOutlierDetector</span>
+<span class="go">  🚩 Features 0, 1 may have more outliers (in a univariate sense) than expected.</span>
+<span class="go">array([[ 0.12573022, -0.13210486],</span>
+<span class="go">       [ 0.64042265,  0.10490012],</span>
+<span class="go">       [-0.53566937,  0.36159505],</span>
+<span class="go">       ...,</span>
+<span class="go">       [ 1.24972527,  0.75063397],</span>
+<span class="go">       [-0.55581573, -2.01881162],</span>
+<span class="go">       [-0.90942756,  0.36922933]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">UnivariateOutlierDetector</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># No warning.</span>
+<span class="go">array([[ 0.12573022, -0.13210486],</span>
+<span class="go">       [ 0.64042265,  0.10490012],</span>
+<span class="go">       [-0.53566937,  0.36159505],</span>
+<span class="go">       ...,</span>
+<span class="go">       [ 1.24972527,  0.75063397],</span>
+<span class="go">       [-0.55581573, -2.01881162],</span>
+<span class="go">       [-0.90942756,  0.36922933]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.sklearn.formatwarning">
+<span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">formatwarning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.formatwarning" title="Permalink to this definition">#</a></dt>
+<dd><p>A custom warning format function.</p>
+</dd></dl>
+
 </section>
 <section id="module-redflag.target">
 <span id="redflag-target-module"></span><h2>redflag.target module<a class="headerlink" href="#module-redflag.target" title="Permalink to this heading">#</a></h2>
@@ -1348,32 +1778,6 @@ will take every other sample; 3 will take every third, etc.</p></li>
 <span class="go">(array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]), array([0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ecdf</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;zero&#39;</span><span class="p">)</span>
 <span class="go">(array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]), array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]))</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.utils.expected_outliers">
-<span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">expected_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.utils.expected_outliers" title="Permalink to this definition">#</a></dt>
-<dd><p>Expected number of outliers in a dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<em>int</em>) – The number of samples.</p></li>
-<li><p><strong>d</strong> (<em>int</em>) – The number of features.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em>) – The number of standard deviations from the mean.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The expected number of outliers.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">expected_outliers</span><span class="p">(</span><span class="mi">10_000</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="go">137</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1836,14 +2240,14 @@ per column.</p>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="_notebooks/Basic_usage.html">
+          <a class="prev-page" href="_notebooks/Using_redflag_with_sklearn.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">🚩 Basic usage</div>
+                <div class="title">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></div>
                 
               </div>
             </a>
@@ -1888,10 +2292,13 @@ per column.</p>
             <ul>
 <li><a class="reference internal" href="#">redflag package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-redflag.feature">redflag.feature module</a></li>
+<li><a class="reference internal" href="#module-redflag.distributions">redflag.distributions module</a></li>
 <li><a class="reference internal" href="#module-redflag.imbalance">redflag.imbalance module</a></li>
 <li><a class="reference internal" href="#module-redflag.importance">redflag.importance module</a></li>
+<li><a class="reference internal" href="#module-redflag.independence">redflag.independence module</a></li>
+<li><a class="reference internal" href="#module-redflag.outliers">redflag.outliers module</a></li>
 <li><a class="reference internal" href="#module-redflag.redflag">redflag.redflag module</a></li>
+<li><a class="reference internal" href="#module-redflag.sklearn">redflag.sklearn module</a></li>
 <li><a class="reference internal" href="#module-redflag.target">redflag.target module</a></li>
 <li><a class="reference internal" href="#module-redflag.utils">redflag.utils module</a></li>
 <li><a class="reference internal" href="#module-redflag">Module contents</a></li>

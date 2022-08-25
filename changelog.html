@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="License" href="license.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
         <title>Changelog - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
@@ -163,6 +163,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Basic_usage.html">🚩 Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -222,7 +223,14 @@
 <section id="in-progress">
 <h2>0.1.9, in progress<a class="headerlink" href="#in-progress" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p>More docs!</p></li>
+<li><p>Added some experimental <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> transformers that implement various <code class="docutils literal notranslate"><span class="pre">redflag</span></code> tests. These do not transform the data in any way, they just inspect the data and emit warnings if tests fail. The main ones are: <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.ClipDetector</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.OutlierDetector</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.CorrelationDetector</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.ImbalanceDetector</span></code>, and <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.DistributionComparator</span></code>.</p></li>
+<li><p>Added tests for the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> transformers. These are in <code class="docutils literal notranslate"><span class="pre">redflag/tests/test_redflag.py</span></code> file, whereas all other tests are doctests. You can run all the tests at once with <code class="docutils literal notranslate"><span class="pre">pytest</span></code>; coverage is currently 94%.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">docs/notebooks/Using_redflag_with_sklearn.ipynb</span></code> to show how to use these new objects in an <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> pipeline.</p></li>
+<li><p>Since there’s quite a bit of <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> code in the <code class="docutils literal notranslate"><span class="pre">redflag</span></code> package, it is now a hard dependency. I removed the other dependencies because they are all dependencies of <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">redflag.has_outliers()</span></code> to make it easier to check for excessive outliers in a dataset. This function only uses Mahalanobis distance and always works in a multivariate sense.</p></li>
+<li><p>Reorganized the <code class="docutils literal notranslate"><span class="pre">redflag.features</span></code> module into new modules: <code class="docutils literal notranslate"><span class="pre">redflag.distributions</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.outliers</span></code>, and <code class="docutils literal notranslate"><span class="pre">redflag.independence</span></code>. All of the functions are still imported into the <code class="docutils literal notranslate"><span class="pre">redflag</span></code> namespace, so this doesn’t affect existing code.</p></li>
+<li><p>Added examples to <code class="docutils literal notranslate"><span class="pre">docs/notebooks/Basic_usage.ipynb</span></code>.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">class_imbalance()</span></code> function, which was confusing. Use <code class="docutils literal notranslate"><span class="pre">imbalance_ratio()</span></code> instead.</p></li>
 </ul>
 </section>
 <section id="july-2022">
@@ -230,7 +238,7 @@
 <ul class="simple">
 <li><p>Added Wasserstein distance comparisons for univariate and multivariate distributions. This works for either a <code class="docutils literal notranslate"><span class="pre">groups</span></code> array, or for multiple dataset splits if that’s more convenient.</p></li>
 <li><p>Improved <code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code>, removing OneClassSVM method and adding EllipticEnvelope and Mahalanobis distance.</p></li>
-<li><p>Added Mahalanobis distance outlier detection function to serve <code class="docutils literal notranslate"><span class="pre">get_outlier()</span></code> or be used on its own. Reproduces the results <code class="docutils literal notranslate"><span class="pre">zscore_outliers()</span></code> used to give for univariate data, so removed that.</p></li>
+<li><p>Added Mahalanobis distance outlier detection function to serve <code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code> or be used on its own. Reproduces the results <code class="docutils literal notranslate"><span class="pre">zscore_outliers()</span></code> used to give for univariate data, so removed that.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">kde_peaks()</span></code> function to find peaks in a kernel density estimate. This also needed some other functions, including <code class="docutils literal notranslate"><span class="pre">fit_kde()</span></code>, <code class="docutils literal notranslate"><span class="pre">get_kde()</span></code>, <code class="docutils literal notranslate"><span class="pre">find_large_peaks()</span></code>, and the bandwidth estimators, <code class="docutils literal notranslate"><span class="pre">bw_silverman()</span></code> and <code class="docutils literal notranslate"><span class="pre">bw_scott()</span></code>.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">classes</span></code> argument to the class imbalance function, in case there are classes with no data, or to override the classes in the data.</p></li>
 <li><p>Fixed a bug in the <code class="docutils literal notranslate"><span class="pre">feature_importances()</span></code> function.</p></li>
