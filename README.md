@@ -18,27 +18,23 @@ You can install this package with `pip`:
 
     pip install redflag
 
-Installing `scikit-learn` allows you to access some extra options for outlier detection.
-
-    pip install redflag[sklearn]
-
-For developers, there are also options for installing `tests`, `docs` and `dev` dependencies.
+For developers, there are `pip` options for installing `tests`, `docs` and `dev` dependencies, e.g. `pip install redflag[dev]` to install all testing and documentation packages.
 
 
 ## Example
 
-`redflag` is currently just a collection of functions. Most of the useful ones take a single column of data (e.g. a 1D NumPy array) and run a single test. For example, we can do some outlier detection:
+`redflag` is currently just a collection of functions. Most of the useful ones take a single column of data (e.g. a 1D NumPy array) and run a single test. For example, we can do some outlier detection. The `get_outliers()` function returns the indices of data points that are considered outliers:
 
 ```python
 >>> import redflag as rf
 >>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
->>> rf.has_outliers(data)
+>>> rf.get_outliers(data)
 array([], dtype=int64)
->>> rf.has_outliers(3 * data + [100])
-array([100])
+>>> rf.get_outliers(3 * data + [100])
+array([33])
 ```
 
-See the notebook [Using_redflag.ipynb](https://github.com/agilescientific/redflag/blob/main/notebooks/Using_redflag.ipynb) for several other examples.
+See [the documentation](https://code.agilescientific.com/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/agilescientific/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
 
 
 ## Documentation
@@ -55,6 +51,6 @@ Please see [`CONTRIBUTING.md`](https://github.com/agilescientific/redflag/blob/m
 
 You can run the tests (requires `pytest` and `pytest-cov`) with
 
-    python run_tests.py
+    pytest
 
-Most of the tests are run with `doctest`.
+Most of the tests are doctests, but `pytest` will run them using the settings in `setup.cfg`.

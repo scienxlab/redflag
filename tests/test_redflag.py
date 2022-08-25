@@ -98,3 +98,38 @@ def test_outlier_detector():
     # Does not warn with factor of 2:
     pipe = make_pipeline(rf.OutlierDetector(factor=2.0))
     pipe.fit_transform(X)
+
+
+def test_imbalance_detector():
+    pipe = make_pipeline(rf.ImbalanceDetector())
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(100, 1))
+    y = rf.generate_data([20, 80])
+    with pytest.warns(UserWarning, match="The labels are imbalanced"):
+        pipe.fit_transform(X, y)
+
+    # Check other method.
+    pipe = make_pipeline(rf.ImbalanceDetector(method='ir', threshold=2))
+    with pytest.warns(UserWarning, match="The labels are imbalanced"):
+        pipe.fit_transform(X, y)
+
+    # Does not warn with higher threshold (summary statistic for this y is 0.6):
+    pipe = make_pipeline(rf.ImbalanceDetector(threshold=0.7))
+    pipe.fit_transform(X, y)
+
+    # Warns about wrong kind of y:
+    y = rng.normal(size=100)
+    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+        pipe.fit_transform(X, y)
+
+    # Raises error because method doesn't exist:
+    with pytest.raises(ValueError) as e:
+        pipe = make_pipeline(rf.ImbalanceDetector(method='foo'))
+
+    # Raises error because threshold is wrong.
+    with pytest.raises(ValueError) as e:
+        pipe = make_pipeline(rf.ImbalanceDetector(method='ir', threshold=0.5))
+
+    # Raises error because threshold is wrong.
+    with pytest.raises(ValueError) as e:
+        pipe = make_pipeline(rf.ImbalanceDetector(method='id', threshold=2))

@@ -31,6 +31,7 @@ from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
 from .target import is_continuous
 from .independence import is_correlated
 from .outliers import has_outliers, expected_outliers
+from .imbalance import imbalance_degree, imbalance_ratio, minority_classes
 
 
 def formatwarning(message, *args, **kwargs):
@@ -434,7 +435,7 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
             warnings.warn(f"🚩 There are more outliers than expected in the data ({actual} vs {expected}).")
 
         return X
-    
+
     def fit_transform(self, X, y=None):
         """
         This is called when fitting, if it is present. We can make our call to self.fit()
@@ -449,18 +450,81 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
         Returns:
             X.
         """
-        # Call fit() to learn the distributions.
         self = self.fit(X, y=y)
         
-        # When fitting, we do not run transform() (actually a test).
+        # When fitting, we do not run transform().
         return X
+
+
+class ImbalanceDetector(BaseEstimator, TransformerMixin):
+
+    def __init__(self, method='id', threshold=0.4, classes=None):
+        """
+        Constructor for the class.
+
+        Args:
+            method (str): The method to use for imbalance detection. In general,
+                'id' is the best method for multi-class classification problems
+                (but can be used for binary classification problems as well).
+            threshold (float): The threshold for the imbalance, default 0.5.
+                For 'id', the imbalance summary statistic is in [0, 1). See
+                Ortigosa-Hernandez et al. (2017) for details. For 'ir', the
+                threshold is a ratio of the majority class to the minority class
+                and ranges from 1 (balanced) to infinity (nothing in the
+                minority class).
+            classes (list): The names of the classes present in the data, even
+                if they are not present in the array `y`.
+        """
+        if method not in ['id', 'ir']:
+            raise ValueError(f"Method must be 'id' or 'ir' but was {method}")
+
+        if (method == 'ir') and (threshold <= 1):
+            raise ValueError(f"Method is 'ir' but threshold <= 1. For IR, the measure is the ratio of the majority class to the minority class; for example use 2 to trigger a warning if there are twice as many samples in the majority class as in the minority class.")
+
+        if (method == 'id') and (threshold >= 1):
+            raise ValueError(f"Method is 'id' but threshold >= 1. For ID, the measure is always in [0, 1).")
+
+        self.method = method
+        self.threshold = threshold
+        self.classes = classes
+
+    def fit(self, X, y=None):
+
+        # If there's no target or y is continuous (probably a regression), we're done.
+        if y is None or is_continuous(y):
+            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+            return self
+
+        methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
+        imbalance = methods[self.method](y)
+        
+        if self.method == 'id':
+            imbalance = imbalance - int(imbalance)
+
+        min_classes = minority_classes(y, classes=self.classes)
+
+        imbalanced = (len(min_classes) > 0) and (imbalance > self.threshold)
+
+        if imbalanced and self.method == 'id':
+            warnings.warn(f"🚩 The labels are imbalanced by more than the threshold ({imbalance:0.3f} > {self.threshold:0.3f}).")
+        if imbalanced and self.method == 'ir':
+            warnings.warn(f"🚩 The labels are imbalanced by more than the threshold ({imbalance:0.1f} > {self.threshold:0.1f}).")
+
+        return self
+
+    def transform(self, X, y=None):
+        """
+        Checks y for imbalance.
+        """
+        return check_array(X)
 
 
 pipeline = Pipeline(
     steps=[
+        ("rf.imbalance", ImbalanceDetector()),
         ("rf.clip", ClipDetector()),
+        ("rf.correlation", CorrelationDetector()),
         ("rf.outlier", OutlierDetector()),
-        ("rf.corr", CorrelationDetector()),
-        ("rf.dist", DistributionComparator()),
+        ("rf.distributions", DistributionComparator()),
     ]
 )

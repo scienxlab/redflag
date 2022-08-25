@@ -35,7 +35,7 @@ from .target import *
 from .utils import *
 
 
-def get_counts(a, classes=None):
+def class_counts(a, classes=None):
     """
     Make a Counter of the class labels in `classes`, or in `a` if `classes`
     is None.
@@ -51,7 +51,7 @@ def get_counts(a, classes=None):
             `classes` (if `classes is not `None`) or `a`.
 
     Example:
-    >>> get_counts([1, 3, 2, 2, 3, 3])
+    >>> class_counts([1, 3, 2, 2, 3, 3])
     {1: 1, 3: 3, 2: 2}
     """
     counts = Counter(a)
@@ -81,7 +81,7 @@ def empirical_distribution(a, classes=None):
             classes discovered in `a` (if `classes` is None) or named in 
             `classes` otherwise.
     """
-    c = get_counts(a, classes=classes)
+    c = class_counts(a, classes=classes)
     ζ = np.array([v / sum(c.values()) for v in c.values()])
     e = np.array([1 / len(c) for _ in c.values()])
     return ζ, e
@@ -90,6 +90,8 @@ def empirical_distribution(a, classes=None):
 def imbalance_ratio(a, classes=None):
     """
     Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
+
+    This measure is useful for binary problems, but not for multiclass problems.
 
     Args:
         a (array): A list of class labels.
@@ -184,9 +186,15 @@ def furthest_distribution(a, classes=None):
     return np.array(i)
 
 
-def imbalance_degree(a, method='manhattan', classes=None):
+def imbalance_degree(a, method='tv', classes=None):
     r"""
-    Compute IR according to Eq 8 in Ortigosa-Hernandez et al. (2017).
+    The imbalance degree reflects the degree to which the distribution of
+    classes is imbalanced. The integer part of the imbalance degree is the
+    number of minority classes minus 1 (m - 1, below). The fractional part
+    is the distance between the actual (empirical) and expected distributions.
+    The distance can be defined in different ways, depending on the method.
+
+    IR is defined according to Eq 8 in Ortigosa-Hernandez et al. (2017).
 
     .. math::
         \mathrm{ID}(\zeta) = \frac{d_\mathrm{\Delta}(\mathbf{\zeta}, \mathbf{e})}
@@ -195,8 +203,8 @@ def imbalance_degree(a, method='manhattan', classes=None):
     `method` can be a string from:
       - 'manhattan': Manhattan distance or L1 norm
       - 'euclidean': Euclidean distance or L2 norm
-      - 'hellinger': Hellinger distance
-      - 'tv': total variation distance
+      - 'hellinger': Hellinger distance, recommended by Ortigosa-Hernandez et al. (2017)
+      - 'tv': total variation distance, recommended by Ortigosa-Hernandez et al. (2017)
       - 'kl': Kullback-Leibner divergence
 
     It can also be a function returning a divergence. 
@@ -229,39 +237,8 @@ def imbalance_degree(a, method='manhattan', classes=None):
     m = sum(ζ < e)
     i = furthest_distribution(a, classes=classes)
     div = divergence(method)
-    return (div(ζ, e) / div(i, e)) + (m - 1)
-
-
-def class_imbalance(a, classes=None):
-    """
-    Binary classification: imbalance ratio (number of expected majority class
-    samples to number of expected minority samples).
-    
-    Multiclass classifications: imbalance degree metric, per Ortigosa-Hernandez
-    et al. (2017).
-
-    Args:
-        a (array): A list of class labels.
-        classes (array): A list of classes, in the event that `a` does not
-            contain all of the classes, or if you want to ignore some classes
-            in `a` (not recommended) you can omit them from this list.
-
-    Returns:
-        float: The imbalance ratio (binary  tasks) or imbalance degree
-        (multiclass tasks).
-
-    Examples:
-        >>> class_imbalance([0, 0, 0, 1, 1, 1, 1, 1, 1])
-        2.0
-        >>> class_imbalance([0, 0, 0, 1, 1, 1, 1, 1, 1, 2])
-        1.4
-    """
-    if is_binary(a):
-        return imbalance_ratio(a, classes=classes)
-    elif is_multiclass(a):
-        return imbalance_degree(a, classes=classes)
-    else:
-        return None
+    epsilon = 1e-12
+    return (div(ζ, e) / (epsilon + div(i, e))) + (m - 1)
 
 
 def minority_classes(a, classes=None):
@@ -288,7 +265,7 @@ def minority_classes(a, classes=None):
     # been raised by `empirical_distribution`.
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        classes = get_counts(a, classes=classes).keys()
+        classes = class_counts(a, classes=classes).keys()
 
     # Return the minority classes in order, smallest first.
     return np.array([c for ζi, ei, c in sorted(zip(ζ, e, classes)) if ζi < ei])
