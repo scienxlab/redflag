@@ -121,7 +121,7 @@ class UnivariateOutlierDetector(BaseRedflagDetector):
     outliers in each feature considered separately. (To consider all features
     together, use the `OutlierDetector` instead.)
 
-    **kwargs are passed to `has_outliers`.
+    kwargs are passed to `has_outliers`.
 
     Example:
         >>> from sklearn.pipeline import make_pipeline
@@ -217,21 +217,9 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
 
 
 class DistributionComparator(BaseEstimator, TransformerMixin):
-    """
-    Transformer that raises warnings if validation or prediction data is not
-    in the same distribution as the training data.
-
-    Methods:
-        fit_transform(): Called when fitting. In this transformer, we don't
-            transform the data, we just learn the distributions.
-        transform(): Called when transforming validation or prediction data.
-        fit(): Called by fit_transform() when fitting the training data.
-    """
 
     def __init__(self, threshold=1.0, bins=200, warn=True, warn_if_zero=False):
         """
-        Constructor for the class.
-
         Args:
             threshold (float): The threshold for the Wasserstein distance.
             bins (int): The number of bins to use when computing the histograms.
@@ -337,17 +325,7 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
 
 
 class OutlierDetector(BaseEstimator, TransformerMixin):
-    """
-    Transformer that raises warnings if data has more outliers than expected
-    for the size and dimensionality of dataset. The data are considered in a
-    multivariate sense.
 
-    Methods:
-        fit_transform(): Called when fitting. In this transformer, we don't
-            transform the data, we just learn the distribution's properties.
-        transform(): Called when transforming validation or prediction data.
-        fit(): Called by fit_transform() when fitting the training data.
-    """
     def __init__(self, p=0.99, threshold=None, factor=1.0):
         """
         Constructor for the class.
