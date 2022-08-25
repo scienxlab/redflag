@@ -1,4 +1,4 @@
-# Installation
+# 🚩 Installation
 
 At the command line:
 
@@ -12,4 +12,4 @@ Or, if you use Conda environments:
 
 For developers, there are also options for installing `tests`, `docs` and `dev` dependencies, e.g. `pip install redflag[dev]` to install all testing and documentation packages.
 
-If you want to help develop Redflag, please read [Development](development.md).
+If you want to help develop `redflag`, please read [Development](development.md).

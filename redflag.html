@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Development" href="development.html" /><link rel="prev" title="Using redflag with sklearn" href="_notebooks/Using_redflag_with_sklearn.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Development" href="development.html" /><link rel="prev" title="🚩 Using redflag with sklearn" href="_notebooks/Using_redflag_with_sklearn.html" />
 
     <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
         <title>redflag package - redflag documentation</title>
@@ -161,9 +161,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">🚩 Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Basic_usage.html">🚩 Basic usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul class="current">
@@ -1227,30 +1227,9 @@ the threshold will be used to compute <cite>p</cite>.</p></li>
 <dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">DistributionComparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn_if_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
-<p>Transformer that raises warnings if validation or prediction data is not
-in the same distribution as the training data.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.fit_transform">
-<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.fit_transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Called when fitting. In this transformer, we don’t
-transform the data, we just learn the distributions.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Called when transforming validation or prediction data.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.fit" title="Permalink to this definition">#</a></dt>
-<dd><p>Called by fit_transform() when fitting the training data.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Record the histograms of the input data, using 200 bins by default.</p>
 <p>Normally we’d compute Wasserstein distance directly from the data,
 but that seems memory-expensive.</p>
@@ -1268,8 +1247,8 @@ but that seems memory-expensive.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.fit_transform" title="Permalink to this definition">#</a></dt>
 <dd><p>This is called when fitting, if it is present. We can make our call to self.fit()
 and not bother calling self.transform(), because we’re not actually transforming
 anything, we’re just getting set up for applying our test later during prediction.</p>
@@ -1290,8 +1269,8 @@ anything, we’re just getting set up for applying our test later during predict
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.sklearn.DistributionComparator.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DistributionComparator.transform" title="Permalink to this definition">#</a></dt>
 <dd><p>Compare the histograms of the input data X to the histograms of the
 training data. We use the Wasserstein distance to compare the
 distributions.</p>
@@ -1384,31 +1363,9 @@ sense. (To consider feature distributions separately, use the
 <dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">OutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
-<p>Transformer that raises warnings if data has more outliers than expected
-for the size and dimensionality of dataset. The data are considered in a
-multivariate sense.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit_transform">
-<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit_transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Called when fitting. In this transformer, we don’t
-transform the data, we just learn the distribution’s properties.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Called when transforming validation or prediction data.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit" title="Permalink to this definition">#</a></dt>
-<dd><p>Called by fit_transform() when fitting the training data.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Record the robust location and covariance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1424,8 +1381,8 @@ transform the data, we just learn the distribution’s properties.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit_transform" title="Permalink to this definition">#</a></dt>
 <dd><p>This is called when fitting, if it is present. We can make our call to self.fit()
 and not bother calling self.transform(), because we’re not actually transforming
 anything, we’re just getting set up for applying our test later during prediction.
@@ -1447,8 +1404,8 @@ The warning about outliers in the data will come from self.fit().</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id5" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.transform" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute the Mahalanobis distances using the location and covarianced
 learned from the training data.</p>
 <p>This transformer does not transform the data, it just compares the
@@ -1480,7 +1437,7 @@ instantiation.</p>
 <p>Transformer that detects if there are more than the expected number of
 outliers in each feature considered separately. (To consider all features
 together, use the <cite>OutlierDetector</cite> instead.)</p>
-<p><a href="#id6"><span class="problematic" id="id7">**</span></a>kwargs are passed to <cite>has_outliers</cite>.</p>
+<p>kwargs are passed to <cite>has_outliers</cite>.</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">UnivariateOutlierDetector</span><span class="p">())</span>
@@ -2247,7 +2204,7 @@ per column.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></div>
+                <div class="title">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></div>
                 
               </div>
             </a>
