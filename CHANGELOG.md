@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.1.9, in progress
+## 0.1.10, in development
+
+- Coming soon...
+
+
+## 0.1.9, 25 August 2022
 
 - Added some experimental `sklearn` transformers that implement various `redflag` tests. These do not transform the data in any way, they just inspect the data and emit warnings if tests fail. The main ones are: `redflag.sklearn.ClipDetector`, `redflag.sklearn.OutlierDetector`, `redflag.sklearn.CorrelationDetector`, `redflag.sklearn.ImbalanceDetector`, and `redflag.sklearn.DistributionComparator`.
 - Added tests for the `sklearn` transformers. These are in `redflag/tests/test_redflag.py` file, whereas all other tests are doctests. You can run all the tests at once with `pytest`; coverage is currently 94%.
