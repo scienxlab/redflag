@@ -228,7 +228,9 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://geocomp.s3.amazonaws.com/data/Panoma_training_data.csv&#39;</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1"># Look at the transposed summary: each column in the DataFrame is a row here.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
 </div>
@@ -251,131 +253,159 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Well Name</th>
-      <th>Depth</th>
-      <th>Formation</th>
-      <th>RelPos</th>
-      <th>Marine</th>
-      <th>GR</th>
-      <th>ILD</th>
-      <th>DeltaPHI</th>
-      <th>PHIND</th>
-      <th>PE</th>
-      <th>Facies</th>
-      <th>LATITUDE</th>
-      <th>LONGITUDE</th>
-      <th>ILD_log10</th>
-      <th>Lithology</th>
-      <th>RHOB</th>
-      <th>Mineralogy</th>
-      <th>Siliciclastic</th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>SHRIMPLIN</td>
-      <td>851.3064</td>
-      <td>A1 SH</td>
-      <td>1.000</td>
-      <td>1</td>
-      <td>77.45</td>
-      <td>4.613176</td>
-      <td>9.9</td>
-      <td>11.915</td>
-      <td>4.6</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.664</td>
-      <td>siltstone</td>
-      <td>2393.499945</td>
-      <td>siliciclastic</td>
-      <td>True</td>
+      <th>Depth</th>
+      <td>3966.0</td>
+      <td>882.674555</td>
+      <td>40.150056</td>
+      <td>784.402800</td>
+      <td>858.012000</td>
+      <td>888.339600</td>
+      <td>913.028400</td>
+      <td>963.320400</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>SHRIMPLIN</td>
-      <td>851.4588</td>
-      <td>A1 SH</td>
-      <td>0.979</td>
-      <td>1</td>
-      <td>78.26</td>
-      <td>4.581419</td>
-      <td>14.2</td>
-      <td>12.565</td>
-      <td>4.1</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.661</td>
-      <td>siltstone</td>
-      <td>2416.119814</td>
-      <td>siliciclastic</td>
-      <td>True</td>
+      <th>RelPos</th>
+      <td>3966.0</td>
+      <td>0.524999</td>
+      <td>0.286375</td>
+      <td>0.010000</td>
+      <td>0.282000</td>
+      <td>0.531000</td>
+      <td>0.773000</td>
+      <td>1.000000</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>SHRIMPLIN</td>
-      <td>851.6112</td>
-      <td>A1 SH</td>
-      <td>0.957</td>
-      <td>1</td>
-      <td>79.05</td>
-      <td>4.549881</td>
-      <td>14.8</td>
-      <td>13.050</td>
-      <td>3.6</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.658</td>
-      <td>siltstone</td>
-      <td>2404.576056</td>
-      <td>siliciclastic</td>
-      <td>True</td>
+      <th>Marine</th>
+      <td>3966.0</td>
+      <td>1.325013</td>
+      <td>0.589539</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>SHRIMPLIN</td>
-      <td>851.7636</td>
-      <td>A1 SH</td>
-      <td>0.936</td>
-      <td>1</td>
-      <td>86.10</td>
-      <td>4.518559</td>
-      <td>13.9</td>
-      <td>13.115</td>
-      <td>3.5</td>
-      <td>3.0</td>
-      <td>37.978076</td>
-      <td>-100.987305</td>
-      <td>0.655</td>
-      <td>siltstone</td>
-      <td>2393.249071</td>
-      <td>siliciclastic</td>
-      <td>True</td>
+      <th>GR</th>
+      <td>3966.0</td>
+      <td>64.367899</td>
+      <td>28.414603</td>
+      <td>12.036000</td>
+      <td>45.311250</td>
+      <td>64.840000</td>
+      <td>78.809750</td>
+      <td>200.000000</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>SHRIMPLIN</td>
-      <td>851.9160</td>
-      <td>A1 SH</td>
-      <td>0.915</td>
-      <td>1</td>
-      <td>74.58</td>
-      <td>4.436086</td>
-      <td>13.5</td>
-      <td>13.300</td>
-      <td>3.4</td>
-      <td>3.0</td>
-      <td>37.978076</td>
+      <th>ILD</th>
+      <td>3966.0</td>
+      <td>5.240308</td>
+      <td>3.190416</td>
+      <td>0.340408</td>
+      <td>3.169567</td>
+      <td>4.305266</td>
+      <td>6.664234</td>
+      <td>32.136605</td>
+    </tr>
+    <tr>
+      <th>DeltaPHI</th>
+      <td>3966.0</td>
+      <td>3.469088</td>
+      <td>4.922310</td>
+      <td>-21.832000</td>
+      <td>1.000000</td>
+      <td>3.292500</td>
+      <td>6.124750</td>
+      <td>18.600000</td>
+    </tr>
+    <tr>
+      <th>PHIND</th>
+      <td>3966.0</td>
+      <td>13.008807</td>
+      <td>6.936391</td>
+      <td>0.550000</td>
+      <td>8.196250</td>
+      <td>11.781500</td>
+      <td>16.050000</td>
+      <td>52.369000</td>
+    </tr>
+    <tr>
+      <th>PE</th>
+      <td>3966.0</td>
+      <td>3.686427</td>
+      <td>0.815113</td>
+      <td>0.200000</td>
+      <td>3.123000</td>
+      <td>3.514500</td>
+      <td>4.241750</td>
+      <td>8.094000</td>
+    </tr>
+    <tr>
+      <th>Facies</th>
+      <td>3966.0</td>
+      <td>4.471004</td>
+      <td>2.406180</td>
+      <td>1.000000</td>
+      <td>2.000000</td>
+      <td>4.000000</td>
+      <td>6.000000</td>
+      <td>9.000000</td>
+    </tr>
+    <tr>
+      <th>LATITUDE</th>
+      <td>3966.0</td>
+      <td>37.632575</td>
+      <td>0.299398</td>
+      <td>37.180732</td>
+      <td>37.356426</td>
+      <td>37.500380</td>
+      <td>37.910583</td>
+      <td>38.063373</td>
+    </tr>
+    <tr>
+      <th>LONGITUDE</th>
+      <td>3966.0</td>
+      <td>-101.294895</td>
+      <td>0.230454</td>
+      <td>-101.646452</td>
+      <td>-101.389189</td>
+      <td>-101.325130</td>
+      <td>-101.106045</td>
       <td>-100.987305</td>
-      <td>0.647</td>
-      <td>siltstone</td>
-      <td>2382.602601</td>
-      <td>siliciclastic</td>
-      <td>True</td>
+    </tr>
+    <tr>
+      <th>ILD_log10</th>
+      <td>3966.0</td>
+      <td>0.648860</td>
+      <td>0.251542</td>
+      <td>-0.468000</td>
+      <td>0.501000</td>
+      <td>0.634000</td>
+      <td>0.823750</td>
+      <td>1.507000</td>
+    </tr>
+    <tr>
+      <th>RHOB</th>
+      <td>3966.0</td>
+      <td>2288.861692</td>
+      <td>218.038459</td>
+      <td>1500.000000</td>
+      <td>2201.007475</td>
+      <td>2342.202051</td>
+      <td>2434.166399</td>
+      <td>2802.871147</td>
     </tr>
   </tbody>
 </table>
@@ -525,7 +555,8 @@
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_pred</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -539,170 +570,8 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
        &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
        &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;,
-       &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;mudstone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;, &#39;limestone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;siltstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;mudstone&#39;,
-       &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;,
-       &#39;mudstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;sandstone&#39;,
-       &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;,
-       &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;,
-       &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;,
-       &#39;sandstone&#39;, &#39;sandstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;,
-       &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;sandstone&#39;,
-       &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;dolomite&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;sandstone&#39;, &#39;siltstone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;sandstone&#39;, &#39;sandstone&#39;,
-       &#39;sandstone&#39;, &#39;limestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;mudstone&#39;,
-       &#39;mudstone&#39;, &#39;mudstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;wackestone&#39;,
-       &#39;wackestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;wackestone&#39;, &#39;wackestone&#39;,
-       &#39;limestone&#39;, &#39;dolomite&#39;, &#39;dolomite&#39;, &#39;limestone&#39;, &#39;siltstone&#39;,
-       &#39;limestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;limestone&#39;,
-       &#39;limestone&#39;, &#39;wackestone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;mudstone&#39;,
-       &#39;mudstone&#39;, &#39;limestone&#39;, &#39;limestone&#39;, &#39;mudstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;mudstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;,
-       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;], dtype=object)
+       &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;, &#39;siltstone&#39;],
+      dtype=object)
 </pre></div>
 </div>
 </div>
