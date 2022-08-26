@@ -103,7 +103,8 @@ def imbalance_ratio(a, classes=None):
         float: The imbalance ratio.
     """
     ζ, _ = empirical_distribution(a, classes=classes)
-    return max(ζ) / min(ζ)
+    epsilon = 1e-12
+    return max(ζ) / (min(ζ) + epsilon)
 
 
 def major_minor(a, classes=None):
