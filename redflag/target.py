@@ -23,14 +23,46 @@ import numpy as np
 from .utils import *
 
 
-def is_continuous(a, n=10):
+def update_p(prior, sensitivity, specificity):
+    """
+    Bayesian update of the prior probability, given the sensitivity and
+    specificity.
+
+    Args:
+        prior (float): The prior probability.
+        sensitivity (float): The sensitivity of the test, or true positive rate.
+        specificity (float): The specificity of the test, or false positive rate.
+
+    Returns:
+        float: The posterior probability.
+
+    Examples:
+        >>> update_p(0.5, 0.5, 0.5)
+        0.5
+        >>> update_p(0.001, 0.999, 0.999)
+        0.4999999999999998
+        >>> update_p(0.5, 0.9, 0.9)
+        0.9
+    """
+    tpr, fpr = sensitivity, 1 - specificity
+    return (tpr * prior) / (tpr*prior + fpr*(1-prior))
+
+
+def is_continuous(a, n=None):
     """
     Decide if this is most likely a continuous variable (and thus, if this is
     the target, for example, most likely a regression task).
+
     Args:
         a (array): A target vector.
+        n (int): The number of potential categories. That is, if there are
+            fewer than n unique values in the data, it is estimated to be
+            categorical. Default: the square root of the sample size, which
+            is 10% of the data or 10_000, whichever is smaller.
+
     Returns:
         bool: True if arr is probably best suited to regression.
+
     Examples:
         >>> is_continuous(10 * ['a', 'b'])
         False
@@ -41,22 +73,39 @@ def is_continuous(a, n=10):
         True
     """
     arr = np.array(a)
+
     if not is_numeric(arr):
         return False
 
-    # If we have non-floats and there are a lot of values over a large range,
-    # then it's probably not categorical.
-    nonfloats = not np.issubdtype(arr.dtype, np.floating)
-    wide = np.max(arr) - np.min(arr) > n
-    large = np.unique(arr).size > n
-    if nonfloats and not (wide and large):
-        return False
+    # Starting with this and having the uplifts be 0.666 means
+    # that at least 2 tests must trigger to get over 0.5.
+    p = 0.333
+        
+    N = max(min(len(arr)//10, 10_000), 10)
+    sample = np.random.choice(arr, size=N, replace=False)
+
+    if n is None:
+        n = np.sqrt(len(sample))
+
+    # Check if floats (proper floats, ).
+    if np.issubdtype(sample.dtype, np.floating):
+
+        # If not ints in disguise.
+        if not np.all([xi.is_integer() for xi in np.unique(sample)]):
+            p = update_p(p, 0.666, 0.666)
+            
+        # If low precision.
+        if np.all((100*sample).astype(int) - 100*sample < 1e-12):
+            p = update_p(p, 0.666, 0.666)
+
+    if np.unique(sample).size > n:
+        p = update_p(p, 0.666, 0.666)
+
+    many_gap_sizes = np.unique(np.diff(sample)).size > n
+    if many_gap_sizes:
+        p = update_p(p, 0.666, 0.666)
     
-    # If we have small gaps between values and there are a lot of different
-    # gap sizes, it's probably not categorical.
-    small_gaps = np.min(np.diff(arr)) < np.min(arr) / 100
-    many_gap_sizes = np.unique(np.diff(arr)).size > np.unique(arr).size / 10
-    return small_gaps and many_gap_sizes
+    return p > 0.5
 
 
 def n_classes(y):
