@@ -95,3 +95,70 @@ def feature_importances(X, y=None, n=3, task=None, random_state=None, standardiz
 
     # Drop imps with smallest variance and take mean of what's left.
     return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-n:], axis=0)
+
+
+def least_important_features(importances, threshold=None):
+    """
+    Returns the least important features, in order of importance (least
+        important first).
+    
+    Args:
+        importances (array): the importance of the features, in the order in
+            which they appear in X.
+        threshold (float or None): the cutoff for the importance. If None, the
+            cutoff is set to half the expectation of the importance (i.e. 0.5/M
+            where M is the number of features).
+
+    Returns:
+        array: The indices of the least important features.
+
+    Examples:
+        >>> least_important_features([0.05, 0.01, 0.24, 0.4, 0.3])
+        array([1, 0])
+        >>> least_important_features([0.2, 0.2, 0.2, 0.2, 0.2])
+        array([], dtype=int64)
+    """
+    if threshold is None:
+        threshold = 0.5 / len(importances)
+
+    least_important = {}
+    for arg, imp in zip(np.argsort(importances), np.sort(importances)):
+        if sum(least_important.values()) + imp > threshold:
+            break
+        least_important[arg] = imp
+
+    return np.array(list(least_important)).astype(int)
+
+
+def most_important_features(importances, threshold=None):
+    """
+    Returns the indices of the most important features, in reverse order of
+        importance (most important first).
+ 
+    Args:
+        importances (array): the importance of the features, in the order in
+            which they appear in X.
+        threshold (float or None): the cutoff for the importance. If None,
+            the cutoff is set to (M-1)/M where M is the number of features.
+
+    Returns:
+        array: The indices of the most important features.
+
+    Examples:
+        >>> most_important_features([0.05, 0.01, 0.24, 0.4, 0.3])
+        array([3, 4, 2])
+        >>> most_important_features([0.2, 0.2, 0.2, 0.2, 0.2])
+        array([4, 3, 2, 1, 0])
+    """
+    if threshold is None:
+        threshold = 1 - 0.5 / len(importances)
+
+    most_important = {}
+    args = np.argsort(importances)[::-1]
+    imps = np.sort(importances)[::-1]
+    for arg, imp in zip(args, imps):
+        most_important[arg] = imp
+        if sum(most_important.values()) > threshold:
+            break
+
+    return np.array(list(most_important)).astype(int)
