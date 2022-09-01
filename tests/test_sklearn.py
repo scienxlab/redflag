@@ -141,16 +141,16 @@ def test_importance_detector():
     with pytest.raises(ValueError) as e:
         pipe = make_pipeline(rf.ImportanceDetector(threshold=2))
 
-    pipe = make_pipeline(rf.ImportanceDetector())
+    pipe = make_pipeline(rf.ImportanceDetector(random_state=0))
 
     # Warns about low importance.
-    X, y = make_classification(n_samples=100, n_features=4, n_informative=3, n_redundant=0, n_classes=2, random_state=0)
-    with pytest.warns(UserWarning, match="Feature 1 has low importance"):
+    X, y = make_classification(n_samples=200, n_features=4, n_informative=3, n_redundant=0, n_classes=2, random_state=42)
+    with pytest.warns(UserWarning, match="Feature 3 has low importance"):
         pipe.fit_transform(X, y)
 
     # Warns about high importance.
-    X, y = make_classification(n_samples=100, n_features=5, n_informative=2, n_redundant=0, n_classes=2, random_state=0)
-    with pytest.warns(UserWarning, match="Features 3, 0 have very high importance"):
+    X, y = make_classification(n_samples=200, n_features=3, n_informative=2, n_redundant=0, n_classes=2, random_state=42)
+    with pytest.warns(UserWarning, match="Feature 1 has very high importance"):
         pipe.fit_transform(X, y)
 
     # Warns about wrong kind of y.
