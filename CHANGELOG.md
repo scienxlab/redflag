@@ -2,7 +2,8 @@
 
 ## 0.1.10, in development
 
-- Added `least_important_features()` and `most_important_features()`. These functions are complementary (in other words, if the same threshold is used in each, then between them they return all of the features). The default threshold for importance is half the expected value. E.g. if there are 5 features, then the default threshold is half of 0.2, or 0.1.
+- Added `least_important_features()` and `most_important_features()`. These functions are complementary (in other words, if the same threshold is used in each, then between them they return all of the features). The default threshold for importance is half the expected value. E.g. if there are 5 features, then the default threshold is half of 0.2, or 0.1. Part of [Issue 2](https://github.com/agilescientific/redflag/issues/2).
+- Added `ImportanceDetector` class, which warns if 1 or 2 features have anomalously high importance, or if some features have anomalously low importance. Part of [Issue 2](https://github.com/agilescientific/redflag/issues/2).
 - Improved `is_continuous()`, which was buggy. It still fails on some cases. I'm not sure a definitive test for continuousness (or, conversely, discreteness) is possible; it's just a heuristic.
 
 
