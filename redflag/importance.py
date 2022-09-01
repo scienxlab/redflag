@@ -65,6 +65,9 @@ def feature_importances(X, y=None, n=3, task=None, random_state=None, standardiz
         >>> feature_importances(X, y, task='classification', random_state=0)
         array([ 0.        ,  0.89013985, -0.55680651])
     """
+    if y is None:
+        raise NotImplementedError('Unsupervised importance is not yet implemented.')
+
     if task is None:
         task = 'regression' if is_continuous(y) else 'classification'
 

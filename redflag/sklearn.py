@@ -32,6 +32,8 @@ from .target import is_continuous
 from .independence import is_correlated
 from .outliers import has_outliers, expected_outliers
 from .imbalance import imbalance_degree, imbalance_ratio, minority_classes
+from .importance import feature_importances
+from .importance import least_important_features, most_important_features
 
 
 def formatwarning(message, *args, **kwargs):
@@ -467,7 +469,17 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
         self.classes = classes
 
     def fit(self, X, y=None):
+        """
+        Checks y for imbalance.
 
+        Args:
+            X (np.ndarray): The data to compare to the training data. Not used
+                by this transformer.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            self.
+        """
         # If there's no target or y is continuous (probably a regression), we're done.
         if y is None or is_continuous(y):
             warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
@@ -492,7 +504,77 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         """
-        Checks y for imbalance.
+        This detector does nothing during 'transform', only during 'fit'.
+
+        Args:
+            X (np.ndarray): The data to compare to the training data. Not used
+                by this transformer.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
+        """
+        return check_array(X)
+
+
+class ImportanceDetector(BaseEstimator, TransformerMixin):
+
+    def __init__(self, threshold=None, random_state=None):
+        """
+        Constructor for the class.
+
+        Args:
+            threshold (float): The threshold for the cumulative importance.
+            max_threshold (float): The maximum threshold for the importance
+                of a single feature.
+        """
+        if (threshold is not None) and not (0 <= threshold <= 1):
+            raise ValueError(f"threshold must be between 0 and 1, but was {threshold}")
+
+        self.threshold = threshold
+        self.random_state = random_state
+
+    def fit(self, X, y=None):
+        """
+        Checks the dataset (X and y together) for unusually low and/or high
+            importance.
+
+        Args:
+            X (np.ndarray): The data. Not used by this detector.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
+        """
+        if y is None:
+            warnings.warn("Target y is None, so no importance detection.")
+            return self
+
+        importances = feature_importances(X, y, random_state=self.random_state)
+        most_important = most_important_features(importances, threshold=self.threshold)
+
+        if (m := len(most_important)) <= 2:
+            most_str = ', '.join(str(i) for i in most_important)
+            warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {most_str} {'has' if m == 1 else 'have'} very high importance; check for leakage.")
+            return self
+
+        # Don't do this check if there were high-importance features (infer that the others are low.)
+        least_important = least_important_features(importances, threshold=self.threshold)
+        if (m := len(least_important)) > 0:
+            least_str = ', '.join(str(i) for i in least_important)
+            warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {least_str} {'has' if m == 1 else 'have'} low importance; check for relevance.")
+            return self
+
+    def transform(self, X, y=None):
+        """
+        This detector does nothing during 'transform', only during 'fit'.
+
+        Args:
+            X (np.ndarray): The data. Not used by this detector.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
         """
         return check_array(X)
 
@@ -504,5 +586,6 @@ pipeline = Pipeline(
         ("rf.correlation", CorrelationDetector()),
         ("rf.outlier", OutlierDetector()),
         ("rf.distributions", DistributionComparator()),
+        ("rf.importance", ImportanceDetector()),
     ]
 )

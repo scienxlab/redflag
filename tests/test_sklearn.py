@@ -2,6 +2,7 @@
 import pytest
 import numpy as np
 from sklearn.pipeline import make_pipeline
+from sklearn.datasets import make_classification
 
 import redflag as rf
 
@@ -133,3 +134,26 @@ def test_imbalance_detector():
     # Raises error because threshold is wrong.
     with pytest.raises(ValueError) as e:
         pipe = make_pipeline(rf.ImbalanceDetector(method='id', threshold=2))
+
+
+def test_importance_detector():
+    # Raises error because method doesn't exist:
+    with pytest.raises(ValueError) as e:
+        pipe = make_pipeline(rf.ImportanceDetector(threshold=2))
+
+    pipe = make_pipeline(rf.ImportanceDetector())
+
+    # Warns about low importance.
+    X, y = make_classification(n_samples=100, n_features=4, n_informative=3, n_redundant=0, n_classes=2, random_state=0)
+    with pytest.warns(UserWarning, match="Feature 1 has low importance"):
+        pipe.fit_transform(X, y)
+
+    # Warns about high importance.
+    X, y = make_classification(n_samples=100, n_features=5, n_informative=2, n_redundant=0, n_classes=2, random_state=0)
+    with pytest.warns(UserWarning, match="Features 3, 0 have very high importance"):
+        pipe.fit_transform(X, y)
+
+    # Warns about wrong kind of y.
+    y = None
+    with pytest.warns(UserWarning, match="Target y is None"):
+        pipe.fit_transform(X, y)
