@@ -97,12 +97,12 @@ def wasserstein_ovr(a, groups=None, standardize=False):
     """
     First Wasserstein distance between each group in `a` vs the rest of `a`
     ('one vs rest' or OVR).
-    
+
     The results are in `np.unique(a)` order.
-    
+
     Data should be standardized for results you can compare across different
     measurements. The function does not apply standardization by default.
-    
+
     Returns K scores for K groups.
 
     Args:
@@ -132,13 +132,13 @@ def wasserstein_ovo(a, groups=None, standardize=False):
     """
     First Wasserstein distance between each group in `a` vs each other group
     ('one vs one' or OVO).
-    
+
     The results are in the order given by `combinations(np.unique(groups),
     r=2)`, which matches the order of `scipy.spatial.distance` metrics.
-    
+
     Data should be standardized for results you can compare across different
     measurements. The function does not apply standardization by default.
-    
+
     Returns K(K-1)/2 scores for K groups.
 
     Args:
@@ -171,12 +171,30 @@ def wasserstein_ovo(a, groups=None, standardize=False):
     return np.array(dists)
 
 
+def wasserstein_multi(X, groups=None):
+    """
+    Compute the multivariate (first) Wasserstein distance between groups.
+
+    Returns the distance matrix for all pairwise distances ('squareform').
+
+    Args:
+        X (array): The data. Must be a 2D array, or a sequence of 2D arrays.
+            If the latter, then the groups are implicitly assumed to be the
+            datasets in the sequence and the `groups` argument is ignored.
+        groups (array): The group labels.
+
+    Returns:
+        array: The 2D array of pairwise Wasserstein distance scores.
+    """
+    raise NotImplementedError()
+
+
 def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
     """
     Step over all features and apply the distance function to the groups.
-    
+
     Method can be 'ovr', 'ovo', or a function.
-    
+
     The function `reducer` is applied to the ovo result to reduce it to one
     value per group per feature. If you want the full array of each group
     against each other, either pass the identity function (`lambda x: x`,
@@ -213,7 +231,7 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
         array([[0.39754762],
                [0.71161667],
                [0.24495   ]])
-        """
+    """
     # If the data is a sequence of arrays, then assume the groups are the
     # datasets in the sequence and the `groups` argument is ignored.
     try:
@@ -249,12 +267,15 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
     if n_groups < 2:
         raise ValueError("Must have 2 or more groups.")
 
+    if method == 'multi':
+        return wasserstein_multi(X, groups=groups)
+
     methods = {
         'ovr': wasserstein_ovr,
         'ovo': wasserstein_ovo,
     }
     func = methods.get(method, method)
-    
+
     if reducer is None:
         reducer = np.mean
 
@@ -273,7 +294,7 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
 def bw_silverman(a):
     """
     Calculate the Silverman bandwidth.
-    
+
     Args:
         a (array): The data.
     
@@ -288,7 +309,7 @@ def bw_silverman(a):
     n, d = np.array(a).size, 1
     return np.power(n, -1 / (d + 4))
 
-    
+
 def bw_scott(a):
     """
     Calculate the Scott bandwidth.
@@ -340,7 +361,7 @@ def cv_kde(a, n_bandwidths=20, cv=10):
 def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
     """
     Fit a kernel density estimation to the data.
-    
+
     Args:
         a (array): The data.
         bandwidth (float): The bandwidth. Default 1.0.
@@ -358,7 +379,7 @@ def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
         True
         >>> len(kde)
         200
-        """
+    """
     a = np.asarray(a)
     model = KernelDensity(kernel=kernel, bandwidth=bandwidth)
     model.fit(a.reshape(-1, 1))
