@@ -22,10 +22,13 @@ import warnings
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils import check_array
+from sklearn import pipeline
 from sklearn.pipeline import Pipeline
+from sklearn.pipeline import _name_estimators
 from sklearn.covariance import EllipticEnvelope
 from scipy.stats import wasserstein_distance
 from scipy.stats import cumfreq
+from sklearn.utils.metaestimators import available_if
 
 from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
 from .target import is_continuous
@@ -241,6 +244,8 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
         Normally we'd compute Wasserstein distance directly from the data, 
         but that seems memory-expensive.
 
+        Sets `self.histograms` to the learned histograms.
+
         Args:
             X (np.ndarray): The data to learn the distributions from.
             y (np.ndarray): The labels for the data. Not used for anything.
@@ -249,10 +254,10 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
             self.
         """
         X = check_array(X)
-        hists = [cumfreq(feature, numbins=self.bins) for feature in X.T]
-        self.hist_counts = [h.cumcount for h in hists]
-        self.hist_lowerlimits = [h.lowerlimit for h in hists]
-        self.hist_binsizes = [h.binsize for h in hists]
+        self.histograms_ = [cumfreq(feature, numbins=self.bins) for feature in X.T]
+        self.hist_counts = [h.cumcount for h in self.histograms_]
+        self.hist_lowerlimits = [h.lowerlimit for h in self.histograms_]
+        self.hist_binsizes = [h.binsize for h in self.histograms_]
         return self
 
     def transform(self, X, y=None):
@@ -292,11 +297,13 @@ class DistributionComparator(BaseEstimator, TransformerMixin):
             w = wasserstein_distance(values, f_values, weights, f_weights)
             wasserstein_distances.append(w)
 
-        zeros = np.where(np.array(wasserstein_distances)==0)[0]
+        W = np.array(wasserstein_distances)
+
+        zeros = np.where(W == 0)[0]
         if n := zeros.size and self.warn_if_zero:
             warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} {'are' if n > 1 else 'is'} identical to the training data.")
 
-        positive = np.where(np.array(wasserstein_distances) > self.threshold)[0]
+        positive = np.where(W > self.threshold)[0]
         if n := positive.size:
             pos = ', '.join(str(i) for i in positive)
             if self.warn:
@@ -357,11 +364,14 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
         expected = int(self.factor * expected_outliers(n, d, threshold=self.threshold))
 
         # If the number of outliers is greater than the expected number, raise a warning.
-        return idx.size, expected
+        return idx, expected
 
     def fit(self, X, y=None):
         """
         Record the robust location and covariance.
+
+        Sets `self.outliers_` to the indices of the outliers beyond the given
+        threshold distance.
 
         Args:
             X (np.ndarray): The data to learn the distributions from.
@@ -379,12 +389,11 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
         # Compute the Mahalanobis distance of the training data.
         z = np.sqrt(self.ee.dist_)
 
-        actual, expected = self._actual_vs_expected(z, n, d)
-        if actual > expected:
-            warnings.warn(f"🚩 There are more outliers than expected in the training data ({actual} vs {expected}).")
+        self.outliers_, expected = self._actual_vs_expected(z, n, d)
+        if self.outliers_.size > expected:
+            warnings.warn(f"🚩 There are more outliers than expected in the training data ({self.outliers_.size} vs {expected}).")
 
         return self
-
 
     def transform(self, X, y=None):
         """
@@ -411,8 +420,8 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
         z = np.sqrt(self.ee.mahalanobis(X))
 
         actual, expected = self._actual_vs_expected(z, n, d)
-        if actual > expected:
-            warnings.warn(f"🚩 There are more outliers than expected in the data ({actual} vs {expected}).")
+        if actual.size > expected:
+            warnings.warn(f"🚩 There are more outliers than expected in the data ({actual.size} vs {expected}).")
 
         return X
 
@@ -472,6 +481,10 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
         """
         Checks y for imbalance.
 
+        Sets `self.minority_classes_` and `self.imbalance_`. Note: imbalance
+        degree is adjusted to express only the fractional part; for the integer
+        part, use the length of the minority class list).
+
         Args:
             X (np.ndarray): The data to compare to the training data. Not used
                 by this transformer.
@@ -491,14 +504,15 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
         if self.method == 'id':
             imbalance = imbalance - int(imbalance)
 
-        min_classes = minority_classes(y, classes=self.classes)
+        self.imbalance_ = imbalance
+        self.minority_classes_ = minority_classes(y, classes=self.classes)
 
-        imbalanced = (len(min_classes) > 0) and (imbalance > self.threshold)
+        imbalanced = (len(self.minority_classes_) > 0) and (imbalance > self.threshold)
 
         if imbalanced and self.method == 'id':
-            warnings.warn(f"🚩 The labels are imbalanced by more than the threshold ({imbalance:0.3f} > {self.threshold:0.3f}).")
+            warnings.warn(f"🚩 The labels are imbalanced by more than the threshold ({imbalance:0.3f} > {self.threshold:0.3f}). See self.minority_classes_ for the minority classes.")
         if imbalanced and self.method == 'ir':
-            warnings.warn(f"🚩 The labels are imbalanced by more than the threshold ({imbalance:0.1f} > {self.threshold:0.1f}).")
+            warnings.warn(f"🚩 The labels are imbalanced by more than the threshold ({imbalance:0.1f} > {self.threshold:0.1f}). See self.minority_classes_ for the minority classes.")
 
         return self
 
@@ -514,6 +528,129 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
         Returns:
             X.
         """
+        return check_array(X)
+
+
+class ImbalanceComparator(BaseEstimator, TransformerMixin):
+
+    def __init__(self, method='id', threshold=0.4, min_class_diff=1, classes=None):
+        """
+        Args:
+            method (str): The method to use for imbalance detection. In general,
+                'id' is the best method for multi-class classification problems
+                (but can be used for binary classification problems as well).
+            threshold (float): The threshold for the imbalance, default 0.5.
+                For 'id', the imbalance summary statistic is in [0, 1). See
+                Ortigosa-Hernandez et al. (2017) for details. For 'ir', the
+                threshold is a ratio of the majority class to the minority class
+                and ranges from 1 (balanced) to infinity (nothing in the
+                minority class).
+            min_class_diff (int): The difference in the number of minority
+                classes that will trigger a warning.
+            classes (list): The names of the classes present in the data, even
+                if they are not present in the array `y`.
+        """
+        if method not in ['id', 'ir']:
+            raise ValueError(f"Method must be 'id' or 'ir' but was {method}")
+
+        if (method == 'ir') and (threshold <= 1):
+            raise ValueError(f"Method is 'ir' but threshold <= 1. For IR, the measure is the ratio of the majority class to the minority class; for example use 2 to trigger a warning if there are twice as many samples in the majority class as in the minority class.")
+
+        if (method == 'id') and (threshold >= 1):
+            raise ValueError(f"Method is 'id' but threshold >= 1. For ID, the measure is always in [0, 1).")
+
+        self.method = method
+        self.threshold = threshold
+        self.min_class_diff = min_class_diff
+        self.classes = classes
+
+    def fit(self, X, y=None):
+        """
+        Record the imbalance degree and minority classes of the input data.
+
+        Sets `self.minority_classes_` and `self.imbalance_`.
+
+        Args:
+            X (np.ndarray): The data to learn the statistics from.
+            y (np.ndarray): The labels for the data. Not used for anything.
+
+        Returns:
+            self.
+        """
+        # If there's no target or y is continuous (probably a regression), we're done.
+        if y is None or is_continuous(y):
+            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+            return self
+
+        methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
+        imbalance = methods[self.method](y)
+        
+        if self.method == 'id':
+            imbalance = imbalance - int(imbalance)
+
+        self.imbalance_ = imbalance
+        self.minority_classes_ = minority_classes(y, classes=self.classes)
+        return self
+
+    def transform(self, X, y=None):
+        """
+        Compare the imbalance statistics of the labels, y, between the
+        training data (calling `fit`) and subsequent data (calling `transform`).
+
+        This transformer does not transform the data, it just compares the
+        distributions.
+
+        Args:
+            X (np.ndarray): The data to compare to the training data. Not used.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
+        """
+        # If there's no target or y is continuous (probably a regression), we're done.
+        if y is None or is_continuous(y):
+            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+            return self
+
+        methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
+        imbalance = methods[self.method](y)
+
+        if self.method == 'id':
+            imbalance = imbalance - int(imbalance)
+
+        min_classes = minority_classes(y, classes=self.classes)
+
+        # Check if the minority classes have changed.
+        if min_classes != self.minority_classes_:
+            warnings.warn(f"🚩 The minority classes ({min_classes}) are different from those in the training data.")
+
+        # Check if there's a different *number* of minority classes.
+        if abs(len(min_classes) - len(self.minority_classes_)) >= self.min_class_diff:
+            warnings.warn(f"🚩 There is a different number ({len(min_classes)}) of minority classes compared to the training data ({len(self.minority_classes_)}).")
+
+        # Check if the imbalance metric has changed.
+        if abs(imbalance - self.imbalance_) >= self.threshold:
+            warnings.warn(f"🚩 The imbalance metric ({imbalance}) is different from that of the training data ({self.imbalance_}).")
+
+        return check_array(X)
+
+    def fit_transform(self, X, y=None):
+        """
+        This is called when fitting, if it is present. We can make our call to self.fit()
+        and not bother calling self.transform(), because we're not actually transforming
+        anything, we're just getting set up for applying our test later during prediction.
+
+        Args:
+            X (np.ndarray): The data to compare to the training data.
+            y (np.ndarray): The labels for the data. Not used for anything.
+
+        Returns:
+            X.
+        """
+        # Call fit() to learn the distributions.
+        self = self.fit(X, y=y)
+        
+        # When fitting, we do not run transform().
         return check_array(X)
 
 
@@ -577,6 +714,82 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
             X.
         """
         return check_array(X)
+
+
+class RfPipeline(pipeline.Pipeline):
+
+    def _can_transform(self):
+        return self._final_estimator == "passthrough" or hasattr(
+            self._final_estimator, "transform"
+        )
+
+    @available_if(_can_transform)
+    def transform(self, X, y=None):
+        """
+        Required because built-in sklearn pipeline does not handle y.
+
+        Transform the data, and apply `transform` with the final estimator.
+        Call `transform` of each transformer in the pipeline. The transformed
+        data are finally passed to the final estimator that calls
+        `transform` method. Only valid if the final estimator
+        implements `transform`.
+        
+        This also works where final estimator is `None` in which case all prior
+        transformations are applied.
+        
+        Parameters
+        ----------
+        X : iterable
+            Data to transform. Must fulfill input requirements of first step
+            of the pipeline.
+        y : iterable
+            Target vector. Optional.
+
+        Returns
+        -------
+        Xt : ndarray of shape (n_samples, n_transformed_features)
+            Transformed data.
+        """
+        Xt = X
+        for _, _, transform in self._iter():
+            if y is None:
+                Xt = transform.transform(Xt)
+            else:
+                Xt = transform.transform(Xt, y)
+        return Xt
+
+
+def make_rf_pipeline(*steps, memory=None, verbose=False):
+    """Construct a :class:`RfPipeline` from the given estimators.
+    This is a shorthand for the :class:`RfPipeline` constructor; it does not
+    require, and does not permit, naming the estimators. Instead, their names
+    will be set to the lowercase of their types automatically.
+    Parameters
+    ----------
+    *steps : list of Estimator objects
+        List of the scikit-learn estimators that are chained together.
+    memory : str or object with the joblib.Memory interface, default=None
+        Used to cache the fitted transformers of the pipeline. By default,
+        no caching is performed. If a string is given, it is the path to
+        the caching directory. Enabling caching triggers a clone of
+        the transformers before fitting. Therefore, the transformer
+        instance given to the pipeline cannot be inspected
+        directly. Use the attribute ``named_steps`` or ``steps`` to
+        inspect estimators within the pipeline. Caching the
+        transformers is advantageous when fitting is time consuming.
+    verbose : bool, default=False
+        If True, the time elapsed while fitting each step will be printed as it
+        is completed.
+    Returns
+    -------
+    p : RfPipeline
+        Returns a :class:`RfPipeline` object.
+    See Also
+    --------
+    RfPipeline : Class for creating a pipeline of transforms with a final
+        estimator.
+    """
+    return RfPipeline(_name_estimators(steps), memory=memory, verbose=verbose)
 
 
 pipeline = Pipeline(

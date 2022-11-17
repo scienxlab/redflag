@@ -8,7 +8,7 @@ import redflag as rf
 
 """
 NB Most of redflag is tested by its doctests, but doctest cannot test
-   for warnings. Most of the tests in this file are of the sklearn API.
+   for warnings, AFAIK. Most of the tests in this file are of the sklearn API.
 """
 
 def test_clip_detector():
@@ -118,10 +118,14 @@ def test_imbalance_detector():
     pipe = make_pipeline(rf.ImbalanceDetector(threshold=0.7))
     pipe.fit_transform(X, y)
 
-    # Warns about wrong kind of y:
+    # Warns about wrong kind of y (continuous):
     y = rng.normal(size=100)
     with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
         pipe.fit_transform(X, y)
+
+    # Warns about wrong kind of y (None):
+    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+        pipe.fit_transform(X)
 
     # Raises error because method doesn't exist:
     with pytest.raises(ValueError) as e:
@@ -134,6 +138,42 @@ def test_imbalance_detector():
     # Raises error because threshold is wrong.
     with pytest.raises(ValueError) as e:
         pipe = make_pipeline(rf.ImbalanceDetector(method='id', threshold=2))
+
+
+def test_imbalance_comparator():
+    """
+    The 'comparator' learns the imbalance statistics of the training set,
+    then compares subsequent sets to the learned stats.
+    """
+    pipe = rf.make_rf_pipeline(rf.ImbalanceComparator())
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(200, 1))
+    y = rf.generate_data([20, 20, 20, 140])
+
+    # Does not raise a warning because we're only fitting.
+    pipe.fit(X, y)
+
+    # Warns about different number of minority classes.
+    y = rf.generate_data([20, 20, 80, 80])
+    with pytest.warns(UserWarning, match="There is a different number"):
+        pipe.transform(X, y)
+
+    # Warns about wrong kind of y (continuous):
+    y = rng.normal(size=100)
+    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+        pipe.fit_transform(X, y)
+
+    # Warns about wrong kind of y (None):
+    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+        pipe.fit_transform(X)
+
+    # Raises error because threshold is wrong.
+    with pytest.raises(ValueError) as e:
+        pipe = make_pipeline(rf.ImbalanceComparator(method='ir', threshold=0.5))
+
+    # Raises error because threshold is wrong.
+    with pytest.raises(ValueError) as e:
+        pipe = make_pipeline(rf.ImbalanceComparator(method='id', threshold=2))
 
 
 def test_importance_detector():
