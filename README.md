@@ -25,10 +25,10 @@ For developers, there are `pip` options for installing `tests`, `docs` and `dev`
 
 ```python
 >>> import redflag as rf
->>> data = [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
+>>> data = 3 * [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
 >>> rf.get_outliers(data)
 array([], dtype=int64)
->>> rf.get_outliers(3 * data + [100])
+>>> rf.get_outliers(data + [100])
 array([33])
 ```
 
