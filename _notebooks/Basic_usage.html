@@ -239,7 +239,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.10rc1&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.10rc2&#39;
 </pre></div>
 </div>
 </div>
@@ -435,9 +435,9 @@
 </div></div></div>
 </div>
 </section>
-<section id="descriptive">
-<h2>Descriptive<a class="headerlink" href="#descriptive" title="Permalink to this heading">#</a></h2>
-<p>We can use <code class="docutils literal notranslate"><span class="pre">is_continuous()</span></code> to check if a feature (or the target) is continuous (as opposed to categorical).</p>
+<section id="categorical-or-continuous">
+<h2>Categorical or continuous?<a class="headerlink" href="#categorical-or-continuous" title="Permalink to this heading">#</a></h2>
+<p>It’s fairly easy to tell if a column is numeric or not, but harder to decide if it’s continuous or categorical. We can use <code class="docutils literal notranslate"><span class="pre">is_continuous()</span></code> to check if a feature (or the target) is continuous. It uses heuristics and is definitely not foolproof. <code class="docutils literal notranslate"><span class="pre">redflag</span></code> uses it internally sometimes to decide how to treat a feature or target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -468,7 +468,7 @@
 </div>
 </div>
 </div>
-<p>This has missed the <strong>Facies</strong> column, which is categorical. But the others are correct.</p>
+<p>These are all correct.</p>
 </section>
 <section id="imbalance-metrics">
 <h2>Imbalance metrics<a class="headerlink" href="#imbalance-metrics" title="Permalink to this heading">#</a></h2>
@@ -545,7 +545,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7ff18b5a3950&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f2eb8f28210&gt;
 </pre></div>
 </div>
 <img alt="../_images/2089f8111890b1dfe61335c13204f479c92c015eb8f6a293db6d5eff6e9d8ed3.png" src="../_images/2089f8111890b1dfe61335c13204f479c92c015eb8f6a293db6d5eff6e9d8ed3.png" />
@@ -601,7 +601,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7ff189076e90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7f2eb8cf46d0&gt;
 </pre></div>
 </div>
 <img alt="../_images/2a158a921076ed90b8b740d2a97d4f22694a53259b125d114db083ae79459a24.png" src="../_images/2a158a921076ed90b8b740d2a97d4f22694a53259b125d114db083ae79459a24.png" />
@@ -656,10 +656,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7ff18920a010&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f2eb85997d0&gt;
 </pre></div>
 </div>
-<img alt="../_images/8c7317a10f6b24e9ea9228cdd82ce7add9d67b81f52aba612a57fa3c348e702a.png" src="../_images/8c7317a10f6b24e9ea9228cdd82ce7add9d67b81f52aba612a57fa3c348e702a.png" />
+<img alt="../_images/df62517e885b03aa6f09582555a86c90e9d6c2b115647a70c636067a51c022bb.png" src="../_images/df62517e885b03aa6f09582555a86c90e9d6c2b115647a70c636067a51c022bb.png" />
 </div>
 </div>
 <p>This truncated normal distribution has no outliers (there are only about 60, compared to the 100 we expect at this confidence level of 99% on this dataset of 10,000 records).</p>
@@ -700,7 +700,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7ff188973390&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f2eb8e05b50&gt;
 </pre></div>
 </div>
 <img alt="../_images/4bfde80b66cfbfedd8e03a8dbff9fdb6fdf97d6449dbee27232c64106f0b9f38.png" src="../_images/4bfde80b66cfbfedd8e03a8dbff9fdb6fdf97d6449dbee27232c64106f0b9f38.png" />
@@ -757,7 +757,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7ff188753a50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f2eb849f950&gt;
 </pre></div>
 </div>
 <img alt="../_images/358afb174042d552a1c3df84b26a199171964a1d87201b3a027803cab1a63aeb.png" src="../_images/358afb174042d552a1c3df84b26a199171964a1d87201b3a027803cab1a63aeb.png" />
@@ -906,7 +906,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.28473547, 0.37689758, 0.27783294, 0.05936136, 0.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.2849765 , 0.43914362, 0.20936421, 0.06651567, 0.        ])
 </pre></div>
 </div>
 </div>
@@ -951,7 +951,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.08700799, 0.41923666, 0.4592391 , 0.03416134, 0.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.08875548, 0.42835889, 0.45633361, 0.0195145 , 0.        ])
 </pre></div>
 </div>
 </div>
@@ -1026,7 +1026,7 @@
             <ul>
 <li><a class="reference internal" href="#">🚩 Basic usage</a><ul>
 <li><a class="reference internal" href="#load-some-data">Load some data</a></li>
-<li><a class="reference internal" href="#descriptive">Descriptive</a></li>
+<li><a class="reference internal" href="#categorical-or-continuous">Categorical or continuous?</a></li>
 <li><a class="reference internal" href="#imbalance-metrics">Imbalance metrics</a></li>
 <li><a class="reference internal" href="#outliers">Outliers</a></li>
 <li><a class="reference internal" href="#clipping">Clipping</a></li>

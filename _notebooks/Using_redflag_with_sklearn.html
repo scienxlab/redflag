@@ -714,7 +714,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 There is a different number of minority classes (2) compared to the training data (4).
-🚩 The minority classes (dolomite, sandstone) are different from those in the training data (dolomite, mudstone, wackestone, sandstone).
+🚩 The minority classes (dolomite, sandstone) are different from those in the training data (dolomite, mudstone, sandstone, wackestone).
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  66.276     , 2359.73324716,    3.591     ],
@@ -732,8 +732,8 @@
 <section id="what-to-do-about-the-warnings">
 <h2>What to do about the warnings<a class="headerlink" href="#what-to-do-about-the-warnings" title="Permalink to this heading">#</a></h2>
 <p>If one of the detectors triggers, what should you do? Here are some ideas:</p>
-<section id="imbalancedetector">
-<h3><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code><a class="headerlink" href="#imbalancedetector" title="Permalink to this heading">#</a></h3>
+<section id="imbalancedetector-and-imbalancecomparator">
+<h3><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code> and <code class="docutils literal notranslate"><span class="pre">ImbalanceComparator</span></code><a class="headerlink" href="#imbalancedetector-and-imbalancecomparator" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Check <code class="docutils literal notranslate"><span class="pre">rf.class_counts(y)</span></code> to see the support for each class in the dataset.</p></li>
 <li><p>Check <code class="docutils literal notranslate"><span class="pre">rf.minority_classes(y)</span></code> to see which classes are considered ‘minority’.</p></li>
@@ -779,13 +779,11 @@
 <p>A small difference, especially on just a few features, might just result from natural variance in the data and you may decide to ignore it. A large difference may be a result of forgetting to scale the data using the scaling parameters learned from the training data. A large difference could also result from trying to apply the model to a new ‘domain’, e.g. a new geographic location, set of patients, or type of widget.</p>
 <p>If you’re in the model selection phase, it’s possible that a different train/test split will give more comparable distributions.</p>
 </section>
-<section id="feature-importance-comparator-coming-soon">
-<h3>Feature importance comparator (coming soon)<a class="headerlink" href="#feature-importance-comparator-coming-soon" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Negative importance suggests the feature is harming the prediction.</p></li>
-<li><p>Very low positive importance (compared to other features) suggests the feature does not contain much useful information.</p></li>
-<li><p>Very high importance in one or two features (compared to other features) suggests the feature(s) may be leaking information: check that it does not contain information about the target variable.</p></li>
-</ul>
+<section id="importancedetector">
+<h3><code class="docutils literal notranslate"><span class="pre">ImportanceDetector</span></code><a class="headerlink" href="#importancedetector" title="Permalink to this heading">#</a></h3>
+<p>This detector checks for both “too important” features and “not important enough” features, using thresholds you provide and some heuristics.</p>
+<p>One or two very important features might indicate leakage: check that the features do not carry unintended information about the thing you are trying to predict. In particular, they should not carry information that will not be available to the model in production at prediction time. The classic example is trying to predict medical diagnosis using a patient number that contains encoded information about the patient’s diagnosis.</p>
+<p>On the other hand, features with very low importance may not be useful to your model. If dimensionality is an issue, or the model is easily distracted by noise, you might improve performance by dropping one or more of these non-useful features. You will probably also improve the explainability of the model, which is often a desirable property.</p>
 </section>
 </section>
 </section>
@@ -860,12 +858,12 @@
 <li><a class="reference internal" href="#using-the-detector-transformers">Using the ‘detector’ transformers</a></li>
 <li><a class="reference internal" href="#the-imbalance-comparator">The imbalance comparator</a></li>
 <li><a class="reference internal" href="#what-to-do-about-the-warnings">What to do about the warnings</a><ul>
-<li><a class="reference internal" href="#imbalancedetector"><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code></a></li>
+<li><a class="reference internal" href="#imbalancedetector-and-imbalancecomparator"><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code> and <code class="docutils literal notranslate"><span class="pre">ImbalanceComparator</span></code></a></li>
 <li><a class="reference internal" href="#clipdetector"><code class="docutils literal notranslate"><span class="pre">ClipDetector</span></code></a></li>
 <li><a class="reference internal" href="#correlationdetector"><code class="docutils literal notranslate"><span class="pre">CorrelationDetector</span></code></a></li>
 <li><a class="reference internal" href="#outlierdetector"><code class="docutils literal notranslate"><span class="pre">OutlierDetector</span></code></a></li>
 <li><a class="reference internal" href="#distributioncomparator"><code class="docutils literal notranslate"><span class="pre">DistributionComparator</span></code></a></li>
-<li><a class="reference internal" href="#feature-importance-comparator-coming-soon">Feature importance comparator (coming soon)</a></li>
+<li><a class="reference internal" href="#importancedetector"><code class="docutils literal notranslate"><span class="pre">ImportanceDetector</span></code></a></li>
 </ul>
 </li>
 </ul>
