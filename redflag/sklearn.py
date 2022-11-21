@@ -620,13 +620,15 @@ class ImbalanceComparator(BaseEstimator, TransformerMixin):
 
         min_classes = minority_classes(y, classes=self.classes)
 
-        # Check if the minority classes have changed.
-        if min_classes != self.minority_classes_:
-            warnings.warn(f"🚩 The minority classes ({min_classes}) are different from those in the training data.")
+        diff = abs(len(min_classes) - len(self.minority_classes_))
 
         # Check if there's a different *number* of minority classes.
-        if abs(len(min_classes) - len(self.minority_classes_)) >= self.min_class_diff:
-            warnings.warn(f"🚩 There is a different number ({len(min_classes)}) of minority classes compared to the training data ({len(self.minority_classes_)}).")
+        if diff >= self.min_class_diff:
+            warnings.warn(f"🚩 There is a different number of minority classes ({len(min_classes)}) compared to the training data ({len(self.minority_classes_)}).")
+
+        # Check if there's the same number but the minority classes have changed.
+        if set(min_classes) != set(self.minority_classes_):
+            warnings.warn(f"🚩 The minority classes ({', '.join(str(c) for c in set(min_classes))}) are different from those in the training data ({', '.join(str(c) for c in set(self.minority_classes_))}).")
 
         # Check if the imbalance metric has changed.
         if abs(imbalance - self.imbalance_) >= self.threshold:
@@ -700,7 +702,8 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
         if (m := len(least_important)) > 0:
             least_str = ', '.join(str(i) for i in least_important)
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {least_str} {'has' if m == 1 else 'have'} low importance; check for relevance.")
-            return self
+
+        return self
 
     def transform(self, X, y=None):
         """
@@ -718,10 +721,15 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
 
 class RfPipeline(pipeline.Pipeline):
 
+    """
+    This class is adapted from original Pipeline code at sklearn/pipeline.py
+    (c) the scikit-learn contributors and licensed under BSD 3-clause license.
+    """
+
     def _can_transform(self):
         return self._final_estimator == "passthrough" or hasattr(
             self._final_estimator, "transform"
-        )
+            )
 
     @available_if(_can_transform)
     def transform(self, X, y=None):
@@ -764,6 +772,10 @@ def make_rf_pipeline(*steps, memory=None, verbose=False):
     This is a shorthand for the :class:`RfPipeline` constructor; it does not
     require, and does not permit, naming the estimators. Instead, their names
     will be set to the lowercase of their types automatically.
+
+    This function is adapted from original code at sklearn/pipeline.py
+    (c) the scikit-learn contributors and licensed under BSD 3-clause license.
+
     Parameters
     ----------
     *steps : list of Estimator objects
@@ -780,14 +792,11 @@ def make_rf_pipeline(*steps, memory=None, verbose=False):
     verbose : bool, default=False
         If True, the time elapsed while fitting each step will be printed as it
         is completed.
+
     Returns
     -------
     p : RfPipeline
         Returns a :class:`RfPipeline` object.
-    See Also
-    --------
-    RfPipeline : Class for creating a pipeline of transforms with a final
-        estimator.
     """
     return RfPipeline(_name_estimators(steps), memory=memory, verbose=verbose)
 

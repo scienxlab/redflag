@@ -145,7 +145,11 @@ def test_imbalance_comparator():
     The 'comparator' learns the imbalance statistics of the training set,
     then compares subsequent sets to the learned stats.
     """
+    # We need to use the special redflag pipeline object, which passes
+    # both X and y to `transform()`.
     pipe = rf.make_rf_pipeline(rf.ImbalanceComparator())
+
+    # The rest is standard.
     rng = np.random.default_rng(0)
     X = rng.normal(size=(200, 1))
     y = rf.generate_data([20, 20, 20, 140])
