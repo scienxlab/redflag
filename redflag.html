@@ -2,15 +2,14 @@
 <html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Development" href="development.html" /><link rel="prev" title="🚩 Using redflag with sklearn" href="_notebooks/Using_redflag_with_sklearn.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="_static/favicon.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>redflag package - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     
@@ -204,7 +203,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -511,6 +511,29 @@ per group. Default: <cite>np.mean</cite>.</p></li>
 <span class="go">       [0.24495   ]])</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.distributions.wasserstein_multi">
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">wasserstein_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.distributions.wasserstein_multi" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the multivariate (first) Wasserstein distance between groups.</p>
+<p>Returns the distance matrix for all pairwise distances (‘squareform’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array</em>) – The data. Must be a 2D array, or a sequence of 2D arrays.
+If the latter, then the groups are implicitly assumed to be the
+datasets in the sequence and the <cite>groups</cite> argument is ignored.</p></li>
+<li><p><strong>groups</strong> (<em>array</em>) – The group labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The 2D array of pairwise Wasserstein distance scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -895,6 +918,71 @@ the assumption being made.</p></li>
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.importance.least_important_features">
+<span class="sig-prename descclassname"><span class="pre">redflag.importance.</span></span><span class="sig-name descname"><span class="pre">least_important_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">importances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.importance.least_important_features" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Returns the least important features, in order of importance (least</dt><dd><p>important first).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>importances</strong> (<em>array</em>) – the importance of the features, in the order in
+which they appear in X.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em> or </em><em>None</em>) – the cutoff for the importance. If None, the
+cutoff is set to half the expectation of the importance (i.e. 0.5/M
+where M is the number of features).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The indices of the least important features.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">least_important_features</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="go">array([1, 0])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">least_important_features</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="go">array([], dtype=int64)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.importance.most_important_features">
+<span class="sig-prename descclassname"><span class="pre">redflag.importance.</span></span><span class="sig-name descname"><span class="pre">most_important_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">importances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.importance.most_important_features" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Returns the indices of the most important features, in reverse order of</dt><dd><p>importance (most important first).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>importances</strong> (<em>array</em>) – the importance of the features, in the order in
+which they appear in X.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em> or </em><em>None</em>) – the cutoff for the importance. If None,
+the cutoff is set to (M-1)/M where M is the number of features.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The indices of the most important features.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">most_important_features</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="go">array([3, 4, 2])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">most_important_features</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="go">array([4, 3, 2, 1, 0])</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 <section id="module-redflag.independence">
 <span id="redflag-independence-module"></span><h2>redflag.independence module<a class="headerlink" href="#module-redflag.independence" title="Permalink to this heading">#</a></h2>
@@ -1233,6 +1321,7 @@ the threshold will be used to compute <cite>p</cite>.</p></li>
 <dd><p>Record the histograms of the input data, using 200 bins by default.</p>
 <p>Normally we’d compute Wasserstein distance directly from the data,
 but that seems memory-expensive.</p>
+<p>Sets <cite>self.histograms</cite> to the learned histograms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1296,18 +1385,167 @@ above the threshold.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceComparator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceComparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_class_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceComparator" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceComparator.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceComparator.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Record the imbalance degree and minority classes of the input data.</p>
+<p>Sets <cite>self.minority_classes_</cite> and <cite>self.imbalance_</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to learn the statistics from.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceComparator.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceComparator.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>This is called when fitting, if it is present. We can make our call to self.fit()
+and not bother calling self.transform(), because we’re not actually transforming
+anything, we’re just getting set up for applying our test later during prediction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImbalanceComparator.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceComparator.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Compare the imbalance statistics of the labels, y, between the
+training data (calling <cite>fit</cite>) and subsequent data (calling <cite>transform</cite>).</p>
+<p>This transformer does not transform the data, it just compares the
+distributions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data. Not used.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector.fit" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Checks y for imbalance.</p>
+<p>Sets <cite>self.minority_classes_</cite> and <cite>self.imbalance_</cite>. Note: imbalance
+degree is adjusted to express only the fractional part; for the integer
+part, use the length of the minority class list).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data. Not used
+by this transformer.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector.transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Checks y for imbalance.</p>
+<dd><p>This detector does nothing during ‘transform’, only during ‘fit’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data. Not used
+by this transformer.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.ImportanceDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImportanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImportanceDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImportanceDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImportanceDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>Checks the dataset (X and y together) for unusually low and/or high</dt><dd><p>importance.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data. Not used by this detector.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.ImportanceDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImportanceDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>This detector does nothing during ‘transform’, only during ‘fit’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data. Not used by this detector.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1367,6 +1605,8 @@ sense. (To consider feature distributions separately, use the
 <dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Record the robust location and covariance.</p>
+<p>Sets <cite>self.outliers_</cite> to the indices of the outliers beyond the given
+threshold distance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1431,6 +1671,42 @@ instantiation.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.RfPipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">RfPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">steps</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.RfPipeline" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></p>
+<p>This class is adapted from original Pipeline code at sklearn/pipeline.py
+(c) the scikit-learn contributors and licensed under BSD 3-clause license.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.RfPipeline.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.RfPipeline.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Required because built-in sklearn pipeline does not handle y.</p>
+<p>Transform the data, and apply <cite>transform</cite> with the final estimator.
+Call <cite>transform</cite> of each transformer in the pipeline. The transformed
+data are finally passed to the final estimator that calls
+<cite>transform</cite> method. Only valid if the final estimator
+implements <cite>transform</cite>.</p>
+<p>This also works where final estimator is <cite>None</cite> in which case all prior
+transformations are applied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>iterable</em>) – Data to transform. Must fulfill input requirements of first step
+of the pipeline.</p></li>
+<li><p><strong>y</strong> (<em>iterable</em>) – Target vector. Optional.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Xt</strong> – Transformed data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n_samples, n_transformed_features)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.UnivariateOutlierDetector">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">UnivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.UnivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
@@ -1472,6 +1748,40 @@ together, use the <cite>OutlierDetector</cite> instead.)</p>
 <dd><p>A custom warning format function.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.sklearn.make_rf_pipeline">
+<span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">make_rf_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.make_rf_pipeline" title="Permalink to this definition">#</a></dt>
+<dd><p>Construct a <a class="reference internal" href="#redflag.sklearn.RfPipeline" title="redflag.sklearn.RfPipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">RfPipeline</span></code></a> from the given estimators.
+This is a shorthand for the <a class="reference internal" href="#redflag.sklearn.RfPipeline" title="redflag.sklearn.RfPipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">RfPipeline</span></code></a> constructor; it does not
+require, and does not permit, naming the estimators. Instead, their names
+will be set to the lowercase of their types automatically.</p>
+<p>This function is adapted from original code at sklearn/pipeline.py
+(c) the scikit-learn contributors and licensed under BSD 3-clause license.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*steps</strong> (<em>list</em><em> of </em><em>Estimator objects</em>) – List of the scikit-learn estimators that are chained together.</p></li>
+<li><p><strong>memory</strong> (<em>str</em><em> or </em><em>object with the joblib.Memory interface</em><em>, </em><em>default=None</em>) – Used to cache the fitted transformers of the pipeline. By default,
+no caching is performed. If a string is given, it is the path to
+the caching directory. Enabling caching triggers a clone of
+the transformers before fitting. Therefore, the transformer
+instance given to the pipeline cannot be inspected
+directly. Use the attribute <code class="docutils literal notranslate"><span class="pre">named_steps</span></code> or <code class="docutils literal notranslate"><span class="pre">steps</span></code> to
+inspect estimators within the pipeline. Caching the
+transformers is advantageous when fitting is time consuming.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>default=False</em>) – If True, the time elapsed while fitting each step will be printed as it
+is completed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>p</strong> – Returns a <a class="reference internal" href="#redflag.sklearn.RfPipeline" title="redflag.sklearn.RfPipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">RfPipeline</span></code></a> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#redflag.sklearn.RfPipeline" title="redflag.sklearn.RfPipeline">RfPipeline</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-redflag.target">
 <span id="redflag-target-module"></span><h2>redflag.target module<a class="headerlink" href="#module-redflag.target" title="Permalink to this heading">#</a></h2>
@@ -1504,17 +1814,24 @@ together, use the <cite>OutlierDetector</cite> instead.)</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.target.is_continuous">
-<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_continuous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.is_continuous" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_continuous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.is_continuous" title="Permalink to this definition">#</a></dt>
 <dd><p>Decide if this is most likely a continuous variable (and thus, if this is
-the target, for example, most likely a regression task).
-:param a: A target vector.
-:type a: array</p>
+the target, for example, most likely a regression task).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if arr is probably best suited to regression.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array</em>) – A target vector.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of potential categories. That is, if there are
+fewer than n unique values in the data, it is estimated to be
+categorical. Default: the square root of the sample size, which
+is 10% of the data or 10_000, whichever is smaller.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if arr is probably best suited to regression.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -1607,6 +1924,37 @@ the target, for example, most likely a regression task).
 <span class="go">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_classes</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.update_p">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">update_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prior</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specificity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.target.update_p" title="Permalink to this definition">#</a></dt>
+<dd><p>Bayesian update of the prior probability, given the sensitivity and
+specificity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prior</strong> (<em>float</em>) – The prior probability.</p></li>
+<li><p><strong>sensitivity</strong> (<em>float</em>) – The sensitivity of the test, or true positive rate.</p></li>
+<li><p><strong>specificity</strong> (<em>float</em>) – The specificity of the test, or false positive rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The posterior probability.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="go">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">)</span>
+<span class="go">0.4999999999999998</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+<span class="go">0.9</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2195,10 +2543,10 @@ per column.</p>
                 </div>
                 <div class="title">Development</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="_notebooks/Using_redflag_with_sklearn.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -2241,7 +2589,7 @@ per column.</p>
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -2249,15 +2597,137 @@ per column.</p>
             <ul>
 <li><a class="reference internal" href="#">redflag package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-redflag.distributions">redflag.distributions module</a></li>
-<li><a class="reference internal" href="#module-redflag.imbalance">redflag.imbalance module</a></li>
-<li><a class="reference internal" href="#module-redflag.importance">redflag.importance module</a></li>
-<li><a class="reference internal" href="#module-redflag.independence">redflag.independence module</a></li>
-<li><a class="reference internal" href="#module-redflag.outliers">redflag.outliers module</a></li>
+<li><a class="reference internal" href="#module-redflag.distributions">redflag.distributions module</a><ul>
+<li><a class="reference internal" href="#redflag.distributions.best_distribution"><code class="docutils literal notranslate"><span class="pre">best_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.bw_scott"><code class="docutils literal notranslate"><span class="pre">bw_scott()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.bw_silverman"><code class="docutils literal notranslate"><span class="pre">bw_silverman()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.cv_kde"><code class="docutils literal notranslate"><span class="pre">cv_kde()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.find_large_peaks"><code class="docutils literal notranslate"><span class="pre">find_large_peaks()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.fit_kde"><code class="docutils literal notranslate"><span class="pre">fit_kde()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.get_kde"><code class="docutils literal notranslate"><span class="pre">get_kde()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.kde_peaks"><code class="docutils literal notranslate"><span class="pre">kde_peaks()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.wasserstein"><code class="docutils literal notranslate"><span class="pre">wasserstein()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.wasserstein_multi"><code class="docutils literal notranslate"><span class="pre">wasserstein_multi()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.wasserstein_ovo"><code class="docutils literal notranslate"><span class="pre">wasserstein_ovo()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.distributions.wasserstein_ovr"><code class="docutils literal notranslate"><span class="pre">wasserstein_ovr()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.imbalance">redflag.imbalance module</a><ul>
+<li><a class="reference internal" href="#redflag.imbalance.class_counts"><code class="docutils literal notranslate"><span class="pre">class_counts()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.divergence"><code class="docutils literal notranslate"><span class="pre">divergence()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.empirical_distribution"><code class="docutils literal notranslate"><span class="pre">empirical_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.furthest_distribution"><code class="docutils literal notranslate"><span class="pre">furthest_distribution()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.imbalance_degree"><code class="docutils literal notranslate"><span class="pre">imbalance_degree()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.imbalance_ratio"><code class="docutils literal notranslate"><span class="pre">imbalance_ratio()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.major_minor"><code class="docutils literal notranslate"><span class="pre">major_minor()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.minority_classes"><code class="docutils literal notranslate"><span class="pre">minority_classes()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.importance">redflag.importance module</a><ul>
+<li><a class="reference internal" href="#redflag.importance.feature_importances"><code class="docutils literal notranslate"><span class="pre">feature_importances()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.importance.least_important_features"><code class="docutils literal notranslate"><span class="pre">least_important_features()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.importance.most_important_features"><code class="docutils literal notranslate"><span class="pre">most_important_features()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.independence">redflag.independence module</a><ul>
+<li><a class="reference internal" href="#redflag.independence.is_correlated"><code class="docutils literal notranslate"><span class="pre">is_correlated()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.outliers">redflag.outliers module</a><ul>
+<li><a class="reference internal" href="#redflag.outliers.expected_outliers"><code class="docutils literal notranslate"><span class="pre">expected_outliers()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.outliers.get_outliers"><code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.outliers.has_outliers"><code class="docutils literal notranslate"><span class="pre">has_outliers()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.outliers.is_correlated"><code class="docutils literal notranslate"><span class="pre">is_correlated()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.outliers.mahalanobis"><code class="docutils literal notranslate"><span class="pre">mahalanobis()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.outliers.mahalanobis_outliers"><code class="docutils literal notranslate"><span class="pre">mahalanobis_outliers()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-redflag.redflag">redflag.redflag module</a></li>
-<li><a class="reference internal" href="#module-redflag.sklearn">redflag.sklearn module</a></li>
-<li><a class="reference internal" href="#module-redflag.target">redflag.target module</a></li>
-<li><a class="reference internal" href="#module-redflag.utils">redflag.utils module</a></li>
+<li><a class="reference internal" href="#module-redflag.sklearn">redflag.sklearn module</a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector.fit"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector.transform"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.ClipDetector"><code class="docutils literal notranslate"><span class="pre">ClipDetector</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.CorrelationDetector"><code class="docutils literal notranslate"><span class="pre">CorrelationDetector</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.DistributionComparator"><code class="docutils literal notranslate"><span class="pre">DistributionComparator</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.DistributionComparator.fit"><code class="docutils literal notranslate"><span class="pre">DistributionComparator.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.DistributionComparator.fit_transform"><code class="docutils literal notranslate"><span class="pre">DistributionComparator.fit_transform()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.DistributionComparator.transform"><code class="docutils literal notranslate"><span class="pre">DistributionComparator.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceComparator"><code class="docutils literal notranslate"><span class="pre">ImbalanceComparator</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceComparator.fit"><code class="docutils literal notranslate"><span class="pre">ImbalanceComparator.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceComparator.fit_transform"><code class="docutils literal notranslate"><span class="pre">ImbalanceComparator.fit_transform()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceComparator.transform"><code class="docutils literal notranslate"><span class="pre">ImbalanceComparator.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceDetector"><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceDetector.fit"><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.ImbalanceDetector.transform"><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.ImportanceDetector"><code class="docutils literal notranslate"><span class="pre">ImportanceDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.ImportanceDetector.fit"><code class="docutils literal notranslate"><span class="pre">ImportanceDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.ImportanceDetector.transform"><code class="docutils literal notranslate"><span class="pre">ImportanceDetector.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector.fit"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector.transform"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.OutlierDetector"><code class="docutils literal notranslate"><span class="pre">OutlierDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.OutlierDetector.fit"><code class="docutils literal notranslate"><span class="pre">OutlierDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.OutlierDetector.fit_transform"><code class="docutils literal notranslate"><span class="pre">OutlierDetector.fit_transform()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.OutlierDetector.transform"><code class="docutils literal notranslate"><span class="pre">OutlierDetector.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.RfPipeline"><code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.RfPipeline.transform"><code class="docutils literal notranslate"><span class="pre">RfPipeline.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.UnivariateOutlierDetector"><code class="docutils literal notranslate"><span class="pre">UnivariateOutlierDetector</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.formatwarning"><code class="docutils literal notranslate"><span class="pre">formatwarning()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.make_rf_pipeline"><code class="docutils literal notranslate"><span class="pre">make_rf_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.target">redflag.target module</a><ul>
+<li><a class="reference internal" href="#redflag.target.is_binary"><code class="docutils literal notranslate"><span class="pre">is_binary()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.is_continuous"><code class="docutils literal notranslate"><span class="pre">is_continuous()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.is_multiclass"><code class="docutils literal notranslate"><span class="pre">is_multiclass()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.is_multioutput"><code class="docutils literal notranslate"><span class="pre">is_multioutput()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.n_classes"><code class="docutils literal notranslate"><span class="pre">n_classes()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.update_p"><code class="docutils literal notranslate"><span class="pre">update_p()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.utils">redflag.utils module</a><ul>
+<li><a class="reference internal" href="#redflag.utils.bool_to_index"><code class="docutils literal notranslate"><span class="pre">bool_to_index()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.clipped"><code class="docutils literal notranslate"><span class="pre">clipped()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.consecutive"><code class="docutils literal notranslate"><span class="pre">consecutive()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.cv"><code class="docutils literal notranslate"><span class="pre">cv()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.ecdf"><code class="docutils literal notranslate"><span class="pre">ecdf()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.flatten"><code class="docutils literal notranslate"><span class="pre">flatten()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.generate_data"><code class="docutils literal notranslate"><span class="pre">generate_data()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.get_idx"><code class="docutils literal notranslate"><span class="pre">get_idx()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.has_few_samples"><code class="docutils literal notranslate"><span class="pre">has_few_samples()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.has_flat"><code class="docutils literal notranslate"><span class="pre">has_flat()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.has_low_distance_stdev"><code class="docutils literal notranslate"><span class="pre">has_low_distance_stdev()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.has_monotonic"><code class="docutils literal notranslate"><span class="pre">has_monotonic()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.has_nans"><code class="docutils literal notranslate"><span class="pre">has_nans()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.index_to_bool"><code class="docutils literal notranslate"><span class="pre">index_to_bool()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.is_clipped"><code class="docutils literal notranslate"><span class="pre">is_clipped()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.is_numeric"><code class="docutils literal notranslate"><span class="pre">is_numeric()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.is_standardized"><code class="docutils literal notranslate"><span class="pre">is_standardized()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.iter_groups"><code class="docutils literal notranslate"><span class="pre">iter_groups()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.ordered_unique"><code class="docutils literal notranslate"><span class="pre">ordered_unique()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.proportion_to_stdev"><code class="docutils literal notranslate"><span class="pre">proportion_to_stdev()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.split_and_standardize"><code class="docutils literal notranslate"><span class="pre">split_and_standardize()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.stdev_to_proportion"><code class="docutils literal notranslate"><span class="pre">stdev_to_proportion()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.zscore"><code class="docutils literal notranslate"><span class="pre">zscore()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-redflag">Module contents</a></li>
 </ul>
 </li>
@@ -2275,12 +2745,8 @@ per column.</p>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/scripts/furo.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>

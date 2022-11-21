@@ -2,15 +2,14 @@
 <html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="redflag package" href="../redflag.html" /><link rel="prev" title="🚩 Basic usage" href="Basic_usage.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>🚩 Using redflag with sklearn - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     
@@ -204,7 +203,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -422,10 +422,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;GR&#39;, ylabel=&#39;Count&#39;&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: xlabel=&#39;GR&#39;, ylabel=&#39;Count&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/458473acfb07f90bf630089c5c39b4ce526997912d4085260e741b3f6ed31e66.png" src="../_images/458473acfb07f90bf630089c5c39b4ce526997912d4085260e741b3f6ed31e66.png" />
+<img alt="../_images/dff40fb0048731fdea605328ffc1f44f59ed2ae8ec1cce0f902fe6f990d7b578.png" src="../_images/dff40fb0048731fdea605328ffc1f44f59ed2ae8ec1cce0f902fe6f990d7b578.png" />
 </div>
 </div>
 <p>We will split this dataset by group (well name):</p>
@@ -437,18 +437,45 @@
 
 <span class="n">test_flag</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Well Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_wells</span><span class="p">)</span>
 
-<span class="n">X_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span>
 
-<span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="using-the-redflag-pipeline">
-<h2>Using the <code class="docutils literal notranslate"><span class="pre">redflag</span></code> pipeline<a class="headerlink" href="#using-the-redflag-pipeline" title="Permalink to this heading">#</a></h2>
-<p>There is a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html"><code class="docutils literal notranslate"><span class="pre">sklearn.pipeline.Pipeline</span></code></a> you can use, containing all of the detectors. (At the time of writing, there are three components, but this is set to grow.)</p>
+<section id="the-redflag-detector-classes">
+<h2>The <code class="docutils literal notranslate"><span class="pre">redflag</span></code> detector classes<a class="headerlink" href="#the-redflag-detector-classes" title="Permalink to this heading">#</a></h2>
+<p>There are two main kinds of object: <strong>detectors</strong> and <strong>comparators</strong>.</p>
+<p><strong>Detectors</strong> look for problems in your training and/or subsequent (e.g. validation, test, or production) data and are mostly unsupervised. There are several detectors:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ClipDetector()</span></code> — looks for features that have been clipped.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CorrelationDetector()</span></code> — looks for features that are correlated to themselves, which indicates that the data are likely not IID (in particular, not independent).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UnivariateOutlierDetector()</span></code> — looks for outliers, considering each feature separately. Usually, you probably want to use <code class="docutils literal notranslate"><span class="pre">OutlierDetector</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector()</span></code> — looks for outliers, considering all the features together. Usually, you probably want to use <code class="docutils literal notranslate"><span class="pre">OutlierDetector</span></code> instead.</p></li>
+</ul>
+<p>The following detectors only run during training. In other words, they examine your data during model fitting, but do not look at data during subsequent calls to <code class="docutils literal notranslate"><span class="pre">predict</span></code> or <code class="docutils literal notranslate"><span class="pre">score</span></code>, etc.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ImportanceDetector()</span></code> — looks at feature importance. Runs during <code class="docutils literal notranslate"><span class="pre">fit</span></code> only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector()</span></code> — looks for class imbalance in <code class="docutils literal notranslate"><span class="pre">y</span></code>. Runs during <code class="docutils literal notranslate"><span class="pre">fit</span></code> only. In other words, it can find class imbalance in the training data, but does not look at data during subsequent calls to <code class="docutils literal notranslate"><span class="pre">predict</span></code> or <code class="docutils literal notranslate"><span class="pre">score</span></code>, etc.</p></li>
+</ul>
+<p>Finally, one detector is a bit different from the others because it runs in unsupervised mode on the training data, but in supervised mode on subsequent data. In other words, it can find outliers in the training data (based on some threshold), then it uses the statistics of the training data to decide what is an outlier in the subsequent data:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">OutlierDetector()</span></code> — looks for outliers. Runs during <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p></li>
+</ul>
+<p><strong>Comparators</strong> are fully supervised. They learn things about your data during training, then look at subsequent (e.g. validation, test, or production) data and compare. They will not triger during model fitting, only during <code class="docutils literal notranslate"><span class="pre">predict</span></code> or <code class="docutils literal notranslate"><span class="pre">score</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DistributionComparator()</span></code> — checks that the distributions of the features are similar to those seen during training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImbalanceComparator()</span></code>— checks that any class imbalance is similar to that seen during training. (Does not trigger if the training data is imbalanced; use <code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code> for that.) Note that this comparator does not work in ordinary <code class="docutils literal notranslate"><span class="pre">sklearn.pipeline.Pipeline</span></code> objects; use <code class="docutils literal notranslate"><span class="pre">redflag.RfPipeline</span></code> instead.</p></li>
+</ul>
+</section>
+<section id="using-the-pre-built-redflag-pipeline">
+<h2>Using the pre-built <code class="docutils literal notranslate"><span class="pre">redflag</span></code> pipeline<a class="headerlink" href="#using-the-pre-built-redflag-pipeline" title="Permalink to this heading">#</a></h2>
+<p>There is a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html"><code class="docutils literal notranslate"><span class="pre">sklearn.pipeline.Pipeline</span></code></a> you can use, containing most of the detectors. To find out why one is not included, and why, read on.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ImbalanceComparator</span></code>, is not compatible with ordinary <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> objects, because it requires <code class="docutils literal notranslate"><span class="pre">y</span></code> (class imbalance comparison only works on the target vector). An <code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code> object is available to use with this comparator… but it will not work as part of another ordinary <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, so if you compose a multi-pipeline pipeline, make sure to use <code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code> for all of it. Please note there is also a <code class="docutils literal notranslate"><span class="pre">make_rf_pipeline()</span></code> function that works just like <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code>, but it uses <code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code> instead.</p>
+<p>For now, we’ll carry on with the standard <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">redflag</span> <span class="k">as</span> <span class="nn">rf</span>
@@ -462,11 +489,13 @@
                 (&#x27;rf.clip&#x27;, ClipDetector()),
                 (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                 (&#x27;rf.outlier&#x27;, OutlierDetector()),
-                (&#x27;rf.distributions&#x27;, DistributionComparator())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
+                (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                (&#x27;rf.importance&#x27;, ImportanceDetector())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
                 (&#x27;rf.clip&#x27;, ClipDetector()),
                 (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                 (&#x27;rf.outlier&#x27;, OutlierDetector()),
-                (&#x27;rf.distributions&#x27;, DistributionComparator())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">CorrelationDetector</label><div class="sk-toggleable__content"><pre>CorrelationDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator()</pre></div></div></div></div></div></div></div></div></div>
+                (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                (&#x27;rf.importance&#x27;, ImportanceDetector())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">CorrelationDetector</label><div class="sk-toggleable__content"><pre>CorrelationDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label sk-toggleable__label-arrow">ImportanceDetector</label><div class="sk-toggleable__content"><pre>ImportanceDetector()</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>We can use this in another pipeline:</p>
 <div class="cell docutils container">
@@ -487,21 +516,22 @@
                                  (&#x27;rf.clip&#x27;, ClipDetector()),
                                  (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                                  (&#x27;rf.outlier&#x27;, OutlierDetector()),
-                                 (&#x27;rf.distributions&#x27;,
-                                  DistributionComparator())])),
-                (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
+                                 (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                                 (&#x27;rf.importance&#x27;, ImportanceDetector())])),
+                (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
                 (&#x27;pipeline&#x27;,
                  Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
                                  (&#x27;rf.clip&#x27;, ClipDetector()),
                                  (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                                  (&#x27;rf.outlier&#x27;, OutlierDetector()),
-                                 (&#x27;rf.distributions&#x27;,
-                                  DistributionComparator())])),
-                (&#x27;svc&#x27;, SVC())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
+                                 (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                                 (&#x27;rf.importance&#x27;, ImportanceDetector())])),
+                (&#x27;svc&#x27;, SVC())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
                 (&#x27;rf.clip&#x27;, ClipDetector()),
                 (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                 (&#x27;rf.outlier&#x27;, OutlierDetector()),
-                (&#x27;rf.distributions&#x27;, DistributionComparator())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label sk-toggleable__label-arrow">CorrelationDetector</label><div class="sk-toggleable__content"><pre>CorrelationDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator()</pre></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label sk-toggleable__label-arrow">SVC</label><div class="sk-toggleable__content"><pre>SVC()</pre></div></div></div></div></div></div></div></div></div>
+                (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                (&#x27;rf.importance&#x27;, ImportanceDetector())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label sk-toggleable__label-arrow">CorrelationDetector</label><div class="sk-toggleable__content"><pre>CorrelationDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-16" type="checkbox" ><label for="sk-estimator-id-16" class="sk-toggleable__label sk-toggleable__label-arrow">ImportanceDetector</label><div class="sk-toggleable__content"><pre>ImportanceDetector()</pre></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-17" type="checkbox" ><label for="sk-estimator-id-17" class="sk-toggleable__label sk-toggleable__label-arrow">SVC</label><div class="sk-toggleable__content"><pre>SVC()</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>During the <code class="docutils literal notranslate"><span class="pre">fit</span></code> phase, the <code class="docutils literal notranslate"><span class="pre">redflag</span></code> transformers do three things:</p>
 <ul class="simple">
@@ -516,7 +546,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 The labels are imbalanced by more than the threshold (0.420 &gt; 0.400).
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 The labels are imbalanced by more than the threshold (0.420 &gt; 0.400). See self.minority_classes_ for the minority classes.
 🚩 Features 0, 1 may have clipped values.
 🚩 Features 0, 1, 2 may have correlated values.
 </pre></div>
@@ -531,22 +561,23 @@
                                  (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                                  (&#x27;rf.outlier&#x27;,
                                   OutlierDetector(threshold=3.3682141715600706)),
-                                 (&#x27;rf.distributions&#x27;,
-                                  DistributionComparator())])),
-                (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-16" type="checkbox" ><label for="sk-estimator-id-16" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
+                                 (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                                 (&#x27;rf.importance&#x27;, ImportanceDetector())])),
+                (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-18" type="checkbox" ><label for="sk-estimator-id-18" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
                 (&#x27;pipeline&#x27;,
                  Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
                                  (&#x27;rf.clip&#x27;, ClipDetector()),
                                  (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                                  (&#x27;rf.outlier&#x27;,
                                   OutlierDetector(threshold=3.3682141715600706)),
-                                 (&#x27;rf.distributions&#x27;,
-                                  DistributionComparator())])),
-                (&#x27;svc&#x27;, SVC())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-17" type="checkbox" ><label for="sk-estimator-id-17" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-18" type="checkbox" ><label for="sk-estimator-id-18" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
+                                 (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                                 (&#x27;rf.importance&#x27;, ImportanceDetector())])),
+                (&#x27;svc&#x27;, SVC())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-20" type="checkbox" ><label for="sk-estimator-id-20" class="sk-toggleable__label sk-toggleable__label-arrow">pipeline: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;rf.imbalance&#x27;, ImbalanceDetector()),
                 (&#x27;rf.clip&#x27;, ClipDetector()),
                 (&#x27;rf.correlation&#x27;, CorrelationDetector()),
                 (&#x27;rf.outlier&#x27;, OutlierDetector(threshold=3.3682141715600706)),
-                (&#x27;rf.distributions&#x27;, DistributionComparator())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-20" type="checkbox" ><label for="sk-estimator-id-20" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-21" type="checkbox" ><label for="sk-estimator-id-21" class="sk-toggleable__label sk-toggleable__label-arrow">CorrelationDetector</label><div class="sk-toggleable__content"><pre>CorrelationDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-22" type="checkbox" ><label for="sk-estimator-id-22" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector(threshold=3.3682141715600706)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-23" type="checkbox" ><label for="sk-estimator-id-23" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator()</pre></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-24" type="checkbox" ><label for="sk-estimator-id-24" class="sk-toggleable__label sk-toggleable__label-arrow">SVC</label><div class="sk-toggleable__content"><pre>SVC()</pre></div></div></div></div></div></div></div></div></div>
+                (&#x27;rf.distributions&#x27;, DistributionComparator()),
+                (&#x27;rf.importance&#x27;, ImportanceDetector())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-21" type="checkbox" ><label for="sk-estimator-id-21" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-22" type="checkbox" ><label for="sk-estimator-id-22" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-23" type="checkbox" ><label for="sk-estimator-id-23" class="sk-toggleable__label sk-toggleable__label-arrow">CorrelationDetector</label><div class="sk-toggleable__content"><pre>CorrelationDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-24" type="checkbox" ><label for="sk-estimator-id-24" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector(threshold=3.3682141715600706)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-25" type="checkbox" ><label for="sk-estimator-id-25" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-26" type="checkbox" ><label for="sk-estimator-id-26" class="sk-toggleable__label sk-toggleable__label-arrow">ImportanceDetector</label><div class="sk-toggleable__content"><pre>ImportanceDetector()</pre></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-27" type="checkbox" ><label for="sk-estimator-id-27" class="sk-toggleable__label sk-toggleable__label-arrow">SVC</label><div class="sk-toggleable__content"><pre>SVC()</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>When we pass in data for prediction, <code class="docutils literal notranslate"><span class="pre">redflag</span></code> checks the new inputs. There are two categories of check:</p>
 <ul class="simple">
@@ -576,7 +607,7 @@
 </div>
 </div>
 </div>
-<p>But you can’t pass arguments to the <code class="docutils literal notranslate"><span class="pre">redflag_pipeline</span></code> components yet, for example to change the sensitivity of the <code class="docutils literal notranslate"><span class="pre">DistributionComparator</span></code>. To do that, use them separately.</p>
+<p>But you can’t pass arguments to the elements of <code class="docutils literal notranslate"><span class="pre">redflag_pipeline</span></code> components yet, for example to change the sensitivity of the <code class="docutils literal notranslate"><span class="pre">DistributionComparator</span></code>. To do that, use them separately. That is, instantiate the detector components how you want them, and make a pipeline out of the components.</p>
 </section>
 <section id="using-the-detector-transformers">
 <h2>Using the ‘detector’ transformers<a class="headerlink" href="#using-the-detector-transformers" title="Permalink to this heading">#</a></h2>
@@ -588,11 +619,11 @@
 
 <span class="n">test_flag</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Well Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">test_wells</span><span class="p">)</span>
 
-<span class="n">X_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span>
 
-<span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="n">features</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">test_flag</span><span class="p">,</span> <span class="s1">&#39;Lithology&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -635,14 +666,14 @@
                  OutlierDetector(p=0.8, threshold=2.154443705823081)),
                 (&#x27;distributioncomparator&#x27;,
                  DistributionComparator(threshold=0.25)),
-                (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-25" type="checkbox" ><label for="sk-estimator-id-25" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
+                (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-28" type="checkbox" ><label for="sk-estimator-id-28" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
                 (&#x27;imbalancedetector&#x27;, ImbalanceDetector(threshold=0.5)),
                 (&#x27;clipdetector&#x27;, ClipDetector()),
                 (&#x27;outlierdetector&#x27;,
                  OutlierDetector(p=0.8, threshold=2.154443705823081)),
                 (&#x27;distributioncomparator&#x27;,
                  DistributionComparator(threshold=0.25)),
-                (&#x27;svc&#x27;, SVC())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-26" type="checkbox" ><label for="sk-estimator-id-26" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-27" type="checkbox" ><label for="sk-estimator-id-27" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector(threshold=0.5)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-28" type="checkbox" ><label for="sk-estimator-id-28" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-29" type="checkbox" ><label for="sk-estimator-id-29" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector(p=0.8, threshold=2.154443705823081)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-30" type="checkbox" ><label for="sk-estimator-id-30" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator(threshold=0.25)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-31" type="checkbox" ><label for="sk-estimator-id-31" class="sk-toggleable__label sk-toggleable__label-arrow">SVC</label><div class="sk-toggleable__content"><pre>SVC()</pre></div></div></div></div></div></div></div></div></div>
+                (&#x27;svc&#x27;, SVC())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-29" type="checkbox" ><label for="sk-estimator-id-29" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-30" type="checkbox" ><label for="sk-estimator-id-30" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceDetector</label><div class="sk-toggleable__content"><pre>ImbalanceDetector(threshold=0.5)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-31" type="checkbox" ><label for="sk-estimator-id-31" class="sk-toggleable__label sk-toggleable__label-arrow">ClipDetector</label><div class="sk-toggleable__content"><pre>ClipDetector()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-32" type="checkbox" ><label for="sk-estimator-id-32" class="sk-toggleable__label sk-toggleable__label-arrow">OutlierDetector</label><div class="sk-toggleable__content"><pre>OutlierDetector(p=0.8, threshold=2.154443705823081)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-33" type="checkbox" ><label for="sk-estimator-id-33" class="sk-toggleable__label sk-toggleable__label-arrow">DistributionComparator</label><div class="sk-toggleable__content"><pre>DistributionComparator(threshold=0.25)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-34" type="checkbox" ><label for="sk-estimator-id-34" class="sk-toggleable__label sk-toggleable__label-arrow">SVC</label><div class="sk-toggleable__content"><pre>SVC()</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>The test dataset does not trigger the higher threshold for outliers. But with the new lower Wasserstein threshold, the distribution comparison fails for all of the features:</p>
 <div class="cell docutils container">
@@ -653,6 +684,46 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 Features 0, 1, 2 have distributions that are different from training.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-imbalance-comparator">
+<h2>The imbalance comparator<a class="headerlink" href="#the-imbalance-comparator" title="Permalink to this heading">#</a></h2>
+<p>As mentioned, the <code class="docutils literal notranslate"><span class="pre">ImbalanceComparator</span></code>, is not compatible with ordinary <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> objects, because it requires <code class="docutils literal notranslate"><span class="pre">y</span></code> (class imbalance comparison only works on the target vector). An <code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code> object is available to use with this comparator… but it will not work as part of another ordinary <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> (for the same reason: <code class="docutils literal notranslate"><span class="pre">y</span></code> will not be passed into it), so if you compose a multi-pipeline pipeline, make sure to use <code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code> for all of it.</p>
+<p>There is also a <code class="docutils literal notranslate"><span class="pre">make_rf_pipeline()</span></code> function that works just like <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code>, but it uses <code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code> instead.</p>
+<p>Let’s use it to check whether the imbalance in our test data is similar to the imbalance in the training data. When fitting a model, the comparator will never trigger:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">make_rf_pipeline</span><span class="p">(</span><span class="n">rf</span><span class="o">.</span><span class="n">ImbalanceComparator</span><span class="p">())</span>
+
+<span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-5 {color: black;background-color: white;}#sk-container-id-5 pre{padding: 0;}#sk-container-id-5 div.sk-toggleable {background-color: white;}#sk-container-id-5 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-5 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-5 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-5 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-5 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-5 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-5 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-5 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-5 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-5 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-5 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-5 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-5 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-5 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-5 div.sk-item {position: relative;z-index: 1;}#sk-container-id-5 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-5 div.sk-item::before, #sk-container-id-5 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-5 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-5 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-5 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-5 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-5 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-5 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-5 div.sk-label-container {text-align: center;}#sk-container-id-5 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-5 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-5" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RfPipeline(steps=[(&#x27;imbalancecomparator&#x27;, ImbalanceComparator())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-35" type="checkbox" ><label for="sk-estimator-id-35" class="sk-toggleable__label sk-toggleable__label-arrow">RfPipeline</label><div class="sk-toggleable__content"><pre>RfPipeline(steps=[(&#x27;imbalancecomparator&#x27;, ImbalanceComparator())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-36" type="checkbox" ><label for="sk-estimator-id-36" class="sk-toggleable__label sk-toggleable__label-arrow">ImbalanceComparator</label><div class="sk-toggleable__content"><pre>ImbalanceComparator()</pre></div></div></div></div></div></div></div></div></div>
+</div>
+<p>But during transformation (therefore during prediction or other inference phases), it checks the imbalance is the same:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 There is a different number of minority classes (2) compared to the training data (4).
+🚩 The minority classes (dolomite, sandstone) are different from those in the training data (dolomite, mudstone, wackestone, sandstone).
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  66.276     , 2359.73324716,    3.591     ],
+       [  77.252     , 2354.54679144,    3.341     ],
+       [  82.899     , 2330.35783664,    3.064     ],
+       ...,
+       [  90.49      , 2193.06953439,    3.168     ],
+       [  90.975     , 2192.32922081,    3.154     ],
+       [  90.108     , 2176.62535394,    3.125     ]])
 </pre></div>
 </div>
 </div>
@@ -701,12 +772,20 @@
 <ul class="simple">
 <li><p>When you call <code class="docutils literal notranslate"><span class="pre">fit</span></code> (e.g. during training), the detector learns the empirical, binned distributions of your features, one at a time. No warnings can be emitted during fitting, you are only learning the distributions.</p></li>
 <li><p>When you call <code class="docutils literal notranslate"><span class="pre">transform</span></code> (e.g. during evaluation, testing, or in production), the detector compares the distributions in the data to those that were learned during fitting.</p></li>
-<li><p>The comparison uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Wasserstein_metric">1-Wasserstein distance</a>, or “earth mover’s distance”. Each feature is compared in turn; it is not a multivariate treatment. (If you’d like to see wuch a thing, please make a GitHub Issue, or have a crack at implementing it!)</p></li>
+<li><p>The comparison uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Wasserstein_metric">1-Wasserstein distance</a>, or “earth mover’s distance”. Each feature is compared in turn; it is not a multivariate treatment. (If you’d like to see such a thing, please make a GitHub Issue, or have a crack at implementing it!)</p></li>
 <li><p>If the distance is more than the threshold, 1 by default, the warning is triggered.</p></li>
 </ul>
 <p>If this detector triggers, it’s a sign that you may have violated the ‘identical  distribution’ part of the <a class="reference external" href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">IID assumption</a>. You should examine the distributions of the features in the training data vs the current data that triggered the detector. For example, you can do this visually with something like Seaborn’s <code class="docutils literal notranslate"><span class="pre">displot</span></code> or <code class="docutils literal notranslate"><span class="pre">kdeplot</span></code> functions.</p>
 <p>A small difference, especially on just a few features, might just result from natural variance in the data and you may decide to ignore it. A large difference may be a result of forgetting to scale the data using the scaling parameters learned from the training data. A large difference could also result from trying to apply the model to a new ‘domain’, e.g. a new geographic location, set of patients, or type of widget.</p>
 <p>If you’re in the model selection phase, it’s possible that a different train/test split will give more comparable distributions.</p>
+</section>
+<section id="feature-importance-comparator-coming-soon">
+<h3>Feature importance comparator (coming soon)<a class="headerlink" href="#feature-importance-comparator-coming-soon" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Negative importance suggests the feature is harming the prediction.</p></li>
+<li><p>Very low positive importance (compared to other features) suggests the feature does not contain much useful information.</p></li>
+<li><p>Very high importance in one or two features (compared to other features) suggests the feature(s) may be leaking information: check that it does not contain information about the target variable.</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -723,10 +802,10 @@
                 </div>
                 <div class="title">redflag package</div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="Basic_usage.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -769,21 +848,24 @@
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a><ul>
-<li><a class="reference internal" href="#using-the-redflag-pipeline">Using the <code class="docutils literal notranslate"><span class="pre">redflag</span></code> pipeline</a></li>
+<li><a class="reference internal" href="#the-redflag-detector-classes">The <code class="docutils literal notranslate"><span class="pre">redflag</span></code> detector classes</a></li>
+<li><a class="reference internal" href="#using-the-pre-built-redflag-pipeline">Using the pre-built <code class="docutils literal notranslate"><span class="pre">redflag</span></code> pipeline</a></li>
 <li><a class="reference internal" href="#using-the-detector-transformers">Using the ‘detector’ transformers</a></li>
+<li><a class="reference internal" href="#the-imbalance-comparator">The imbalance comparator</a></li>
 <li><a class="reference internal" href="#what-to-do-about-the-warnings">What to do about the warnings</a><ul>
 <li><a class="reference internal" href="#imbalancedetector"><code class="docutils literal notranslate"><span class="pre">ImbalanceDetector</span></code></a></li>
 <li><a class="reference internal" href="#clipdetector"><code class="docutils literal notranslate"><span class="pre">ClipDetector</span></code></a></li>
 <li><a class="reference internal" href="#correlationdetector"><code class="docutils literal notranslate"><span class="pre">CorrelationDetector</span></code></a></li>
 <li><a class="reference internal" href="#outlierdetector"><code class="docutils literal notranslate"><span class="pre">OutlierDetector</span></code></a></li>
 <li><a class="reference internal" href="#distributioncomparator"><code class="docutils literal notranslate"><span class="pre">DistributionComparator</span></code></a></li>
+<li><a class="reference internal" href="#feature-importance-comparator-coming-soon">Feature importance comparator (coming soon)</a></li>
 </ul>
 </li>
 </ul>
@@ -802,11 +884,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     </body>
 </html>

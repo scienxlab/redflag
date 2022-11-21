@@ -2,15 +2,14 @@
 <html class="no-js" lang="en">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" /><link rel="prev" title="🚩 Installation" href="../installation.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.1.1, furo 2022.06.21"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
         <title>🚩 Basic usage - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     
@@ -204,7 +203,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -239,7 +239,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.9&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.10rc1&#39;
 </pre></div>
 </div>
 </div>
@@ -435,21 +435,63 @@
 </div></div></div>
 </div>
 </section>
+<section id="descriptive">
+<h2>Descriptive<a class="headerlink" href="#descriptive" title="Permalink to this heading">#</a></h2>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">is_continuous()</span></code> to check if a feature (or the target) is continuous (as opposed to categorical).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">:</span><span class="s2">&gt;20s</span><span class="si">}</span><span class="s2"> ... </span><span class="si">{</span><span class="n">rf</span><span class="o">.</span><span class="n">is_continuous</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>           Well Name ... False
+               Depth ... True
+           Formation ... False
+              RelPos ... True
+              Marine ... False
+                  GR ... True
+                 ILD ... True
+            DeltaPHI ... True
+               PHIND ... True
+                  PE ... True
+              Facies ... False
+            LATITUDE ... True
+           LONGITUDE ... True
+           ILD_log10 ... True
+           Lithology ... False
+                RHOB ... True
+          Mineralogy ... False
+       Siliciclastic ... False
+</pre></div>
+</div>
+</div>
+</div>
+<p>This has missed the <strong>Facies</strong> column, which is categorical. But the others are correct.</p>
+</section>
 <section id="imbalance-metrics">
 <h2>Imbalance metrics<a class="headerlink" href="#imbalance-metrics" title="Permalink to this heading">#</a></h2>
 <p>First, we’ll look at measuring imbalance in the target using <code class="docutils literal notranslate"><span class="pre">rf.class_imbalance()</span></code>. For binary targets, the metric is imbalace ratio (ratio between majority and minority class). For multiclass targets, the metric is imbalance degree <a class="reference external" href="https://doi.org/10.1016/j.patrec.2017.08.002">(Ortigosa-Hernandez et al, 2017)</a>, a single-value measure that explains (a) how many minority classes there are and (b) how skewed the supports are.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">imbalance_degree</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">imbalance_ratio</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.378593040846633
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8.347368420878391
 </pre></div>
 </div>
 </div>
 </div>
+<p>To interpret this number, split it into two parts:</p>
+<ul class="simple">
+<li><p>The integer part, 3, is equal to <span class="math notranslate nohighlight">\(m - 1\)</span>, where <span class="math notranslate nohighlight">\(m\)</span> is the number of minority classes.</p></li>
+<li><p>The fractional part, 0.378…, is a measure of the amount of imbalance, where 0 means the dataset is balanced perfectly and 0.999… is really bad.</p></li>
+</ul>
+<p>If the imbalance degree is -1 then there are no minority classes and all the classes have equal support.</p>
+<p>In general, this statistic is more informative than the commonly used ‘imbalance ratio’ (<code class="docutils literal notranslate"><span class="pre">rf.imbalance_ratio()</span></code>), which is the ratio of support in the maximum majority class to that in the minimum minority class, with no regard for the support of the other classes.</p>
 <p>We can get the minority classes, which are those with fewer samples than expected. These are returned in order, smallest first:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -503,10 +545,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7fc5462fba30&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7ff18b5a3950&gt;
 </pre></div>
 </div>
-<img alt="../_images/1f3975ce3789afca247e1be9ef88470e82e3ac83b45acc46d22de7dada1cc4bb.png" src="../_images/1f3975ce3789afca247e1be9ef88470e82e3ac83b45acc46d22de7dada1cc4bb.png" />
+<img alt="../_images/2089f8111890b1dfe61335c13204f479c92c015eb8f6a293db6d5eff6e9d8ed3.png" src="../_images/2089f8111890b1dfe61335c13204f479c92c015eb8f6a293db6d5eff6e9d8ed3.png" />
 </div>
 </div>
 </section>
@@ -522,9 +564,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 301,  302,  303,  415,  416,  417,  418,  799,  896,  897,  898,
-        899,  996,  997, 1843, 2278, 2279, 2280, 2638, 2639, 2640, 2641,
-       2642, 2643, 2920, 2921, 2922, 3070, 3071, 3074, 3075, 3076, 3077,
-       3079, 3080, 3211, 3580, 3581, 3582, 3583])
+        899,  996,  997, 1843, 1844, 2278, 2279, 2280, 2638, 2639, 2640,
+       2641, 2642, 2643, 2920, 2921, 2922, 3070, 3071, 3074, 3075, 3076,
+       3079, 3080, 3081, 3580, 3581, 3582, 3583])
 </pre></div>
 </div>
 </div>
@@ -540,10 +582,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/42cad8a3294c6de1372e63cf2761a3ecc7729dc47ab6a6e125a06c0911d91fd6.png" src="../_images/42cad8a3294c6de1372e63cf2761a3ecc7729dc47ab6a6e125a06c0911d91fd6.png" />
+<img alt="../_images/8eb1dcae9f2165d49fb913d04b1a45f2652a8284db1f95ca1dbf74776ff2ab1d.png" src="../_images/8eb1dcae9f2165d49fb913d04b1a45f2652a8284db1f95ca1dbf74776ff2ab1d.png" />
 </div>
 </div>
 <p>By default it uses an <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#isolation-forest"><strong>isolation forest</strong></a> to detect the outliers at the 99% confidence level, but you can also opt to use <strong>local outlier factor</strong>, <strong>elliptic envelope</strong>, or <strong>Mahalanobis distance</strong>, setting the confidence level to choose how many outliers you will see, or (equivalently) setting the <code class="docutils literal notranslate"><span class="pre">threshold</span></code> to the number of standard deviations away from the mean you regard as signal.</p>
@@ -559,10 +601,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7fc50ac8a980&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7ff189076e90&gt;
 </pre></div>
 </div>
-<img alt="../_images/50548877d6b264cccec3b15273fa01b73d858ebc54207d95054628e5fa12ef61.png" src="../_images/50548877d6b264cccec3b15273fa01b73d858ebc54207d95054628e5fa12ef61.png" />
+<img alt="../_images/2a158a921076ed90b8b740d2a97d4f22694a53259b125d114db083ae79459a24.png" src="../_images/2a158a921076ed90b8b740d2a97d4f22694a53259b125d114db083ae79459a24.png" />
 </div>
 </div>
 <p>A helper function can compute the number of expected outliers, given the dataset size and assuming a Gaussian distribution of samples.</p>
@@ -614,10 +656,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fc50848cfa0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7ff18920a010&gt;
 </pre></div>
 </div>
-<img alt="../_images/98847724001b119d8b5f9d83569cdd2162529c6c8b8ac93797df73a96a1941b9.png" src="../_images/98847724001b119d8b5f9d83569cdd2162529c6c8b8ac93797df73a96a1941b9.png" />
+<img alt="../_images/8c7317a10f6b24e9ea9228cdd82ce7add9d67b81f52aba612a57fa3c348e702a.png" src="../_images/8c7317a10f6b24e9ea9228cdd82ce7add9d67b81f52aba612a57fa3c348e702a.png" />
 </div>
 </div>
 <p>This truncated normal distribution has no outliers (there are only about 60, compared to the 100 we expect at this confidence level of 99% on this dataset of 10,000 records).</p>
@@ -658,10 +700,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fc5086a95d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7ff188973390&gt;
 </pre></div>
 </div>
-<img alt="../_images/83d5eda0006afb0386f11eb25f3df938effe77f8989e8f57a10b8a5cd5106de3.png" src="../_images/83d5eda0006afb0386f11eb25f3df938effe77f8989e8f57a10b8a5cd5106de3.png" />
+<img alt="../_images/4bfde80b66cfbfedd8e03a8dbff9fdb6fdf97d6449dbee27232c64106f0b9f38.png" src="../_images/4bfde80b66cfbfedd8e03a8dbff9fdb6fdf97d6449dbee27232c64106f0b9f38.png" />
 </div>
 </div>
 </section>
@@ -715,10 +757,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fc4fdf248e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7ff188753a50&gt;
 </pre></div>
 </div>
-<img alt="../_images/c6806459cbf20055bbe272dd9f559108cf2ca005f0555f8cee864b87bf249770.png" src="../_images/c6806459cbf20055bbe272dd9f559108cf2ca005f0555f8cee864b87bf249770.png" />
+<img alt="../_images/358afb174042d552a1c3df84b26a199171964a1d87201b3a027803cab1a63aeb.png" src="../_images/358afb174042d552a1c3df84b26a199171964a1d87201b3a027803cab1a63aeb.png" />
 </div>
 </div>
 </section>
@@ -758,10 +800,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: &gt;
 </pre></div>
 </div>
-<img alt="../_images/35186b1eb92bf8aecc21c43a089874ce4a8145f21170fa3b69b3e29ccded8dd0.png" src="../_images/35186b1eb92bf8aecc21c43a089874ce4a8145f21170fa3b69b3e29ccded8dd0.png" />
+<img alt="../_images/7650936f197253565d56c8fa564def6db8ce847d70e0daa1a1370a01a0184506.png" src="../_images/7650936f197253565d56c8fa564def6db8ce847d70e0daa1a1370a01a0184506.png" />
 </div>
 </div>
 <p>This shows us that the distributions of the PE log in well indices 6 and 7 are somewhat different and may be anomalous. It also suggests that the CROSS H CATTLE well is different from the others.</p>
@@ -845,6 +887,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Random&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Constant&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -852,26 +895,53 @@
 <p>First, a <strong>classification task</strong>. Imagine we’re trying to predict lithology from well logs. Which are the most important logs?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">,</span> <span class="s1">&#39;ILD_log10&#39;</span><span class="p">,</span> <span class="s1">&#39;RHOB&#39;</span><span class="p">,</span> <span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="s1">&#39;Random&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">,</span> <span class="s1">&#39;ILD_log10&#39;</span><span class="p">,</span> <span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="s1">&#39;Random&#39;</span><span class="p">,</span> <span class="s1">&#39;Constant&#39;</span><span class="p">]</span>
 
 <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">]</span>
 
-<span class="n">rf</span><span class="o">.</span><span class="n">feature_importances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">feature_importances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">importances</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.20940466, 0.33152635, 0.15046128, 0.21208407, 0.09405768])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.28473547, 0.37689758, 0.27783294, 0.05936136, 0.        ])
 </pre></div>
 </div>
 </div>
 </div>
-<p>This tells us that the most important features are, in order: PE, ILD, CR, RHOB, with the random variable a distant last.</p>
-<p>Now we’ll look at a <strong>regression task</strong>. We’ll try to predict RHOB from the other logs (including the random variable). The function guesses that this is a regression task:</p>
+<p>This tells us that the most important features are, in order: ILD, PE, GR, with the random and constant variables unsurprisingly useless.</p>
+<p>There’s a function to help us decide which are the least important features; it returns the indices of the least useful features, in order (least useful first):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">,</span> <span class="s1">&#39;ILD_log10&#39;</span><span class="p">,</span> <span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="s1">&#39;Random&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">least_important_features</span><span class="p">(</span><span class="n">importances</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<p>And a complementary function reporting the most important:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">most_important_features</span><span class="p">(</span><span class="n">importances</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 0, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we’ll look at a <strong>regression task</strong>. We’ll try to predict RHOB from the other logs (including the dummy variables). The function guesses that this is a regression task:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">,</span> <span class="s1">&#39;ILD_log10&#39;</span><span class="p">,</span> <span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="s1">&#39;Random&#39;</span><span class="p">,</span> <span class="s1">&#39;Constant&#39;</span><span class="p">]</span>
 
 <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;RHOB&#39;</span><span class="p">]</span>
@@ -881,26 +951,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.0924731 , 0.41256784, 0.45383464, 0.04112442])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.08700799, 0.41923666, 0.4592391 , 0.03416134, 0.        ])
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">feature_importances</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-<span class="n">i</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="n">i</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 4.90445128,  1.07316295,  1.        , 13.66658155])
-</pre></div>
-</div>
-</div>
-</div>
-<p>The most predictive features are PE and ILD, with GR substantially less important. Again, the random variable is the least important feature.</p>
+<p>The most predictive features are PE and ILD, with GR substantially less important. Again, the random and constant variables are the least important feature.</p>
 </section>
 </section>
 
@@ -916,10 +972,10 @@
                 </div>
                 <div class="title">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></div>
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
           <a class="prev-page" href="../installation.html">
-              <svg><use href="#svg-arrow-right"></use></svg>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
@@ -962,7 +1018,7 @@
       <div class="toc-sticky toc-scroll">
         <div class="toc-title-container">
           <span class="toc-title">
-            Contents
+            On this page
           </span>
         </div>
         <div class="toc-tree-container">
@@ -970,6 +1026,7 @@
             <ul>
 <li><a class="reference internal" href="#">🚩 Basic usage</a><ul>
 <li><a class="reference internal" href="#load-some-data">Load some data</a></li>
+<li><a class="reference internal" href="#descriptive">Descriptive</a></li>
 <li><a class="reference internal" href="#imbalance-metrics">Imbalance metrics</a></li>
 <li><a class="reference internal" href="#outliers">Outliers</a></li>
 <li><a class="reference internal" href="#clipping">Clipping</a></li>
@@ -996,11 +1053,9 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
