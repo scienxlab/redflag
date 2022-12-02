@@ -18,10 +18,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from __future__ import annotations  # To support PEP 585 and PEP 604.
+
 import warnings
 from typing import Iterable, Any
 from numpy.typing import ArrayLike
-from __future__ import annotations  # To support PEP 585 and PEP 604.
 
 import numpy as np
 from sklearn.model_selection import train_test_split
