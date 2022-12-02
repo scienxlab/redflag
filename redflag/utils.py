@@ -19,7 +19,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import warnings
-from typing import Iterable 
+from typing import Iterable, Any
+from numpy.typing import ArrayLike
 
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -29,7 +30,7 @@ from scipy.optimize import fsolve
 from scipy.spatial.distance import pdist
 
 
-def flatten(L):
+def flatten(L: list[Any]) -> Iterable[Any]:
     """
     Flattens a list. For example:
 
@@ -45,7 +46,7 @@ def flatten(L):
             yield x
 
 
-def get_idx(cond):
+def get_idx(cond: bool) -> np.ndarray:
     """
     Get the True indices of a 1D boolean array.
 
@@ -67,7 +68,7 @@ def get_idx(cond):
 bool_to_index = get_idx
 
 
-def index_to_bool(idx, n=None):
+def index_to_bool(idx: ArrayLike, n: Optional[int]=None) -> np.ndarray:
     """
     Convert an index to a boolean array.
 
@@ -87,8 +88,7 @@ def index_to_bool(idx, n=None):
     return np.array([i in idx for i in range(n)])
 
 
-
-def is_numeric(a):
+def is_numeric(a: ArrayLike) -> bool:
     """
     Decide if a sequence is numeric.
 
@@ -108,7 +108,7 @@ def is_numeric(a):
     return np.issubdtype(a.dtype, np.number)
 
 
-def generate_data(counts):
+def generate_data(counts: ArrayLike) -> list[int]:
     """
     Generate data from a list of counts.
 
@@ -126,7 +126,7 @@ def generate_data(counts):
     return [item for sublist in data for item in sublist]
 
 
-def ordered_unique(a):
+def ordered_unique(a: ArrayLike) -> np.ndarray:
     """
     Unique items in appearance order.
 
@@ -148,7 +148,7 @@ def ordered_unique(a):
     return a[np.sort(idx)]
 
 
-def split_and_standardize(X, y, random_state=None):
+def split_and_standardize(X: ArrayLike, y: ArrayLike, random_state: Optional[int]=None) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Split a dataset, check if it's standardized, and scale if not.
 
@@ -158,7 +158,7 @@ def split_and_standardize(X, y, random_state=None):
         random_state (int or None): The seed for the split.
 
     Returns:
-        tuple of ndarray: X_train, X_val, y_train, y_val
+        tuple of ndarray: X, X_train, X_val, y, y_train, y_val
     """
     X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=random_state)
 
@@ -172,7 +172,7 @@ def split_and_standardize(X, y, random_state=None):
     return X, X_train, X_val, y, y_train, y_val
 
 
-def ecdf(arr, start='1/N', downsample=None):
+def ecdf(arr: ArrayLike, start: str='1/N', downsample: Optional[int]=None) -> tuple[np.ndarray, np.ndarray]:
     """
     Empirical CDF. No binning: the output is the length of the
     input. By default, uses the convention of starting at 1/N
@@ -295,7 +295,7 @@ def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
     return r_hat
 
 
-def is_standardized(a, atol=1e-5):
+def is_standardized(a: ArrayLike, atol: float=1e-5) -> bool:
     """
     Returns True if the feature has zero mean and standard deviation of 1.
     In other words, if the feature appears to be a Z-score.
@@ -318,7 +318,7 @@ def is_standardized(a, atol=1e-5):
     return (np.abs(μ) < atol) and (np.abs(σ - 1) < atol)
 
 
-def zscore(X):
+def zscore(X: np.ndarray) -> np.ndarray:
     """
     Transform array to Z-scores. If 2D, stats are computed
     per column.
@@ -331,7 +331,7 @@ def zscore(X):
     return (X - np.nanmean(X, axis=0)) / np.nanstd(X, axis=0)
 
 
-def cv(X):
+def cv(X: np.ndarray) -> float:
     """
     Coefficient of variation, as a decimal fraction of the mean.
 
@@ -351,7 +351,7 @@ def cv(X):
     return np.nanstd(X, axis=0) / μ
 
 
-def has_low_distance_stdev(X, atol=0.1):
+def has_low_distance_stdev(X: np.ndarray, atol: float=0.1) -> bool:
     """
     Returns True if the instances has a small relative standard deviation of
     distances in the feature space.
@@ -366,7 +366,7 @@ def has_low_distance_stdev(X, atol=0.1):
     return cv(pdist(zscore(X))) < atol
 
 
-def has_few_samples(X):
+def has_few_samples(X: np.ndarray) -> bool:
     """
     Returns True if the number of samples is less than the square of the
     number of features.
@@ -390,7 +390,7 @@ def has_few_samples(X):
     return N < M**2
 
 
-def clipped(a):
+def clipped(a: ArrayLike) -> tuple[Optional[ArrayLike], Optional[ArrayLike]]:
     """
     Returns the indices of values at the min and max.
 
@@ -411,7 +411,7 @@ def clipped(a):
     return min_clips, max_clips
 
 
-def is_clipped(a):
+def is_clipped(a: ArrayLike) -> bool:
     """
     Decide if the data are likely clipped: If there are multiple
     values at the max and/or min, then the data may be clipped.
@@ -430,7 +430,7 @@ def is_clipped(a):
     return (min_clips is not None) or (max_clips is not None)
 
 
-def iter_groups(groups):
+def iter_groups(groups: ArrayLike) -> Iterator[np.ndarray]:
     """
     Allow iterating over groups, getting boolean array for each.
     
@@ -452,7 +452,7 @@ def iter_groups(groups):
         yield groups == group
 
 
-def has_nans(a):
+def has_nans(a: ArrayLike) -> np.ndarray:
     """
     Returns the indices of any NaNs.
 
@@ -471,7 +471,7 @@ def has_nans(a):
     return np.nonzero(np.isnan(a))[0]
 
 
-def consecutive(a, stepsize=1):
+def consecutive(a: ArrayLike, stepsize: int=1) -> list[np.ndarray]:
     """
     Splits an array into groups of consecutive values.
     
@@ -489,9 +489,9 @@ def consecutive(a, stepsize=1):
     return np.split(a, get_idx(np.diff(a) != stepsize) + 1)
 
 
-def has_flat(a, tolerance=3):
+def has_flat(a: ArrayLike, tolerance: int=3) -> np.ndarray:
     """
-    Returns True if the array has any flat values.
+    Returns the indices of runs of flat values.
 
     Args:
         a (array): The data, a 1D array.
@@ -513,9 +513,9 @@ def has_flat(a, tolerance=3):
     return np.array(list(flatten(flats)), dtype=int)
 
 
-def has_monotonic(a, tolerance=3):
+def has_monotonic(a: ArrayLike, tolerance: int=3) -> np.ndarray:
     """
-    Returns True if the array is monotonic.
+    Returns the indices of monotonic runs in the data.
 
     Args:
         a (array): The data, a 1D array.
