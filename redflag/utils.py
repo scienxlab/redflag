@@ -21,6 +21,7 @@ limitations under the License.
 import warnings
 from typing import Iterable, Any
 from numpy.typing import ArrayLike
+from __future__ import annotations  # To support PEP 585 and PEP 604.
 
 import numpy as np
 from sklearn.model_selection import train_test_split
