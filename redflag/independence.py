@@ -19,9 +19,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import numpy as np
+from numpy.typing import ArrayLike
 
 
-def is_correlated(a, n=20, s=20, threshold=0.1):
+def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> bool:
     """
     Check if a dataset is correlated. Uses s chunks of n samples.
 

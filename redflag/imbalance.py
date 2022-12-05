@@ -28,14 +28,16 @@ https://doi.org/10.1016/j.patrec.2017.08.002
 """
 from collections import Counter
 import warnings
+from typing import Optional, Callable
 
 import numpy as np
+from numpy.typing import ArrayLike
 
 from .target import *
 from .utils import *
 
 
-def class_counts(a, classes=None):
+def class_counts(a: ArrayLike, classes: Optional[ArrayLike]=None) -> dict:
     """
     Make a Counter of the class labels in `classes`, or in `a` if `classes`
     is None.
@@ -66,7 +68,7 @@ def class_counts(a, classes=None):
     return {k: counts[k] for k in classes}
 
 
-def empirical_distribution(a, classes=None):
+def empirical_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> tuple[ArrayLike, ArrayLike]:
     """
     Compute zeta and e. Equation 5 in Ortigosa-Hernandez et al. (2017).
 
@@ -87,7 +89,7 @@ def empirical_distribution(a, classes=None):
     return ζ, e
 
 
-def imbalance_ratio(a, classes=None):
+def imbalance_ratio(a: ArrayLike, classes: Optional[ArrayLike]=None) -> float:
     """
     Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
 
@@ -107,7 +109,7 @@ def imbalance_ratio(a, classes=None):
     return max(ζ) / (min(ζ) + epsilon)
 
 
-def major_minor(a, classes=None):
+def major_minor(a: ArrayLike, classes: Optional[ArrayLike]=None) -> tuple[int, int]:
     """
     Returns the number of majority and minority classes.
 
@@ -128,7 +130,7 @@ def major_minor(a, classes=None):
     return sum(ζ >= e), sum(ζ < e)
 
 
-def divergence(method='hellinger'):
+def divergence(method: str='hellinger') -> Callable:
     """
     Compute the divergence between two discrete probability distributions. 
 
@@ -162,7 +164,7 @@ def divergence(method='hellinger'):
     return functions.get(method, method)
 
 
-def furthest_distribution(a, classes=None):
+def furthest_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> ArrayLike:
     """
     Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
 
@@ -187,7 +189,7 @@ def furthest_distribution(a, classes=None):
     return np.array(i)
 
 
-def imbalance_degree(a, method='tv', classes=None):
+def imbalance_degree(a: ArrayLike, method: str='tv', classes: Optional[ArrayLike]=None) -> float:
     r"""
     The imbalance degree reflects the degree to which the distribution of
     classes is imbalanced. The integer part of the imbalance degree is the
@@ -242,7 +244,7 @@ def imbalance_degree(a, method='tv', classes=None):
     return (div(ζ, e) / (epsilon + div(i, e))) + (m - 1)
 
 
-def minority_classes(a, classes=None):
+def minority_classes(a: ArrayLike, classes: Optional[ArrayLike]=None) -> ArrayLike:
     """
     Get the minority classes.
 

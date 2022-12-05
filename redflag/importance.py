@@ -18,7 +18,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from typing import Optional
+
 import numpy as np
+from numpy.typing import ArrayLike
 from sklearn.inspection import permutation_importance
 from sklearn.linear_model import Lasso
 from sklearn.ensemble import RandomForestRegressor
@@ -31,7 +34,10 @@ from .target import is_continuous
 from .utils import split_and_standardize
 
 
-def feature_importances(X, y=None, n=3, task=None, random_state=None, standardize=True):
+def feature_importances(X: ArrayLike, y: ArrayLike=None,
+                        n: int=3, task: Optional[str]=None,
+                        random_state: Optional[int]=None,
+                        standardize: bool=True) -> ArrayLike:
     """
     Measure feature importances on a task, given X and y.
 
@@ -100,11 +106,12 @@ def feature_importances(X, y=None, n=3, task=None, random_state=None, standardiz
     return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-n:], axis=0)
 
 
-def least_important_features(importances, threshold=None):
+def least_important_features(importances: ArrayLike,
+                             threshold: Optional[float]=None) -> ArrayLike:
     """
     Returns the least important features, in order of importance (least
         important first).
-    
+
     Args:
         importances (array): the importance of the features, in the order in
             which they appear in X.
@@ -133,7 +140,8 @@ def least_important_features(importances, threshold=None):
     return np.array(list(least_important)).astype(int)
 
 
-def most_important_features(importances, threshold=None):
+def most_important_features(importances: ArrayLike,
+                             threshold: Optional[float]=None) -> ArrayLike:
     """
     Returns the indices of the most important features, in reverse order of
         importance (most important first).
