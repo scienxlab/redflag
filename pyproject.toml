@@ -10,3 +10,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools_scm]
 write_to = "redflag/_version.py"
 git_describe_command = "git describe --dirty --tags --long --match v* --first-parent"
+
+[tool.mypy]
+warn_return_any = true
+ignore_missing_imports = true
+exclude = ['docs', 'tests']

@@ -37,7 +37,7 @@ from .utils import split_and_standardize
 def feature_importances(X: ArrayLike, y: ArrayLike=None,
                         n: int=3, task: Optional[str]=None,
                         random_state: Optional[int]=None,
-                        standardize: bool=True) -> ArrayLike:
+                        standardize: bool=True) -> np.ndarray:
     """
     Measure feature importances on a task, given X and y.
 
@@ -107,7 +107,7 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
 
 
 def least_important_features(importances: ArrayLike,
-                             threshold: Optional[float]=None) -> ArrayLike:
+                             threshold: Optional[float]=None) -> np.ndarray:
     """
     Returns the least important features, in order of importance (least
         important first).
@@ -141,7 +141,7 @@ def least_important_features(importances: ArrayLike,
 
 
 def most_important_features(importances: ArrayLike,
-                             threshold: Optional[float]=None) -> ArrayLike:
+                             threshold: Optional[float]=None) -> np.ndarray         :
     """
     Returns the indices of the most important features, in reverse order of
         importance (most important first).

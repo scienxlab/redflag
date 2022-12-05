@@ -68,7 +68,7 @@ def class_counts(a: ArrayLike, classes: Optional[ArrayLike]=None) -> dict:
     return {k: counts[k] for k in classes}
 
 
-def empirical_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> tuple[ArrayLike, ArrayLike]:
+def empirical_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> tuple[np.ndarray, np.ndarray]:
     """
     Compute zeta and e. Equation 5 in Ortigosa-Hernandez et al. (2017).
 
@@ -164,7 +164,7 @@ def divergence(method: str='hellinger') -> Callable:
     return functions.get(method, method)
 
 
-def furthest_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> ArrayLike:
+def furthest_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np.ndarray:
     """
     Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
 
@@ -244,7 +244,7 @@ def imbalance_degree(a: ArrayLike, method: str='tv', classes: Optional[ArrayLike
     return (div(ζ, e) / (epsilon + div(i, e))) + (m - 1)
 
 
-def minority_classes(a: ArrayLike, classes: Optional[ArrayLike]=None) -> ArrayLike:
+def minority_classes(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np.ndarray:
     """
     Get the minority classes.
 

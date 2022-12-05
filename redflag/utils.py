@@ -21,7 +21,7 @@ limitations under the License.
 from __future__ import annotations  # To support PEP 585 and PEP 604.
 
 import warnings
-from typing import Iterable, Any
+from typing import Iterable, Any, Optional
 from numpy.typing import ArrayLike
 
 import numpy as np
@@ -124,6 +124,7 @@ def generate_data(counts: ArrayLike) -> list[int]:
         >>> generate_data([3, 5])
         [0, 0, 0, 1, 1, 1, 1, 1]
     """
+    counts = np.asarray(counts).astype(int)
     data = [c * [i] for i, c in enumerate(counts)]
     return [item for sublist in data for item in sublist]
 
@@ -256,7 +257,7 @@ def stdev_to_proportion(threshold: float, d: float=1, n: float=1e9) -> float:
         >>> stdev_to_proportion(5, d=10)
         0.9946544947734935
     """
-    return beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2)
+    return float(beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2))
 
 
 def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
@@ -294,7 +295,7 @@ def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
     """
     func = lambda r_, d_, n_: stdev_to_proportion(r_, d_, n_) - p
     r_hat , = fsolve(func, x0=2, args=(d, n))
-    return r_hat
+    return float(r_hat)
 
 
 def is_standardized(a: ArrayLike, atol: float=1e-5) -> bool:
@@ -317,7 +318,7 @@ def is_standardized(a: ArrayLike, atol: float=1e-5) -> bool:
         bool: True if the feature appears to be a Z-score.
     """
     μ, σ = np.nanmean(a), np.nanstd(a)
-    return (np.abs(μ) < atol) and (np.abs(σ - 1) < atol)
+    return bool((np.abs(μ) < atol) and (np.abs(σ - 1) < atol))
 
 
 def zscore(X: np.ndarray) -> np.ndarray:
