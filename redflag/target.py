@@ -18,12 +18,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from typing import Optional
+
 import numpy as np
+from numpy.typing import ArrayLike
 
 from .utils import *
 
 
-def update_p(prior, sensitivity, specificity):
+def update_p(prior: float, sensitivity: float, specificity: float) -> float:
     """
     Bayesian update of the prior probability, given the sensitivity and
     specificity.
@@ -48,7 +51,7 @@ def update_p(prior, sensitivity, specificity):
     return (tpr * prior) / (tpr*prior + fpr*(1-prior))
 
 
-def is_continuous(a, n=None):
+def is_continuous(a: ArrayLike, n: Optional[int]=None) -> bool:
     """
     Decide if this is most likely a continuous variable (and thus, if this is
     the target, for example, most likely a regression task).
@@ -108,7 +111,7 @@ def is_continuous(a, n=None):
     return p > 0.5
 
 
-def n_classes(y):
+def n_classes(y: ArrayLike) -> int:
     """
     Count the classes.
 
@@ -130,7 +133,7 @@ def n_classes(y):
     return np.unique(y_).size
 
 
-def is_multioutput(y):
+def is_multioutput(y: ArrayLike) -> bool:
     """
     Decide if a target array is multi-output.
 
@@ -163,7 +166,7 @@ def is_multioutput(y):
         raise TypeError(message)
 
 
-def is_multiclass(y):
+def is_multiclass(y: ArrayLike) -> bool:
     """
     Decide if a single target is multiclass.
 
@@ -187,7 +190,7 @@ def is_multiclass(y):
         return False
 
 
-def is_binary(y):
+def is_binary(y: ArrayLike) -> bool:
     """
     Decide if a single target is binary.
 
