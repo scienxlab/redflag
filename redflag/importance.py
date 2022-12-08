@@ -82,7 +82,7 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
         X, X_train, X_val, y, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
 
     # Train three models and gather the importances.
-    imps = []
+    imps: list = []
     if task == 'classification':
         imps.append(np.abs(LogisticRegression().fit(X, y).coef_.sum(axis=0)))
         imps.append(RandomForestClassifier(random_state=random_state).fit(X, y).feature_importances_)
@@ -131,7 +131,7 @@ def least_important_features(importances: ArrayLike,
     if threshold is None:
         threshold = 0.5 / len(importances)
 
-    least_important = {}
+    least_important: dict = {}
     for arg, imp in zip(np.argsort(importances), np.sort(importances)):
         if sum(least_important.values()) + imp > threshold:
             break
@@ -164,7 +164,7 @@ def most_important_features(importances: ArrayLike,
     if threshold is None:
         threshold = 1 - 0.5 / len(importances)
 
-    most_important = {}
+    most_important: dict = {}
     args = np.argsort(importances)[::-1]
     imps = np.sort(importances)[::-1]
     for arg, imp in zip(args, imps):
