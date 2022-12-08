@@ -18,9 +18,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from __future__ import annotations
+
+from typing import Optional
 from functools import reduce, partial
 
 import numpy as np
+from numpy.typing import ArrayLike
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.ensemble import IsolationForest
 from sklearn.covariance import EllipticEnvelope
@@ -29,7 +33,7 @@ from .utils import stdev_to_proportion, proportion_to_stdev
 from .utils import get_idx
 
 
-def is_correlated(a, n=20, s=20, threshold=0.1):
+def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> bool:
     """
     Check if a dataset is correlated. Uses s chunks of n samples.
 
@@ -60,7 +64,7 @@ def is_correlated(a, n=20, s=20, threshold=0.1):
     r = rng.choice(np.arange(len(chunks)), size=N_chunks, replace=False)
 
     # Loop over selected chunks and count ones with correlation.
-    acs = []
+    acs: list = []
     for chunk in [c for i, c in enumerate(chunks) if i in r]:
         c = chunk[:L_chunks] - np.nanmean(chunk)
         autocorr = np.correlate(c, c, mode='same')
@@ -75,7 +79,7 @@ def is_correlated(a, n=20, s=20, threshold=0.1):
     return (p >= threshold) & (q >= 0)
 
 
-def mahalanobis(X, correction=False):
+def mahalanobis(X: ArrayLike, correction: bool=False) -> np.ndarray:
     """
     Compute the Mahalanobis distances of a dataset.
 
@@ -109,7 +113,7 @@ def mahalanobis(X, correction=False):
     return np.sqrt(ee.dist_)
 
 
-def mahalanobis_outliers(X, p=0.99, threshold=None):
+def mahalanobis_outliers(X: ArrayLike, p: float=0.99, threshold: Optional[float]=None) -> np.ndarray:
     """
     Find outliers given samples and a threshold in multiples of stdev.
     Returns -1 for outliers and 1 for inliers (to match the sklearn API).
@@ -164,7 +168,7 @@ def mahalanobis_outliers(X, p=0.99, threshold=None):
     return outliers
 
 
-def get_outliers(a, method='iso', p=0.99, threshold=None):
+def get_outliers(a: ArrayLike, method: str='iso', p: float=0.99, threshold: Optional[float]=None) -> np.ndarray:
     """
     Returns outliers in the data, considering all of the features. What counts
     as an outlier is determined by the threshold, which is in multiples of
@@ -235,7 +239,7 @@ def get_outliers(a, method='iso', p=0.99, threshold=None):
     return outliers
 
 
-def expected_outliers(n, d=1, p=0.99, threshold=None):
+def expected_outliers(n: int, d: int=1, p: float=0.99, threshold: Optional[float]=None) -> int:
     """
     Expected number of outliers in a dataset.
     
@@ -262,7 +266,7 @@ def expected_outliers(n, d=1, p=0.99, threshold=None):
     return int(n * (1 - p))
 
 
-def has_outliers(a, p=0.99, threshold=None, factor=1):
+def has_outliers(a: ArrayLike, p: float=0.99, threshold: Optional[float]=None, factor: float=1.0) -> bool:
     """
     Use Mahalanobis distance to determine if there are more outliers than
     expected at the given confidence level or Mahalanobis distance threshold.
