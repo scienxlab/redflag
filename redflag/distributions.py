@@ -193,10 +193,10 @@ def wasserstein_multi(X: ArrayLike, groups: ArrayLike=None) -> np.ndarray:
     raise NotImplementedError()
 
 
-def wasserstein(a: ArrayLike,
+def wasserstein(X: ArrayLike,
                 groups: ArrayLike=None,
                 method: str='ovr', 
-                tandardize: bool=False,
+                standardize: bool=False,
                 reducer: Callable=None) -> np.ndarray:
     """
     Step over all features and apply the distance function to the groups.
