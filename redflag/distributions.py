@@ -18,11 +18,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from __future__ import annotations  # To support PEP 585 and PEP 604.
+
+from typing import Optional, NamedTuple, Callable
 from collections import namedtuple
 from itertools import combinations
 import warnings
 
 import numpy as np
+from numpy.typing import ArrayLike
 import scipy.stats as ss
 from scipy.stats import wasserstein_distance
 from scipy.spatial.distance import squareform
@@ -48,7 +52,7 @@ DISTS = [
     'uniform',
 ]
 
-def best_distribution(a, bins=None):
+def best_distribution(a: ArrayLike, bins: Optional[int]=None) -> NamedTuple:
     """
     Model data by finding best fit distribution to data.
 
@@ -92,8 +96,8 @@ def best_distribution(a, bins=None):
     Distribution = namedtuple('Distribution', ['name', 'shape', 'loc', 'scale'])
     return Distribution(best_dist.name, shape, μ, σ)
 
-        
-def wasserstein_ovr(a, groups=None, standardize=False):
+
+def wasserstein_ovr(a: ArrayLike, groups: ArrayLike=None, standardize: bool=False) -> np.ndarray:
     """
     First Wasserstein distance between each group in `a` vs the rest of `a`
     ('one vs rest' or OVR).
@@ -128,7 +132,7 @@ def wasserstein_ovr(a, groups=None, standardize=False):
     return np.array(dists)
 
 
-def wasserstein_ovo(a, groups=None, standardize=False):
+def wasserstein_ovo(a: ArrayLike, groups: ArrayLike=None, standardize: bool=False) -> np.ndarray:
     """
     First Wasserstein distance between each group in `a` vs each other group
     ('one vs one' or OVO).
@@ -171,7 +175,7 @@ def wasserstein_ovo(a, groups=None, standardize=False):
     return np.array(dists)
 
 
-def wasserstein_multi(X, groups=None):
+def wasserstein_multi(X: ArrayLike, groups: ArrayLike=None) -> np.ndarray:
     """
     Compute the multivariate (first) Wasserstein distance between groups.
 
@@ -189,7 +193,11 @@ def wasserstein_multi(X, groups=None):
     raise NotImplementedError()
 
 
-def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
+def wasserstein(a: ArrayLike,
+                groups: ArrayLike=None,
+                method: str='ovr', 
+                tandardize: bool=False,
+                reducer: Callable=None) -> np.ndarray:
     """
     Step over all features and apply the distance function to the groups.
 
@@ -291,7 +299,7 @@ def wasserstein(X, groups=None, method='ovr', standardize=False, reducer=None):
     return np.swapaxes(dist_arrs, 0, 1)
 
 
-def bw_silverman(a):
+def bw_silverman(a: ArrayLike) -> float:
     """
     Calculate the Silverman bandwidth.
 
@@ -310,7 +318,7 @@ def bw_silverman(a):
     return np.power(n, -1 / (d + 4))
 
 
-def bw_scott(a):
+def bw_scott(a: ArrayLike) -> float:
     """
     Calculate the Scott bandwidth.
     
@@ -329,7 +337,7 @@ def bw_scott(a):
     return np.power(n * (d + 2) / 4, -1 / (d + 4))
 
 
-def cv_kde(a, n_bandwidths=20, cv=10):
+def cv_kde(a: ArrayLike, n_bandwidths: int=20, cv: int=10) -> float:
     """
     Run a cross validation grid search to identify the optimal bandwidth for
     the kernel density estimation.
@@ -358,7 +366,7 @@ def cv_kde(a, n_bandwidths=20, cv=10):
     return model.best_params_['bandwidth']
 
 
-def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
+def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple[np.ndarray, np.ndarray]:
     """
     Fit a kernel density estimation to the data.
 
@@ -389,7 +397,7 @@ def fit_kde(a, bandwidth=1.0, kernel='gaussian'):
     return np.squeeze(x), np.exp(log_density)
 
 
-def get_kde(a, method='scott'):
+def get_kde(a: ArrayLike, method: str='scott') -> tuple[np.ndarray, np.ndarray]:
     """
     Get the kernel density estimation for the data.
 
@@ -416,7 +424,7 @@ def get_kde(a, method='scott'):
     return fit_kde(a, bandwidth=bw)
 
 
-def find_large_peaks(x, y, threshold=0.1):
+def find_large_peaks(x: ArrayLike, y: ArrayLike, threshold: float=0.1) -> tuple[np.ndarray, np.ndarray]:
     """
     Find the peaks in the array. Returns the values of x and y at the largest
     peaks, using threshold &times; max(peak amplitudes) as the cut-off. That is,
@@ -447,7 +455,8 @@ def find_large_peaks(x, y, threshold=0.1):
     Peaks = namedtuple('Peaks', ['positions', 'heights'])
     return Peaks(z, h)
 
-def kde_peaks(a, method='scott', threshold=0.1):
+
+def kde_peaks(a: ArrayLike, method: str='scott', threshold: float=0.1) -> tuple[np.ndarray, np.ndarray]:
     """
     Find the peaks in the kernel density estimation.
 
