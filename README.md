@@ -51,4 +51,4 @@ You can run the tests (requires `pytest` and `pytest-cov`) with
 
     pytest
 
-Most of the tests are doctests, but `pytest` will run them using the settings in `setup.cfg`. More tests are welcome.
+Most of the tests are doctests, but `pytest` will run them using the settings in `setup.cfg`.
