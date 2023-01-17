@@ -2,6 +2,12 @@ from __future__ import annotations
 """
 Imbalance metrics.
 
+This work is derived from the following reference work:
+Jonathan Ortigosa-Hernandez, Inaki Inza, and Jose A. Lozano
+Measuring the Class-imbalance Extent of Multi-class Problems
+Pattern Recognition Letters 98 (2017)
+https://doi.org/10.1016/j.patrec.2017.08.002
+
 Author: Matt Hall, agilescientific.com
 Licence: Apache 2.0
 
@@ -19,17 +25,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from __future__ import annotations  # To support PEP 585 and PEP 604.
 
-"""
-This work is derived from the following reference work:
-Jonathan Ortigosa-Hernandez, Inaki Inza, and Jose A. Lozano
-Measuring the Class-imbalance Extent of Multi-class Problems
-Pattern Recognition Letters 98 (2017)
-https://doi.org/10.1016/j.patrec.2017.08.002
-"""
+from typing import Optional, Callable
 from collections import Counter
 import warnings
-from typing import Optional, Callable
 
 import numpy as np
 from numpy.typing import ArrayLike
