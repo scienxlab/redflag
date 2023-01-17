@@ -1,17 +1,72 @@
 [build-system]
-requires = [
-    "setuptools>=48",
-    "setuptools_scm[toml] >= 4, <6",
-    "setuptools_scm_git_archive",
-    "wheel >= 0.29.0",
-]
+requires = ["setuptools>=65", "setuptools-scm>=7"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "redflag"
+dynamic = ["version"]
+requires-python = ">=3.8"
+authors = [{ name="Matt Hall", email="kwinkunks@gmail.com" },]
+description = "Raise red flags on machine learning datasets."
+license = {file = "LICENSE"}
+readme = "README.md"
+keywords = ["machine learning", "data science", "quality assurance"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Development Status :: 3 - Alpha",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "scipy!=1.10.0",    # Bug in stats.powerlaw.
+    "scikit-learn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "mypy",
+    "types-setuptools",
+    "pytest",
+    "coverage[toml]",
+    "pytest-cov",
+    "sphinx",
+    "sphinxcontrib-apidoc",
+    "furo",
+    "myst_nb",
+    "jupyter",
+    "pandas",
+    "seaborn",
+]
+
+[project.urls]
+"documentation" = "https://scienxlab.github.io/redflag"
+"repository" = "https://github.com/scienxlab/redflag"
+
 [tool.setuptools_scm]
-write_to = "redflag/_version.py"
-git_describe_command = "git describe --dirty --tags --long --match v* --first-parent"
+write_to = "src/redflag/_version.py"
+
+[tool.setuptools.packages.find]
+where = ["."]
 
 [tool.mypy]
 warn_return_any = true
 ignore_missing_imports = true
 exclude = ['docs', 'tests']
+
+[tool.pytest.ini_options]
+# pytest configuration: http://doc.pytest.org/en/latest/customize.html
+addopts = "--doctest-modules --ignore=docs --cov=redflag"
+
+[tool.coverage.run]
+# coverage configuration: https://coverage.readthedocs.io/
+omit = [
+    "redflag/__init__.py",
+    "redflag/_version.py",
+]
