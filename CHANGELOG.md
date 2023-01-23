@@ -7,12 +7,12 @@
 
 ## 0.1.10, 21 November 2022
 
-- Added `redflag.importance.least_important_features()` and `redflag.importance.most_important_features()`. These functions are complementary (in other words, if the same threshold is used in each, then between them they return all of the features). The default threshold for importance is half the expected value. E.g. if there are 5 features, then the default threshold is half of 0.2, or 0.1. Part of [Issue 2](https://github.com/agilescientific/redflag/issues/2).
-- Added `redflag.sklearn.ImportanceDetector` class, which warns if 1 or 2 features have anomalously high importance, or if some features have anomalously low importance. Part of [Issue 2](https://github.com/agilescientific/redflag/issues/2).
+- Added `redflag.importance.least_important_features()` and `redflag.importance.most_important_features()`. These functions are complementary (in other words, if the same threshold is used in each, then between them they return all of the features). The default threshold for importance is half the expected value. E.g. if there are 5 features, then the default threshold is half of 0.2, or 0.1. Part of [Issue 2](https://github.com/scienxlab/redflag/issues/2).
+- Added `redflag.sklearn.ImportanceDetector` class, which warns if 1 or 2 features have anomalously high importance, or if some features have anomalously low importance. Part of [Issue 2](https://github.com/scienxlab/redflag/issues/2).
 - Added `redflag.sklearn.ImbalanceComparator` class, which learns the imbalance present in the training data, then compares what is observed in subsequent data (evaluation, test, or production data). If there's a difference, it throws a warning. Note: it does not warn if there is imbalance present in the training data; use `ImbalanceDetector` for that.
 - Added `redflag.sklearn.RfPipeline` class, which is needed to include the `ImbalanceComparator` in a pipeline (because the common-or-garden `sklearn.pipeline.Pipeline` class does not pass `y` into a transformer's `transform()` method). Also added the `redflag.sklearn.make_rf_pipeline()` function to help make pipelines with this special class. These components are straight-up forks of the code in `scikit-learn` (3-clause BSD licensed).
 - Added example to `docs/notebooks/Using_redflag_with_sklearn.ipynb` to show how to use these new objects.
-- Improved `redflag.is_continuous()`, which was buggy; see [Issue 3](https://github.com/agilescientific/redflag/issues/3). It still fails on some cases. I'm not sure a definitive test for continuousness (or, conversely, discreteness) is possible; it's just a heuristic.
+- Improved `redflag.is_continuous()`, which was buggy; see [Issue 3](https://github.com/scienxlab/redflag/issues/3). It still fails on some cases. I'm not sure a definitive test for continuousness (or, conversely, discreteness) is possible; it's just a heuristic.
 
 
 ## 0.1.9, 25 August 2022

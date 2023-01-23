@@ -8,13 +8,13 @@ def simplify_credits(html):
     """
     Replace the credit part of the HTML footer. Return the new text.
     """
-    s = r'<a class="muted-link" href="https://pradyunsg\.me">@pradyunsg</a>\'s'
+    s = r"""<a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s"""
     pattern = re.compile(s)
     html = pattern.sub(r'', html)
 
-    s = r'Copyright &#169; 2022, The Bruges Authors'
+    s = r'Copyright &#169; 2023, The Redflag Authors'
     pattern = re.compile(s)
-    new_s = '&#169; 2022, The Bruges Authors | <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>'
+    new_s = '&#169; 2023, The Redflag Authors | <a href="https://creativecommons.org/licenses/by/4.0/">CC BY</a>'
     html = pattern.sub(new_s, html)
 
     return html
@@ -26,7 +26,7 @@ def add_analytics(html):
     """
     s = r'</head>'
     pattern = re.compile(s)
-    new_s = '<script defer data-domain="code.agilescientific.com" src="https://plausible.io/js/plausible.js"></script></head>'
+    new_s = '<script defer data-domain="scienxlab.com" src="https://plausible.io/js/plausible.js"></script></head>'
     html = pattern.sub(new_s, html)
 
     return html

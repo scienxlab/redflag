@@ -1,4 +1,3 @@
-from __future__ import annotations
 """
 Imbalance metrics.
 
@@ -8,10 +7,10 @@ Measuring the Class-imbalance Extent of Multi-class Problems
 Pattern Recognition Letters 98 (2017)
 https://doi.org/10.1016/j.patrec.2017.08.002
 
-Author: Matt Hall, agilescientific.com
+Author: Matt Hall, scienxlab.com
 Licence: Apache 2.0
 
-Copyright 2022 Agile Scientific
+Copyright 2022 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

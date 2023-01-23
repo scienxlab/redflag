@@ -1,6 +1,6 @@
 # Contributor Covenant Code of Conduct
 
-## Our Pledge
+## Our pledge
 
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to make participation in our project and
@@ -58,8 +58,7 @@ a project may be further defined and clarified by project maintainers.
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by contacting any of the following people:
 
-- Matt Hall, [matt@agilescientific.com](mailto:matt@agilescientific.com)
-- Evan Bianco, [evan@agilescientific.com](mailto:evan@agilescientific.com)
+- Matt Hall, [kwinkunks@gmail.com](mailto:kwinkunks@gmail.com)
 
 All complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is

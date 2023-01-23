@@ -1,6 +1,7 @@
 # Redflag
 
-[![Build and test](https://github.com/agilescientific/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/agilescientific/redflag/actions/workflows/build-test.yml)
+[![Build and test](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml)
+[![Documentation](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml)
 [![PyPI version](https://img.shields.io/pypi/v/redflag.svg)](https://pypi.org/project/redflag/)
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag/)
 [![PyPI license](https://img.shields.io/pypi/l/redflag.svg)](https://pypi.org/project/redflag/)
@@ -16,33 +17,38 @@ You can install this package with `pip`:
 
     pip install redflag
 
-For developers, there are `pip` options for installing `tests`, `docs` and `dev` dependencies, e.g. `pip install redflag[dev]` to install all testing and documentation packages.
+For developers, there is a `pip` option for installing `dev` dependencies. Use `pip install redflag[dev]` to install all testing and documentation packages.
 
 
 ## Example
 
-`redflag` is currently just a collection of functions. Most of the useful ones take a single column of data (e.g. a 1D NumPy array) and run a single test. For example, we can do some outlier detection. The `get_outliers()` function returns the indices of data points that are considered outliers:
+For the most part, `redflag` is currently a collection of functions. Most of the useful ones take one or more columns of data (usually a 1D or 2D NumPy array) and run a single test. For example, we can do some outlier detection: the `get_outliers()` function returns the indices of data points that are considered outliers:
 
 ```python
 >>> import redflag as rf
 >>> data = 3 * [-3, -2, -2, -1, 0, 0, 0, 1, 2, 2, 3]
 >>> rf.get_outliers(data)
 array([], dtype=int64)
+```
+
+That is, there are no outliers. But let's add a clear outlier: a new data record with a value of 100. The function returns the index position(s) of the outlier point(s):
+
+```python
 >>> rf.get_outliers(data + [100])
 array([33])
 ```
 
-See [the documentation](https://code.agilescientific.com/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/agilescientific/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
+See [the documentation](https://code.scienxlab.com/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/scienxlab/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
 
 
 ## Documentation
 
-[The documentation is online.](https://code.agilescientific.com/redflag)
+[The documentation is online.](https://code.scienxlab.com/redflag)
 
 
 ## Contributing
 
-Please see [`CONTRIBUTING.md`](https://github.com/agilescientific/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.agilescientific.com/redflag) about _Development_.
+Please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.scienxlab.com/redflag) about _Development_.
 
 
 ## Testing

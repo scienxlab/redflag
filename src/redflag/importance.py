@@ -1,10 +1,10 @@
 """
 Feature importance metrics.
 
-Author: Matt Hall, agilescientific.com
+Author: Matt Hall, scienxlab.com
 Licence: Apache 2.0
 
-Copyright 2022 Agile Scientific
+Copyright 2022 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
