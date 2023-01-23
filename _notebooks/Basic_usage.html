@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" /><link rel="prev" title="🚩 Installation" href="../installation.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><meta name="generator" content="sphinx-5.3.0, furo 2022.09.29"/>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
         <title>🚩 Basic usage - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
@@ -153,7 +153,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -239,7 +239,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.10&#39;
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">redflag</span> <span class="k">as</span> <span class="nn">rf</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">rf</span><span class="o">.</span><span class="n">__version__</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;redflag&#39;
 </pre></div>
 </div>
 </div>
@@ -475,7 +481,7 @@
 <p>First, we’ll look at measuring imbalance in the target using <code class="docutils literal notranslate"><span class="pre">rf.class_imbalance()</span></code>. For binary targets, the metric is imbalace ratio (ratio between majority and minority class). For multiclass targets, the metric is imbalance degree <a class="reference external" href="https://doi.org/10.1016/j.patrec.2017.08.002">(Ortigosa-Hernandez et al, 2017)</a>, a single-value measure that explains (a) how many minority classes there are and (b) how skewed the supports are.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">imbalance_ratio</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf</span><span class="o">.</span><span class="n">imbalance_degree</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Lithology&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -545,10 +551,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f7047789ad0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7fa93be70640&gt;
 </pre></div>
 </div>
-<img alt="../_images/2089f8111890b1dfe61335c13204f479c92c015eb8f6a293db6d5eff6e9d8ed3.png" src="../_images/2089f8111890b1dfe61335c13204f479c92c015eb8f6a293db6d5eff6e9d8ed3.png" />
+<img alt="../_images/41d377ac8a3075388147c7da4b3d33769d941f54973c8e20999d1b39c63d2853.png" src="../_images/41d377ac8a3075388147c7da4b3d33769d941f54973c8e20999d1b39c63d2853.png" />
 </div>
 </div>
 </section>
@@ -582,10 +588,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/8eb1dcae9f2165d49fb913d04b1a45f2652a8284db1f95ca1dbf74776ff2ab1d.png" src="../_images/8eb1dcae9f2165d49fb913d04b1a45f2652a8284db1f95ca1dbf74776ff2ab1d.png" />
+<img alt="../_images/fa2225113c2debc69385bc53ada322f0a5c92c3de09510bd447204ab55b49121.png" src="../_images/fa2225113c2debc69385bc53ada322f0a5c92c3de09510bd447204ab55b49121.png" />
 </div>
 </div>
 <p>By default it uses an <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#isolation-forest"><strong>isolation forest</strong></a> to detect the outliers at the 99% confidence level, but you can also opt to use <strong>local outlier factor</strong>, <strong>elliptic envelope</strong>, or <strong>Mahalanobis distance</strong>, setting the confidence level to choose how many outliers you will see, or (equivalently) setting the <code class="docutils literal notranslate"><span class="pre">threshold</span></code> to the number of standard deviations away from the mean you regard as signal.</p>
@@ -601,10 +607,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7f704566b690&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7fa93925b6d0&gt;
 </pre></div>
 </div>
-<img alt="../_images/2a158a921076ed90b8b740d2a97d4f22694a53259b125d114db083ae79459a24.png" src="../_images/2a158a921076ed90b8b740d2a97d4f22694a53259b125d114db083ae79459a24.png" />
+<img alt="../_images/f97be8fa3c56b76b02bd3b9179ae7f929d8eeb2b0734237fc2b6bbae2c672afa.png" src="../_images/f97be8fa3c56b76b02bd3b9179ae7f929d8eeb2b0734237fc2b6bbae2c672afa.png" />
 </div>
 </div>
 <p>A helper function can compute the number of expected outliers, given the dataset size and assuming a Gaussian distribution of samples.</p>
@@ -656,10 +662,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f7045440e10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fa9360fe970&gt;
 </pre></div>
 </div>
-<img alt="../_images/fd3a243557e5296c0bc195dedf94414c69c84c58c629d23c05e184e79cca61a0.png" src="../_images/fd3a243557e5296c0bc195dedf94414c69c84c58c629d23c05e184e79cca61a0.png" />
+<img alt="../_images/c5560064bd5f84197a5a11005538f8c3857d67639c48b768f042cb7603a31df8.png" src="../_images/c5560064bd5f84197a5a11005538f8c3857d67639c48b768f042cb7603a31df8.png" />
 </div>
 </div>
 <p>This truncated normal distribution has no outliers (there are only about 60, compared to the 100 we expect at this confidence level of 99% on this dataset of 10,000 records).</p>
@@ -700,10 +706,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f704546ce50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fa936004250&gt;
 </pre></div>
 </div>
-<img alt="../_images/4bfde80b66cfbfedd8e03a8dbff9fdb6fdf97d6449dbee27232c64106f0b9f38.png" src="../_images/4bfde80b66cfbfedd8e03a8dbff9fdb6fdf97d6449dbee27232c64106f0b9f38.png" />
+<img alt="../_images/15aaa6f274695a2b8fc158a59ae302f97d2f5d3209530e422edd84469828a9ed.png" src="../_images/15aaa6f274695a2b8fc158a59ae302f97d2f5d3209530e422edd84469828a9ed.png" />
 </div>
 </div>
 </section>
@@ -757,10 +763,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f70453ffad0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fa93472ae20&gt;
 </pre></div>
 </div>
-<img alt="../_images/358afb174042d552a1c3df84b26a199171964a1d87201b3a027803cab1a63aeb.png" src="../_images/358afb174042d552a1c3df84b26a199171964a1d87201b3a027803cab1a63aeb.png" />
+<img alt="../_images/d29917f3bd4dab7f91906cd4bef1b4ef2890cddde5bc69bc9cada914ded1d39b.png" src="../_images/d29917f3bd4dab7f91906cd4bef1b4ef2890cddde5bc69bc9cada914ded1d39b.png" />
 </div>
 </div>
 </section>
@@ -800,10 +806,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: &gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/7650936f197253565d56c8fa564def6db8ce847d70e0daa1a1370a01a0184506.png" src="../_images/7650936f197253565d56c8fa564def6db8ce847d70e0daa1a1370a01a0184506.png" />
+<img alt="../_images/cab75b111779a86b1d0aaad35a8ad28e4ba87d0a2a62b9d9430018969eb9d004.png" src="../_images/cab75b111779a86b1d0aaad35a8ad28e4ba87d0a2a62b9d9430018969eb9d004.png" />
 </div>
 </div>
 <p>This shows us that the distributions of the PE log in well indices 6 and 7 are somewhat different and may be anomalous. It also suggests that the CROSS H CATTLE well is different from the others.</p>
@@ -906,7 +912,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.39387537, 0.2963354 , 0.19766706, 0.10794293, 0.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.26212942, 0.36516684, 0.2869616 , 0.08298919, 0.        ])
 </pre></div>
 </div>
 </div>
@@ -920,7 +926,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4, 3])
 </pre></div>
 </div>
 </div>
@@ -933,7 +939,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, 3])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 0])
 </pre></div>
 </div>
 </div>
@@ -951,7 +957,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.09260722, 0.41815882, 0.45993271, 0.02930125, 0.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.0887365 , 0.427288  , 0.45634234, 0.02687602, 0.        ])
 </pre></div>
 </div>
 </div>
