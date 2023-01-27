@@ -53,7 +53,7 @@ dev = [
 write_to = "src/redflag/_version.py"
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 
 [tool.mypy]
 warn_return_any = true
