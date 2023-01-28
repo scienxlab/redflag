@@ -12,9 +12,8 @@ Redflag: An Entrance Exam for Data
     | ``redflag`` aims to be an automatic safety net for
     | machine learning datasets. Given a ``DataFrame`` or
     | ``ndarray``, ``redflag`` will analyse each feature,
-    | including aspects such as class imbalance, outliers,
-    | anomalous data patterns, threats to the IID assumption,
-    | and so on.
+    | including aspects such as class imbalance, leakage, outliers,
+    | anomalous data patterns, threats to the IID assumption, etc.
 
 
 Quick start
