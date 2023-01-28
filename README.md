@@ -6,7 +6,7 @@
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag/)
 [![PyPI license](https://img.shields.io/pypi/l/redflag.svg)](https://pypi.org/project/redflag/)
 
-🚩 `redflag` aims to be an automatic safety net for machine learning datasets. The vision is to accept input of a Pandas `DataFrame` or NumPy `ndarray` (one for each of the input `X` and target `y` in a machine learning task). `redflag` will provide an analysis of each feature, and of the target, including aspects such as class imbalance, outliers, anomalous data patterns, threats to the IID assumption, and so on. The goal is to complement other projects like `pandas-profiling` and `greatexpectations`.
+🚩 `redflag` aims to be an automatic safety net for machine learning datasets. The vision is to accept input of a Pandas `DataFrame` or NumPy `ndarray` (one for each of the input `X` and target `y` in a machine learning task). `redflag` will provide an analysis of each feature, and of the target, including aspects such as class imbalance, leakage, outliers, anomalous data patterns, threats to the IID assumption, and so on. The goal is to complement other projects like `pandas-profiling` and `greatexpectations`.
 
 ⚠️ **This project is very rough and does not do much yet. The API will very likely change without warning. Please consider contributing!**
 
@@ -38,17 +38,17 @@ That is, there are no outliers. But let's add a clear outlier: a new data record
 array([33])
 ```
 
-See [the documentation](https://code.scienxlab.com/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/scienxlab/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
+See [the documentation](https://code.scienxlab.org/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/scienxlab/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
 
 
 ## Documentation
 
-[The documentation is online.](https://code.scienxlab.com/redflag)
+[The documentation is online.](https://code.scienxlab.org/redflag)
 
 
 ## Contributing
 
-Please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.scienxlab.com/redflag) about _Development_.
+Please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.scienxlab.org/redflag) about _Development_.
 
 
 ## Testing
