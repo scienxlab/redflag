@@ -3,7 +3,7 @@
 .. container::
    :name: forkongithub
 
-   `Fork on GitHub <https://github.com/agilescientific/redflag>`_
+   `Fork on GitHub <https://github.com/scienxlab/redflag>`_
 
 
 Redflag: An Entrance Exam for Data
@@ -81,8 +81,7 @@ Indices and tables
     :hidden:
 
     PyPI releases <https://pypi.org/project/redflag/>
-    Code in GitHub <https://github.com/agilescientific/redflag>
-    Issue tracker <https://github.com/agilescientific/redflag/issues>
-    Community guidelines <https://code.agilescientific.com/community>
-    Agile's software <https://code.agilescientific.com>
-    Agile's website <https://www.agilescientific.com>
+    Code in GitHub <https://github.com/scienxlab/redflag>
+    Issue tracker <https://github.com/scienxlab/redflag/issues>
+    Community guidelines <https://scienxlab.com/community>
+    Scienxlab <https://scienxlab.com>

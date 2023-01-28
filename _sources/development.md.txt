@@ -12,7 +12,7 @@ You can install this package with `pip`. The `dev` option will install the packa
 
 ## Contributing
 
-If you'd like to contribute pull requests back to the main `redflag ` project, please see [`CONTRIBUTING.md`](https://github.com/agilescientific/redflag/blob/main/CONTRIBUTING.md).
+If you'd like to contribute pull requests back to the main `redflag ` project, please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md).
 
 
 ## Testing
