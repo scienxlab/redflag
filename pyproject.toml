@@ -67,6 +67,6 @@ addopts = "--doctest-modules --ignore=docs --cov=redflag"
 [tool.coverage.run]
 # coverage configuration: https://coverage.readthedocs.io/
 omit = [
-    "redflag/__init__.py",
-    "redflag/_version.py",
+    "src/redflag/__init__.py",
+    "src/redflag/_version.py",
 ]
