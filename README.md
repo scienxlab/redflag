@@ -38,17 +38,17 @@ That is, there are no outliers. But let's add a clear outlier: a new data record
 array([33])
 ```
 
-See [the documentation](https://code.scienxlab.org/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/scienxlab/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
+See [the documentation](https://scienxlab.org/redflag), and specifically the notebook [Basic_usage.ipynb](https://github.com/scienxlab/redflag/blob/main/docs/notebooks/Basic_usage.ipynb) for several other basic examples.
 
 
 ## Documentation
 
-[The documentation is online.](https://code.scienxlab.org/redflag)
+[The documentation is online.](https://scienxlab.org/redflag)
 
 
 ## Contributing
 
-Please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://code.scienxlab.org/redflag) about _Development_.
+Please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://scienxlab.org/redflag) about _Development_.
 
 
 ## Testing
@@ -57,4 +57,4 @@ You can run the tests (requires `pytest` and `pytest-cov`) with
 
     pytest
 
-Most of the tests are doctests, but `pytest` will run them using the settings in `setup.cfg`.
+Most of the tests are doctests, but `pytest` will run them using the settings in `pyproject.toml`.
