@@ -1,7 +1,7 @@
 """
 Functions related to understanding distributions.
 
-Author: Matt Hall, scienxlab.com
+Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
 Copyright 2022 Redflag contributors

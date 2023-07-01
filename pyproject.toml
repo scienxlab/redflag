@@ -46,7 +46,7 @@ dev = [
 ]
 
 [project.urls]
-"documentation" = "https://scienxlab.github.io/redflag"
+"documentation" = "https://scienxlab.org/redflag"
 "repository" = "https://github.com/scienxlab/redflag"
 
 [tool.setuptools_scm]

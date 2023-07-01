@@ -7,7 +7,7 @@ Measuring the Class-imbalance Extent of Multi-class Problems
 Pattern Recognition Letters 98 (2017)
 https://doi.org/10.1016/j.patrec.2017.08.002
 
-Author: Matt Hall, scienxlab.com
+Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
 Copyright 2022 Redflag contributors

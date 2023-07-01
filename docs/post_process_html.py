@@ -26,7 +26,7 @@ def add_analytics(html):
     """
     s = r'</head>'
     pattern = re.compile(s)
-    new_s = '<script defer data-domain="scienxlab.com" src="https://plausible.io/js/plausible.js"></script></head>'
+    new_s = '<script defer data-domain="scienxlab.org" src="https://plausible.io/js/plausible.js"></script></head>'
     html = pattern.sub(new_s, html)
 
     return html
