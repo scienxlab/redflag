@@ -1,8 +1,11 @@
 # Changelog
 
-## 0.1.11, in development
+## 0.1.11, summer 2023
 
-- Coming soon...
+- Added custom 'alarm' `Detector`, which can be instantiated with a function and a warning to emit when the function returns True for a 1D array.
+- Added `make_detector_pipeline()` which can take sequences of functions and warnings (or a mapping of functions to warnings) and returns a `scikit-learn.pipeline.Pipeline` containing a `Detector` for each function.
+- Changed the wording slightly in the existing detectors.
+- Added a `Tutorial.ipynb` notebook to the docs.
 
 
 ## 0.1.10, 21 November 2022

@@ -25,6 +25,7 @@ from sklearn.utils import check_array
 from sklearn import pipeline
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import _name_estimators
+from sklearn.pipeline import make_pipeline
 from sklearn.covariance import EllipticEnvelope
 from scipy.stats import wasserstein_distance
 from scipy.stats import cumfreq
@@ -66,14 +67,14 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
         positive = [i for i, feature in enumerate(X.T) if self.func(feature)]
         if n := len(positive):
             pos = ', '.join(str(i) for i in positive)
-            warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} may have {self.warning}.")
+            warnings.warn(f"🚩 Feature{'' if n == 1 else 's'} {pos} {'has' if n == 1 else 'have'} samples that {self.warning}.")
 
         if (y is not None) and is_continuous(y):
             if np.asarray(y).ndim == 1:
                 y_ = y.reshape(-1, 1)
             for i, target in enumerate(y_.T):
                 if self.func(target):
-                    warnings.warn(f"🚩 Target {i} may have {self.warning}.")
+                    warnings.warn(f"🚩 Target {i} has samples that {self.warning}.")
 
         return X
 
@@ -88,14 +89,14 @@ class ClipDetector(BaseRedflagDetector):
         >>> X = np.array([[2, 1], [3, 2], [4, 3], [5, 3]])
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.ClipDetector
-          🚩 Feature 1 may have clipped values.
+          🚩 Feature 1 has samples that may be clipped.
         array([[2, 1],
                [3, 2],
                [4, 3],
                [5, 3]])
     """
     def __init__(self):
-        super().__init__(is_clipped, "clipped values")
+        super().__init__(is_clipped, "may be clipped")
 
 
 class CorrelationDetector(BaseRedflagDetector):
@@ -109,7 +110,7 @@ class CorrelationDetector(BaseRedflagDetector):
         >>> X = np.stack([rng.uniform(size=20), np.sin(np.linspace(0, 1, 20))]).T
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.CorrelationDetector
-          🚩 Feature 1 may have correlated values.
+          🚩 Feature 1 has samples that may be correlated.
         array([[0.38077051, 0.        ],
                [0.42977406, 0.05260728]
                ...
@@ -117,7 +118,7 @@ class CorrelationDetector(BaseRedflagDetector):
                [0.7482485 , 0.84147098]])
     """
     def __init__(self):
-        super().__init__(is_correlated, "correlated values")
+        super().__init__(is_correlated, "may be correlated")
 
 
 class UnivariateOutlierDetector(BaseRedflagDetector):
@@ -135,7 +136,7 @@ class UnivariateOutlierDetector(BaseRedflagDetector):
         >>> X = rng.normal(size=(1_000, 2))
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.UnivariateOutlierDetector
-          🚩 Features 0, 1 may have more outliers (in a univariate sense) than expected.
+          🚩 Features 0, 1 have samples that are excess univariate outliers.
         array([[ 0.12573022, -0.13210486],
                [ 0.64042265,  0.10490012],
                [-0.53566937,  0.36159505],
@@ -154,7 +155,7 @@ class UnivariateOutlierDetector(BaseRedflagDetector):
                [-0.90942756,  0.36922933]])
     """
     def __init__(self, **kwargs):
-        super().__init__(has_outliers, "more outliers (in a univariate sense) than expected", **kwargs)
+        super().__init__(has_outliers, "are excess univariate outliers", **kwargs)
 
 
 class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
@@ -171,7 +172,7 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
         >>> X = rng.normal(size=(1_000, 2))
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.MultivariateOutlierDetector
-          🚩 Dataset may have more outliers (in a multivariate sense) than expected.
+          🚩 Dataset has more multivariate outlier samples than expected.
         array([[ 0.12573022, -0.13210486],
                [ 0.64042265,  0.10490012],
                [-0.53566937,  0.36159505],
@@ -210,13 +211,17 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
         outliers = has_outliers(X, p=self.p, threshold=self.threshold, factor=self.factor)
 
         if outliers:
-            warnings.warn(f"🚩 Dataset may have more outliers (in a multivariate sense) than expected.")
+            warnings.warn(f"🚩 Dataset has more multivariate outlier samples than expected.")
 
         if (y is not None) and is_continuous(y):
             if np.asarray(y).ndim == 1:
                 y_ = y.reshape(-1, 1)
+                kind = 'univariate'
+            else:
+                y_ = y
+                kind = 'multivariate'
             if has_outliers(y_, p=self.p, threshold=self.threshold, factor=self.factor):
-                    warnings.warn(f"🚩 Target may have more outliers (in a multivariate sense) than expected.")
+                    warnings.warn(f"🚩 Target has more {kind} outlier samples than expected.")
 
         return X
 
@@ -811,3 +816,36 @@ pipeline = Pipeline(
         ("rf.importance", ImportanceDetector()),
     ]
 )
+
+
+class Detector(BaseRedflagDetector):
+    def __init__(self, func, warning=None):
+        if warning is None:
+            warning = f"fail custom func {func.__name__}()"
+        super().__init__(func, warning)
+
+
+def make_detector_pipeline(funcs, warnings=None) -> Pipeline:
+    """
+    Make a detector from one or more 'alarm' functions.
+
+    Args:
+        funcs: Can be a sequence of functions returning True if a 1D array
+            meets some condition you want to trigger the alarm for. For example,
+            `has_negative = lambda x: np.any(x < 0)` to alert you to the
+            presence of negative values. Can also be a mappable of functions to
+            warnings.
+        warnings: The warnings corresponding to the functions. It's probably
+            safer to pass the functions with their warnings in a dict.
+
+    Returns:
+        Pipeline
+    """
+    detectors = []
+    if isinstance(funcs, dict):
+        warnings = funcs.values()
+    elif warnings is None:
+        warnings = [None for _ in funcs]
+    for func, warn in zip(funcs, warnings):
+        detectors.append(Detector(func, warn))
+    return make_pipeline(*detectors)

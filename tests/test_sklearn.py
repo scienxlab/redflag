@@ -18,7 +18,7 @@ def test_clip_detector():
     """
     pipe = make_pipeline(rf.ClipDetector())
     X = np.array([[2, 1], [3, 2], [4, 3], [5, 3]])
-    with pytest.warns(UserWarning, match="Feature 1 may have clipped values."):
+    with pytest.warns(UserWarning, match="Feature 1 has samples that may be clipped."):
         pipe.fit_transform(X)
 
     # Does not warn:
@@ -33,7 +33,22 @@ def test_correlation_detector():
     pipe = make_pipeline(rf.CorrelationDetector())
     rng = np.random.default_rng(0)
     X = np.stack([rng.uniform(size=20), np.sin(np.linspace(0, 1, 20))]).T
-    with pytest.warns(UserWarning, match="Feature 1 may have correlated values."):
+    with pytest.warns(UserWarning, match="Feature 1 has samples that may be correlated."):
+        pipe.fit_transform(X)
+
+
+def test_custom_detector():
+    """
+    Checks for data which fails a user-supplied test.
+    """
+    has_negative = lambda x: np.any(x < 0)
+    pipe = rf.make_detector_pipeline({has_negative: "are negative"})
+    X = np.array([[-2, 1], [3, 2], [4, 3], [5, 4]])
+    with pytest.warns(UserWarning, match="Feature 0 has samples that are negative."):
+        pipe.fit_transform(X)
+
+    pipe = rf.make_detector_pipeline([has_negative])
+    with pytest.warns(UserWarning, match="Feature 0 has samples that fail custom func"):
         pipe.fit_transform(X)
 
 
@@ -62,7 +77,7 @@ def test_univariate_outlier_detector():
     pipe = make_pipeline(rf.UnivariateOutlierDetector(factor=0.5))
     rng = np.random.default_rng(0)
     X = rng.normal(size=1_000).reshape(-1, 1)
-    with pytest.warns(UserWarning, match="Feature 0 may have more outliers"):
+    with pytest.warns(UserWarning, match="Feature 0 has samples that are excess univariate outliers"):
         pipe.fit_transform(X)
 
     # Does not warn with factor of 2.5:
@@ -75,7 +90,7 @@ def test_multivariate_outlier_detector():
     pipe = make_pipeline(rf.MultivariateOutlierDetector(factor=0.5))
     rng = np.random.default_rng(0)
     X = rng.normal(size=(1_000, 2))
-    with pytest.warns(UserWarning, match="Dataset may have more outliers"):
+    with pytest.warns(UserWarning, match="Dataset has more multivariate outlier samples than expected."):
         pipe.fit_transform(X)
 
     # Does not warn with factor of 2.5:
