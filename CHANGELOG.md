@@ -6,6 +6,7 @@
 - Added `make_detector_pipeline()` which can take sequences of functions and warnings (or a mapping of functions to warnings) and returns a `scikit-learn.pipeline.Pipeline` containing a `Detector` for each function.
 - Changed the wording slightly in the existing detectors.
 - Added a `Tutorial.ipynb` notebook to the docs.
+- Added a **Copy** button to code blocks in the docs.
 
 
 ## 0.1.10, 21 November 2022
