@@ -697,15 +697,17 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
         importances = feature_importances(X, y, random_state=self.random_state)
         most_important = most_important_features(importances, threshold=self.threshold)
 
-        if (m := len(most_important)) <= 2:
-            most_str = ', '.join(str(i) for i in most_important)
+        M = X.shape[1]
+
+        if (m := len(most_important)) <= 2 and (m < M):
+            most_str = ', '.join(str(i) for i in sorted(most_important))
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {most_str} {'has' if m == 1 else 'have'} very high importance; check for leakage.")
             return self
 
         # Don't do this check if there were high-importance features (infer that the others are low.)
         least_important = least_important_features(importances, threshold=self.threshold)
         if (m := len(least_important)) > 0:
-            least_str = ', '.join(str(i) for i in least_important)
+            least_str = ', '.join(str(i) for i in sorted(least_important))
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {least_str} {'has' if m == 1 else 'have'} low importance; check for relevance.")
 
         return self
