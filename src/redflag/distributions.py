@@ -394,8 +394,8 @@ def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple
         >>> rng = np.random.default_rng(42)
         >>> data = rng.normal(size=100)
         >>> x, kde = fit_kde(data)
-        >>> x[0]
-        -3.2124714013056916
+        >>> x[0] + 3.2124714013056916 < 1e-9
+        True
         >>> kde[0] - 0.014367259502733645 < 1e-9
         True
         >>> len(kde)
@@ -433,8 +433,8 @@ def get_kde(a: ArrayLike, method: str='scott') -> tuple[np.ndarray, np.ndarray]:
         >>> rng = np.random.default_rng(42)
         >>> data = rng.normal(size=100)
         >>> x, kde = get_kde(data)
-        >>> x[0]
-        -1.354649738246933
+        >>> x[0] + 1.354649738246933 < 1e-9
+        True
         >>> kde[0] - 0.162332012191087 < 1e-9
         True
         >>> len(kde)

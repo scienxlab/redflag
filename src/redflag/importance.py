@@ -84,17 +84,17 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
     # Train three models and gather the importances.
     imps: list = []
     if task == 'classification':
-        imps.append(np.abs(LogisticRegression().fit(X, y).coef_.sum(axis=0)))
+        imps.append(np.abs(LogisticRegression(random_state=random_state).fit(X, y).coef_.sum(axis=0)))
         imps.append(RandomForestClassifier(random_state=random_state).fit(X, y).feature_importances_)
         model = KNeighborsClassifier().fit(X_train, y_train)
-        r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='f1_weighted', random_state=random_state)
+        r = permutation_importance(model, X_val, y_val, n_repeats=8, scoring='f1_weighted', random_state=random_state)
         imps.append(r.importances_mean)
     elif task == 'regression':
         # Need data to be scaled, but don't necessarily want to scale entire dataset.
-        imps.append(np.abs(Lasso().fit(X, y).coef_))
+        imps.append(np.abs(Lasso(random_state=random_state).fit(X, y).coef_))
         imps.append(RandomForestRegressor(random_state=random_state).fit(X, y).feature_importances_)
         model = KNeighborsRegressor().fit(X_train, y_train)
-        r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='neg_mean_squared_error', random_state=random_state)
+        r = permutation_importance(model, X_val, y_val, n_repeats=8, scoring='neg_mean_squared_error', random_state=random_state)
         if not all(r.importances_mean < 0):
             r.importances_mean[r.importances_mean < 0] = 1e-9
             imps.append(r.importances_mean)
