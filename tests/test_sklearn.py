@@ -37,6 +37,20 @@ def test_correlation_detector():
         pipe.fit_transform(X)
 
 
+def test_simple_multimodal_detector():
+    """
+    Checks for features with a multimodal distribution, considered across the
+    entire dataset (i.e. not per class).
+    """
+    pipe = make_pipeline(rf.RegressionMultimodalDetector())
+    rng = np.random.default_rng(0)
+    X1 = np.stack([rng.normal(size=80), rng.normal(size=80)]).T
+    X2 = np.stack([rng.normal(size=80), 3 + rng.normal(size=80)]).T
+    X = np.vstack([X1, X2])
+    with pytest.warns(UserWarning, match="Feature 1 has samples that may be multimodally distributed."):
+        pipe.fit_transform(X)
+
+
 def test_custom_detector():
     """
     Checks for data which fails a user-supplied test.
@@ -48,8 +62,16 @@ def test_custom_detector():
         pipe.fit_transform(X)
 
     pipe = rf.make_detector_pipeline([has_negative])
-    with pytest.warns(UserWarning, match="Feature 0 has samples that fail custom func"):
+    with pytest.warns(UserWarning, match="Feature 0 has samples that fail"):
         pipe.fit_transform(X)
+
+    detector = rf.Detector(has_negative)
+    X = np.random.random(size=(100, 2))
+    y = np.random.random(size=100) - 0.1
+    assert has_negative(y)
+    assert rf.is_continuous(y)
+    with pytest.warns(UserWarning, match="Target 0 has samples that fail"):
+        pipe.fit_transform(X, y)
 
 
 def test_distribution_comparator():
@@ -135,12 +157,11 @@ def test_imbalance_detector():
 
     # Warns about wrong kind of y (continuous):
     y = rng.normal(size=100)
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+    with pytest.warns(UserWarning, match="Target y seems continuous"):
         pipe.fit_transform(X, y)
 
-    # Warns about wrong kind of y (None):
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
-        pipe.fit_transform(X)
+    # No warning if y is None, just skips.
+    pipe.fit_transform(X)
 
     # Raises error because method doesn't exist:
     with pytest.raises(ValueError) as e:
@@ -179,12 +200,11 @@ def test_imbalance_comparator():
 
     # Warns about wrong kind of y (continuous):
     y = rng.normal(size=100)
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+    with pytest.warns(UserWarning, match="Target y seems continuous"):
         pipe.fit_transform(X, y)
 
-    # Warns about wrong kind of y (None):
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
-        pipe.fit_transform(X)
+    # No warning if y is None, just skips:
+    pipe.fit_transform(X)
 
     # Raises error because threshold is wrong.
     with pytest.raises(ValueError) as e:

@@ -32,7 +32,9 @@ from scipy.stats import cumfreq
 from sklearn.utils.metaestimators import available_if
 
 from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
+from .utils import iter_groups
 from .target import is_continuous
+from .distributions import is_multimodal
 from .independence import is_correlated
 from .outliers import has_outliers, expected_outliers
 from .imbalance import imbalance_degree, imbalance_ratio, minority_classes
@@ -56,12 +58,6 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
         self.warning = warning
 
     def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        """
-        Checks X (and y, if it is continuous data) for suspect values.
-        """
         X = check_array(X)
 
         positive = [i for i, feature in enumerate(X.T) if self.func(feature)]
@@ -69,12 +65,20 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
             pos = ', '.join(str(i) for i in positive)
             warnings.warn(f"🚩 Feature{'' if n == 1 else 's'} {pos} {'has' if n == 1 else 'have'} samples that {self.warning}.")
 
-        if (y is not None) and is_continuous(y):
-            if np.asarray(y).ndim == 1:
-                y_ = y.reshape(-1, 1)
+        if y is not None:
+            y_ = np.asarray(y)
+            if y_.ndim == 1:
+                y_ = y_.reshape(-1, 1)
             for i, target in enumerate(y_.T):
-                if self.func(target):
+                if is_continuous(target) and self.func(target):
                     warnings.warn(f"🚩 Target {i} has samples that {self.warning}.")
+
+        return self
+
+    def transform(self, X, y=None):
+        """
+        Can check X here, but y is not passed into here by `fit`.
+        """
 
         return X
 
@@ -119,6 +123,17 @@ class CorrelationDetector(BaseRedflagDetector):
     """
     def __init__(self):
         super().__init__(is_correlated, "may be correlated")
+
+
+class RegressionMultimodalDetector(BaseRedflagDetector):
+    """
+    Transformer that detects features with non-unimodal distributions. In a
+    regression task, it considers the univariate distributions of the features
+    and the target. Do not use this detector for classification tasks, use
+    `MultimodalDetector` instead.
+    """
+    def __init__(self):
+        super().__init__(is_multimodal, "may be multimodally distributed")
 
 
 class UnivariateOutlierDetector(BaseRedflagDetector):
@@ -499,8 +514,10 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
             self.
         """
         # If there's no target or y is continuous (probably a regression), we're done.
-        if y is None or is_continuous(y):
-            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+        if y is None:
+            return self
+        if is_continuous(y):
+            warnings.warn("Target y seems continuous, skipping imbalance detection.")
             return self
 
         methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
@@ -583,8 +600,10 @@ class ImbalanceComparator(BaseEstimator, TransformerMixin):
             self.
         """
         # If there's no target or y is continuous (probably a regression), we're done.
-        if y is None or is_continuous(y):
-            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+        if y is None:
+            return self
+        if is_continuous(y):
+            warnings.warn("Target y seems continuous, skipping imbalance detection.")
             return self
 
         methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
@@ -613,8 +632,10 @@ class ImbalanceComparator(BaseEstimator, TransformerMixin):
             X.
         """
         # If there's no target or y is continuous (probably a regression), we're done.
-        if y is None or is_continuous(y):
-            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+        if y is None:
+            return self
+        if is_continuous(y):
+            warnings.warn("Target y seems continuous, skipping imbalance detection.")
             return self
 
         methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
@@ -691,7 +712,7 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
             X.
         """
         if y is None:
-            warnings.warn("Target y is None, so no importance detection.")
+            warnings.warn("Target y is None, skipping importance detection.")
             return self
 
         importances = feature_importances(X, y, random_state=self.random_state)
@@ -706,6 +727,7 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
 
         # Don't do this check if there were high-importance features (infer that the others are low.)
         least_important = least_important_features(importances, threshold=self.threshold)
+
         if (m := len(least_important)) > 0:
             least_str = ', '.join(str(i) for i in sorted(least_important))
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {least_str} {'has' if m == 1 else 'have'} low importance; check for relevance.")
@@ -813,6 +835,7 @@ pipeline = Pipeline(
         ("rf.imbalance", ImbalanceDetector()),
         ("rf.clip", ClipDetector()),
         ("rf.correlation", CorrelationDetector()),
+        # ("rf.multimodal", MultimodalDetector()),
         ("rf.outlier", OutlierDetector()),
         ("rf.distributions", DistributionComparator()),
         ("rf.importance", ImportanceDetector()),
