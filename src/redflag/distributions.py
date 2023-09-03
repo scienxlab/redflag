@@ -34,7 +34,7 @@ from scipy.signal import find_peaks
 from sklearn.neighbors import KernelDensity
 from sklearn.model_selection import GridSearchCV
 
-from .utils import is_standardized
+from .utils import is_standard_normal
 from .utils import iter_groups
 
 
@@ -256,9 +256,9 @@ def wasserstein(X: ArrayLike,
     except AttributeError:
         # It's probably a 1D array or list.
         pass
-    
+
     if stacked:
-        if not is_standardized(first):
+        if not is_standard_normal(first):
             warnings.warn('First group does not appear to be standardized.', stacklevel=2)
         groups = np.hstack([len(dataset)*[i] for i, dataset in enumerate(X)])
         X = np.vstack(X)
@@ -267,7 +267,7 @@ def wasserstein(X: ArrayLike,
     X = np.asarray(X)
     if X.ndim != 2:
         raise ValueError("X must be a 2D array-like.")
-    
+
     if groups is None:
         raise ValueError("Must provide a 1D array of group labels if X is a 2D array.")
     n_groups = np.unique(groups).size
@@ -302,6 +302,10 @@ def wasserstein(X: ArrayLike,
 def bw_silverman(a: ArrayLike) -> float:
     """
     Calculate the Silverman bandwidth.
+
+    Silverman, BW (1981), "Using kernel density estimates to investigate
+    multimodality", Journal of the Royal Statistical Society. Series B Vol. 43,
+    No. 1 (1981), pp. 97-99.
 
     Args:
         a (array): The data.
@@ -350,12 +354,20 @@ def cv_kde(a: ArrayLike, n_bandwidths: int=20, cv: int=10) -> float:
     Returns:
         float. The optimal bandwidth.
 
-    Examples:
-        >>> data = [1, 1, 1, 2, 2, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3]
-        >>> abs(cv_kde(data, n_bandwidths=3, cv=3) - 0.290905379576344) < 1e-9
-        True
+    Example:
+        >>> rng = np.random.default_rng(42)
+        >>> data = rng.normal(size=100)
+        >>> cv_kde(data, n_bandwidths=3, cv=3)
+        0.5212113989811242
     """
-    a = np.asarray(a).reshape(-1, 1)
+    a = np.asarray(a)
+    if not is_standard_normal(a):
+        warnings.warn('Data does not appear to be standardized, the KDE may be a poor fit.', stacklevel=2)
+    if a.ndim == 1:
+        a = a.reshape(-1, 1)
+    elif a.ndim >= 2:
+        raise ValueError("Data must be 1D.")
+
     silverman = bw_silverman(a)
     scott = bw_scott(a)
     start = min(silverman, scott)/2
@@ -378,22 +390,30 @@ def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple
     Returns:
         tuple: (x, kde).
 
-    Examples:
-        >>> data = [-3, 1, -2, -2, -2, -2, 1, 2, 2, 1, 1, 2, 0, 0, 2, 2, 3, 3]
+    Example:
+        >>> rng = np.random.default_rng(42)
+        >>> data = rng.normal(size=100)
         >>> x, kde = fit_kde(data)
         >>> x[0]
-        -4.5
-        >>> abs(kde[0] - 0.011092399847113) < 1e-9
-        True
+        -3.2124714013056916
+        >>> kde[0]
+        0.014367259502733645
         >>> len(kde)
         200
     """
     a = np.asarray(a)
+    if not is_standard_normal(a):
+        warnings.warn('Data does not appear to be standardized, the KDE may be a poor fit.', stacklevel=2)
+    if a.ndim == 1:
+        a = a.reshape(-1, 1)
+    elif a.ndim >= 2:
+        raise ValueError("Data must be 1D.")
     model = KernelDensity(kernel=kernel, bandwidth=bandwidth)
-    model.fit(a.reshape(-1, 1))
-    mima = 1.5 * np.abs(a).max()
+    model.fit(a)
+    mima = 1.5 * bandwidth * np.abs(a).max()
     x = np.linspace(-mima, mima, 200).reshape(-1, 1)
     log_density = model.score_samples(x)
+
     return np.squeeze(x), np.exp(log_density)
 
 
@@ -403,19 +423,20 @@ def get_kde(a: ArrayLike, method: str='scott') -> tuple[np.ndarray, np.ndarray]:
 
     Args:
         a (array): The data.
-        method (str): The rule of thumb for bandwidth estimation.
-            Default 'scott'.
+        method (str): The rule of thumb for bandwidth estimation. Must be one
+            of 'silverman', 'scott', or 'cv'. Default 'scott'.
 
     Returns:
         tuple: (x, kde).
 
     Examples:
-        >>> data = [-3, 1, -2, -2, -2, -2, 1, 2, 2, 1, 1, 2, 0, 0, 2, 2, 3, 3]
+        >>> rng = np.random.default_rng(42)
+        >>> data = rng.normal(size=100)
         >>> x, kde = get_kde(data)
         >>> x[0]
-        -4.5
-        >>> abs(kde[0] - 0.0015627693633590066) < 1e-09
-        True
+        -1.354649738246933
+        >>> kde[0]
+        0.162332012191087
         >>> len(kde)
         200
     """
@@ -462,8 +483,8 @@ def kde_peaks(a: ArrayLike, method: str='scott', threshold: float=0.1) -> tuple[
 
     Args:
         a (array): The data.
-        method (str): The rule of thumb for bandwidth estimation.
-            Default 'scott'.
+        method (str): The rule of thumb for bandwidth estimation. Must be one
+            of 'silverman', 'scott', or 'cv'. Default 'scott'.
         threshold (float): The threshold for peak amplitude. Default 0.1.
 
     Returns:
@@ -471,11 +492,38 @@ def kde_peaks(a: ArrayLike, method: str='scott', threshold: float=0.1) -> tuple[
             the peaks.
 
     Examples:
-        >>> data = [-3, 1, -2, -2, -2, -2, 1, 2, 2, 1, 1, 2, 0, 0, 2, 2, 3, 3]
+        >>> rng = np.random.default_rng(42)
+        >>> data = np.concatenate([rng.normal(size=100)-2, rng.normal(size=100)+2])
         >>> x_peaks, y_peaks = kde_peaks(data)
         >>> x_peaks
-        array([-2.05778894,  1.74120603])
+        array([-1.67243035,  1.88998226])
         >>> y_peaks
-        array([0.15929031, 0.24708215])
+        array([0.22014721, 0.19729456])
     """
     return find_large_peaks(*get_kde(a, method), threshold=threshold)
+
+
+def is_multimodal(a: ArrayLike, method: str='scott', threshold: float=0.1) -> bool:
+    """
+    Test if the data is multimodal.
+
+    Args:
+        a (array): The data.
+        method (str): The rule of thumb for bandwidth estimation. Must be one
+            of 'silverman', 'scott', or 'cv'. Default 'scott'.
+        threshold (float): The threshold for peak amplitude. Default 0.1.
+
+    Returns:
+        bool: True if the data is multimodal.
+
+    Examples:
+        >>> rng = np.random.default_rng(42)
+        >>> data = rng.normal(size=100)
+        >>> is_multimodal(data)
+        False
+        >>> data = np.concatenate([rng.normal(size=100)-2, rng.normal(size=100)+2])
+        >>> is_multimodal(data)
+        True
+    """
+    x, y = kde_peaks(a, method=method, threshold=threshold)
+    return len(x) > 1
