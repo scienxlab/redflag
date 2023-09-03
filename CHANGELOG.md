@@ -3,7 +3,7 @@
 ## 0.2.0, 3 September 2023
 
 - Moved to something more closely resembling semantic versioning, which is the main reason this is version 0.2.0.
-- Builds and tests on Python 3.11 have been successful, so now supporting this version. Started testing on Python 3.12, which is not supported for the time being.
+- Builds and tests on Python 3.11 have been successful, so now supporting this version.
 - Added custom 'alarm' `Detector`, which can be instantiated with a function and a warning to emit when the function returns True for a 1D array. You can easily write your own detectors with this class.
 - Added `make_detector_pipeline()` which can take sequences of functions and warnings (or a mapping of functions to warnings) and returns a `scikit-learn.pipeline.Pipeline` containing a `Detector` for each function.
 - Added `RegressionMultimodalDetector` to allow detection of non-unimodal distributions in features, when considered across the entire dataset. (Coming soon, a similar detector for classification tasks that will partition the data by class.)
