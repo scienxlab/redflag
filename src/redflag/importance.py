@@ -25,10 +25,10 @@ from numpy.typing import ArrayLike
 from sklearn.inspection import permutation_importance
 from sklearn.linear_model import Lasso
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVR
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
 
 from .target import is_continuous
 from .utils import split_and_standardize
@@ -42,8 +42,8 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
     Measure feature importances on a task, given X and y.
 
     Classification tasks are assessed with logistic regression, a random
-    forest, and SVM permutation importance. Regression tasks are assessed with
-    lasso regression, a random forest, and SVM permutation importance. In each
+    forest, and KNN permutation importance. Regression tasks are assessed with
+    lasso regression, a random forest, and KNN permutation importance. In each
     case, the `n` normalized importances with the most variance are averaged.
 
     Args:
@@ -63,13 +63,13 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
             appear in X.
 
     Examples:
-        >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1], [0, 4, 0], [0, 5, 1]]
-        >>> y = [5, 15, 25, 35, 45, 55]
-        >>> feature_importances(X, y, task='regression', random_state=0)
-        array([ 0.        ,  0.97811006, -0.19385077])
-        >>> y = ['a', 'a', 'a', 'b', 'b', 'b']
-        >>> feature_importances(X, y, task='classification', random_state=0)
-        array([ 0.        ,  0.89013985, -0.55680651])
+        >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1], [0, 4, 0], [0, 5, 1], [0, 7, 0], [0, 8, 1], [0, 8, 0]]
+        >>> y = [5, 15, 25, 35, 45, 55, 80, 85, 90]
+        >>> feature_importances(X, y, task='regression', random_state=42)
+        array([0.        , 0.99416839, 0.00583161])
+        >>> y = ['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']
+        >>> feature_importances(X, y, task='classification', random_state=42)
+        array([0.        , 0.62908523, 0.37091477])
     """
     if y is None:
         raise NotImplementedError('Unsupervised importance is not yet implemented.')
@@ -86,15 +86,18 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
     if task == 'classification':
         imps.append(np.abs(LogisticRegression().fit(X, y).coef_.sum(axis=0)))
         imps.append(RandomForestClassifier(random_state=random_state).fit(X, y).feature_importances_)
-        model = SVC(random_state=random_state).fit(X_train, y_train)
+        model = KNeighborsClassifier().fit(X_train, y_train)
         r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='f1_weighted', random_state=random_state)
         imps.append(r.importances_mean)
     elif task == 'regression':
+        # Need data to be scaled, but don't necessarily want to scale entire dataset.
         imps.append(np.abs(Lasso().fit(X, y).coef_))
         imps.append(RandomForestRegressor(random_state=random_state).fit(X, y).feature_importances_)
-        model = SVR().fit(X_train, y_train)
+        model = KNeighborsRegressor().fit(X_train, y_train)
         r = permutation_importance(model, X_val, y_val, n_repeats=10, scoring='neg_mean_squared_error', random_state=random_state)
-        imps.append(r.importances_mean)
+        if not all(r.importances_mean < 0):
+            r.importances_mean[r.importances_mean < 0] = 1e-9
+            imps.append(r.importances_mean)
 
     imps = np.array(imps)
 
