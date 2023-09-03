@@ -258,7 +258,7 @@ def wasserstein(X: ArrayLike,
         pass
 
     if stacked:
-        if not is_standard_normal(first):
+        if not is_standard_normal(first.flat):
             warnings.warn('First group does not appear to be standardized.', stacklevel=2)
         groups = np.hstack([len(dataset)*[i] for i, dataset in enumerate(X)])
         X = np.vstack(X)
@@ -309,7 +309,7 @@ def bw_silverman(a: ArrayLike) -> float:
 
     Args:
         a (array): The data.
-    
+
     Returns:
         float: The Silverman bandwidth.
 
@@ -325,7 +325,7 @@ def bw_silverman(a: ArrayLike) -> float:
 def bw_scott(a: ArrayLike) -> float:
     """
     Calculate the Scott bandwidth.
-    
+
     Args:
         a (array): The data.
     
@@ -396,8 +396,8 @@ def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple
         >>> x, kde = fit_kde(data)
         >>> x[0]
         -3.2124714013056916
-        >>> kde[0]
-        0.014367259502733645
+        >>> kde[0] - 0.014367259502733645 < 1e-9
+        True
         >>> len(kde)
         200
     """
@@ -435,8 +435,8 @@ def get_kde(a: ArrayLike, method: str='scott') -> tuple[np.ndarray, np.ndarray]:
         >>> x, kde = get_kde(data)
         >>> x[0]
         -1.354649738246933
-        >>> kde[0]
-        0.162332012191087
+        >>> kde[0] - 0.162332012191087 < 1e-9
+        True
         >>> len(kde)
         200
     """

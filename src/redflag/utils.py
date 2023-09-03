@@ -371,12 +371,12 @@ def is_standard_normal(a: ArrayLike, confidence: float=0.95) -> bool:
 
     Example:
         >>> a = np.random.normal(size=1000)
-        >>> is_standard_normal(a)
+        >>> is_standard_normal(a, confidence=0.9)
         True
         >>> is_standard_normal(a + 1)
         False
     """
-    ks = stats.kstest(a, stats.norm.cdf)
+    ks = stats.kstest(a, 'norm')
     return ks.pvalue > (1 - confidence)
 
 
