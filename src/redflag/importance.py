@@ -68,8 +68,9 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
         >>> feature_importances(X, y, task='regression', random_state=42)
         array([0.        , 0.99416839, 0.00583161])
         >>> y = ['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']
-        >>> feature_importances(X, y, task='classification', random_state=42)
-        array([0.        , 0.62908523, 0.37091477])
+        >>> x0, x1, x2 = feature_importances(X, y, task='classification', random_state=42)
+        >>> x1 > x2 > x0  # See Issue #49 for why this test is like this.
+        True
     """
     if y is None:
         raise NotImplementedError('Unsupervised importance is not yet implemented.')
