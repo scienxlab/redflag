@@ -21,15 +21,47 @@ limitations under the License.
 from __future__ import annotations
 
 import warnings
+import functools
+import inspect
 from typing import Iterable, Any, Optional
 from numpy.typing import ArrayLike
 
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from scipy.stats import beta
+from scipy import stats
 from scipy.optimize import fsolve
 from scipy.spatial.distance import pdist
+
+
+def deprecated(instructions):
+    """
+    Flags a method as deprecated. This decorator can be used to mark functions
+    as deprecated. It will result in a warning being emitted when the function
+    is used.
+    Args:
+        instructions (str): A human-friendly string of instructions, such
+        as: 'Please migrate to add_proxy() ASAP.'
+    Returns:
+        The decorated function.
+    """
+    def decorator(func):
+
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            message = 'Call to deprecated function {}. {}'.format(
+                func.__name__,
+                instructions)
+
+            frame = inspect.currentframe().f_back
+
+            warnings.warn_explicit(message,
+                                   category=DeprecationWarning,
+                                   filename=inspect.getfile(frame.f_code),
+                                   lineno=frame.f_lineno)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 
 def flatten(L: list[Any]) -> Iterable[Any]:
@@ -163,9 +195,10 @@ def split_and_standardize(X: ArrayLike, y: ArrayLike, random_state: Optional[int
     Returns:
         tuple of ndarray: X, X_train, X_val, y, y_train, y_val
     """
+    X = np.asarray(X)
     X_train, X_val, y_train, y_val = train_test_split(X, y, random_state=random_state)
 
-    if not is_standardized(X):
+    if not all(is_standard_normal(x) for x in X.T):
         scaler = StandardScaler().fit(X)
         X = scaler.transform(X)
         scaler = StandardScaler().fit(X_train)
@@ -257,7 +290,7 @@ def stdev_to_proportion(threshold: float, d: float=1, n: float=1e9) -> float:
         >>> stdev_to_proportion(5, d=10)
         0.9946544947734935
     """
-    return float(beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2))
+    return float(stats.beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2))
 
 
 def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
@@ -298,7 +331,8 @@ def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
     return float(r_hat)
 
 
-def is_standardized(a: ArrayLike, atol: float=1e-5) -> bool:
+@deprecated("Use is_standard_normal() instead.")
+def is_standardized(a: ArrayLike, atol: float=1e-3) -> bool:
     """
     Returns True if the feature has zero mean and standard deviation of 1.
     In other words, if the feature appears to be a Z-score.
@@ -319,6 +353,31 @@ def is_standardized(a: ArrayLike, atol: float=1e-5) -> bool:
     """
     μ, σ = np.nanmean(a), np.nanstd(a)
     return bool((np.abs(μ) < atol) and (np.abs(σ - 1) < atol))
+
+
+def is_standard_normal(a: ArrayLike, confidence: float=0.95) -> bool:
+    """
+    Performs the Kolmogorov-Smirnov test for normality. Returns True if the
+    feature appears to be normally distributed, with a mean close to zero and
+    standard deviation close to 1.
+
+    Args:
+        a (array): The data.
+        confidence (float): The confidence level of the test, default 0.95
+            (95% confidence).
+
+    Returns:
+        bool: True if the feature appears to have a standard normal distribution.
+
+    Example:
+        >>> a = np.random.normal(size=1000)
+        >>> is_standard_normal(a)
+        True
+        >>> is_standard_normal(a + 1)
+        False
+    """
+    ks = stats.kstest(a, stats.norm.cdf)
+    return ks.pvalue > (1 - confidence)
 
 
 def zscore(X: np.ndarray) -> np.ndarray:
@@ -433,7 +492,7 @@ def is_clipped(a: ArrayLike) -> bool:
     return (min_clips is not None) or (max_clips is not None)
 
 
-def iter_groups(groups: ArrayLike) -> Iterator[np.ndarray]:
+def iter_groups(groups: ArrayLike) -> Iterable[np.ndarray]:
     """
     Allow iterating over groups, getting boolean array for each.
     
