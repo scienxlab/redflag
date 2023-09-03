@@ -48,11 +48,12 @@ author = 'The Redflag Authors'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.githubpages',
     'sphinxcontrib.apidoc',
+    'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
-    'myst_nb',
     'sphinx.ext.coverage', 
+    'sphinx_copybutton',
+    'myst_nb',
 ]
  
 myst_enable_extensions = ["dollarmath", "amsmath"]

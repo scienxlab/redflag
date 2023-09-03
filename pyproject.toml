@@ -24,6 +24,7 @@ classifiers = [
 ]
 
 dependencies = [
+    "numpy<2.0",        # NumPy 2 will likely break some things.
     "scipy!=1.10.0",    # Bug in stats.powerlaw.
     "scikit-learn",
 ]
@@ -46,7 +47,7 @@ dev = [
 ]
 
 [project.urls]
-"documentation" = "https://scienxlab.github.io/redflag"
+"documentation" = "https://scienxlab.org/redflag"
 "repository" = "https://github.com/scienxlab/redflag"
 
 [tool.setuptools_scm]

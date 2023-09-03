@@ -18,7 +18,7 @@ def test_clip_detector():
     """
     pipe = make_pipeline(rf.ClipDetector())
     X = np.array([[2, 1], [3, 2], [4, 3], [5, 3]])
-    with pytest.warns(UserWarning, match="Feature 1 may have clipped values."):
+    with pytest.warns(UserWarning, match="Feature 1 has samples that may be clipped."):
         pipe.fit_transform(X)
 
     # Does not warn:
@@ -33,8 +33,45 @@ def test_correlation_detector():
     pipe = make_pipeline(rf.CorrelationDetector())
     rng = np.random.default_rng(0)
     X = np.stack([rng.uniform(size=20), np.sin(np.linspace(0, 1, 20))]).T
-    with pytest.warns(UserWarning, match="Feature 1 may have correlated values."):
+    with pytest.warns(UserWarning, match="Feature 1 has samples that may be correlated."):
         pipe.fit_transform(X)
+
+
+def test_simple_multimodal_detector():
+    """
+    Checks for features with a multimodal distribution, considered across the
+    entire dataset (i.e. not per class).
+    """
+    pipe = make_pipeline(rf.RegressionMultimodalDetector())
+    rng = np.random.default_rng(0)
+    X1 = np.stack([rng.normal(size=80), rng.normal(size=80)]).T
+    X2 = np.stack([rng.normal(size=80), 3 + rng.normal(size=80)]).T
+    X = np.vstack([X1, X2])
+    with pytest.warns(UserWarning, match="Feature 1 has samples that may be multimodally distributed."):
+        pipe.fit_transform(X)
+
+
+def test_custom_detector():
+    """
+    Checks for data which fails a user-supplied test.
+    """
+    has_negative = lambda x: np.any(x < 0)
+    pipe = rf.make_detector_pipeline({has_negative: "are negative"})
+    X = np.array([[-2, 1], [3, 2], [4, 3], [5, 4]])
+    with pytest.warns(UserWarning, match="Feature 0 has samples that are negative."):
+        pipe.fit_transform(X)
+
+    pipe = rf.make_detector_pipeline([has_negative])
+    with pytest.warns(UserWarning, match="Feature 0 has samples that fail"):
+        pipe.fit_transform(X)
+
+    detector = rf.Detector(has_negative)
+    X = np.random.random(size=(100, 2))
+    y = np.random.random(size=100) - 0.1
+    assert has_negative(y)
+    assert rf.is_continuous(y)
+    with pytest.warns(UserWarning, match="Target 0 has samples that fail"):
+        pipe.fit_transform(X, y)
 
 
 def test_distribution_comparator():
@@ -62,7 +99,7 @@ def test_univariate_outlier_detector():
     pipe = make_pipeline(rf.UnivariateOutlierDetector(factor=0.5))
     rng = np.random.default_rng(0)
     X = rng.normal(size=1_000).reshape(-1, 1)
-    with pytest.warns(UserWarning, match="Feature 0 may have more outliers"):
+    with pytest.warns(UserWarning, match="Feature 0 has samples that are excess univariate outliers"):
         pipe.fit_transform(X)
 
     # Does not warn with factor of 2.5:
@@ -75,7 +112,7 @@ def test_multivariate_outlier_detector():
     pipe = make_pipeline(rf.MultivariateOutlierDetector(factor=0.5))
     rng = np.random.default_rng(0)
     X = rng.normal(size=(1_000, 2))
-    with pytest.warns(UserWarning, match="Dataset may have more outliers"):
+    with pytest.warns(UserWarning, match="Dataset has more multivariate outlier samples than expected."):
         pipe.fit_transform(X)
 
     # Does not warn with factor of 2.5:
@@ -120,12 +157,11 @@ def test_imbalance_detector():
 
     # Warns about wrong kind of y (continuous):
     y = rng.normal(size=100)
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+    with pytest.warns(UserWarning, match="Target y seems continuous"):
         pipe.fit_transform(X, y)
 
-    # Warns about wrong kind of y (None):
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
-        pipe.fit_transform(X)
+    # No warning if y is None, just skips.
+    pipe.fit_transform(X)
 
     # Raises error because method doesn't exist:
     with pytest.raises(ValueError) as e:
@@ -164,12 +200,11 @@ def test_imbalance_comparator():
 
     # Warns about wrong kind of y (continuous):
     y = rng.normal(size=100)
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
+    with pytest.warns(UserWarning, match="Target y seems continuous"):
         pipe.fit_transform(X, y)
 
-    # Warns about wrong kind of y (None):
-    with pytest.warns(UserWarning, match="Target y is None or seems continuous"):
-        pipe.fit_transform(X)
+    # No warning if y is None, just skips:
+    pipe.fit_transform(X)
 
     # Raises error because threshold is wrong.
     with pytest.raises(ValueError) as e:

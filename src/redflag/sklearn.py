@@ -1,7 +1,7 @@
 """
 Scikit-learn components.
 
-Author: Matt Hall, scienxlab.com
+Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
 Copyright 2022 Redflag contributors
@@ -25,13 +25,16 @@ from sklearn.utils import check_array
 from sklearn import pipeline
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import _name_estimators
+from sklearn.pipeline import make_pipeline
 from sklearn.covariance import EllipticEnvelope
 from scipy.stats import wasserstein_distance
 from scipy.stats import cumfreq
 from sklearn.utils.metaestimators import available_if
 
 from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
+from .utils import iter_groups
 from .target import is_continuous
+from .distributions import is_multimodal
 from .independence import is_correlated
 from .outliers import has_outliers, expected_outliers
 from .imbalance import imbalance_degree, imbalance_ratio, minority_classes
@@ -55,25 +58,27 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
         self.warning = warning
 
     def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        """
-        Checks X (and y, if it is continuous data) for suspect values.
-        """
         X = check_array(X)
 
         positive = [i for i, feature in enumerate(X.T) if self.func(feature)]
         if n := len(positive):
             pos = ', '.join(str(i) for i in positive)
-            warnings.warn(f"🚩 Feature{'s' if n > 1 else ''} {pos} may have {self.warning}.")
+            warnings.warn(f"🚩 Feature{'' if n == 1 else 's'} {pos} {'has' if n == 1 else 'have'} samples that {self.warning}.")
 
-        if (y is not None) and is_continuous(y):
-            if np.asarray(y).ndim == 1:
-                y_ = y.reshape(-1, 1)
+        if y is not None:
+            y_ = np.asarray(y)
+            if y_.ndim == 1:
+                y_ = y_.reshape(-1, 1)
             for i, target in enumerate(y_.T):
-                if self.func(target):
-                    warnings.warn(f"🚩 Target {i} may have {self.warning}.")
+                if is_continuous(target) and self.func(target):
+                    warnings.warn(f"🚩 Target {i} has samples that {self.warning}.")
+
+        return self
+
+    def transform(self, X, y=None):
+        """
+        Can check X here, but y is not passed into here by `fit`.
+        """
 
         return X
 
@@ -88,14 +93,14 @@ class ClipDetector(BaseRedflagDetector):
         >>> X = np.array([[2, 1], [3, 2], [4, 3], [5, 3]])
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.ClipDetector
-          🚩 Feature 1 may have clipped values.
+          🚩 Feature 1 has samples that may be clipped.
         array([[2, 1],
                [3, 2],
                [4, 3],
                [5, 3]])
     """
     def __init__(self):
-        super().__init__(is_clipped, "clipped values")
+        super().__init__(is_clipped, "may be clipped")
 
 
 class CorrelationDetector(BaseRedflagDetector):
@@ -109,7 +114,7 @@ class CorrelationDetector(BaseRedflagDetector):
         >>> X = np.stack([rng.uniform(size=20), np.sin(np.linspace(0, 1, 20))]).T
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.CorrelationDetector
-          🚩 Feature 1 may have correlated values.
+          🚩 Feature 1 has samples that may be correlated.
         array([[0.38077051, 0.        ],
                [0.42977406, 0.05260728]
                ...
@@ -117,7 +122,18 @@ class CorrelationDetector(BaseRedflagDetector):
                [0.7482485 , 0.84147098]])
     """
     def __init__(self):
-        super().__init__(is_correlated, "correlated values")
+        super().__init__(is_correlated, "may be correlated")
+
+
+class RegressionMultimodalDetector(BaseRedflagDetector):
+    """
+    Transformer that detects features with non-unimodal distributions. In a
+    regression task, it considers the univariate distributions of the features
+    and the target. Do not use this detector for classification tasks, use
+    `MultimodalDetector` instead.
+    """
+    def __init__(self):
+        super().__init__(is_multimodal, "may be multimodally distributed")
 
 
 class UnivariateOutlierDetector(BaseRedflagDetector):
@@ -135,7 +151,7 @@ class UnivariateOutlierDetector(BaseRedflagDetector):
         >>> X = rng.normal(size=(1_000, 2))
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.UnivariateOutlierDetector
-          🚩 Features 0, 1 may have more outliers (in a univariate sense) than expected.
+          🚩 Features 0, 1 have samples that are excess univariate outliers.
         array([[ 0.12573022, -0.13210486],
                [ 0.64042265,  0.10490012],
                [-0.53566937,  0.36159505],
@@ -154,7 +170,7 @@ class UnivariateOutlierDetector(BaseRedflagDetector):
                [-0.90942756,  0.36922933]])
     """
     def __init__(self, **kwargs):
-        super().__init__(has_outliers, "more outliers (in a univariate sense) than expected", **kwargs)
+        super().__init__(has_outliers, "are excess univariate outliers", **kwargs)
 
 
 class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
@@ -171,7 +187,7 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
         >>> X = rng.normal(size=(1_000, 2))
         >>> pipe.fit_transform(X)  # doctest: +SKIP
         redflag/sklearn.py::redflag.sklearn.MultivariateOutlierDetector
-          🚩 Dataset may have more outliers (in a multivariate sense) than expected.
+          🚩 Dataset has more multivariate outlier samples than expected.
         array([[ 0.12573022, -0.13210486],
                [ 0.64042265,  0.10490012],
                [-0.53566937,  0.36159505],
@@ -210,13 +226,17 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
         outliers = has_outliers(X, p=self.p, threshold=self.threshold, factor=self.factor)
 
         if outliers:
-            warnings.warn(f"🚩 Dataset may have more outliers (in a multivariate sense) than expected.")
+            warnings.warn(f"🚩 Dataset has more multivariate outlier samples than expected.")
 
         if (y is not None) and is_continuous(y):
             if np.asarray(y).ndim == 1:
                 y_ = y.reshape(-1, 1)
+                kind = 'univariate'
+            else:
+                y_ = y
+                kind = 'multivariate'
             if has_outliers(y_, p=self.p, threshold=self.threshold, factor=self.factor):
-                    warnings.warn(f"🚩 Target may have more outliers (in a multivariate sense) than expected.")
+                    warnings.warn(f"🚩 Target has more {kind} outlier samples than expected.")
 
         return X
 
@@ -494,8 +514,10 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
             self.
         """
         # If there's no target or y is continuous (probably a regression), we're done.
-        if y is None or is_continuous(y):
-            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+        if y is None:
+            return self
+        if is_continuous(y):
+            warnings.warn("Target y seems continuous, skipping imbalance detection.")
             return self
 
         methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
@@ -578,8 +600,10 @@ class ImbalanceComparator(BaseEstimator, TransformerMixin):
             self.
         """
         # If there's no target or y is continuous (probably a regression), we're done.
-        if y is None or is_continuous(y):
-            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+        if y is None:
+            return self
+        if is_continuous(y):
+            warnings.warn("Target y seems continuous, skipping imbalance detection.")
             return self
 
         methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
@@ -608,8 +632,10 @@ class ImbalanceComparator(BaseEstimator, TransformerMixin):
             X.
         """
         # If there's no target or y is continuous (probably a regression), we're done.
-        if y is None or is_continuous(y):
-            warnings.warn("Target y is None or seems continuous, so no imbalance detection.")
+        if y is None:
+            return self
+        if is_continuous(y):
+            warnings.warn("Target y seems continuous, skipping imbalance detection.")
             return self
 
         methods = {'id': imbalance_degree, 'ir': imbalance_ratio}
@@ -686,21 +712,24 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
             X.
         """
         if y is None:
-            warnings.warn("Target y is None, so no importance detection.")
+            warnings.warn("Target y is None, skipping importance detection.")
             return self
 
         importances = feature_importances(X, y, random_state=self.random_state)
         most_important = most_important_features(importances, threshold=self.threshold)
 
-        if (m := len(most_important)) <= 2:
-            most_str = ', '.join(str(i) for i in most_important)
+        M = X.shape[1]
+
+        if (m := len(most_important)) <= 2 and (m < M):
+            most_str = ', '.join(str(i) for i in sorted(most_important))
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {most_str} {'has' if m == 1 else 'have'} very high importance; check for leakage.")
             return self
 
         # Don't do this check if there were high-importance features (infer that the others are low.)
         least_important = least_important_features(importances, threshold=self.threshold)
+
         if (m := len(least_important)) > 0:
-            least_str = ', '.join(str(i) for i in least_important)
+            least_str = ', '.join(str(i) for i in sorted(least_important))
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {least_str} {'has' if m == 1 else 'have'} low importance; check for relevance.")
 
         return self
@@ -806,8 +835,42 @@ pipeline = Pipeline(
         ("rf.imbalance", ImbalanceDetector()),
         ("rf.clip", ClipDetector()),
         ("rf.correlation", CorrelationDetector()),
+        # ("rf.multimodal", MultimodalDetector()),
         ("rf.outlier", OutlierDetector()),
         ("rf.distributions", DistributionComparator()),
         ("rf.importance", ImportanceDetector()),
     ]
 )
+
+
+class Detector(BaseRedflagDetector):
+    def __init__(self, func, warning=None):
+        if warning is None:
+            warning = f"fail custom func {func.__name__}()"
+        super().__init__(func, warning)
+
+
+def make_detector_pipeline(funcs, warnings=None) -> Pipeline:
+    """
+    Make a detector from one or more 'alarm' functions.
+
+    Args:
+        funcs: Can be a sequence of functions returning True if a 1D array
+            meets some condition you want to trigger the alarm for. For example,
+            `has_negative = lambda x: np.any(x < 0)` to alert you to the
+            presence of negative values. Can also be a mappable of functions to
+            warnings.
+        warnings: The warnings corresponding to the functions. It's probably
+            safer to pass the functions with their warnings in a dict.
+
+    Returns:
+        Pipeline
+    """
+    detectors = []
+    if isinstance(funcs, dict):
+        warnings = funcs.values()
+    elif warnings is None:
+        warnings = [None for _ in funcs]
+    for func, warn in zip(funcs, warnings):
+        detectors.append(Detector(func, warn))
+    return make_pipeline(*detectors)

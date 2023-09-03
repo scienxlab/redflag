@@ -1,8 +1,19 @@
 # Changelog
 
-## 0.1.11, in development
+## 0.2.0, 3 September 2023
 
-- Coming soon...
+- Moved to something more closely resembling semantic versioning, which is the main reason this is version 0.2.0.
+- Builds and tests on Python 3.11 have been successful, so now supporting this version. Started testing on Python 3.12, which is not supported for the time being.
+- Added custom 'alarm' `Detector`, which can be instantiated with a function and a warning to emit when the function returns True for a 1D array. You can easily write your own detectors with this class.
+- Added `make_detector_pipeline()` which can take sequences of functions and warnings (or a mapping of functions to warnings) and returns a `scikit-learn.pipeline.Pipeline` containing a `Detector` for each function.
+- Added `RegressionMultimodalDetector` to allow detection of non-unimodal distributions in features, when considered across the entire dataset. (Coming soon, a similar detector for classification tasks that will partition the data by class.)
+- Redefined `is_standardized` (deprecated) as `is_standard_normal`, which implements the Kolmogorov&ndash;Smirnov test. It seems more reliable than assuming the data will have a mean of almost exactly 0 and standard deviation of exactly 1, when all we really care about is that the feature is roughly normal.
+- Changed the wording slightly in the existing detector warning messages.
+- No longer warning if `y` is `None` in, eg, `ImportanceDetector`, since you most likely know this.
+- Some changes to `ImportanceDetector`. It now uses KNN estimators instead of SVMs as the third measure of importance; the SVMs were too unstable, causing numerical issues. It also now requires that the number of important features is less than the total number of features to be triggered. So if you have 2 features and both are important, it does not trigger.
+- Improved `is_continuous()` which was erroneously classifying integer arrays with many consecutive values as non-continuous.
+- Added a `Tutorial.ipynb` notebook to the docs.
+- Added a **Copy** button to code blocks in the docs.
 
 
 ## 0.1.10, 21 November 2022

@@ -1,7 +1,7 @@
 """
 Functions related to understanding the target and the type of task.
 
-Author: Matt Hall, scienxlab.com
+Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
 Copyright 2022 Redflag contributors
@@ -61,7 +61,7 @@ def is_continuous(a: ArrayLike, n: Optional[int]=None) -> bool:
         n (int): The number of potential categories. That is, if there are
             fewer than n unique values in the data, it is estimated to be
             categorical. Default: the square root of the sample size, which
-            is 10% of the data or 10_000, whichever is smaller.
+            is all the data or 10_000 random samples, whichever is smaller.
 
     Returns:
         bool: True if arr is probably best suited to regression.
@@ -74,39 +74,51 @@ def is_continuous(a: ArrayLike, n: Optional[int]=None) -> bool:
         >>> import numpy as np
         >>> is_continuous(np.random.random(size=100))
         True
+        >>> is_continuous(np.random.randint(0, 15, size=200))
+        False
     """
-    arr = np.array(a)
+    arr = np.asarray(a)
 
     if not is_numeric(arr):
         return False
 
+    # Now we are dealing with numbers that could represent categories.
+
+    if is_binary(arr):
+        return False
+
     # Starting with this and having the uplifts be 0.666 means
     # that at least 2 tests must trigger to get over 0.5.
-    p = 0.333
-        
-    N = max(min(len(arr)//10, 10_000), 10)
-    sample = np.random.choice(arr, size=N, replace=False)
+    p = 1 / 3
+
+    # Take a sample if array is large.
+    if arr.size < 10_000:
+        sample = arr
+    else:
+        sample = np.random.choice(arr, size=10_000, replace=False)
 
     if n is None:
-        n = np.sqrt(len(sample))
+        n = np.sqrt(sample.size)
 
-    # Check if floats (proper floats, ).
+    # Check if floats.
     if np.issubdtype(sample.dtype, np.floating):
 
         # If not ints in disguise.
         if not np.all([xi.is_integer() for xi in np.unique(sample)]):
-            p = update_p(p, 0.666, 0.666)
-            
+            p = update_p(p, 2/3, 2/3)
+
         # If low precision.
-        if np.all((100*sample).astype(int) - 100*sample < 1e-12):
-            p = update_p(p, 0.666, 0.666)
+        if np.all((sample.astype(int) - sample) < 1e-3):
+            p = update_p(p, 2/3, 2/3)
 
+    # If many unique values.
     if np.unique(sample).size > n:
-        p = update_p(p, 0.666, 0.666)
+        p = update_p(p, 2/3, 2/3)
 
-    many_gap_sizes = np.unique(np.diff(sample)).size > n
+    # If many sizes of gaps between numbers.
+    many_gap_sizes = np.unique(np.diff(np.sort(sample))).size > n
     if many_gap_sizes:
-        p = update_p(p, 0.666, 0.666)
+        p = update_p(p, 2/3, 2/3)
     
     return p > 0.5
 
