@@ -355,7 +355,7 @@ def is_standardized(a: ArrayLike, atol: float=1e-3) -> bool:
     return bool((np.abs(μ) < atol) and (np.abs(σ - 1) < atol))
 
 
-def is_standard_normal(a: ArrayLike, confidence: float=0.95) -> bool:
+def is_standard_normal(a: ArrayLike, confidence: float=0.8) -> bool:
     """
     Performs the Kolmogorov-Smirnov test for normality. Returns True if the
     feature appears to be normally distributed, with a mean close to zero and
@@ -363,15 +363,15 @@ def is_standard_normal(a: ArrayLike, confidence: float=0.95) -> bool:
 
     Args:
         a (array): The data.
-        confidence (float): The confidence level of the test, default 0.95
-            (95% confidence).
+        confidence (float): The confidence level of the test, default 0.8
+            (80% confidence).
 
     Returns:
         bool: True if the feature appears to have a standard normal distribution.
 
     Example:
-        >>> a = np.random.normal(size=2000)
-        >>> is_standard_normal(a, confidence=0.9)
+        >>> a = np.random.normal(size=2500)
+        >>> is_standard_normal(a, confidence=0.8)
         True
         >>> is_standard_normal(a + 1)
         False
