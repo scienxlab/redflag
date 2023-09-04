@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0, 3 September 2023
+## 0.2.0, 4 September 2023
 
 - Moved to something more closely resembling semantic versioning, which is the main reason this is version 0.2.0.
 - Builds and tests on Python 3.11 have been successful, so now supporting this version.
@@ -12,6 +12,7 @@
 - No longer warning if `y` is `None` in, eg, `ImportanceDetector`, since you most likely know this.
 - Some changes to `ImportanceDetector`. It now uses KNN estimators instead of SVMs as the third measure of importance; the SVMs were too unstable, causing numerical issues. It also now requires that the number of important features is less than the total number of features to be triggered. So if you have 2 features and both are important, it does not trigger.
 - Improved `is_continuous()` which was erroneously classifying integer arrays with many consecutive values as non-continuous.
+- Note that `wasserstein` no longer checks that the data are standardized; this check will probably return in the future, however.
 - Added a `Tutorial.ipynb` notebook to the docs.
 - Added a **Copy** button to code blocks in the docs.
 
