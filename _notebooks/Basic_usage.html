@@ -5,10 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" /><link rel="prev" title="🚩 Installation" href="../installation.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2023.03.27 -->
         <title>🚩 Basic usage - redflag documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
@@ -163,6 +164,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">🚩 Installation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">🚩 Basic usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -181,8 +183,8 @@
 <li class="toctree-l1"><a class="reference external" href="https://pypi.org/project/redflag/">PyPI releases</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/scienxlab/redflag">Code in GitHub</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/scienxlab/redflag/issues">Issue tracker</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://scienxlab.com/community">Community guidelines</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://scienxlab.com">Scienxlab</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://scienxlab.org/community">Community guidelines</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://scienxlab.org">Scienxlab</a></li>
 </ul>
 
 </div>
@@ -238,7 +240,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.dev1+gd064566&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.2.0rc3&#39;
 </pre></div>
 </div>
 </div>
@@ -457,7 +459,7 @@
                   PE ... True
               Facies ... False
             LATITUDE ... True
-           LONGITUDE ... True
+           LONGITUDE ... False
            ILD_log10 ... True
            Lithology ... False
                 RHOB ... True
@@ -544,10 +546,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7efc4890d150&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f21621c1750&gt;
 </pre></div>
 </div>
-<img alt="../_images/8fdcd98920c559b140898884413f04a52135c4c27320480ce25191c674da87e6.png" src="../_images/8fdcd98920c559b140898884413f04a52135c4c27320480ce25191c674da87e6.png" />
+<img alt="../_images/a56660f9ac1ab9e1ae43e2876861e23d6085ab85d5cd42e58756e5bdb3c3c173.png" src="../_images/a56660f9ac1ab9e1ae43e2876861e23d6085ab85d5cd42e58756e5bdb3c3c173.png" />
 </div>
 </div>
 </section>
@@ -563,9 +565,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 301,  302,  303,  415,  416,  417,  418,  799,  896,  897,  898,
-        899,  996,  997, 1843, 2278, 2279, 2280, 2638, 2639, 2640, 2641,
-       2642, 2643, 2920, 2921, 2922, 3070, 3071, 3074, 3075, 3076, 3079,
-       3080, 3580, 3581, 3582, 3583])
+        899,  996,  997, 1843, 1844, 2278, 2279, 2280, 2638, 2639, 2640,
+       2641, 2642, 2643, 2920, 2921, 2922, 3070, 3071, 3074, 3075, 3076,
+       3079, 3080, 3081, 3580, 3581, 3582, 3583])
 </pre></div>
 </div>
 </div>
@@ -581,10 +583,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
 </pre></div>
 </div>
-<img alt="../_images/3b4b2df8d3a6798aef3245f178660173046a257c0115019343f73fc0bbe72c39.png" src="../_images/3b4b2df8d3a6798aef3245f178660173046a257c0115019343f73fc0bbe72c39.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;GR&#39;, ylabel=&#39;Density&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/856f0e1fc637ef9ecc9d3445785842c13673ca3c26a76ef7ef00288e3ac12c75.png" src="../_images/856f0e1fc637ef9ecc9d3445785842c13673ca3c26a76ef7ef00288e3ac12c75.png" />
 </div>
 </div>
 <p>By default it uses an <a class="reference external" href="https://scikit-learn.org/stable/modules/outlier_detection.html#isolation-forest"><strong>isolation forest</strong></a> to detect the outliers at the 99% confidence level, but you can also opt to use <strong>local outlier factor</strong>, <strong>elliptic envelope</strong>, or <strong>Mahalanobis distance</strong>, setting the confidence level to choose how many outliers you will see, or (equivalently) setting the <code class="docutils literal notranslate"><span class="pre">threshold</span></code> to the number of standard deviations away from the mean you regard as signal.</p>
@@ -600,10 +608,31 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7efc196b3990&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
 </pre></div>
 </div>
-<img alt="../_images/a912b4b20d282e8b06b73e72268eec38419dc8c448f30c025b5978c417889920.png" src="../_images/a912b4b20d282e8b06b73e72268eec38419dc8c448f30c025b5978c417889920.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.JointGrid at 0x7f21605d5c90&gt;
+</pre></div>
+</div>
+<img alt="../_images/81440183e7b7b8c0df05d99a96f03b512184217e3eebf2d010788e69fdbcaf1e.png" src="../_images/81440183e7b7b8c0df05d99a96f03b512184217e3eebf2d010788e69fdbcaf1e.png" />
 </div>
 </div>
 <p>A helper function can compute the number of expected outliers, given the dataset size and assuming a Gaussian distribution of samples.</p>
@@ -655,10 +684,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7efc175cc590&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+The figure layout has changed to tight
 </pre></div>
 </div>
-<img alt="../_images/19d297d250a359f19edbf75e4fe8b73a5445e473e0f5e67230a7f51bba4c3259.png" src="../_images/19d297d250a359f19edbf75e4fe8b73a5445e473e0f5e67230a7f51bba4c3259.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f2160410690&gt;
+</pre></div>
+</div>
+<img alt="../_images/f5909fd8e1396d6184516bcb95da88e4df531800740749792a380c4ccfc94887.png" src="../_images/f5909fd8e1396d6184516bcb95da88e4df531800740749792a380c4ccfc94887.png" />
 </div>
 </div>
 <p>This truncated normal distribution has no outliers (there are only about 60, compared to the 100 we expect at this confidence level of 99% on this dataset of 10,000 records).</p>
@@ -699,10 +733,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7efc1747f410&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+The figure layout has changed to tight
 </pre></div>
 </div>
-<img alt="../_images/edc3a2fc5b43fe27089f0290237c672849bce1eb07aca8ba060e89445550abf5.png" src="../_images/edc3a2fc5b43fe27089f0290237c672849bce1eb07aca8ba060e89445550abf5.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f216021e0d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/d78e85605ed7b0b7927b040c65b314bea5f357944ad18bb72003f8c4b14217bf.png" src="../_images/d78e85605ed7b0b7927b040c65b314bea5f357944ad18bb72003f8c4b14217bf.png" />
 </div>
 </div>
 </section>
@@ -744,7 +783,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribution(name=&#39;gumbel_r&#39;, shape=[], loc=10.040572536302586, scale=4.934329727517257)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distribution(name=&#39;gumbel_r&#39;, shape=[], loc=10.04057253630259, scale=4.93432972751726)
 </pre></div>
 </div>
 </div>
@@ -756,10 +795,15 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7efc153d5610&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+The figure layout has changed to tight
 </pre></div>
 </div>
-<img alt="../_images/94a040f33e6e0f57f6a8234fe458338d7415c05fba5ebfe5b28b6abb945cdfe6.png" src="../_images/94a040f33e6e0f57f6a8234fe458338d7415c05fba5ebfe5b28b6abb945cdfe6.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f21605d4590&gt;
+</pre></div>
+</div>
+<img alt="../_images/558976e2cc754b438ed5d0491d738798d674f500160ff2db8fc03a486aef34b3.png" src="../_images/558976e2cc754b438ed5d0491d738798d674f500160ff2db8fc03a486aef34b3.png" />
 </div>
 </div>
 </section>
@@ -799,10 +843,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot: &gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: &gt;
 </pre></div>
 </div>
-<img alt="../_images/03ce6195f160166b05af8413d9b48db0b91b18fdf0e6c4250fb9db45d98c1744.png" src="../_images/03ce6195f160166b05af8413d9b48db0b91b18fdf0e6c4250fb9db45d98c1744.png" />
+<img alt="../_images/afb0cffb1cc67720c3d087b054472f7b786720b4164f405e5bfca2f24855f0e6.png" src="../_images/afb0cffb1cc67720c3d087b054472f7b786720b4164f405e5bfca2f24855f0e6.png" />
 </div>
 </div>
 <p>This shows us that the distributions of the PE log in well indices 6 and 7 are somewhat different and may be anomalous. It also suggests that the CROSS H CATTLE well is different from the others.</p>
@@ -905,12 +949,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.34671494, 0.31565138, 0.21038773, 0.126375  , 0.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.36649493, 0.26826076, 0.29651224, 0.06712023, 0.        ])
 </pre></div>
 </div>
 </div>
 </div>
-<p>This tells us that the most important features are, in order: ILD, PE, GR, with the random and constant variables unsurprisingly useless.</p>
+<p>This tells us that the most important features are, in order: PE, ILD, GR, with the random and constant variables unsurprisingly useless.</p>
 <p>There’s a function to help us decide which are the least important features; it returns the indices of the least useful features, in order (least useful first):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -919,7 +963,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4, 3])
 </pre></div>
 </div>
 </div>
@@ -932,7 +976,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, 3])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 2, 1])
 </pre></div>
 </div>
 </div>
@@ -950,7 +994,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.09433305, 0.42840118, 0.45104478, 0.02622099, 0.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.0858761 , 0.36528793, 0.51842221, 0.03041376, 0.        ])
 </pre></div>
 </div>
 </div>
@@ -1045,6 +1089,8 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>

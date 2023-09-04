@@ -41,6 +41,7 @@ User guide
     installation
     _notebooks/Basic_usage.ipynb
     _notebooks/Using_redflag_with_sklearn.ipynb
+    _notebooks/Tutorial.ipynb
 
 
 API reference
@@ -82,5 +83,5 @@ Indices and tables
     PyPI releases <https://pypi.org/project/redflag/>
     Code in GitHub <https://github.com/scienxlab/redflag>
     Issue tracker <https://github.com/scienxlab/redflag/issues>
-    Community guidelines <https://scienxlab.com/community>
-    Scienxlab <https://scienxlab.com>
+    Community guidelines <https://scienxlab.org/community>
+    Scienxlab <https://scienxlab.org>
