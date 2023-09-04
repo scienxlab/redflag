@@ -370,7 +370,7 @@ def is_standard_normal(a: ArrayLike, confidence: float=0.8) -> bool:
         bool: True if the feature appears to have a standard normal distribution.
 
     Example:
-        >>> a = np.random.normal(size=2500)
+        >>> a = np.random.normal(size=5000)
         >>> is_standard_normal(a, confidence=0.8)
         True
         >>> is_standard_normal(a + 1)
