@@ -258,12 +258,13 @@ def wasserstein(X: ArrayLike,
         pass
 
     if stacked:
-        if not is_standard_normal(first.flat):
-            warnings.warn('First group does not appear to be standardized.', stacklevel=2)
+        # Not sure this test makes sense any more.
+        # if not is_standard_normal(first.flat):
+        #     warnings.warn('First group does not appear to be standardized.', stacklevel=2)
         groups = np.hstack([len(dataset)*[i] for i, dataset in enumerate(X)])
         X = np.vstack(X)
 
-    # Now we can certainly treat X as a 2D array.
+    # Now we can treat X as a 2D array.
     X = np.asarray(X)
     if X.ndim != 2:
         raise ValueError("X must be a 2D array-like.")
