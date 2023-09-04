@@ -39,6 +39,7 @@ dev = [
     "pytest-cov",
     "sphinx",
     "sphinxcontrib-apidoc",
+    "sphinx_copybutton",
     "furo",
     "myst_nb",
     "jupyter",
