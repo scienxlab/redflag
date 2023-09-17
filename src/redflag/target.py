@@ -4,7 +4,7 @@ Functions related to understanding the target and the type of task.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2022 Redflag contributors
+Copyright 2023 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

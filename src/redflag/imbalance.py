@@ -10,7 +10,7 @@ https://doi.org/10.1016/j.patrec.2017.08.002
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2022 Redflag contributors
+Copyright 2023 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

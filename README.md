@@ -20,7 +20,9 @@ For developers, there is a `pip` option for installing `dev` dependencies. Use `
 
 ## Example
 
-For the most part, `redflag` is currently a collection of functions. Most of the useful ones take one or more columns of data (usually a 1D or 2D NumPy array) and run a single test. For example, we can do some outlier detection: the `get_outliers()` function returns the indices of data points that are considered outliers:
+The most useful components of `redflag` are probably the `scikit-learn` "detectors". These sit in your pipeline, look at your training and validation data, and emit warnings if something looks like it might cause a problem. For example, if we 
+
+`redflag` is mostly a collection of functions. Most of the useful ones take one or more columns of data (usually a 1D or 2D NumPy array) and run a single test. For example, we can do some outlier detection. The `get_outliers()` function returns the indices of data points that are considered outliers:
 
 ```python
 >>> import redflag as rf
