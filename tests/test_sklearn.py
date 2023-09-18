@@ -1,4 +1,4 @@
-"""Test redflag"""
+"""Test sklearn classes."""
 import pytest
 import numpy as np
 from sklearn.pipeline import make_pipeline
