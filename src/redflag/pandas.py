@@ -1,4 +1,9 @@
+from sklearn.dummy import DummyClassifier, DummyRegressor
+
 from .imbalance import imbalance_degree, imbalance_ratio, minority_classes
+from .outliers import get_outliers
+from .target import is_continuous
+from .independence import is_correlated
 
 
 def dummy_decorator(arg):
@@ -29,6 +34,15 @@ class SeriesAccessor:
 
     def minority_classes(self):
         return minority_classes(self._obj)
+    
+    def check(self):
+        results = {}
+        if is_continuous(self._obj):
+            results['outliers'] = get_outliers(self._obj)
+            results['correlated'] = is_correlated(self._obj)
+        else:
+            results['imbalance'] = imbalance_degree(self._obj)
+
 
 
 @register_dataframe_accessor("redflag")
