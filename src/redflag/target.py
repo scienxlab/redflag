@@ -23,8 +23,9 @@ from typing import Optional
 
 import numpy as np
 from numpy.typing import ArrayLike
-from sklearn.dummy import DummyClassifier
+from sklearn.dummy import DummyClassifier, DummyRegressor
 from sklearn.metrics import f1_score, roc_auc_score
+from sklearn.metrics import mean_squared_error, r2_score
 
 from .utils import *
 
@@ -212,13 +213,12 @@ def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None):
         y (array): A list of class labels.
 
     Returns:
-        bool: True if y has exactly 2 classes.
+        dict: A dictionary of scores.
 
     Examples:
-        >>> y_ = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3]
-        >>> dummy_classification_scores(y_, random_state=42)
-        {'most_frequent': {'f1': 0.3333333333333333, 'roc_auc': 0.5},
-         'stratified': {'f1': 0.20000000000000004, 'roc_auc': 0.35654761904761906}}
+        >>> y = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3]
+        >>> dummy_classification_scores(y, random_state=42)
+        {'most_frequent': {'f1': 0.3333333333333333, 'roc_auc': 0.5}, 'stratified': {'f1': 0.20000000000000004, 'roc_auc': 0.35654761904761906}}
     """
     result = {'most_frequent': {}, 'stratified': {}}
     y = np.asanyarray(y)
@@ -234,4 +234,35 @@ def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None):
             scores['roc_auc'] = roc_auc_score(y, y_prob[:, 1])
         else:
             scores['roc_auc'] = roc_auc_score(y, y_prob, multi_class='ovr')            
+    return result
+
+
+def dummy_regression_scores(y: ArrayLike):
+    """
+    Make dummy predictions, which can indicate a good lower-bound baseline
+    for regression tasks. Wraps scikit-learn's `DummyRegressor`, using the
+    `mean` method, and provides a dictionary of MSE and R-squared scores.
+
+    Args:
+        y (array): A list of values.
+
+    Returns:
+        dict: A dictionary of scores.
+
+    Examples:
+        >>> y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> dummy_regression_scores(y)
+        {'mean': {'mean_squared_error': 8.25, 'r2': 0.0}}
+    """
+    result = {'mean': {}}
+    y = np.asanyarray(y)
+    if y.ndim > 1:
+        raise ValueError("Multilabel target is not supported.")
+    X = np.ones_like(y).reshape(-1, 1)  # X is not used by the model.
+    for method, scores in result.items():
+        model = DummyRegressor(strategy=method)
+        _ = model.fit(X, y)
+        y_pred = model.predict(X)
+        scores['mean_squared_error'] = mean_squared_error(y, y_pred)
+        scores['r2'] = r2_score(y, y_pred)
     return result
