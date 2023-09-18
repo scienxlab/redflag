@@ -64,6 +64,31 @@ def deprecated(instructions):
     return decorator
 
 
+def update_p(prior: float, sensitivity: float, specificity: float) -> float:
+    """
+    Bayesian update of the prior probability, given the sensitivity and
+    specificity.
+
+    Args:
+        prior (float): The prior probability.
+        sensitivity (float): The sensitivity of the test, or true positive rate.
+        specificity (float): The specificity of the test, or false positive rate.
+
+    Returns:
+        float: The posterior probability.
+
+    Examples:
+        >>> update_p(0.5, 0.5, 0.5)
+        0.5
+        >>> update_p(0.001, 0.999, 0.999)
+        0.4999999999999998
+        >>> update_p(0.5, 0.9, 0.9)
+        0.9
+    """
+    tpr, fpr = sensitivity, 1 - specificity
+    return (tpr * prior) / (tpr*prior + fpr*(1-prior))
+
+
 def flatten(L: list[Any]) -> Iterable[Any]:
     """
     Flattens a list. For example:
