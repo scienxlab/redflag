@@ -65,6 +65,10 @@ exclude = ['docs', 'tests']
 [tool.pytest.ini_options]
 # pytest configuration: http://doc.pytest.org/en/latest/customize.html
 addopts = "--doctest-modules --ignore=docs --cov=redflag"
+filterwarnings = [
+    "ignore:pkg_resources is deprecated as an API:DeprecationWarning",
+    "ignore:Deprecated call to `pkg_resources.declare_namespace:DeprecationWarning",
+]
 
 [tool.coverage.run]
 # coverage configuration: https://coverage.readthedocs.io/

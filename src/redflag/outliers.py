@@ -33,52 +33,6 @@ from .utils import stdev_to_proportion, proportion_to_stdev
 from .utils import get_idx
 
 
-def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> bool:
-    """
-    Check if a dataset is correlated. Uses s chunks of n samples.
-
-    Args:
-        a (array): The data.
-        n (int): The number of samples per chunk.
-        s (int): The number of chunks.
-        threshold (float): The auto-correlation threshold.
-
-    Returns:
-        bool: True if the data are correlated.
-
-    Examples:
-        >>> is_correlated([7, 1, 6, 8, 7, 6, 2, 9, 4, 2])
-        False
-        >>> is_correlated([1, 2, 1, 7, 6, 8, 6, 2, 1, 1])
-        True
-    """
-    a = np.asarray(a)
-
-    # Split into chunks n samples long.
-    L_chunks = min(a.size, n)
-    chunks = np.array_split(a, a.size//L_chunks)
-
-    # Choose up to s chunk indices at random.
-    N_chunks = min(len(chunks), s)
-    rng = np.random.default_rng()
-    r = rng.choice(np.arange(len(chunks)), size=N_chunks, replace=False)
-
-    # Loop over selected chunks and count ones with correlation.
-    acs: list = []
-    for chunk in [c for i, c in enumerate(chunks) if i in r]:
-        c = chunk[:L_chunks] - np.nanmean(chunk)
-        autocorr = np.correlate(c, c, mode='same')
-        acs.append(autocorr / (c.size * np.nanvar(c)))
-
-    # Average the autocorrelations.
-    acs = np.sum(acs, axis=0) / N_chunks
-
-    p = acs[c.size//2 - 1]  # First non-zero lag.
-    q = acs[c.size//2 - 2]  # Next non-zero lag.
-
-    return (p >= threshold) & (q >= 0)
-
-
 def mahalanobis(X: ArrayLike, correction: bool=False) -> np.ndarray:
     """
     Compute the Mahalanobis distances of a dataset.
@@ -113,7 +67,10 @@ def mahalanobis(X: ArrayLike, correction: bool=False) -> np.ndarray:
     return np.sqrt(ee.dist_)
 
 
-def mahalanobis_outliers(X: ArrayLike, p: float=0.99, threshold: Optional[float]=None) -> np.ndarray:
+def mahalanobis_outliers(X: ArrayLike,
+                         p: float=0.99,
+                         threshold: Optional[float]=None,
+                         ) -> np.ndarray:
     """
     Find outliers given samples and a threshold in multiples of stdev.
     Returns -1 for outliers and 1 for inliers (to match the sklearn API).
@@ -168,7 +125,11 @@ def mahalanobis_outliers(X: ArrayLike, p: float=0.99, threshold: Optional[float]
     return outliers
 
 
-def get_outliers(a: ArrayLike, method: str='iso', p: float=0.99, threshold: Optional[float]=None) -> np.ndarray:
+def get_outliers(a: ArrayLike,
+                 method: str='iso',
+                 p: float=0.99,
+                 threshold: Optional[float]=None,
+                 ) -> np.ndarray:
     """
     Returns outliers in the data, considering all of the features. What counts
     as an outlier is determined by the threshold, which is in multiples of
@@ -177,16 +138,16 @@ def get_outliers(a: ArrayLike, method: str='iso', p: float=0.99, threshold: Opti
     This function requires the scikit-learn package.
 
     Methods: 'iso' (isolation forest), 'lof' (local outlier factor), 'ee'
-    (elliptic envelope), or 'mah' (Mahanalobis distance), or pass a function
-    that returns an array of outlier flags (-1 for outliers and 1 for inliers,
-    matching the `sklearn` convention). You can also pass 'any', which will
-    try all three outlier detection methods and return the outliers which are
-    detected by any of them, or 'all', which will return the outliers which
-    are common to all four methods.
+    (elliptic envelope), or 'mah' (Mahanalobis distance, the default), or pass
+    a function that returns an array of outlier flags (-1 for outliers and 1
+    for inliers, matching the `sklearn` convention). You can also pass 'any',
+    which will try all three outlier detection methods and return the outliers
+    which are detected by any of them, or 'all', which will return the outliers
+    which are common to all four methods.
 
     Args:
         a (array): The data.
-        method (str): The method to use. Can be 'iso', 'lof', 'svm', 'mah',
+        method (str): The method to use. Can be 'iso', 'lof', 'ee', 'mah',
             or a function that returns a Boolean array of outlier flags.
         p (float): The probability threshold, in the range [0, 1]. This value
             is ignored if `threshold` is not None; in this case, `p` will be
@@ -221,12 +182,12 @@ def get_outliers(a: ArrayLike, method: str='iso', p: float=0.99, threshold: Opti
     else:
         expect = 1 - stdev_to_proportion(threshold)
         p = 1 - expect
-    methods = {'iso': IsolationForest(contamination=expect).fit_predict,
-            #    'svm': OneClassSVM(nu=expect).fit_predict,  # Does not seem reliable.
-               'lof': LocalOutlierFactor(contamination=expect, novelty=False).fit_predict,
-               'ee': EllipticEnvelope(contamination=expect).fit_predict,
-               'mah': partial(mahalanobis_outliers, p=p, threshold=threshold),
-              }
+    methods = {
+        'iso': IsolationForest(contamination=expect).fit_predict,
+        'lof': LocalOutlierFactor(contamination=expect, novelty=False).fit_predict,
+        'ee': EllipticEnvelope(contamination=expect).fit_predict,
+        'mah': partial(mahalanobis_outliers, p=p, threshold=threshold),
+    }
     if method == 'any':
         results = [get_idx(func(a)==-1) for func in methods.values()]
         outliers = reduce(np.union1d, results)
@@ -235,11 +196,15 @@ def get_outliers(a: ArrayLike, method: str='iso', p: float=0.99, threshold: Opti
         outliers = reduce(np.intersect1d, results)
     else:
         func = methods.get(method, method)
-        outliers, = np.where(func(a) == -1)
+        outliers, = np.where(func(a)==-1)
     return outliers
 
 
-def expected_outliers(n: int, d: int=1, p: float=0.99, threshold: Optional[float]=None) -> int:
+def expected_outliers(n: int,
+                      d: int=1,
+                      p: float=0.99,
+                      threshold: Optional[float]=None,
+                      ) -> int:
     """
     Expected number of outliers in a dataset.
     
@@ -266,7 +231,11 @@ def expected_outliers(n: int, d: int=1, p: float=0.99, threshold: Optional[float
     return int(n * (1 - p))
 
 
-def has_outliers(a: ArrayLike, p: float=0.99, threshold: Optional[float]=None, factor: float=1.0) -> bool:
+def has_outliers(a: ArrayLike,
+                 p: float=0.99,
+                 threshold: Optional[float]=None,
+                 factor: float=1.0,
+                 ) -> bool:
     """
     Use Mahalanobis distance to determine if there are more outliers than
     expected at the given confidence level or Mahalanobis distance threshold.

@@ -5,7 +5,7 @@
 - Added some Pandas accessors to give access to `redflag` functions directly from DataFrames and Series objects, via an 'accessor'. For example, for a Series `s`, one can call `minority_classes = s.redflag.minority_classes()` instead of `redflag.minority_classes(s)`. Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. **This is an experimental feature and subject to change.**
 - Added `redflag.target.dummy_classification_scores()` and `redflag.target.dummy_regression_scores()`, both of which will train a dummy (i.e. naive) model and compute various relevant scores (MSE and R2 for regression, F1 and ROC-AUC for classification tasks). Additionally, both `most_frequent` and `stratified` strategies are tested for classification tasks; only the `mean` strategy is employed for regression tasks.
 - Moved `redflag.target.update_p()` to `redflag.utils`.
-
+- Added `is_imbalanced()` to return a Boolean depending on a threshold of imbalance degree. Default threshold is 0.5 but the best value is up for debate.
 
 ## 0.2.0, 4 September 2023
 

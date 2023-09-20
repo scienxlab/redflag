@@ -53,7 +53,7 @@ def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> b
     r = rng.choice(np.arange(len(chunks)), size=N_chunks, replace=False)
 
     # Loop over selected chunks and count ones with correlation.
-    acs = []
+    acs: list = []
     for chunk in [c for i, c in enumerate(chunks) if i in r]:
         c = chunk[:L_chunks] - np.nanmean(chunk)
         autocorr = np.correlate(c, c, mode='same')

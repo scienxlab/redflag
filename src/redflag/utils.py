@@ -315,7 +315,7 @@ def stdev_to_proportion(threshold: float, d: float=1, n: float=1e9) -> float:
         >>> stdev_to_proportion(5, d=10)
         0.9946544947734935
     """
-    return float(stats.beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2))
+    return stats.beta.cdf(x=1/n, a=d/2, b=(n-d-1)/2, scale=1/threshold**2)
 
 
 def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
@@ -353,7 +353,7 @@ def proportion_to_stdev(p: float, d: float=1, n: float=1e9) -> float:
     """
     func = lambda r_, d_, n_: stdev_to_proportion(r_, d_, n_) - p
     r_hat , = fsolve(func, x0=2, args=(d, n))
-    return float(r_hat)
+    return r_hat
 
 
 @deprecated("Use is_standard_normal() instead.")
@@ -395,8 +395,9 @@ def is_standard_normal(a: ArrayLike, confidence: float=0.8) -> bool:
         bool: True if the feature appears to have a standard normal distribution.
 
     Example:
-        >>> a = np.random.normal(size=5000)
-        >>> is_standard_normal(a, confidence=0.8)
+        >>> rng= np.random.default_rng(13)
+        >>> a = rng.normal(size=1000)
+        >>> is_standard_normal(a)
         True
         >>> is_standard_normal(a + 1)
         False

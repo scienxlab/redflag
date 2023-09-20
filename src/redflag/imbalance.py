@@ -26,7 +26,7 @@ limitations under the License.
 """
 from __future__ import annotations
 
-from typing import Optional, Callable
+from typing import Optional, Callable, Union
 from collections import Counter
 import warnings
 
@@ -189,7 +189,10 @@ def furthest_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np
     return np.array(i)
 
 
-def imbalance_degree(a: ArrayLike, method: str='tv', classes: Optional[ArrayLike]=None) -> float:
+def imbalance_degree(a: ArrayLike,
+                     method: Union[str, Callable]='tv',
+                     classes: Optional[ArrayLike]=None,
+                     ) -> float:
     r"""
     The imbalance degree reflects the degree to which the distribution of
     classes is imbalanced. The integer part of the imbalance degree is the
@@ -272,3 +275,34 @@ def minority_classes(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np.ndar
 
     # Return the minority classes in order, smallest first.
     return np.array([c for ζi, ei, c in sorted(zip(ζ, e, classes)) if ζi < ei])
+
+
+def is_imbalanced(a: ArrayLike,
+                  threshold: float=0.5,
+                  method: Union[str, Callable]='tv',
+                  classes: Optional[ArrayLike]=None,
+                  ) -> bool:
+    """
+    Check if a dataset is imbalanced by first checking that there are minority
+    classes, then inspecting the fractional part of the imbalance degree metric.
+    The metric is compared to the threshold you provide (default 0.5).
+
+    Args:
+        a (array): A list of class labels.
+        threshold (float): The threshold to use. Default: 0.5.
+        method (str or function): The method to use.
+        classes (array): A list of classes, in the event that `a` does not
+            contain all of the classes, or if you want to ignore some classes
+            in `a` (not recommended) you can omit them from this list.
+
+    Returns:
+        bool: True if the dataset is imbalanced.
+
+    Example:
+        >>> is_imbalanced(generate_data([2, 81, 61, 4]))
+        True
+    """
+    if not minority_classes(a, classes=classes).size:
+        return False
+    im_deg = imbalance_degree(a, method, classes)
+    return im_deg - int(im_deg) >= threshold
