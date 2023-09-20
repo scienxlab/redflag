@@ -1,5 +1,6 @@
 from .utils import *
 from .sklearn import *
+from .pandas import *
 
 # Targets
 from .target import *

@@ -4,7 +4,7 @@ Functions related to understanding the target and the type of task.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2022 Redflag contributors
+Copyright 2023 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,37 +18,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+from __future__ import annotations
 from typing import Optional
 
 import numpy as np
 from numpy.typing import ArrayLike
+from sklearn.dummy import DummyClassifier, DummyRegressor
+from sklearn.metrics import f1_score, roc_auc_score
+from sklearn.metrics import mean_squared_error, r2_score
 
 from .utils import *
-
-
-def update_p(prior: float, sensitivity: float, specificity: float) -> float:
-    """
-    Bayesian update of the prior probability, given the sensitivity and
-    specificity.
-
-    Args:
-        prior (float): The prior probability.
-        sensitivity (float): The sensitivity of the test, or true positive rate.
-        specificity (float): The specificity of the test, or false positive rate.
-
-    Returns:
-        float: The posterior probability.
-
-    Examples:
-        >>> update_p(0.5, 0.5, 0.5)
-        0.5
-        >>> update_p(0.001, 0.999, 0.999)
-        0.4999999999999998
-        >>> update_p(0.5, 0.9, 0.9)
-        0.9
-    """
-    tpr, fpr = sensitivity, 1 - specificity
-    return (tpr * prior) / (tpr*prior + fpr*(1-prior))
 
 
 def is_continuous(a: ArrayLike, n: Optional[int]=None) -> bool:
@@ -221,3 +200,69 @@ def is_binary(y: ArrayLike) -> bool:
         False
     """
     return n_classes(y) == 2
+
+
+def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None):
+    """
+    Make dummy classifications, which can indicate a good lower-bound baseline
+    for classification tasks. Wraps scikit-learn's `DummyClassifier`, using the
+    `most_frequent` and `stratified` methods, and provides a dictionary of F1
+    and ROC-AUC scores.
+
+    Args:
+        y (array): A list of class labels.
+
+    Returns:
+        dict: A dictionary of scores.
+
+    Examples:
+        >>> y = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3]
+        >>> dummy_classification_scores(y, random_state=42)
+        {'most_frequent': {'f1': 0.3333333333333333, 'roc_auc': 0.5}, 'stratified': {'f1': 0.20000000000000004, 'roc_auc': 0.35654761904761906}}
+    """
+    result = {'most_frequent': {}, 'stratified': {}}
+    y = np.asanyarray(y)
+    if y.ndim > 1:
+        raise ValueError("Multilabel target is not supported.")
+    X = np.ones_like(y).reshape(-1, 1)  # X is not used by the model.
+    for method, scores in result.items():
+        model = DummyClassifier(strategy=method, random_state=random_state)
+        _ = model.fit(X, y)
+        scores['f1'] = f1_score(y, model.predict(X), average='weighted')
+        y_prob = model.predict_proba(X)
+        if is_binary(y):
+            scores['roc_auc'] = roc_auc_score(y, y_prob[:, 1])
+        else:
+            scores['roc_auc'] = roc_auc_score(y, y_prob, multi_class='ovr')            
+    return result
+
+
+def dummy_regression_scores(y: ArrayLike):
+    """
+    Make dummy predictions, which can indicate a good lower-bound baseline
+    for regression tasks. Wraps scikit-learn's `DummyRegressor`, using the
+    `mean` method, and provides a dictionary of MSE and R-squared scores.
+
+    Args:
+        y (array): A list of values.
+
+    Returns:
+        dict: A dictionary of scores.
+
+    Examples:
+        >>> y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> dummy_regression_scores(y)
+        {'mean': {'mean_squared_error': 8.25, 'r2': 0.0}}
+    """
+    result = {'mean': {}}
+    y = np.asanyarray(y)
+    if y.ndim > 1:
+        raise ValueError("Multilabel target is not supported.")
+    X = np.ones_like(y).reshape(-1, 1)  # X is not used by the model.
+    for method, scores in result.items():
+        model = DummyRegressor(strategy=method)
+        _ = model.fit(X, y)
+        y_pred = model.predict(X)
+        scores['mean_squared_error'] = mean_squared_error(y, y_pred)
+        scores['r2'] = r2_score(y, y_pred)
+    return result

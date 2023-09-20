@@ -4,7 +4,7 @@ Utility functions.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2022 Redflag contributors
+Copyright 2023 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -62,6 +62,31 @@ def deprecated(instructions):
             return func(*args, **kwargs)
         return wrapper
     return decorator
+
+
+def update_p(prior: float, sensitivity: float, specificity: float) -> float:
+    """
+    Bayesian update of the prior probability, given the sensitivity and
+    specificity.
+
+    Args:
+        prior (float): The prior probability.
+        sensitivity (float): The sensitivity of the test, or true positive rate.
+        specificity (float): The specificity of the test, or false positive rate.
+
+    Returns:
+        float: The posterior probability.
+
+    Examples:
+        >>> update_p(0.5, 0.5, 0.5)
+        0.5
+        >>> update_p(0.001, 0.999, 0.999)
+        0.4999999999999998
+        >>> update_p(0.5, 0.9, 0.9)
+        0.9
+    """
+    tpr, fpr = sensitivity, 1 - specificity
+    return (tpr * prior) / (tpr*prior + fpr*(1-prior))
 
 
 def flatten(L: list[Any]) -> Iterable[Any]:
