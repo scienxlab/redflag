@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=65", "setuptools-scm>=8"]
+requires = ["setuptools>=68", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -13,7 +13,8 @@ readme = "README.md"
 keywords = ["machine learning", "data science", "quality assurance"]
 classifiers = [
     "Intended Audience :: Science/Research",
-    "Development Status :: 3 - Alpha",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Development Status :: 4 - Beta",
     "Natural Language :: English",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
