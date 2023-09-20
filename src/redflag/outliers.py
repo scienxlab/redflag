@@ -33,52 +33,6 @@ from .utils import stdev_to_proportion, proportion_to_stdev
 from .utils import get_idx
 
 
-def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> bool:
-    """
-    Check if a dataset is correlated. Uses s chunks of n samples.
-
-    Args:
-        a (array): The data.
-        n (int): The number of samples per chunk.
-        s (int): The number of chunks.
-        threshold (float): The auto-correlation threshold.
-
-    Returns:
-        bool: True if the data are correlated.
-
-    Examples:
-        >>> is_correlated([7, 1, 6, 8, 7, 6, 2, 9, 4, 2])
-        False
-        >>> is_correlated([1, 2, 1, 7, 6, 8, 6, 2, 1, 1])
-        True
-    """
-    a = np.asarray(a)
-
-    # Split into chunks n samples long.
-    L_chunks = min(a.size, n)
-    chunks = np.array_split(a, a.size//L_chunks)
-
-    # Choose up to s chunk indices at random.
-    N_chunks = min(len(chunks), s)
-    rng = np.random.default_rng()
-    r = rng.choice(np.arange(len(chunks)), size=N_chunks, replace=False)
-
-    # Loop over selected chunks and count ones with correlation.
-    acs: list = []
-    for chunk in [c for i, c in enumerate(chunks) if i in r]:
-        c = chunk[:L_chunks] - np.nanmean(chunk)
-        autocorr = np.correlate(c, c, mode='same')
-        acs.append(autocorr / (c.size * np.nanvar(c)))
-
-    # Average the autocorrelations.
-    acs = np.sum(acs, axis=0) / N_chunks
-
-    p = acs[c.size//2 - 1]  # First non-zero lag.
-    q = acs[c.size//2 - 2]  # Next non-zero lag.
-
-    return (p >= threshold) & (q >= 0)
-
-
 def mahalanobis(X: ArrayLike, correction: bool=False) -> np.ndarray:
     """
     Compute the Mahalanobis distances of a dataset.
