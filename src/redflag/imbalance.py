@@ -283,8 +283,9 @@ def is_imbalanced(a: ArrayLike,
                   classes: Optional[ArrayLike]=None,
                   ) -> bool:
     """
-    Check if a dataset is imbalanced by inspecting the fractional part of
-    its imbalance degree metric.
+    Check if a dataset is imbalanced by first checking that there are minority
+    classes, then inspecting the fractional part of the imbalance degree metric.
+    The metric is compared to the threshold you provide (default 0.5).
 
     Args:
         a (array): A list of class labels.
@@ -301,5 +302,7 @@ def is_imbalanced(a: ArrayLike,
         >>> is_imbalanced(generate_data([2, 81, 61, 4]))
         True
     """
+    if not minority_classes(a, classes=classes).size:
+        return False
     im_deg = imbalance_degree(a, method, classes)
     return im_deg - int(im_deg) >= threshold
