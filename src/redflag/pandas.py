@@ -45,14 +45,15 @@ except:
 
 
 TEMPLATES = {
-    'continuous': """
+    'continuous': """Continuous data suitable for regression
 Outliers:    {outliers}
 Correlated:  {correlated}
-Dummy scores:{dummy_regression_scores}
+Dummy scores:{dummy_scores}
 """,
-    'categorical': """
-Imbalance degree: {imbalance_degree}
+    'categorical': """Categorical data suitable for classification
+Imbalance degree: {imbalance}
 Minority classes: {minority_classes}
+Dummy scores:     {dummy_scores}
 """
 }
 
@@ -93,7 +94,7 @@ class SeriesAccessor:
             template = TEMPLATES['continuous']
         else:
             # Categorical.
-            min_class = minority_classes(self._obj)
+            results['minority_classes'] = minority_classes(self._obj)
             results['imbalance'] = imbalance_degree(self._obj)
             results['dummy_scores'] = dummy_classification_scores(self._obj, random_state=random_state)
             template = TEMPLATES['categorical']
