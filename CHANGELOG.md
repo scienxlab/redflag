@@ -2,10 +2,13 @@
 
 ## 0.3.0, Fall 2023
 
-- Added some Pandas accessors to give access to `redflag` functions directly from DataFrames and Series objects, via an 'accessor'. For example, for a Series `s`, one can call `minority_classes = s.redflag.minority_classes()` instead of `redflag.minority_classes(s)`. Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. **This is an experimental feature and subject to change.**
+- Added some accessors to give access to `redflag` functions directly from `pandas.Series` objects, via an 'accessor'. For example, for a Series `s`, one can call `minority_classes = s.redflag.minority_classes()` instead of `redflag.minority_classes(s)`. Other functions include `imbalance_degree()`, `dummy_scores()` (see below). Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. **This is an experimental feature and subject to change.**
+- Added a Series accessor `report()` to perform a range of tests and make a small text report suitable for printing. Access for a Series `s` like `s.redflag.report()`. **This is an experimental feature and subject to change.**
+- Added new documentation page for the Pandas accessor.
 - Added `redflag.target.dummy_classification_scores()`, `redflag.target.dummy_regression_scores()`, which train a dummy (i.e. naive) model and compute various relevant scores (MSE and R2 for regression, F1 and ROC-AUC for classification tasks). Additionally, both `most_frequent` and `stratified` strategies are tested for classification tasks; only the `mean` strategy is employed for regression tasks. The helper function `redflag.target.dummy_scores()` tries to guess what kind of task suits the data and calls the appropriate function.
 - Moved `redflag.target.update_p()` to `redflag.utils`.
 - Added `is_imbalanced()` to return a Boolean depending on a threshold of imbalance degree. Default threshold is 0.5 but the best value is up for debate.
+- Removed `utils.has_low_distance_stdev`.
 
 
 ## 0.2.0, 4 September 2023
