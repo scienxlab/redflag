@@ -1,7 +1,7 @@
 """Test Pandas accessors."""
 import pytest
 import pandas as pd
-from redflag.pandas import null_decorator, SeriesAccessor, DataFrameAccessor
+from redflag.pandas import null_decorator, SeriesAccessor
 
 
 c = pd.Series([1, 1, 1, 1, 1, 2, 2, 2, 3, 3])
