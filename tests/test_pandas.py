@@ -1,12 +1,18 @@
 """Test Pandas accessors."""
 import pytest
 import pandas as pd
-from redflag.pandas import SeriesAccessor, DataFrameAccessor
+from redflag.pandas import null_decorator, SeriesAccessor, DataFrameAccessor
 
 
 c = pd.Series([1, 1, 1, 1, 1, 2, 2, 2, 3, 3])
 r = pd.Series([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 3.0])
 
+
+def test_null_decorator():
+    @null_decorator('foo')
+    def f():
+        return None
+    assert f() is None
 
 def test_dummy_scores():
     c_scores = c.redflag.dummy_scores()

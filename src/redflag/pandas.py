@@ -26,7 +26,7 @@ from .target import is_continuous, dummy_scores, dummy_regression_scores, dummy_
 from .independence import is_correlated
 
 
-def dummy_decorator(arg):
+def null_decorator(arg):
     """
     Returns a decorator that does nothing but wrap the function it
     decorates. Need to do this to accept an argument on the decorator.
@@ -40,8 +40,8 @@ try:
     from pandas.api.extensions import register_dataframe_accessor
     from pandas.api.extensions import register_series_accessor
 except:
-    register_dataframe_accessor = dummy_decorator
-    register_series_accessor = dummy_decorator
+    register_dataframe_accessor = null_decorator
+    register_series_accessor = null_decorator
 
 
 TEMPLATES = {
@@ -92,17 +92,7 @@ class SeriesAccessor:
         return template.format(**results)
 
 
-@register_dataframe_accessor("redflag")
-class DataFrameAccessor:
-    def __init__(self, pandas_obj):
-        self._obj = pandas_obj
-
-    # Probably should not implement these target-only methods.
-    def imbalance_degree(self, target=None):
-        return self._obj[target].redflag.imbalance_degree()
-
-    def minority_classes(self, target=None):
-        return self._obj[target].redflag.minority_classes()
-
-    def dummy_scores(self, target=None, task=None, random_state=None):
-        return self._obj[target].redflag.dummy_scores(task=task, random_state=random_state)
+# @register_dataframe_accessor("redflag")
+# class DataFrameAccessor:
+#     def __init__(self, pandas_obj):
+#         self._obj = pandas_obj
