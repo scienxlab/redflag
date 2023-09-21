@@ -289,10 +289,10 @@ def dummy_scores(y: ArrayLike, task='auto', random_state:Optional[int]=None) -> 
     Examples:
         >>> y = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3]
         >>> dummy_scores(y, random_state=42)
-        {'f1': 0.3333333333333333, 'roc_auc': 0.5, 'strategy': 'most_frequent'}
+        {'f1': 0.3333333333333333, 'roc_auc': 0.5, 'strategy': 'most_frequent', 'task': 'classification'}
         >>> y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
         >>> dummy_scores(y, task='regression')
-        {'mean_squared_error': 8.25, 'r2': 0.0, 'strategy': 'mean'}
+        {'mean_squared_error': 8.25, 'r2': 0.0, 'strategy': 'mean', 'task': 'regression'}
     """
     if task == 'auto':
         task = 'regression' if is_continuous(y) else 'classification'
@@ -306,10 +306,12 @@ def dummy_scores(y: ArrayLike, task='auto', random_state:Optional[int]=None) -> 
         else:
             scores_ = scores_st
             scores_['strategy'] = 'stratified'
+        scores_['task'] = 'classification'
     elif task == 'regression':
         scores = dummy_regression_scores(y)
         scores_ = scores['mean']
         scores_['strategy'] = 'mean'
+        scores_['task'] = 'regression'
     else:
         raise ValueError("`task` must be 'classification' or 'regression', or 'auto' to decide automatically.")
 
