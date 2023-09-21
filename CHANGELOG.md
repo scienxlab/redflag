@@ -7,6 +7,7 @@
 - Moved `redflag.target.update_p()` to `redflag.utils`.
 - Added `is_imbalanced()` to return a Boolean depending on a threshold of imbalance degree. Default threshold is 0.5 but the best value is up for debate.
 
+
 ## 0.2.0, 4 September 2023
 
 - Moved to something more closely resembling semantic versioning, which is the main reason this is version 0.2.0.
