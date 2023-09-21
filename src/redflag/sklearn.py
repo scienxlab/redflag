@@ -32,8 +32,7 @@ from scipy.stats import cumfreq
 from sklearn.utils.metaestimators import available_if
 
 from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
-from .utils import iter_groups
-from .target import is_continuous
+from .target import is_continuous, dummy_scores
 from .distributions import is_multimodal
 from .independence import is_correlated
 from .outliers import has_outliers, expected_outliers
@@ -475,7 +474,7 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
             method (str): The method to use for imbalance detection. In general,
                 'id' is the best method for multi-class classification problems
                 (but can be used for binary classification problems as well).
-            threshold (float): The threshold for the imbalance, default 0.5.
+            threshold (float): The threshold for the imbalance, default 0.4.
                 For 'id', the imbalance summary statistic is in [0, 1). See
                 Ortigosa-Hernandez et al. (2017) for details. For 'ir', the
                 threshold is a ratio of the majority class to the minority class
@@ -732,6 +731,47 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
             least_str = ', '.join(str(i) for i in sorted(least_important))
             warnings.warn(f"🚩 Feature{'' if m == 1 else 's'} {least_str} {'has' if m == 1 else 'have'} low importance; check for relevance.")
 
+        return self
+
+    def transform(self, X, y=None):
+        """
+        This detector does nothing during 'transform', only during 'fit'.
+
+        Args:
+            X (np.ndarray): The data. Not used by this detector.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
+        """
+        return check_array(X)
+
+
+class DummyEstimator(BaseEstimator, TransformerMixin):
+
+    def __init__(self, random_state=None):
+        """
+        Constructor for the class.
+        """
+        self.random_state = random_state
+
+    def fit(self, X, y=None):
+        """
+        Checks the target `y` for predictability from a naive 'dummy' model. The
+        data `X` are accepted but not used for the p
+
+        Args:
+            X (np.ndarray): The data. Not used by this detector.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
+        """
+        if y is None:
+            warnings.warn("Target y is None, skipping dummy estimator scoring.")
+            return self
+
+        scores = dummy_scores(y)
         return self
 
     def transform(self, X, y=None):
