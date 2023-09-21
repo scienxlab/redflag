@@ -237,7 +237,7 @@
 <section id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">#</a></h2>
 <p>You can run the tests (requires <code class="docutils literal notranslate"><span class="pre">pytest</span></code> and <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code>) with</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python run_tests.py
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pytest
 </pre></div>
 </div>
 <p>Most of the tests are <code class="docutils literal notranslate"><span class="pre">doctest</span></code> tests, which are contained in the docstrings of this package’s functions. It is also possible to add test files to the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder in the normal way.</p>
@@ -245,11 +245,7 @@
 <section id="building-the-package">
 <h2>Building the package<a class="headerlink" href="#building-the-package" title="Permalink to this heading">#</a></h2>
 <p>This repo uses PEP 518-style packaging. <a class="reference external" href="https://setuptools.pypa.io/en/latest/build_meta.html">Read more about this</a> and <a class="reference external" href="https://packaging.python.org/en/latest/tutorials/packaging-projects/">about Python packaging in general</a>.</p>
-<p>Building the project requires <code class="docutils literal notranslate"><span class="pre">build</span></code>, so first:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m pip install build
-</pre></div>
-</div>
-<p>Then to build <code class="docutils literal notranslate"><span class="pre">redflag</span></code> locally:</p>
+<p>To build <code class="docutils literal notranslate"><span class="pre">redflag</span></code> locally:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m build
 </pre></div>
 </div>

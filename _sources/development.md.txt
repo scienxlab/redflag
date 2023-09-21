@@ -19,7 +19,7 @@ If you'd like to contribute pull requests back to the main `redflag ` project, p
 
 You can run the tests (requires `pytest` and `pytest-cov`) with
 
-    python run_tests.py
+    pytest
 
 Most of the tests are `doctest` tests, which are contained in the docstrings of this package's functions. It is also possible to add test files to the `tests` folder in the normal way.
 
@@ -28,11 +28,7 @@ Most of the tests are `doctest` tests, which are contained in the docstrings of 
 
 This repo uses PEP 518-style packaging. [Read more about this](https://setuptools.pypa.io/en/latest/build_meta.html) and [about Python packaging in general](https://packaging.python.org/en/latest/tutorials/packaging-projects/).
 
-Building the project requires `build`, so first:
-
-    python -m pip install build
-
-Then to build `redflag` locally:
+To build `redflag` locally:
 
     python -m build
 
