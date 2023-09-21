@@ -747,12 +747,13 @@ class ImportanceDetector(BaseEstimator, TransformerMixin):
         return check_array(X)
 
 
-class DummyEstimator(BaseEstimator, TransformerMixin):
+class DummyPredictor(BaseEstimator, TransformerMixin):
 
-    def __init__(self, random_state=None):
+    def __init__(self, task='auto', random_state=None):
         """
         Constructor for the class.
         """
+        self.task = task
         self.random_state = random_state
 
     def fit(self, X, y=None):
@@ -771,7 +772,11 @@ class DummyEstimator(BaseEstimator, TransformerMixin):
             warnings.warn("Target y is None, skipping dummy estimator scoring.")
             return self
 
-        scores = dummy_scores(y)
+        scores = dummy_scores(y, task=self.task, random_state=self.random_state)
+        task = scores.pop('task')
+        strategy = scores.pop('strategy')
+        est = 'regressor' if task == 'regression' else 'classifier'
+        warnings.warn(f"ℹ️ Dummy {est} scores: {scores} ({strategy} strategy).")
         return self
 
     def transform(self, X, y=None):
@@ -879,6 +884,7 @@ pipeline = Pipeline(
         ("rf.outlier", OutlierDetector()),
         ("rf.distributions", DistributionComparator()),
         ("rf.importance", ImportanceDetector()),
+        ("rf.dummy", DummyPredictor()),
     ]
 )
 

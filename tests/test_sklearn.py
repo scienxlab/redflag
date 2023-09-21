@@ -2,7 +2,7 @@
 import pytest
 import numpy as np
 from sklearn.pipeline import make_pipeline
-from sklearn.datasets import make_classification
+from sklearn.datasets import make_classification, make_regression
 
 import redflag as rf
 
@@ -230,6 +230,28 @@ def test_importance_detector():
     # Warns about high importance.
     X, y = make_classification(n_samples=200, n_features=3, n_informative=2, n_redundant=0, n_classes=2, random_state=42)
     with pytest.warns(UserWarning, match="Feature 1 has very high importance"):
+        pipe.fit_transform(X, y)
+
+    # Warns about wrong kind of y.
+    y = None
+    with pytest.warns(UserWarning, match="Target y is None"):
+        pipe.fit_transform(X, y)
+
+
+def test_dummy_predictor():
+    """
+    Checks that the dummy regressor and classifier work as expected.
+    """
+    pipe = make_pipeline(rf.DummyPredictor(random_state=42))
+
+    # Regression:
+    X, y = make_regression(random_state=42)
+    with pytest.warns(UserWarning, match="Dummy regressor scores:"):
+        pipe.fit_transform(X, y)
+
+    # Classification:
+    X, y = make_classification(random_state=42)
+    with pytest.warns(UserWarning, match="Dummy classifier scores:"):
         pipe.fit_transform(X, y)
 
     # Warns about wrong kind of y.
