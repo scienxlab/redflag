@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0, Fall 2023
+## 0.3.0, 21 September 2023
 
 - Added some accessors to give access to `redflag` functions directly from `pandas.Series` objects, via an 'accessor'. For example, for a Series `s`, one can call `minority_classes = s.redflag.minority_classes()` instead of `redflag.minority_classes(s)`. Other functions include `imbalance_degree()`, `dummy_scores()` (see below). Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. **This is an experimental feature and subject to change.**
 - Added a Series accessor `report()` to perform a range of tests and make a small text report suitable for printing. Access for a Series `s` like `s.redflag.report()`. **This is an experimental feature and subject to change.**
