@@ -133,17 +133,20 @@ def index_to_bool(idx: ArrayLike, n: Optional[int]=None) -> np.ndarray:
 
     Args:
         idx (array): The indices that are True.
-        n (int): The number of elements in the array.
+        n (int): The number of elements in the array. If None, the array will
+            have the length of the largest index, plus 1.
 
     Returns:
         array: The boolean array.
 
     Example:
+        >>> index_to_bool([0, 2])
+        array([ True, False,  True])
         >>> index_to_bool([0, 2], n=5)
         array([ True, False,  True, False, False])
     """
     if n is None:
-        n = len(idx)
+        n = max(idx) + 1
     return np.array([i in idx for i in range(n)])
 
 
@@ -261,6 +264,10 @@ def ecdf(arr: ArrayLike, start: str='1/N', downsample: Optional[int]=None) -> tu
         (array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]), array([0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]))
         >>> ecdf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], start='zero')
         (array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]), array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]))
+        >>> ecdf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], start='foo')
+        Traceback (most recent call last):
+          ...
+        ValueError: Start must be '1/N', 'zero', or 'mid'.
     """
     if not downsample:  # 0 or None same as 1.
         downsample = 1
@@ -272,7 +279,7 @@ def ecdf(arr: ArrayLike, start: str='1/N', downsample: Optional[int]=None) -> tu
     elif start == 'mid':
         y = (np.arange(len(x)) + 0.5) / len(x)
     else:
-        raise ValueError("start must be '1/N', 'zero', or 'mid'.")
+        raise ValueError("Start must be '1/N', 'zero', or 'mid'.")
     return x, y
 
 
@@ -375,6 +382,12 @@ def is_standardized(a: ArrayLike, atol: float=1e-3) -> bool:
 
     Returns:
         bool: True if the feature appears to be a Z-score.
+
+    Example:
+        >>> rng= np.random.default_rng(13)
+        >>> a = rng.normal(size=100)
+        >>> is_standardized(a, atol=0.1)
+        True
     """
     μ, σ = np.nanmean(a), np.nanstd(a)
     return bool((np.abs(μ) < atol) and (np.abs(σ - 1) < atol))
@@ -439,21 +452,6 @@ def cv(X: np.ndarray) -> float:
     return np.nanstd(X, axis=0) / μ
 
 
-def has_low_distance_stdev(X: np.ndarray, atol: float=0.1) -> bool:
-    """
-    Returns True if the instances has a small relative standard deviation of
-    distances in the feature space.
-
-    Args:
-        X (ndarray): The input data.
-        atol (float): The cut-off coefficient of variation, default 0.1.
-
-    Returns:
-        bool
-    """
-    return cv(pdist(zscore(X))) < atol
-
-
 def has_few_samples(X: np.ndarray) -> bool:
     """
     Returns True if the number of samples is less than the square of the
@@ -463,16 +461,17 @@ def has_few_samples(X: np.ndarray) -> bool:
         X (ndarray): The input data.
 
     Returns:
-        bool
+        bool: True if the number of samples is less than the square of the
+            number of features.
 
     Example:
-    >>> import numpy as np
-    >>> X = np.ones((100, 5))
-    >>> has_few_samples(X)
-    False
-    >>> X = np.ones((100, 15))
-    >>> has_few_samples(X)
-    True
+        >>> import numpy as np
+        >>> X = np.ones((100, 5))
+        >>> has_few_samples(X)
+        False
+        >>> X = np.ones((100, 15))
+        >>> has_few_samples(X)
+        True
     """
     N, M = X.shape
     return N < M**2
