@@ -38,19 +38,9 @@ from .utils import is_standard_normal
 from .utils import iter_groups
 
 
-DISTS = [
-    'norm',
-    'cosine',
-    'expon',
-    'exponpow',
-    'gamma',
-    'gumbel_l',
-    'gumbel_r',
-    'powerlaw',
-    'triang',
-    'trapz',
-    'uniform',
-]
+DISTS = ['norm', 'cosine', 'expon', 'exponpow', 'gamma', 'gumbel_l', 'gumbel_r',
+         'powerlaw', 'triang', 'trapz', 'uniform',
+         ]
 
 def best_distribution(a: ArrayLike, bins: Optional[int]=None) -> NamedTuple:
     """
@@ -360,14 +350,17 @@ def cv_kde(a: ArrayLike, n_bandwidths: int=20, cv: int=10) -> float:
         >>> data = rng.normal(size=100)
         >>> cv_kde(data, n_bandwidths=3, cv=3)
         0.5212113989811242
+        >>> cv_kde(rng.normal(size=(10, 10)))
+        Traceback (most recent call last):
+          ...
+        ValueError: Data must be 1D.
     """
     a = np.asarray(a)
+    if a.ndim >= 2:
+        raise ValueError("Data must be 1D.")
     if not is_standard_normal(a):
         warnings.warn('Data does not appear to be standardized, the KDE may be a poor fit.', stacklevel=2)
-    if a.ndim == 1:
-        a = a.reshape(-1, 1)
-    elif a.ndim >= 2:
-        raise ValueError("Data must be 1D.")
+    a = a.reshape(-1, 1)
 
     silverman = bw_silverman(a)
     scott = bw_scott(a)
@@ -401,14 +394,17 @@ def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple
         True
         >>> len(kde)
         200
+        >>> fit_kde(rng.normal(size=(10, 10)))
+        Traceback (most recent call last):
+          ...
+        ValueError: Data must be 1D.
     """
     a = np.asarray(a)
+    if a.ndim >= 2:
+        raise ValueError("Data must be 1D.")
     if not is_standard_normal(a):
         warnings.warn('Data does not appear to be standardized, the KDE may be a poor fit.', stacklevel=2)
-    if a.ndim == 1:
-        a = a.reshape(-1, 1)
-    elif a.ndim >= 2:
-        raise ValueError("Data must be 1D.")
+    a = a.reshape(-1, 1)
     model = KernelDensity(kernel=kernel, bandwidth=bandwidth)
     model.fit(a)
     mima = 1.5 * bandwidth * np.abs(a).max()
