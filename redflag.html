@@ -164,6 +164,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">🚩 Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Basic_usage.html">🚩 Basic usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_Pandas.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
@@ -327,6 +328,10 @@ the kernel density estimation.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cv_kde</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_bandwidths</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="go">0.5212113989811242</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cv_kde</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">  </span><span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Data must be 1D.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -397,6 +402,10 @@ peaks smaller than that are not returned.</p>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">kde</span><span class="p">)</span>
 <span class="go">200</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fit_kde</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)))</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">  </span><span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Data must be 1D.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -781,7 +790,7 @@ in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.imbalance.imbalance_degree">
-<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#redflag.imbalance.imbalance_degree" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#redflag.imbalance.imbalance_degree" title="Permalink to this definition">#</a></dt>
 <dd><p>The imbalance degree reflects the degree to which the distribution of
 classes is imbalanced. The integer part of the imbalance degree is the
 number of minority classes minus 1 (m - 1, below). The fractional part
@@ -859,6 +868,38 @@ in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
 <dd class="field-odd"><p>float</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.imbalance.is_imbalanced">
+<span class="sig-prename descclassname"><span class="pre">redflag.imbalance.</span></span><span class="sig-name descname"><span class="pre">is_imbalanced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'tv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#redflag.imbalance.is_imbalanced" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if a dataset is imbalanced by first checking that there are minority
+classes, then inspecting the fractional part of the imbalance degree metric.
+The metric is compared to the threshold you provide (default 0.4, same as
+the sklearn detector ImbalanceDetector).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>array</em>) – A list of class labels.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The threshold to use. Default: 0.5.</p></li>
+<li><p><strong>method</strong> (<em>str</em><em> or </em><em>function</em>) – The method to use.</p></li>
+<li><p><strong>classes</strong> (<em>array</em>) – A list of classes, in the event that <cite>a</cite> does not
+contain all of the classes, or if you want to ignore some classes
+in <cite>a</cite> (not recommended) you can omit them from this list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the dataset is imbalanced.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_imbalanced</span><span class="p">(</span><span class="n">generate_data</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -1106,17 +1147,17 @@ as an outlier is determined by the threshold, which is in multiples of
 the standard deviation. (The conversion to ‘contamination’ is approximate.)</p>
 <p>This function requires the scikit-learn package.</p>
 <p>Methods: ‘iso’ (isolation forest), ‘lof’ (local outlier factor), ‘ee’
-(elliptic envelope), or ‘mah’ (Mahanalobis distance), or pass a function
-that returns an array of outlier flags (-1 for outliers and 1 for inliers,
-matching the <cite>sklearn</cite> convention). You can also pass ‘any’, which will
-try all three outlier detection methods and return the outliers which are
-detected by any of them, or ‘all’, which will return the outliers which
-are common to all four methods.</p>
+(elliptic envelope), or ‘mah’ (Mahanalobis distance, the default), or pass
+a function that returns an array of outlier flags (-1 for outliers and 1
+for inliers, matching the <cite>sklearn</cite> convention). You can also pass ‘any’,
+which will try all three outlier detection methods and return the outliers
+which are detected by any of them, or ‘all’, which will return the outliers
+which are common to all four methods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
-<li><p><strong>method</strong> (<em>str</em>) – The method to use. Can be ‘iso’, ‘lof’, ‘svm’, ‘mah’,
+<li><p><strong>method</strong> (<em>str</em>) – The method to use. Can be ‘iso’, ‘lof’, ‘ee’, ‘mah’,
 or a function that returns a Boolean array of outlier flags.</p></li>
 <li><p><strong>p</strong> (<em>float</em>) – The probability threshold, in the range [0, 1]. This value
 is ignored if <cite>threshold</cite> is not None; in this case, <cite>p</cite> will be
@@ -1179,35 +1220,6 @@ outliers before comparing to the actual number of outliers.</p></li>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.outliers.is_correlated">
-<span class="sig-prename descclassname"><span class="pre">redflag.outliers.</span></span><span class="sig-name descname"><span class="pre">is_correlated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#redflag.outliers.is_correlated" title="Permalink to this definition">#</a></dt>
-<dd><p>Check if a dataset is correlated. Uses s chunks of n samples.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – The number of samples per chunk.</p></li>
-<li><p><strong>s</strong> (<em>int</em>) – The number of chunks.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em>) – The auto-correlation threshold.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the data are correlated.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">is_correlated</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="go">True</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py function">
@@ -1288,6 +1300,43 @@ the threshold will be used to compute <cite>p</cite>.</p></li>
 <span class="go">array([ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, -1])</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</section>
+<section id="module-redflag.pandas">
+<span id="redflag-pandas-module"></span><h2>redflag.pandas module<a class="headerlink" href="#module-redflag.pandas" title="Permalink to this heading">#</a></h2>
+<p>Pandas accessors.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.pandas.</span></span><span class="sig-name descname"><span class="pre">SeriesAccessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pandas_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.dummy_scores">
+<span class="sig-name descname"><span class="pre">dummy_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.dummy_scores" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.imbalance_degree">
+<span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.imbalance_degree" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.minority_classes">
+<span class="sig-name descname"><span class="pre">minority_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.minority_classes" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.report">
+<span class="sig-name descname"><span class="pre">report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.report" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.pandas.null_decorator">
+<span class="sig-prename descclassname"><span class="pre">redflag.pandas.</span></span><span class="sig-name descname"><span class="pre">null_decorator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.null_decorator" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a decorator that does nothing but wrap the function it
+decorates. Need to do this to accept an argument on the decorator.</p>
 </dd></dl>
 
 </section>
@@ -1419,6 +1468,53 @@ above the threshold.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data.</p></li>
 <li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data. Not used for anything.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.DummyPredictor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">DummyPredictor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DummyPredictor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.DummyPredictor.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DummyPredictor.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks the target <cite>y</cite> for predictability from a naive ‘dummy’ model. The
+data <cite>X</cite> are accepted but not used for the p</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data. Not used by this detector.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.DummyPredictor.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.DummyPredictor.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>This detector does nothing during ‘transform’, only during ‘fit’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data. Not used by this detector.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1867,6 +1963,95 @@ is completed.</p></li>
 <span id="redflag-target-module"></span><h2>redflag.target module<a class="headerlink" href="#module-redflag.target" title="Permalink to this heading">#</a></h2>
 <p>Functions related to understanding the target and the type of task.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.dummy_classification_scores">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">dummy_classification_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#redflag.target.dummy_classification_scores" title="Permalink to this definition">#</a></dt>
+<dd><p>Make dummy classifications, which can indicate a good lower-bound baseline
+for classification tasks. Wraps scikit-learn’s <cite>DummyClassifier</cite>, using the
+<cite>most_frequent</cite> and <cite>stratified</cite> methods, and provides a dictionary of F1
+and ROC-AUC scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array</em>) – A list of class labels.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em>) – A seed for the random number generator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dummy_classification_scores</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="go">{&#39;most_frequent&#39;: {&#39;f1&#39;: 0.3333333333333333, &#39;roc_auc&#39;: 0.5}, &#39;stratified&#39;: {&#39;f1&#39;: 0.20000000000000004, &#39;roc_auc&#39;: 0.35654761904761906}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.dummy_regression_scores">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">dummy_regression_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#redflag.target.dummy_regression_scores" title="Permalink to this definition">#</a></dt>
+<dd><p>Make dummy predictions, which can indicate a good lower-bound baseline
+for regression tasks. Wraps scikit-learn’s <cite>DummyRegressor</cite>, using the
+<cite>mean</cite> method, and provides a dictionary of MSE and R-squared scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>y</strong> (<em>array</em>) – A list of values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dummy_regression_scores</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="go">{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 8.25, &#39;r2&#39;: 0.0}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.dummy_scores">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">dummy_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#redflag.target.dummy_scores" title="Permalink to this definition">#</a></dt>
+<dd><p>Automatically decide whether y is continuous or categorical and call the
+appropriate scoring function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array</em>) – A list of class labels.</p></li>
+<li><p><strong>task</strong> (<em>str</em>) – What kind of task: ‘regression’ or ‘classification’, or ‘auto’
+to decide automatically. In general regression tasks predict continuous
+variables (e.g. temperature tomorrow), while classification tasks predict
+categorical variables (e.g. rain, cloud or sun).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em>) – A seed for the random number generator. Only required
+classification tasks (categorical variables).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of scores.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dummy_scores</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="go">{&#39;f1&#39;: 0.3333333333333333, &#39;roc_auc&#39;: 0.5, &#39;strategy&#39;: &#39;most_frequent&#39;, &#39;task&#39;: &#39;classification&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dummy_scores</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">&#39;regression&#39;</span><span class="p">)</span>
+<span class="go">{&#39;mean_squared_error&#39;: 8.25, &#39;r2&#39;: 0.0, &#39;strategy&#39;: &#39;mean&#39;, &#39;task&#39;: &#39;regression&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="redflag.target.is_binary">
 <span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#redflag.target.is_binary" title="Permalink to this definition">#</a></dt>
 <dd><p>Decide if a single target is binary.</p>
@@ -2006,37 +2191,6 @@ is all the data or 10_000 random samples, whichever is smaller.</p></li>
 <span class="go">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_classes</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="go">3</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.target.update_p">
-<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">update_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specificity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#redflag.target.update_p" title="Permalink to this definition">#</a></dt>
-<dd><p>Bayesian update of the prior probability, given the sensitivity and
-specificity.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>prior</strong> (<em>float</em>) – The prior probability.</p></li>
-<li><p><strong>sensitivity</strong> (<em>float</em>) – The sensitivity of the test, or true positive rate.</p></li>
-<li><p><strong>specificity</strong> (<em>float</em>) – The specificity of the test, or false positive rate.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The posterior probability.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-<span class="go">0.5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">)</span>
-<span class="go">0.4999999999999998</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
-<span class="go">0.9</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2181,6 +2335,10 @@ will take every other sample; 3 will take every third, etc.</p></li>
 <span class="go">(array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]), array([0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ecdf</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;zero&#39;</span><span class="p">)</span>
 <span class="go">(array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10]), array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ecdf</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">  </span><span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Start must be &#39;1/N&#39;, &#39;zero&#39;, or &#39;mid&#39;.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2251,17 +2409,26 @@ number of features.</p>
 <dd class="field-odd"><p><strong>X</strong> (<em>ndarray</em>) – The input data.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>True if the number of samples is less than the square of the</dt><dd><p>number of features.</p>
 </dd>
 </dl>
-<p>Example:
-&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; X = np.ones((100, 5))
-&gt;&gt;&gt; has_few_samples(X)
-False
-&gt;&gt;&gt; X = np.ones((100, 15))
-&gt;&gt;&gt; has_few_samples(X)
-True</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">has_few_samples</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">has_few_samples</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -2291,24 +2458,6 @@ True</p>
 <span class="go">array([4, 5, 6, 7])</span>
 </pre></div>
 </div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="redflag.utils.has_low_distance_stdev">
-<span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">has_low_distance_stdev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#redflag.utils.has_low_distance_stdev" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns True if the instances has a small relative standard deviation of
-distances in the feature space.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>ndarray</em>) – The input data.</p></li>
-<li><p><strong>atol</strong> (<em>float</em>) – The cut-off coefficient of variation, default 0.1.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -2375,7 +2524,8 @@ be allowed.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>idx</strong> (<em>array</em>) – The indices that are True.</p></li>
-<li><p><strong>n</strong> (<em>int</em>) – The number of elements in the array.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of elements in the array. If None, the array will
+have the length of the largest index, plus 1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2386,7 +2536,9 @@ be allowed.</p></li>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">index_to_bool</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">index_to_bool</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">array([ True, False,  True])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index_to_bool</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="go">array([ True, False,  True, False, False])</span>
 </pre></div>
 </div>
@@ -2461,8 +2613,9 @@ standard deviation close to 1.</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">is_standard_normal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_standard_normal</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">is_standard_normal</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">False</span>
@@ -2494,6 +2647,13 @@ or comparing with z-score of entire array using np.allclose().</p>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_standardized</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -2642,6 +2802,37 @@ proportion with decent precision.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="redflag.utils.update_p">
+<span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">update_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensitivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specificity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#redflag.utils.update_p" title="Permalink to this definition">#</a></dt>
+<dd><p>Bayesian update of the prior probability, given the sensitivity and
+specificity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prior</strong> (<em>float</em>) – The prior probability.</p></li>
+<li><p><strong>sensitivity</strong> (<em>float</em>) – The sensitivity of the test, or true positive rate.</p></li>
+<li><p><strong>specificity</strong> (<em>float</em>) – The specificity of the test, or false positive rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The posterior probability.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="go">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">)</span>
+<span class="go">0.4999999999999998</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_p</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">)</span>
+<span class="go">0.9</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="redflag.utils.zscore">
 <span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">zscore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#redflag.utils.zscore" title="Permalink to this definition">#</a></dt>
 <dd><p>Transform array to Z-scores. If 2D, stats are computed
@@ -2740,6 +2931,7 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.imbalance.furthest_distribution"><code class="docutils literal notranslate"><span class="pre">furthest_distribution()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.imbalance.imbalance_degree"><code class="docutils literal notranslate"><span class="pre">imbalance_degree()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.imbalance.imbalance_ratio"><code class="docutils literal notranslate"><span class="pre">imbalance_ratio()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.imbalance.is_imbalanced"><code class="docutils literal notranslate"><span class="pre">is_imbalanced()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.imbalance.major_minor"><code class="docutils literal notranslate"><span class="pre">major_minor()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.imbalance.minority_classes"><code class="docutils literal notranslate"><span class="pre">minority_classes()</span></code></a></li>
 </ul>
@@ -2758,9 +2950,19 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.outliers.expected_outliers"><code class="docutils literal notranslate"><span class="pre">expected_outliers()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.outliers.get_outliers"><code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.outliers.has_outliers"><code class="docutils literal notranslate"><span class="pre">has_outliers()</span></code></a></li>
-<li><a class="reference internal" href="#redflag.outliers.is_correlated"><code class="docutils literal notranslate"><span class="pre">is_correlated()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.outliers.mahalanobis"><code class="docutils literal notranslate"><span class="pre">mahalanobis()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.outliers.mahalanobis_outliers"><code class="docutils literal notranslate"><span class="pre">mahalanobis_outliers()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-redflag.pandas">redflag.pandas module</a><ul>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.dummy_scores"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.dummy_scores()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.imbalance_degree"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.imbalance_degree()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.minority_classes"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.minority_classes()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.report"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.report()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.pandas.null_decorator"><code class="docutils literal notranslate"><span class="pre">null_decorator()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-redflag.sklearn">redflag.sklearn module</a><ul>
@@ -2776,6 +2978,11 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.sklearn.DistributionComparator.fit"><code class="docutils literal notranslate"><span class="pre">DistributionComparator.fit()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.sklearn.DistributionComparator.fit_transform"><code class="docutils literal notranslate"><span class="pre">DistributionComparator.fit_transform()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.sklearn.DistributionComparator.transform"><code class="docutils literal notranslate"><span class="pre">DistributionComparator.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.DummyPredictor"><code class="docutils literal notranslate"><span class="pre">DummyPredictor</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.DummyPredictor.fit"><code class="docutils literal notranslate"><span class="pre">DummyPredictor.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.DummyPredictor.transform"><code class="docutils literal notranslate"><span class="pre">DummyPredictor.transform()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#redflag.sklearn.ImbalanceComparator"><code class="docutils literal notranslate"><span class="pre">ImbalanceComparator</span></code></a><ul>
@@ -2817,12 +3024,14 @@ per column.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-redflag.target">redflag.target module</a><ul>
+<li><a class="reference internal" href="#redflag.target.dummy_classification_scores"><code class="docutils literal notranslate"><span class="pre">dummy_classification_scores()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.dummy_regression_scores"><code class="docutils literal notranslate"><span class="pre">dummy_regression_scores()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.dummy_scores"><code class="docutils literal notranslate"><span class="pre">dummy_scores()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.is_binary"><code class="docutils literal notranslate"><span class="pre">is_binary()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.is_continuous"><code class="docutils literal notranslate"><span class="pre">is_continuous()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.is_multiclass"><code class="docutils literal notranslate"><span class="pre">is_multiclass()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.is_multioutput"><code class="docutils literal notranslate"><span class="pre">is_multioutput()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.n_classes"><code class="docutils literal notranslate"><span class="pre">n_classes()</span></code></a></li>
-<li><a class="reference internal" href="#redflag.target.update_p"><code class="docutils literal notranslate"><span class="pre">update_p()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-redflag.utils">redflag.utils module</a><ul>
@@ -2837,7 +3046,6 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.utils.get_idx"><code class="docutils literal notranslate"><span class="pre">get_idx()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.has_few_samples"><code class="docutils literal notranslate"><span class="pre">has_few_samples()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.has_flat"><code class="docutils literal notranslate"><span class="pre">has_flat()</span></code></a></li>
-<li><a class="reference internal" href="#redflag.utils.has_low_distance_stdev"><code class="docutils literal notranslate"><span class="pre">has_low_distance_stdev()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.has_monotonic"><code class="docutils literal notranslate"><span class="pre">has_monotonic()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.has_nans"><code class="docutils literal notranslate"><span class="pre">has_nans()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.index_to_bool"><code class="docutils literal notranslate"><span class="pre">index_to_bool()</span></code></a></li>
@@ -2850,6 +3058,7 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.utils.proportion_to_stdev"><code class="docutils literal notranslate"><span class="pre">proportion_to_stdev()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.split_and_standardize"><code class="docutils literal notranslate"><span class="pre">split_and_standardize()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.stdev_to_proportion"><code class="docutils literal notranslate"><span class="pre">stdev_to_proportion()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.update_p"><code class="docutils literal notranslate"><span class="pre">update_p()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.zscore"><code class="docutils literal notranslate"><span class="pre">zscore()</span></code></a></li>
 </ul>
 </li>

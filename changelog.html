@@ -164,6 +164,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">🚩 Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Basic_usage.html">🚩 Basic usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_Pandas.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
@@ -221,6 +222,18 @@
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading">#</a></h1>
+<section id="fall-2023">
+<h2>0.3.0, Fall 2023<a class="headerlink" href="#fall-2023" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Added some accessors to give access to <code class="docutils literal notranslate"><span class="pre">redflag</span></code> functions directly from <code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> objects, via an ‘accessor’. For example, for a Series <code class="docutils literal notranslate"><span class="pre">s</span></code>, one can call <code class="docutils literal notranslate"><span class="pre">minority_classes</span> <span class="pre">=</span> <span class="pre">s.redflag.minority_classes()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">redflag.minority_classes(s)</span></code>. Other functions include <code class="docutils literal notranslate"><span class="pre">imbalance_degree()</span></code>, <code class="docutils literal notranslate"><span class="pre">dummy_scores()</span></code> (see below). Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. <strong>This is an experimental feature and subject to change.</strong></p></li>
+<li><p>Added a Series accessor <code class="docutils literal notranslate"><span class="pre">report()</span></code> to perform a range of tests and make a small text report suitable for printing. Access for a Series <code class="docutils literal notranslate"><span class="pre">s</span></code> like <code class="docutils literal notranslate"><span class="pre">s.redflag.report()</span></code>. <strong>This is an experimental feature and subject to change.</strong></p></li>
+<li><p>Added new documentation page for the Pandas accessor.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">redflag.target.dummy_classification_scores()</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.target.dummy_regression_scores()</span></code>, which train a dummy (i.e. naive) model and compute various relevant scores (MSE and R2 for regression, F1 and ROC-AUC for classification tasks). Additionally, both <code class="docutils literal notranslate"><span class="pre">most_frequent</span></code> and <code class="docutils literal notranslate"><span class="pre">stratified</span></code> strategies are tested for classification tasks; only the <code class="docutils literal notranslate"><span class="pre">mean</span></code> strategy is employed for regression tasks. The helper function <code class="docutils literal notranslate"><span class="pre">redflag.target.dummy_scores()</span></code> tries to guess what kind of task suits the data and calls the appropriate function.</p></li>
+<li><p>Moved <code class="docutils literal notranslate"><span class="pre">redflag.target.update_p()</span></code> to <code class="docutils literal notranslate"><span class="pre">redflag.utils</span></code>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">is_imbalanced()</span></code> to return a Boolean depending on a threshold of imbalance degree. Default threshold is 0.5 but the best value is up for debate.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">utils.has_low_distance_stdev</span></code>.</p></li>
+</ul>
+</section>
 <section id="september-2023">
 <h2>0.2.0, 4 September 2023<a class="headerlink" href="#september-2023" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -360,6 +373,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#fall-2023">0.3.0, Fall 2023</a></li>
 <li><a class="reference internal" href="#september-2023">0.2.0, 4 September 2023</a></li>
 <li><a class="reference internal" href="#november-2022">0.1.10, 21 November 2022</a></li>
 <li><a class="reference internal" href="#august-2022">0.1.9, 25 August 2022</a></li>

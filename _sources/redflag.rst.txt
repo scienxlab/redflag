@@ -44,6 +44,14 @@ redflag.outliers module
    :undoc-members:
    :show-inheritance:
 
+redflag.pandas module
+---------------------
+
+.. automodule:: redflag.pandas
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 redflag.sklearn module
 ----------------------
 

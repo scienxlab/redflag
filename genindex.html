@@ -162,6 +162,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">🚩 Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Basic_usage.html">🚩 Basic usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="_notebooks/Using_redflag_with_Pandas.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_notebooks/Tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
@@ -273,11 +274,23 @@
 </li>
         <li><a href="redflag.html#redflag.sklearn.Detector">Detector (class in redflag.sklearn)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="redflag.html#redflag.sklearn.DistributionComparator">DistributionComparator (class in redflag.sklearn)</a>
 </li>
         <li><a href="redflag.html#redflag.imbalance.divergence">divergence() (in module redflag.imbalance)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="redflag.html#redflag.target.dummy_classification_scores">dummy_classification_scores() (in module redflag.target)</a>
+</li>
+        <li><a href="redflag.html#redflag.target.dummy_regression_scores">dummy_regression_scores() (in module redflag.target)</a>
+</li>
+        <li><a href="redflag.html#redflag.target.dummy_scores">dummy_scores() (in module redflag.target)</a>
+
+        <ul>
+          <li><a href="redflag.html#redflag.pandas.SeriesAccessor.dummy_scores">(redflag.pandas.SeriesAccessor method)</a>
+</li>
+        </ul></li>
+        <li><a href="redflag.html#redflag.sklearn.DummyPredictor">DummyPredictor (class in redflag.sklearn)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -311,6 +324,8 @@
 
         <ul>
           <li><a href="redflag.html#redflag.sklearn.DistributionComparator.fit">(redflag.sklearn.DistributionComparator method)</a>
+</li>
+          <li><a href="redflag.html#redflag.sklearn.DummyPredictor.fit">(redflag.sklearn.DummyPredictor method)</a>
 </li>
           <li><a href="redflag.html#redflag.sklearn.ImbalanceComparator.fit">(redflag.sklearn.ImbalanceComparator method)</a>
 </li>
@@ -371,8 +386,6 @@
 </li>
         <li><a href="redflag.html#redflag.utils.has_flat">has_flat() (in module redflag.utils)</a>
 </li>
-        <li><a href="redflag.html#redflag.utils.has_low_distance_stdev">has_low_distance_stdev() (in module redflag.utils)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="redflag.html#redflag.utils.has_monotonic">has_monotonic() (in module redflag.utils)</a>
@@ -390,7 +403,11 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="redflag.html#redflag.imbalance.imbalance_degree">imbalance_degree() (in module redflag.imbalance)</a>
+
+        <ul>
+          <li><a href="redflag.html#redflag.pandas.SeriesAccessor.imbalance_degree">(redflag.pandas.SeriesAccessor method)</a>
 </li>
+        </ul></li>
         <li><a href="redflag.html#redflag.imbalance.imbalance_ratio">imbalance_ratio() (in module redflag.imbalance)</a>
 </li>
         <li><a href="redflag.html#redflag.sklearn.ImbalanceComparator">ImbalanceComparator (class in redflag.sklearn)</a>
@@ -405,16 +422,14 @@
 </li>
         <li><a href="redflag.html#redflag.utils.is_clipped">is_clipped() (in module redflag.utils)</a>
 </li>
-        <li><a href="redflag.html#redflag.target.is_continuous">is_continuous() (in module redflag.target)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="redflag.html#redflag.independence.is_correlated">is_correlated() (in module redflag.independence)</a>
-
-        <ul>
-          <li><a href="redflag.html#redflag.outliers.is_correlated">(in module redflag.outliers)</a>
+        <li><a href="redflag.html#redflag.target.is_continuous">is_continuous() (in module redflag.target)</a>
 </li>
-        </ul></li>
+        <li><a href="redflag.html#redflag.independence.is_correlated">is_correlated() (in module redflag.independence)</a>
+</li>
+        <li><a href="redflag.html#redflag.imbalance.is_imbalanced">is_imbalanced() (in module redflag.imbalance)</a>
+</li>
         <li><a href="redflag.html#redflag.target.is_multiclass">is_multiclass() (in module redflag.target)</a>
 </li>
         <li><a href="redflag.html#redflag.distributions.is_multimodal">is_multimodal() (in module redflag.distributions)</a>
@@ -468,7 +483,11 @@
         <li><a href="redflag.html#redflag.sklearn.make_rf_pipeline">make_rf_pipeline() (in module redflag.sklearn)</a>
 </li>
         <li><a href="redflag.html#redflag.imbalance.minority_classes">minority_classes() (in module redflag.imbalance)</a>
+
+        <ul>
+          <li><a href="redflag.html#redflag.pandas.SeriesAccessor.minority_classes">(redflag.pandas.SeriesAccessor method)</a>
 </li>
+        </ul></li>
         <li>
     module
 
@@ -484,6 +503,8 @@
           <li><a href="redflag.html#module-redflag.independence">redflag.independence</a>
 </li>
           <li><a href="redflag.html#module-redflag.outliers">redflag.outliers</a>
+</li>
+          <li><a href="redflag.html#module-redflag.pandas">redflag.pandas</a>
 </li>
           <li><a href="redflag.html#module-redflag.sklearn">redflag.sklearn</a>
 </li>
@@ -507,6 +528,10 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="redflag.html#redflag.target.n_classes">n_classes() (in module redflag.target)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="redflag.html#redflag.pandas.null_decorator">null_decorator() (in module redflag.pandas)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -575,13 +600,20 @@
           <li><a href="redflag.html#module-redflag.independence">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     redflag.outliers
 
         <ul>
           <li><a href="redflag.html#module-redflag.outliers">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    redflag.pandas
+
+        <ul>
+          <li><a href="redflag.html#module-redflag.pandas">module</a>
 </li>
         </ul></li>
         <li>
@@ -607,6 +639,8 @@
         </ul></li>
         <li><a href="redflag.html#redflag.sklearn.RegressionMultimodalDetector">RegressionMultimodalDetector (class in redflag.sklearn)</a>
 </li>
+        <li><a href="redflag.html#redflag.pandas.SeriesAccessor.report">report() (redflag.pandas.SeriesAccessor method)</a>
+</li>
         <li><a href="redflag.html#redflag.sklearn.RfPipeline">RfPipeline (class in redflag.sklearn)</a>
 </li>
     </ul></td>
@@ -617,10 +651,12 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="redflag.html#redflag.utils.split_and_standardize">split_and_standardize() (in module redflag.utils)</a>
+        <li><a href="redflag.html#redflag.pandas.SeriesAccessor">SeriesAccessor (class in redflag.pandas)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="redflag.html#redflag.utils.split_and_standardize">split_and_standardize() (in module redflag.utils)</a>
+</li>
         <li><a href="redflag.html#redflag.utils.stdev_to_proportion">stdev_to_proportion() (in module redflag.utils)</a>
 </li>
     </ul></td>
@@ -635,6 +671,8 @@
 
         <ul>
           <li><a href="redflag.html#redflag.sklearn.DistributionComparator.transform">(redflag.sklearn.DistributionComparator method)</a>
+</li>
+          <li><a href="redflag.html#redflag.sklearn.DummyPredictor.transform">(redflag.sklearn.DummyPredictor method)</a>
 </li>
           <li><a href="redflag.html#redflag.sklearn.ImbalanceComparator.transform">(redflag.sklearn.ImbalanceComparator method)</a>
 </li>
@@ -661,7 +699,7 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="redflag.html#redflag.target.update_p">update_p() (in module redflag.target)</a>
+        <li><a href="redflag.html#redflag.utils.update_p">update_p() (in module redflag.utils)</a>
 </li>
     </ul></td>
   </tr></table>
