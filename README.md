@@ -18,11 +18,33 @@ You can install this package with `pip`:
 For developers, there is a `pip` option for installing `dev` dependencies. Use `pip install redflag[dev]` to install all testing and documentation packages.
 
 
-## Example
+## Example with `sklearn`
 
-The most useful components of `redflag` are probably the `scikit-learn` "detectors". These sit in your pipeline, look at your training and validation data, and emit warnings if something looks like it might cause a problem. For example, if we 
+The most useful components of `redflag` are probably the `scikit-learn` "detectors". These sit in your pipeline, look at your training and validation data, and emit warnings if something looks like it might cause a problem. For example, we can get alerted to an imbalanced target vector `y` like so:
 
-`redflag` is mostly a collection of functions. Most of the useful ones take one or more columns of data (usually a 1D or 2D NumPy array) and run a single test. For example, we can do some outlier detection. The `get_outliers()` function returns the indices of data points that are considered outliers:
+```python
+import redflag as rf
+from sklearn.datasets import make_classification
+
+X, y = make_classification(weights=[0.1])
+
+_ = rf.ImbalanceDetector().fit(X, y)
+```
+
+This raises a warning:
+
+```python
+🚩 The labels are imbalanced by more than the threshold (0.780 > 0.400). See self.minority_classes_ for the minority classes.
+```
+
+For maximum effect, put this and other detectors in your pipeline, or use the pre-build `rf.pipeline` which contains several useful alerts.
+
+See [the documentation](https://scienxlab.org/redflag), and specifically the notebook [Using `redflag` with `sklearn`.ipynb](https://github.com/scienxlab/redflag/blob/main/docs/notebooks/Using_redflag_with_sklearn.ipynb) for other examples.
+
+
+## Example of function call
+
+`redflag` is also a collection of functions. Most of the useful ones take one or more columns of data (usually a 1D or 2D NumPy array) and run a single test. For example, we can do some outlier detection. The `get_outliers()` function returns the indices of data points that are considered outliers:
 
 ```python
 >>> import redflag as rf
@@ -49,12 +71,3 @@ See [the documentation](https://scienxlab.org/redflag), and specifically the not
 ## Contributing
 
 Please see [`CONTRIBUTING.md`](https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md). There is also a section [in the documentation](https://scienxlab.org/redflag) about _Development_.
-
-
-## Testing
-
-You can run the tests (requires `pytest` and `pytest-cov`) with
-
-    pytest
-
-Most of the tests are doctests, but `pytest` will run them using the settings in `pyproject.toml`.
