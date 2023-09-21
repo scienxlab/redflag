@@ -278,14 +278,15 @@ def minority_classes(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np.ndar
 
 
 def is_imbalanced(a: ArrayLike,
-                  threshold: float=0.5,
+                  threshold: float=0.4,
                   method: Union[str, Callable]='tv',
                   classes: Optional[ArrayLike]=None,
                   ) -> bool:
     """
     Check if a dataset is imbalanced by first checking that there are minority
     classes, then inspecting the fractional part of the imbalance degree metric.
-    The metric is compared to the threshold you provide (default 0.5).
+    The metric is compared to the threshold you provide (default 0.4, same as
+    the sklearn detector ImbalanceDetector).
 
     Args:
         a (array): A list of class labels.

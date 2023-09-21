@@ -202,7 +202,7 @@ def is_binary(y: ArrayLike) -> bool:
     return n_classes(y) == 2
 
 
-def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None):
+def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None) -> dict:
     """
     Make dummy classifications, which can indicate a good lower-bound baseline
     for classification tasks. Wraps scikit-learn's `DummyClassifier`, using the
@@ -211,6 +211,7 @@ def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None):
 
     Args:
         y (array): A list of class labels.
+        random_state (int): A seed for the random number generator.
 
     Returns:
         dict: A dictionary of scores.
@@ -233,11 +234,11 @@ def dummy_classification_scores(y: ArrayLike, random_state:Optional[int]=None):
         if is_binary(y):
             scores['roc_auc'] = roc_auc_score(y, y_prob[:, 1])
         else:
-            scores['roc_auc'] = roc_auc_score(y, y_prob, multi_class='ovr')            
+            scores['roc_auc'] = roc_auc_score(y, y_prob, multi_class='ovr')
     return result
 
 
-def dummy_regression_scores(y: ArrayLike):
+def dummy_regression_scores(y: ArrayLike) -> dict:
     """
     Make dummy predictions, which can indicate a good lower-bound baseline
     for regression tasks. Wraps scikit-learn's `DummyRegressor`, using the
@@ -266,3 +267,50 @@ def dummy_regression_scores(y: ArrayLike):
         scores['mean_squared_error'] = mean_squared_error(y, y_pred)
         scores['r2'] = r2_score(y, y_pred)
     return result
+
+
+def dummy_scores(y: ArrayLike, task='auto', random_state:Optional[int]=None) -> dict:
+    """
+    Automatically decide whether y is continuous or categorical and call the
+    appropriate scoring function.
+
+    Args:
+        y (array): A list of class labels.
+        task (str): What kind of task: 'regression' or 'classification', or 'auto'
+            to decide automatically. In general regression tasks predict continuous
+            variables (e.g. temperature tomorrow), while classification tasks predict
+            categorical variables (e.g. rain, cloud or sun).
+        random_state (int): A seed for the random number generator. Only required
+            classification tasks (categorical variables).
+
+    Returns:
+        dict: A dictionary of scores.
+
+    Examples:
+        >>> y = [1, 1, 1, 1, 1, 2, 2, 2, 3, 3]
+        >>> dummy_scores(y, random_state=42)
+        {'f1': 0.3333333333333333, 'roc_auc': 0.5, 'strategy': 'most_frequent'}
+        >>> y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> dummy_scores(y, task='regression')
+        {'mean_squared_error': 8.25, 'r2': 0.0, 'strategy': 'mean'}
+    """
+    if task == 'auto':
+        task = 'regression' if is_continuous(y) else 'classification'
+
+    if task == 'classification':
+        scores = dummy_classification_scores(y, random_state=random_state)
+        scores_mf, scores_st = scores['most_frequent'], scores['stratified']
+        if scores_mf['f1'] >= scores_st['f1']:
+            scores_ = scores_mf
+            scores_['strategy'] = 'most_frequent'
+        else:
+            scores_ = scores_st
+            scores_['strategy'] = 'stratified'
+    elif task == 'regression':
+        scores = dummy_regression_scores(y)
+        scores_ = scores['mean']
+        scores_['strategy'] = 'mean'
+    else:
+        raise ValueError("`task` must be 'classification' or 'regression', or 'auto' to decide automatically.")
+
+    return scores_
