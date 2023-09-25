@@ -22,7 +22,7 @@ import warnings
 
 from .imbalance import imbalance_degree,minority_classes
 from .outliers import get_outliers
-from .target import is_continuous, dummy_scores, dummy_regression_scores, dummy_classification_scores
+from .target import *
 from .independence import is_correlated
 
 
@@ -71,6 +71,11 @@ class SeriesAccessor:
         if is_continuous(self._obj):
             warnings.warn('The Series does not seem categorical.')
         return minority_classes(self._obj)
+
+    def is_ordered(self, q=0.95):
+        if is_continuous(self._obj):
+            warnings.warn('The Series does not seem categorical.')
+        return is_ordered(self._obj, q=q)
 
     def dummy_scores(self, task='auto', random_state=None):
         return dummy_scores(self._obj, task=task, random_state=random_state)

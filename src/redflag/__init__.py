@@ -1,6 +1,7 @@
 from .utils import *
 from .sklearn import *
 from .pandas import *
+from .markov import Markov_chain
 
 # Targets
 from .target import *

@@ -28,6 +28,7 @@ from sklearn.metrics import f1_score, roc_auc_score
 from sklearn.metrics import mean_squared_error, r2_score
 
 from .utils import *
+from .markov import Markov_chain
 
 
 def is_continuous(a: ArrayLike, n: Optional[int]=None) -> bool:
@@ -316,3 +317,32 @@ def dummy_scores(y: ArrayLike, task='auto', random_state:Optional[int]=None) -> 
         raise ValueError("`task` must be 'classification' or 'regression', or 'auto' to decide automatically.")
 
     return scores_
+
+
+def is_ordered(y: ArrayLike, q: float=0.95) -> bool:
+    """
+    Decide if a single target is ordered.
+
+    Args:
+        y (array): A list of class labels.
+        q (float): The confidence level, as a float in the range 0 to 1.
+            Default: 0.95.
+
+    Returns:
+        bool: True if y is ordered.
+    
+    Examples:
+        >>> is_ordered(10 * ['top', 'top', 'middle', 'middle', 'bottom'])
+        True
+        >>> is_ordered(10 * [0, 0, 1, 1, 2, 2, 1, 1, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3])
+        True
+        >>> rng = np.random.default_rng(42)
+        >>> is_ordered(rng.integers(low=0, high=9, size=200))
+        False
+    """
+    if is_continuous(y):
+        raise ValueError('Cannot check order of continuous data.')
+    sas = isinstance(y[0], str)
+    m = Markov_chain.from_sequence(y, strings_are_states=sas, include_self=True)
+    chi2, crit, perc = m.chi_squared(q=q)
+    return chi2 > crit

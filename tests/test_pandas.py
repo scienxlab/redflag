@@ -14,6 +14,7 @@ def test_null_decorator():
         return None
     assert f() is None
 
+
 def test_dummy_scores():
     c_scores = c.redflag.dummy_scores()
     r_scores = r.redflag.dummy_scores()
@@ -29,6 +30,10 @@ def test_imbalance_metrics():
     imb_degree = c.redflag.imbalance_degree()
     assert imb_degree - 1.25 < 1e-9
 
+def test_is_ordered():
+    assert c.redflag.is_ordered()
+    with pytest.raises(ValueError, match="Cannot check order of continuous data."):
+        r.redflag.is_ordered()
 
 def test_warnings():
     with pytest.warns(UserWarning, match="The Series does not seem categorical."):
@@ -40,6 +45,7 @@ def test_warnings():
 def test_series_categorical_report():
     report_c = c.redflag.report()
     assert 'Categorical' in report_c
+
 
 def test_series_continuous_report():
     report_r = r.redflag.report()
