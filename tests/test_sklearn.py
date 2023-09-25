@@ -21,6 +21,14 @@ def test_clip_detector():
     with pytest.warns(UserWarning, match="Feature 1 has samples that may be clipped."):
         pipe.fit_transform(X)
 
+    # Warns about y, but only on continuous data.
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(100, 2))
+    y = rng.normal(size=100)
+    y[:3] = y.max()
+    with pytest.warns(UserWarning, match="Target 0 has samples that may be clipped."):
+        pipe.fit_transform(X, y)
+
     # Does not warn:
     X = np.array([[2, 1], [3, 2], [4, 3], [5, 4]])
     pipe.fit_transform(X)
@@ -37,18 +45,22 @@ def test_correlation_detector():
         pipe.fit_transform(X)
 
 
-def test_simple_multimodal_detector():
+def test_multimodality_detector():
     """
     Checks for features with a multimodal distribution, considered across the
-    entire dataset (i.e. not per class).
+    entire dataset.
     """
-    pipe = make_pipeline(rf.RegressionMultimodalDetector())
+    pipe = make_pipeline(rf.MultimodalityDetector())
     rng = np.random.default_rng(0)
     X1 = np.stack([rng.normal(size=80), rng.normal(size=80)]).T
     X2 = np.stack([rng.normal(size=80), 3 + rng.normal(size=80)]).T
     X = np.vstack([X1, X2])
-    with pytest.warns(UserWarning, match="Feature 1 has samples that may be multimodally distributed."):
+    with pytest.warns(UserWarning, match="Feature 1 has a multimodal distribution."):
         pipe.fit_transform(X)
+    y = np.hstack([np.zeros(80), np.ones(80)])
+
+    # Does not warn.
+    pipe.fit(X, y)
 
 
 def test_custom_detector():
@@ -115,9 +127,21 @@ def test_multivariate_outlier_detector():
     with pytest.warns(UserWarning, match="Dataset has more multivariate outlier samples than expected."):
         pipe.fit_transform(X)
 
+    # Warns for y too.
+    pipe = make_pipeline(rf.MultivariateOutlierDetector(factor=0.5, p=0.8))
+    X = rng.uniform(size=(1_000, 2))
+    y = rng.normal(size=1_000)
+    # y[:100] = 10
+    with pytest.warns(UserWarning, match="Target has more univariate outlier samples than expected."):
+        pipe.fit_transform(X, y)
+
     # Does not warn with factor of 2.5:
     pipe = make_pipeline(rf.MultivariateOutlierDetector(factor=2.5))
     pipe.fit_transform(X)
+
+    # Does not warn for y.
+    y = rng.normal(size=1_000)
+    pipe.fit(X, y)
 
 
 def test_outlier_detector():
@@ -202,6 +226,8 @@ def test_imbalance_comparator():
     y = rng.normal(size=100)
     with pytest.warns(UserWarning, match="Target y seems continuous"):
         pipe.fit_transform(X, y)
+    with pytest.warns(UserWarning, match="Target y seems continuous"):
+        pipe.transform(X, y)
 
     # No warning if y is None, just skips:
     pipe.fit_transform(X)

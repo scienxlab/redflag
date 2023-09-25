@@ -58,6 +58,12 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
         self.warn = warn
 
     def fit(self, X, y=None):
+        return self
+
+    def fit_transform(self, X, y=None):
+        return self.transform(X, y)
+
+    def transform(self, X, y=None):
         X = check_array(X)
 
         positive = [i for i, feature in enumerate(X.T) if self.func(feature)]
@@ -80,13 +86,6 @@ class BaseRedflagDetector(BaseEstimator, TransformerMixin):
                         warnings.warn(message)
                     else:
                         raise ValueError(message)
-
-        return self
-
-    def transform(self, X, y=None):
-        """
-        Can check X here, but y is not passed into here by `fit`.
-        """
 
         return X
 
@@ -131,17 +130,6 @@ class CorrelationDetector(BaseRedflagDetector):
     """
     def __init__(self):
         super().__init__(is_correlated, "may be correlated")
-
-
-class RegressionMultimodalDetector(BaseRedflagDetector):
-    """
-    Transformer that detects features with non-unimodal distributions. In a
-    regression task, it considers the univariate distributions of the features
-    and the target. Do not use this detector for classification tasks, use
-    `MultimodalDetector` instead.
-    """
-    def __init__(self):
-        super().__init__(is_multimodal, "may be multimodally distributed")
 
 
 class UnivariateOutlierDetector(BaseRedflagDetector):
@@ -222,6 +210,9 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self
 
+    def fit_transform(self, X, y=None):
+        return self.transform(X, y)
+
     def transform(self, X, y=None):
         """
         Checks X (and y, if it is continuous data) for outlier values.
@@ -243,12 +234,10 @@ class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
 
         if (y is not None) and is_continuous(y):
             if np.asarray(y).ndim == 1:
-                y_ = y.reshape(-1, 1)
                 kind = 'univariate'
             else:
-                y_ = y
                 kind = 'multivariate'
-            if has_outliers(y_, p=self.p, threshold=self.threshold, factor=self.factor):
+            if has_outliers(y, p=self.p, threshold=self.threshold, factor=self.factor):
                 message = f"🚩 Target has more {kind} outlier samples than expected."
                 if self.warn:
                     warnings.warn(message)
@@ -494,6 +483,89 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
         return X
 
 
+class MultimodalityDetector(BaseEstimator, TransformerMixin):
+
+    def __init__(self, task='auto', method='scott', threshold=0.1, warn=True):
+        """
+        Constructor for the class.
+
+        Args:
+            task (str): The task to use for multimodality detection. If 'auto',
+                then the detector will try to guess the task based on whether `y`
+                is continuous or not. Must be one of 'auto', 'classification',
+                'regression'. Default: 'auto'.
+            method (str): The rule of thumb for bandwidth estimation. Must be one
+                of 'silverman', 'scott', or 'cv'. Default 'scott'.
+            threshold (float): The threshold for peak amplitude. Default 0.1.
+            warn (bool): Whether to raise a warning or raise an error.
+        """
+        self.task = task
+        self.method = method
+        self.threshold = threshold
+        self.warn = warn
+
+    def fit(self, X, y=None):
+        """
+        Checks for multimodality in the features of X. Each feature is checked
+        separately.
+
+        If `y` is categorical, the features are checked for multimodality
+        separately for each class.
+
+        Args:
+            X (np.ndarray): The data to compare to the training data. Not used
+                by this transformer.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            self.
+        """
+        X = check_array(X)
+
+        if (self.task == 'auto' and is_continuous(y)) or (self.task == 'regression'):
+            groups = None
+        else:
+            groups = y
+
+        positive = []
+        for i, feature in enumerate(X.T):
+            multi = is_multimodal(feature, groups=groups, method=self.method, threshold=self.threshold)
+            # This unpleasantness is a consequence of is_multimodal returning
+            # a list of booleans if groups is not None, and a single boolean
+            # if groups is None.
+            try:
+                if any(multi):
+                    positive.append(i)
+            except TypeError:
+                if multi:
+                    positive.append(i)
+
+        if n := len(positive):
+            pos = ', '.join(str(i) for i in positive)
+            message = f"{'' if n > 1 else 'a'} multimodal distribution{'s' if n > 1 else ''}"
+            message = f"🚩 Feature{'' if n == 1 else 's'} {pos} {'has' if n == 1 else 'have'} {message}."
+            if self.warn:
+                warnings.warn(message)
+            else:
+                raise ValueError(message)
+
+        return self
+
+    def transform(self, X, y=None):
+        """
+        This detector does nothing during 'transform', only during 'fit'.
+
+        Args:
+            X (np.ndarray): The data to compare to the training data. Not used
+                by this transformer.
+            y (np.ndarray): The labels for the data.
+
+        Returns:
+            X.
+        """
+        return check_array(X)
+
+
 class ImbalanceDetector(BaseEstimator, TransformerMixin):
 
     def __init__(self, method='id', threshold=0.4, classes=None, warn=True):
@@ -512,6 +584,7 @@ class ImbalanceDetector(BaseEstimator, TransformerMixin):
                 minority class).
             classes (list): The names of the classes present in the data, even
                 if they are not present in the array `y`.
+            warn (bool): Whether to raise a warning or raise an error.
         """
         if method not in ['id', 'ir']:
             raise ValueError(f"Method must be 'id' or 'ir' but was {method}")

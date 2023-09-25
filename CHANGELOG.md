@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1, Fall 2023
+
+- All of the `sklearn` components can now be instantiated with `warn=False` in order to trigger a `ValueException` instead of a warning. This allows you to build pipelines that will break if a detector is triggered.
+- You can now pass `groups` to `redflag.distributions.is_multimodal()`. If present, the modality will be checked for each group, returning a Boolean array of values (one for each group). This allows you to check a feature partitioned by target class, for example.
+- Added `MultimodalDetector` to provide a way to check for multimodal features. If `y` is passed and is categorical, it will be used to partition the data and modality will be checked for each class.
+- Removed `RegressionMultimodalDetector`. Use `MultimodalDetector` instead.
+
+
 ## 0.3.0, 21 September 2023
 
 - Added some accessors to give access to `redflag` functions directly from `pandas.Series` objects, via an 'accessor'. For example, for a Series `s`, one can call `minority_classes = s.redflag.minority_classes()` instead of `redflag.minority_classes(s)`. Other functions include `imbalance_degree()`, `dummy_scores()` (see below). Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. **This is an experimental feature and subject to change.**

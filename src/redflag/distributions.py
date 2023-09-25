@@ -20,7 +20,7 @@ limitations under the License.
 """
 from __future__ import annotations
 
-from typing import Optional, NamedTuple, Callable
+from typing import Optional, NamedTuple, Callable, Union
 from collections import namedtuple
 from itertools import combinations
 import warnings
@@ -399,7 +399,7 @@ def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple
           ...
         ValueError: Data must be 1D.
     """
-    a = np.asarray(a)
+    a = np.squeeze(a)
     if a.ndim >= 2:
         raise ValueError("Data must be 1D.")
     if not is_standard_normal(a):
@@ -500,27 +500,40 @@ def kde_peaks(a: ArrayLike, method: str='scott', threshold: float=0.1) -> tuple[
     return find_large_peaks(*get_kde(a, method), threshold=threshold)
 
 
-def is_multimodal(a: ArrayLike, method: str='scott', threshold: float=0.1) -> bool:
+def is_multimodal(a: ArrayLike,
+                  groups:Optional[ArrayLike]=None,
+                  method: str='scott',
+                  threshold: float=0.1) -> Union[bool, np.ndarray]:
     """
     Test if the data is multimodal.
 
     Args:
         a (array): The data.
+        groups (array): Group labels, if the data is to be partitioned before
+            testing.
         method (str): The rule of thumb for bandwidth estimation. Must be one
             of 'silverman', 'scott', or 'cv'. Default 'scott'.
         threshold (float): The threshold for peak amplitude. Default 0.1.
 
     Returns:
-        bool: True if the data is multimodal.
+        bool or np.ndarray: True if the data appear to be multimodal. If groups
+        were passed, an array with one result per group is returned.
 
     Examples:
         >>> rng = np.random.default_rng(42)
-        >>> data = rng.normal(size=100)
-        >>> is_multimodal(data)
+        >>> a = rng.normal(size=200)
+        >>> is_multimodal(a)
         False
-        >>> data = np.concatenate([rng.normal(size=100)-2, rng.normal(size=100)+2])
-        >>> is_multimodal(data)
+        >>> b = np.concatenate([rng.normal(size=100)-2, rng.normal(size=100)+2])
+        >>> is_multimodal(b)
         True
+        >>> c = np.concatenate([a, b])
+        >>> is_multimodal(c, groups=[0]*200 + [1]*200)
+        array([False,  True])
     """
-    x, y = kde_peaks(a, method=method, threshold=threshold)
-    return len(x) > 1
+    a = np.asarray(a)
+    result = []
+    for group in iter_groups(groups):
+        x, y = kde_peaks(a[group], method=method, threshold=threshold)
+        result.append(len(x) > 1)
+    return result[0] if len(result) == 1 else np.array(result)
