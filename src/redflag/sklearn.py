@@ -1014,7 +1014,7 @@ pipeline = Pipeline(
         ("rf.imbalance", ImbalanceDetector()),
         ("rf.clip", ClipDetector()),
         ("rf.correlation", CorrelationDetector()),
-        # ("rf.multimodal", MultimodalDetector()),
+        ("rf.multimodality", MultimodalityDetector()),
         ("rf.outlier", OutlierDetector()),
         ("rf.distributions", DistributionComparator()),
         ("rf.importance", ImportanceDetector()),

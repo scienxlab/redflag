@@ -1,10 +1,11 @@
 # Changelog
 
-## 0.3.1, Fall 2023
+## 0.3.1, coming Fall 2023
 
+- `redflag` can now be installed by the `conda` package and environment manager. To do so, use `conda install -c conda-forge redflag`.
 - All of the `sklearn` components can now be instantiated with `warn=False` in order to trigger a `ValueException` instead of a warning. This allows you to build pipelines that will break if a detector is triggered.
 - You can now pass `groups` to `redflag.distributions.is_multimodal()`. If present, the modality will be checked for each group, returning a Boolean array of values (one for each group). This allows you to check a feature partitioned by target class, for example.
-- Added `MultimodalDetector` to provide a way to check for multimodal features. If `y` is passed and is categorical, it will be used to partition the data and modality will be checked for each class.
+- Added `MultimodalityDetector` to provide a way to check for multimodal features. If `y` is passed and is categorical, it will be used to partition the data and modality will be checked for each class.
 - Removed `RegressionMultimodalDetector`. Use `MultimodalDetector` instead.
 
 
