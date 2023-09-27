@@ -7,7 +7,7 @@ name = "redflag"
 dynamic = ["version"]
 requires-python = ">=3.8"
 authors = [{ name="Matt Hall", email="kwinkunks@gmail.com" },]
-description = "Raise red flags on machine learning datasets."
+description = "Safety net for machine learning pipelines."
 license = {file = "LICENSE"}
 readme = "README.md"
 keywords = ["machine learning", "data science", "quality assurance"]
