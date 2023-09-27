@@ -36,6 +36,14 @@ redflag.independence module
    :undoc-members:
    :show-inheritance:
 
+redflag.markov module
+---------------------
+
+.. automodule:: redflag.markov
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 redflag.outliers module
 -----------------------
 

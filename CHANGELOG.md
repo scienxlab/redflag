@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.1, 28 September 2023
+## 0.4.0, 28 September 2023
 
 - `redflag` can now be installed by the `conda` package and environment manager. To do so, use `conda install -c conda-forge redflag`.
 - All of the `sklearn` components can now be instantiated with `warn=False` in order to trigger a `ValueException` instead of a warning. This allows you to build pipelines that will break if a detector is triggered.
