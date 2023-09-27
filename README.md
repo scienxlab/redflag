@@ -1,12 +1,13 @@
-# Redflag
+# redflag
 
 [![Build and test](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml)
 [![Documentation](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml)
 [![PyPI version](https://img.shields.io/pypi/v/redflag.svg)](https://pypi.org/project/redflag/)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/redflag.svg)](https://anaconda.org/conda-forge/redflag)
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag/)
 [![PyPI license](https://img.shields.io/pypi/l/redflag.svg)](https://pypi.org/project/redflag/)
 
-🚩 `redflag` aims to be an automatic safety net for machine learning datasets. The vision is to accept input of a Pandas `DataFrame` or NumPy `ndarray` (one for each of the input `X` and target `y` in a machine learning task). `redflag` will provide an analysis of each feature, and of the target, including aspects such as class imbalance, leakage, outliers, anomalous data patterns, threats to the IID assumption, and so on. The goal is to complement other projects like `pandas-profiling` and `greatexpectations`.
+🚩 `redflag` aims to be an automatic safety net for machine learning datasets. The vision is to accept input of a Pandas `DataFrame` or NumPy `ndarray` representing the input `X` and target `y` in a machine learning task. `redflag` will provide an analysis of each feature, and of the target, including aspects such as class imbalance, leakage, outliers, anomalous data patterns, threats to the IID assumption, and so on. The goal is to complement other projects like `pandas-profiling` and `greatexpectations`.
 
 
 ## Installation
