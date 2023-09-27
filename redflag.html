@@ -445,32 +445,38 @@ of ‘silverman’, ‘scott’, or ‘cv’. Default ‘scott’.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.distributions.is_multimodal">
-<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">is_multimodal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scott'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#redflag.distributions.is_multimodal" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">redflag.distributions.</span></span><span class="sig-name descname"><span class="pre">is_multimodal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'scott'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#redflag.distributions.is_multimodal" title="Permalink to this definition">#</a></dt>
 <dd><p>Test if the data is multimodal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>a</strong> (<em>array</em>) – The data.</p></li>
+<li><p><strong>groups</strong> (<em>array</em>) – Group labels, if the data is to be partitioned before
+testing.</p></li>
 <li><p><strong>method</strong> (<em>str</em>) – The rule of thumb for bandwidth estimation. Must be one
 of ‘silverman’, ‘scott’, or ‘cv’. Default ‘scott’.</p></li>
 <li><p><strong>threshold</strong> (<em>float</em>) – The threshold for peak amplitude. Default 0.1.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the data is multimodal.</p>
+<dd class="field-even"><p>True if the data appear to be multimodal. If groups
+were passed, an array with one result per group is returned.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p>bool or np.ndarray</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">is_multimodal</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_multimodal</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">is_multimodal</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_multimodal</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 <span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_multimodal</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">200</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">200</span><span class="p">)</span>
+<span class="go">array([False,  True])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1104,6 +1110,156 @@ the cutoff is set to (M-1)/M where M is the number of features.</p></li>
 </dd></dl>
 
 </section>
+<section id="module-redflag.markov">
+<span id="redflag-markov-module"></span><h2>redflag.markov module<a class="headerlink" href="#module-redflag.markov" title="Permalink to this heading">#</a></h2>
+<p>Functions related to Markov chains. This code was originally implemented in
+<a class="reference external" href="https://github.com/agilescientific/striplog">https://github.com/agilescientific/striplog</a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">Markov_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observed_counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.chi_squared">
+<span class="sig-name descname"><span class="pre">chi_squared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.chi_squared" title="Permalink to this definition">#</a></dt>
+<dd><p>The chi-squared statistic for the given transition
+frequencies.</p>
+<p>Also returns the critical statistic at the given confidence
+level q (default 95%).</p>
+<p>If the first number is bigger than the second number,
+then you can reject the hypothesis that the sequence
+is randomly ordered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>q</strong> (<em>float</em>) – The confidence level, as a float in the range 0 to 1.
+Default: 0.95.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The chi-squared statistic.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.degrees_of_freedom">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">degrees_of_freedom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#redflag.markov.Markov_chain.degrees_of_freedom" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.expected_freqs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expected_freqs</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.expected_freqs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.from_sequence">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings_are_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.from_sequence" title="Permalink to this definition">#</a></dt>
+<dd><p>Parse a sequence and make the transition matrix of the specified order.</p>
+<p><strong>Provide sequence(s) ordered in upwards direction.</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sequence</strong> (<em>list-like</em>) – A list-like, or list-like of list-likes.
+The inner list-likes represent sequences of states.
+For example, can be a string or list of strings, or
+a list or list of lists.</p></li>
+<li><p><strong>states</strong> (<em>list-like</em>) – A list or array of the names of the states.
+If not provided, it will be inferred from the data.</p></li>
+<li><p><strong>strings_are_states</strong> (<em>bool</em>) – <p>True if the strings are
+themselves states (i.e. words or tokens) and not
+sequences of one-character states. For example,
+set to True if you provide something like:</p>
+<blockquote>
+<div><p>[‘sst’, ‘mud’, ‘mud’, ‘sst’, ‘lst’, ‘lst’]</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>include_self</strong> (<em>bool</em>) – Whether to include self-to-self
+transitions (default is <cite>False</cite>: do not include them).</p></li>
+<li><p><strong>step</strong> (<em>integer</em>) – The distance to step. Default is 1: use
+the previous state only. If 2, then the previous-but-
+one state is used as well as the previous state (and
+the matrix has one more dimension).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.generate_states">
+<span class="sig-name descname"><span class="pre">generate_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.generate_states" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates the next states of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – The number of future states to generate.</p></li>
+<li><p><strong>current_state</strong> (<em>str</em>) – The state of the current random variable.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list. The next n states.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.normalized_difference">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalized_difference</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.normalized_difference" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="redflag.markov.Markov_chain.observed_freqs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observed_freqs</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.observed_freqs" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.markov.hollow_matrix">
+<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">hollow_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.hollow_matrix" title="Permalink to this definition">#</a></dt>
+<dd><p>Return hollow matrix (zeros on diagonal).</p>
+<dl class="simple">
+<dt>Args</dt><dd><p>M (ndarray): a ‘square’ ndarray.</p>
+</dd>
+<dt>Returns</dt><dd><p>ndarray. The same array with zeros on the diagonal.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.markov.observations">
+<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_of_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.observations" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute observation matrix.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.markov.regularize">
+<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">regularize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings_are_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#redflag.markov.regularize" title="Permalink to this definition">#</a></dt>
+<dd><p>Turn a sequence or sequence of sequences into a tuple of
+the unique elements in the sequence(s), plus a sequence
+of sequences (sort of equivalent to <cite>np.atleast_2d()</cite>).</p>
+<dl>
+<dt>Args</dt><dd><dl>
+<dt>sequence (list-like): A list-like container of either</dt><dd><p>states, or of list-likes of states.</p>
+</dd>
+<dt>strings_are_states (bool): True if the strings are</dt><dd><p>themselves states (i.e. words or tokens) and not
+sequences of one-character states. For example,
+set to True if you provide something like:</p>
+<blockquote>
+<div><p>[‘sst’, ‘mud’, ‘mud’, ‘sst’, ‘lst’, ‘lst’]</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="simple">
+<dt>tuple. A tuple of the unique states, and a sequence</dt><dd><p>of sequences.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-redflag.outliers">
 <span id="redflag-outliers-module"></span><h2>redflag.outliers module<a class="headerlink" href="#module-redflag.outliers" title="Permalink to this heading">#</a></h2>
 <p>Functions related to understanding features.</p>
@@ -1321,6 +1477,11 @@ the threshold will be used to compute <cite>p</cite>.</p></li>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.is_ordered">
+<span class="sig-name descname"><span class="pre">is_ordered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.is_ordered" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.minority_classes">
 <span class="sig-name descname"><span class="pre">minority_classes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.minority_classes" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
@@ -1345,7 +1506,7 @@ decorates. Need to do this to accept an argument on the decorator.</p>
 <p>Scikit-learn components.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">BaseRedflagDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warning</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">BaseRedflagDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector.fit">
@@ -1353,16 +1514,38 @@ decorates. Need to do this to accept an argument on the decorator.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit to data, then transform it.</p>
+<p>Fits transformer to <cite>X</cite> and <cite>y</cite> with optional parameters <cite>fit_params</cite>
+and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Input samples.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em><em>,                 </em><em>default=None</em>) – Target values (None for unsupervised transformations).</p></li>
+<li><p><strong>**fit_params</strong> (<em>dict</em>) – Additional fit parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray array of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.BaseRedflagDetector.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.BaseRedflagDetector.transform" title="Permalink to this definition">#</a></dt>
-<dd><p>Can check X here, but y is not passed into here by <cite>fit</cite>.</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.ClipDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ClipDetector</span></span><a class="headerlink" href="#redflag.sklearn.ClipDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ClipDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ClipDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
 <p>Transformer that detects features with clipped values.</p>
 <p class="rubric">Example</p>
@@ -1382,7 +1565,7 @@ decorates. Need to do this to accept an argument on the decorator.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.CorrelationDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">CorrelationDetector</span></span><a class="headerlink" href="#redflag.sklearn.CorrelationDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">CorrelationDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.CorrelationDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
 <p>Transformer that detects features correlated to themselves.</p>
 <p class="rubric">Example</p>
@@ -1404,7 +1587,7 @@ decorates. Need to do this to accept an argument on the decorator.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.Detector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">Detector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warning</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.Detector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">Detector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.Detector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
 </dd></dl>
 
@@ -1530,7 +1713,7 @@ data <cite>X</cite> are accepted but not used for the p</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceComparator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceComparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_class_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceComparator" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceComparator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_class_diff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceComparator" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceComparator.fit">
@@ -1599,7 +1782,7 @@ distributions.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImbalanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImbalanceDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.ImbalanceDetector.fit">
@@ -1647,7 +1830,7 @@ by this transformer.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.ImportanceDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImportanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImportanceDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">ImportanceDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.ImportanceDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.ImportanceDetector.fit">
@@ -1695,8 +1878,101 @@ by this transformer.</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.InsufficientDataDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">InsufficientDataDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.InsufficientDataDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
+<p>Transformer that detects datasets with a small number of samples compared
+to the number of features (or, equivalently, a lot of features compared to
+the number of samples). It may be difficult to learn a model on such a
+dataset. If the number of samples is smaller than the square of the number
+of features, this transformer will raise a warning.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.InsufficientDataDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.InsufficientDataDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.InsufficientDataDetector.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.InsufficientDataDetector.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit to data, then transform it.</p>
+<p>Fits transformer to <cite>X</cite> and <cite>y</cite> with optional parameters <cite>fit_params</cite>
+and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Input samples.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em><em>,                 </em><em>default=None</em>) – Target values (None for unsupervised transformations).</p></li>
+<li><p><strong>**fit_params</strong> (<em>dict</em>) – Additional fit parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray array of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.InsufficientDataDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.InsufficientDataDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks X for sufficient data.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="redflag.sklearn.MultimodalityDetector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">MultimodalityDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scott'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultimodalityDetector" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.MultimodalityDetector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultimodalityDetector.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks for multimodality in the features of X. Each feature is checked
+separately.</p>
+<p>If <cite>y</cite> is categorical, the features are checked for multimodality
+separately for each class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data. Not used
+by this transformer.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.MultimodalityDetector.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultimodalityDetector.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>This detector does nothing during ‘transform’, only during ‘fit’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – The data to compare to the training data. Not used
+by this transformer.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – The labels for the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ol class="upperalpha simple" start="24">
+<li></li>
+</ol>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.MultivariateOutlierDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">MultivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">MultivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <p>Transformer that detects if there are more than the expected number of
 outliers when the dataset is considered as a whole, in a mutlivariate
@@ -1734,6 +2010,29 @@ sense. (To consider feature distributions separately, use the
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="redflag.sklearn.MultivariateOutlierDetector.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit to data, then transform it.</p>
+<p>Fits transformer to <cite>X</cite> and <cite>y</cite> with optional parameters <cite>fit_params</cite>
+and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Input samples.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>) or </em><em>(</em><em>n_samples</em><em>, </em><em>n_outputs</em><em>)</em><em>,                 </em><em>default=None</em>) – Target values (None for unsupervised transformations).</p></li>
+<li><p><strong>**fit_params</strong> (<em>dict</em>) – Additional fit parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray array of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.MultivariateOutlierDetector.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.MultivariateOutlierDetector.transform" title="Permalink to this definition">#</a></dt>
 <dd><p>Checks X (and y, if it is continuous data) for outlier values.</p>
@@ -1743,7 +2042,7 @@ sense. (To consider feature distributions separately, use the
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">OutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">OutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.OutlierDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.sklearn.OutlierDetector.fit">
@@ -1815,16 +2114,6 @@ instantiation.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="redflag.sklearn.RegressionMultimodalDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">RegressionMultimodalDetector</span></span><a class="headerlink" href="#redflag.sklearn.RegressionMultimodalDetector" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
-<p>Transformer that detects features with non-unimodal distributions. In a
-regression task, it considers the univariate distributions of the features
-and the target. Do not use this detector for classification tasks, use
-<cite>MultimodalDetector</cite> instead.</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.RfPipeline">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">RfPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">steps</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.RfPipeline" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></p>
@@ -1862,7 +2151,7 @@ of the pipeline.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.sklearn.UnivariateOutlierDetector">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">UnivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.UnivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">UnivariateOutlierDetector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.sklearn.UnivariateOutlierDetector" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector" title="redflag.sklearn.BaseRedflagDetector"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a></p>
 <p>Transformer that detects if there are more than the expected number of
 outliers in each feature considered separately. (To consider all features
@@ -1904,7 +2193,7 @@ together, use the <cite>OutlierDetector</cite> instead.)</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.sklearn.make_detector_pipeline">
-<span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">make_detector_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funcs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warnings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pipeline</span></span></span><a class="headerlink" href="#redflag.sklearn.make_detector_pipeline" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">redflag.sklearn.</span></span><span class="sig-name descname"><span class="pre">make_detector_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funcs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pipeline</span></span></span><a class="headerlink" href="#redflag.sklearn.make_detector_pipeline" title="Permalink to this definition">#</a></dt>
 <dd><p>Make a detector from one or more ‘alarm’ functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1913,9 +2202,9 @@ together, use the <cite>OutlierDetector</cite> instead.)</p>
 meets some condition you want to trigger the alarm for. For example,
 <cite>has_negative = lambda x: np.any(x &lt; 0)</cite> to alert you to the
 presence of negative values. Can also be a mappable of functions to
-warnings.</p></li>
-<li><p><strong>warnings</strong> – The warnings corresponding to the functions. It’s probably
-safer to pass the functions with their warnings in a dict.</p></li>
+messages.</p></li>
+<li><p><strong>messages</strong> – The messages corresponding to the functions. It’s probably
+safer to pass the functions with their messages in a dict.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2165,6 +2454,37 @@ is all the data or 10_000 random samples, whichever is smaller.</p></li>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">is_multioutput</span><span class="p">([[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]],[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">]]])</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="gr">TypeError</span>: <span class="n">Target array has too many dimensions.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.target.is_ordered">
+<span class="sig-prename descclassname"><span class="pre">redflag.target.</span></span><span class="sig-name descname"><span class="pre">is_ordered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#redflag.target.is_ordered" title="Permalink to this definition">#</a></dt>
+<dd><p>Decide if a single target is ordered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array</em>) – A list of class labels.</p></li>
+<li><p><strong>q</strong> (<em>float</em>) – The confidence level, as a float in the range 0 to 1.
+Default: 0.95.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if y is ordered.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_ordered</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_ordered</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_ordered</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">200</span><span class="p">))</span>
+<span class="go">False</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2946,6 +3266,22 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.independence.is_correlated"><code class="docutils literal notranslate"><span class="pre">is_correlated()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-redflag.markov">redflag.markov module</a><ul>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain"><code class="docutils literal notranslate"><span class="pre">Markov_chain</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.chi_squared"><code class="docutils literal notranslate"><span class="pre">Markov_chain.chi_squared()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.degrees_of_freedom"><code class="docutils literal notranslate"><span class="pre">Markov_chain.degrees_of_freedom</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.expected_freqs"><code class="docutils literal notranslate"><span class="pre">Markov_chain.expected_freqs</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.from_sequence"><code class="docutils literal notranslate"><span class="pre">Markov_chain.from_sequence()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.generate_states"><code class="docutils literal notranslate"><span class="pre">Markov_chain.generate_states()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.normalized_difference"><code class="docutils literal notranslate"><span class="pre">Markov_chain.normalized_difference</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.Markov_chain.observed_freqs"><code class="docutils literal notranslate"><span class="pre">Markov_chain.observed_freqs</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.markov.hollow_matrix"><code class="docutils literal notranslate"><span class="pre">hollow_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.observations"><code class="docutils literal notranslate"><span class="pre">observations()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.markov.regularize"><code class="docutils literal notranslate"><span class="pre">regularize()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-redflag.outliers">redflag.outliers module</a><ul>
 <li><a class="reference internal" href="#redflag.outliers.expected_outliers"><code class="docutils literal notranslate"><span class="pre">expected_outliers()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.outliers.get_outliers"><code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code></a></li>
@@ -2958,6 +3294,7 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor</span></code></a><ul>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.dummy_scores"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.dummy_scores()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.imbalance_degree"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.imbalance_degree()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.is_ordered"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.is_ordered()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.minority_classes"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.minority_classes()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.report"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.report()</span></code></a></li>
 </ul>
@@ -2968,6 +3305,7 @@ per column.</p>
 <li><a class="reference internal" href="#module-redflag.sklearn">redflag.sklearn module</a><ul>
 <li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector</span></code></a><ul>
 <li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector.fit"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector.fit_transform"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector.fit_transform()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.sklearn.BaseRedflagDetector.transform"><code class="docutils literal notranslate"><span class="pre">BaseRedflagDetector.transform()</span></code></a></li>
 </ul>
 </li>
@@ -3001,8 +3339,20 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.sklearn.ImportanceDetector.transform"><code class="docutils literal notranslate"><span class="pre">ImportanceDetector.transform()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#redflag.sklearn.InsufficientDataDetector"><code class="docutils literal notranslate"><span class="pre">InsufficientDataDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.InsufficientDataDetector.fit"><code class="docutils literal notranslate"><span class="pre">InsufficientDataDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.InsufficientDataDetector.fit_transform"><code class="docutils literal notranslate"><span class="pre">InsufficientDataDetector.fit_transform()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.InsufficientDataDetector.transform"><code class="docutils literal notranslate"><span class="pre">InsufficientDataDetector.transform()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#redflag.sklearn.MultimodalityDetector"><code class="docutils literal notranslate"><span class="pre">MultimodalityDetector</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.sklearn.MultimodalityDetector.fit"><code class="docutils literal notranslate"><span class="pre">MultimodalityDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.MultimodalityDetector.transform"><code class="docutils literal notranslate"><span class="pre">MultimodalityDetector.transform()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector</span></code></a><ul>
 <li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector.fit"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector.fit()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector.fit_transform"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector.fit_transform()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.sklearn.MultivariateOutlierDetector.transform"><code class="docutils literal notranslate"><span class="pre">MultivariateOutlierDetector.transform()</span></code></a></li>
 </ul>
 </li>
@@ -3012,7 +3362,6 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.sklearn.OutlierDetector.transform"><code class="docutils literal notranslate"><span class="pre">OutlierDetector.transform()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#redflag.sklearn.RegressionMultimodalDetector"><code class="docutils literal notranslate"><span class="pre">RegressionMultimodalDetector</span></code></a></li>
 <li><a class="reference internal" href="#redflag.sklearn.RfPipeline"><code class="docutils literal notranslate"><span class="pre">RfPipeline</span></code></a><ul>
 <li><a class="reference internal" href="#redflag.sklearn.RfPipeline.transform"><code class="docutils literal notranslate"><span class="pre">RfPipeline.transform()</span></code></a></li>
 </ul>
@@ -3031,6 +3380,7 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.target.is_continuous"><code class="docutils literal notranslate"><span class="pre">is_continuous()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.is_multiclass"><code class="docutils literal notranslate"><span class="pre">is_multiclass()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.is_multioutput"><code class="docutils literal notranslate"><span class="pre">is_multioutput()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.target.is_ordered"><code class="docutils literal notranslate"><span class="pre">is_ordered()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.target.n_classes"><code class="docutils literal notranslate"><span class="pre">n_classes()</span></code></a></li>
 </ul>
 </li>
