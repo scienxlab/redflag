@@ -31,7 +31,8 @@ from scipy.stats import wasserstein_distance
 from scipy.stats import cumfreq
 from sklearn.utils.metaestimators import available_if
 
-from .utils import is_clipped, proportion_to_stdev, stdev_to_proportion
+from .utils import is_clipped, proportion_to_stdev
+from .utils import stdev_to_proportion, has_few_samples
 from .target import is_continuous, dummy_scores
 from .distributions import is_multimodal
 from .independence import is_correlated
@@ -106,8 +107,8 @@ class ClipDetector(BaseRedflagDetector):
                [4, 3],
                [5, 3]])
     """
-    def __init__(self):
-        super().__init__(is_clipped, "may be clipped")
+    def __init__(self, warn=True):
+        super().__init__(is_clipped, "may be clipped", warn=warn)
 
 
 class CorrelationDetector(BaseRedflagDetector):
@@ -128,8 +129,8 @@ class CorrelationDetector(BaseRedflagDetector):
                [0.92571458, 0.81188195],
                [0.7482485 , 0.84147098]])
     """
-    def __init__(self):
-        super().__init__(is_correlated, "may be correlated")
+    def __init__(self, warn=True):
+        super().__init__(is_correlated, "may be correlated", warn=warn)
 
 
 class UnivariateOutlierDetector(BaseRedflagDetector):
@@ -165,8 +166,8 @@ class UnivariateOutlierDetector(BaseRedflagDetector):
                [-0.55581573, -2.01881162],
                [-0.90942756,  0.36922933]])
     """
-    def __init__(self, **kwargs):
-        super().__init__(has_outliers, "are excess univariate outliers", **kwargs)
+    def __init__(self, warn=True, **kwargs):
+        super().__init__(has_outliers, "are excess univariate outliers", warn=warn, **kwargs)
 
 
 class MultivariateOutlierDetector(BaseEstimator, TransformerMixin):
@@ -482,6 +483,44 @@ class OutlierDetector(BaseEstimator, TransformerMixin):
         # When fitting, we do not run transform().
         return X
 
+
+class InsufficientDataDetector(BaseRedflagDetector):
+    """
+    Transformer that detects datasets with a small number of samples compared
+    to the number of features (or, equivalently, a lot of features compared to
+    the number of samples). It may be difficult to learn a model on such a
+    dataset. If the number of samples is smaller than the square of the number
+    of features, this transformer will raise a warning.
+    """
+
+    def __init__(self, warn=True):
+        """
+        Constructor for the class.
+
+        Args:
+            warn (bool): Whether to raise a warning or raise an error.
+        """
+        self.warn = warn
+
+    def fit(self, X, y=None):
+        return self
+
+    def fit_transform(self, X, y=None):
+        return self.transform(X, y)
+
+    def transform(self, X, y=None):
+        """
+        Checks X for sufficient data.
+        """
+        X = check_array(X)
+        N, M = X.shape
+        if has_few_samples(X):
+            message = f"🚩 Dataset contains only {N} samples, fewer than the square of the number of features, {M}."
+            if self.warn:
+                warnings.warn(message)
+            else:
+                raise ValueError(message)
+        return X
 
 class MultimodalityDetector(BaseEstimator, TransformerMixin):
 

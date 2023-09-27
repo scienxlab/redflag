@@ -29,6 +29,11 @@ def test_clip_detector():
     with pytest.warns(UserWarning, match="Target 0 has samples that may be clipped."):
         pipe.fit_transform(X, y)
 
+    # Raises:
+    pipe = make_pipeline(rf.ClipDetector(warn=False))
+    with pytest.raises(ValueError) as e:
+        pipe.fit_transform(X, y)
+
     # Does not warn:
     X = np.array([[2, 1], [3, 2], [4, 3], [5, 4]])
     pipe.fit_transform(X)
@@ -42,6 +47,28 @@ def test_correlation_detector():
     rng = np.random.default_rng(0)
     X = np.stack([rng.uniform(size=20), np.sin(np.linspace(0, 1, 20))]).T
     with pytest.warns(UserWarning, match="Feature 1 has samples that may be correlated."):
+        pipe.fit_transform(X)
+
+
+def test_insufficient_data_detector():
+    """
+    Checks for too few samples.
+    """
+    pipe = make_pipeline(rf.InsufficientDataDetector())
+    rng = np.random.default_rng(0)
+
+    # Does not warn:
+    X = rng.normal(size=(36, 6))
+    pipe.fit_transform(X)
+
+    # Warns:
+    X = rng.normal(size=(35, 6))
+    with pytest.warns(UserWarning, match="Dataset contains only 35 samples"):
+        pipe.fit_transform(X)
+
+    # Raises:
+    pipe = make_pipeline(rf.InsufficientDataDetector(warn=False))
+    with pytest.raises(ValueError) as e:
         pipe.fit_transform(X)
 
 
