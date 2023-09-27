@@ -340,9 +340,12 @@ def is_ordered(y: ArrayLike, q: float=0.95) -> bool:
         >>> is_ordered(rng.integers(low=0, high=9, size=200))
         False
     """
-    if is_continuous(y):
+    y_ = np.asanyarray(y)
+    if is_continuous(y_):
         raise ValueError('Cannot check order of continuous data.')
+    if y_.ndim > 1:
+        raise ValueError('Cannot check order of multilabel data.')
     sas = isinstance(y[0], str)
-    m = Markov_chain.from_sequence(y, strings_are_states=sas, include_self=True)
+    m = Markov_chain.from_sequence(y_, strings_are_states=sas, include_self=True)
     chi2, crit, perc = m.chi_squared(q=q)
     return chi2 > crit
