@@ -469,7 +469,10 @@ def find_large_peaks(x: ArrayLike, y: ArrayLike, threshold: float=0.1) -> tuple[
     x, y = np.asarray(x), np.asarray(y)
     pos, hts = find_peaks(y, height=y)
     hts = hts['peak_heights']
-    z, h = np.array([(x[p].item(), h) for p, h in zip(pos, hts) if h > threshold * hts.max()]).T
+    if any(hts):
+        z, h = np.array([(x[p].item(), h) for p, h in zip(pos, hts) if h > threshold * hts.max()]).T
+    else:
+        z, h = np.array([]), np.array([])
     Peaks = namedtuple('Peaks', ['positions', 'heights'])
     return Peaks(z, h)
 
@@ -533,7 +536,10 @@ def is_multimodal(a: ArrayLike,
     """
     a = np.asarray(a)
     result = []
-    for group in iter_groups(groups):
-        x, y = kde_peaks(a[group], method=method, threshold=threshold)
-        result.append(len(x) > 1)
+    with warnings.catch_warnings(record=True) as w:
+        for group in iter_groups(groups):
+            x, y = kde_peaks(a[group], method=method, threshold=threshold)
+            result.append(len(x) > 1)
+    if w:
+        warnings.warn('ℹ️ Multimodality detection may not have been possible for all groups.', stacklevel=2)
     return result[0] if len(result) == 1 else np.array(result)

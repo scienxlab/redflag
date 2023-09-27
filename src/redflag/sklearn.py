@@ -567,17 +567,19 @@ class MultimodalityDetector(BaseEstimator, TransformerMixin):
             groups = y
 
         positive = []
-        for i, feature in enumerate(X.T):
-            multi = is_multimodal(feature, groups=groups, method=self.method, threshold=self.threshold)
-            # This unpleasantness is a consequence of is_multimodal returning
-            # a list of booleans if groups is not None, and a single boolean
-            # if groups is None.
-            try:
-                if any(multi):
-                    positive.append(i)
-            except TypeError:
-                if multi:
-                    positive.append(i)
+        with warnings.catch_warnings(record=True) as w:
+
+            for i, feature in enumerate(X.T):
+                multi = is_multimodal(feature, groups=groups, method=self.method, threshold=self.threshold)
+                # This unpleasantness is a consequence of is_multimodal returning
+                # a list of booleans if groups is not None, and a single boolean
+                # if groups is None.
+                try:
+                    if any(multi):
+                        positive.append(i)
+                except TypeError:
+                    if multi:
+                        positive.append(i)
 
         if n := len(positive):
             pos = ', '.join(str(i) for i in positive)
@@ -587,6 +589,9 @@ class MultimodalityDetector(BaseEstimator, TransformerMixin):
                 warnings.warn(message)
             else:
                 raise ValueError(message)
+
+        if w:
+            warnings.warn("ℹ️ Multimodality detection may not have succeeded for all groups in all features.")
 
         return self
 
@@ -1063,13 +1068,13 @@ pipeline = Pipeline(
 
 
 class Detector(BaseRedflagDetector):
-    def __init__(self, func, warning=None):
-        if warning is None:
-            warning = f"fail custom func {func.__name__}()"
-        super().__init__(func, warning)
+    def __init__(self, func, message=None):
+        if message is None:
+            message = f"fail custom func {func.__name__}()"
+        super().__init__(func, message)
 
 
-def make_detector_pipeline(funcs, warnings=None) -> Pipeline:
+def make_detector_pipeline(funcs, messages=None) -> Pipeline:
     """
     Make a detector from one or more 'alarm' functions.
 
@@ -1078,18 +1083,18 @@ def make_detector_pipeline(funcs, warnings=None) -> Pipeline:
             meets some condition you want to trigger the alarm for. For example,
             `has_negative = lambda x: np.any(x < 0)` to alert you to the
             presence of negative values. Can also be a mappable of functions to
-            warnings.
-        warnings: The warnings corresponding to the functions. It's probably
-            safer to pass the functions with their warnings in a dict.
+            messages.
+        messages: The messages corresponding to the functions. It's probably
+            safer to pass the functions with their messages in a dict.
 
     Returns:
         Pipeline
     """
     detectors = []
     if isinstance(funcs, dict):
-        warnings = funcs.values()
-    elif warnings is None:
-        warnings = [None for _ in funcs]
-    for func, warn in zip(funcs, warnings):
-        detectors.append(Detector(func, warn))
+        messages = funcs.values()
+    elif messages is None:
+        messages = [None for _ in funcs]
+    for func, message in zip(funcs, messages):
+        detectors.append(Detector(func, message))
     return make_pipeline(*detectors)
