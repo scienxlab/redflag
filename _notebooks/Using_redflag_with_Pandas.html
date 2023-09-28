@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Tutorial" href="Tutorial.html" /><link rel="prev" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="🚩 Tutorial" href="Tutorial.html" /><link rel="prev" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2023.03.27 -->
         <title>🚩 Using redflag with Pandas - redflag documentation</title>
@@ -137,7 +137,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -165,7 +165,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Basic_usage.html">🚩 Basic usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">🚩 Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
@@ -214,7 +214,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -234,7 +234,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.4.0rc1&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.4.0rc2&#39;
 </pre></div>
 </div>
 </div>
@@ -398,6 +398,8 @@
 </table>
 </div></div></div>
 </div>
+<section id="series-accessor">
+<h2>Series accessor<a class="headerlink" href="#series-accessor" title="Permalink to this heading">#</a></h2>
 <p>For the time being, there are only accessors on Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects. For example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -428,8 +430,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.25070659735756834,
- &#39;roc_auc&#39;: 0.5002038872861748,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.2552082708719739,
+ &#39;roc_auc&#39;: 0.503090073421503,
  &#39;strategy&#39;: &#39;stratified&#39;,
  &#39;task&#39;: &#39;classification&#39;}
 </pre></div>
@@ -461,9 +463,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Continuous data suitable for regression
-Outliers:    [  34   35  140  141  142  143  175  532  575  581  583  633  662  768
-  769  773  801 1316 1498 1547 1744 1754 1756 1778 1779 1780 1784 1788
- 1808 1812 2884 2932 2973 2974 3004 3087 3100 3109]
+Outliers:    [  34   35  140  141  142  143  175  532  575  581  583  633  662  757
+  768  769  801 1316 1498 1547 1744 1754 1756 1778 1779 1780 1784 1788
+ 1808 1812 2884 2932 2973 2974 3004 3087 3094 3100 3109]
 Correlated:  True
 Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, &#39;r2&#39;: 0.0}}
 </pre></div>
@@ -471,6 +473,11 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 </div>
 </div>
 <p>This is an experimental feature; future releases will have more functions. Feedback welcome!</p>
+</section>
+<section id="dataframe-accessor">
+<h2>DataFrame accessor<a class="headerlink" href="#dataframe-accessor" title="Permalink to this heading">#</a></h2>
+<p>Coming soon!</p>
+</section>
 </section>
 
         </article>
@@ -483,7 +490,7 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Tutorial</div>
+                <div class="title">🚩 Tutorial</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -516,8 +523,28 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas</a><ul>
+<li><a class="reference internal" href="#series-accessor">Series accessor</a></li>
+<li><a class="reference internal" href="#dataframe-accessor">DataFrame accessor</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
