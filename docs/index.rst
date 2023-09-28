@@ -22,11 +22,23 @@ Quick start
 .. toctree::
     :caption: Quick start
 
-Install ``redflag`` with pip:
+Install ``redflag`` with pip or with ``conda`` from the ``conda-forge`` channel:
 
 .. code-block:: shell
 
     pip install redflag
+
+Import ``redflag`` in your Python program:
+
+.. code-block:: python
+
+    import redflag as rf
+
+There are three main ways to use ``redflag``:
+
+1. ``scikit-learn`` components for your pipelines, e.g. ``rf.ImbalanceDetector().fit_transform(X, y)``.
+2. ``pandas`` accessors on Series and DataFrames, e.g. ``df['target'].redflag.imbalance_degree()``.
+3. As a library of standalone functions, e.g. ``rf.imbalance_degree(y)``.
 
 Carry on exploring with the user guide below.
 
