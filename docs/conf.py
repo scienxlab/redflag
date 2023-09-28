@@ -83,7 +83,7 @@ exclude_patterns = ['_build', 'notebooks']
 #
 # https://sphinx-themes.org/sample-sites/furo/
 html_theme = 'furo'
-
+html_title = ''
 html_theme_options = {
     "sidebar_hide_name": True,
 }
