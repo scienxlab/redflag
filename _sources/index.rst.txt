@@ -6,14 +6,15 @@
    `Fork on GitHub <https://github.com/scienxlab/redflag>`_
 
 
-Redflag: An Entrance Exam for Data
-==================================
+Redflag: safer ML by design
+===========================
 
-    | ``redflag`` aims to be an automatic safety net for
-    | machine learning datasets. Given a ``DataFrame`` or
-    | ``ndarray``, ``redflag`` will analyse each feature,
-    | including aspects such as class imbalance, leakage, outliers,
-    | anomalous data patterns, threats to the IID assumption, etc.
+    | ``redflag`` is a lightweight safety net for machine
+    | learning. Given a ``DataFrame`` or ``ndarray``,
+    | ``redflag`` will analyse the features and the target,
+    | and warn you about class imbalance, leakage, outliers,
+    | anomalous data patterns, threats to the IID assumption,
+    | and more.
 
 
 Quick start
