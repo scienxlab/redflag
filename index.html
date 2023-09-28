@@ -238,10 +238,20 @@
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 </div>
-<p>Install <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with pip:</p>
+<p>Install <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with pip or with <code class="docutils literal notranslate"><span class="pre">conda</span></code> from the <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code> channel:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>redflag
 </pre></div>
 </div>
+<p>Import <code class="docutils literal notranslate"><span class="pre">redflag</span></code> in your Python program:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">redflag</span> <span class="k">as</span> <span class="nn">rf</span>
+</pre></div>
+</div>
+<p>There are three main ways to use <code class="docutils literal notranslate"><span class="pre">redflag</span></code>:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> components for your pipelines, e.g. <code class="docutils literal notranslate"><span class="pre">rf.ImbalanceDetector().fit_transform(X,</span> <span class="pre">y)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> accessors on Series and DataFrames, e.g. <code class="docutils literal notranslate"><span class="pre">df['target'].redflag.imbalance_degree()</span></code>.</p></li>
+<li><p>As a library of standalone functions, e.g. <code class="docutils literal notranslate"><span class="pre">rf.imbalance_degree(y)</span></code>.</p></li>
+</ol>
 <p>Carry on exploring with the user guide below.</p>
 </section>
 <section id="user-guide">
