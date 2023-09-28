@@ -5,7 +5,7 @@ If you'd like to develop `redflag`, this page should help you get started.
 
 ## Installation
 
-You can install this package with `pip`. The `dev` option will install the packages you need for testing and building the documentation.
+You can install this package with `pip` or `conda`. The `dev` option will install the packages you need for testing and building the documentation.
 
     pip install redflag[dev]
 
@@ -21,7 +21,7 @@ You can run the tests (requires `pytest` and `pytest-cov`) with
 
     pytest
 
-Most of the tests are `doctest` tests, which are contained in the docstrings of this package's functions. It is also possible to add test files to the `tests` folder in the normal way.
+Most of the tests are `doctest` tests, which are contained in the docstrings of this package's functions. There are further tests in the `tests` folder.
 
 
 ## Building the package
