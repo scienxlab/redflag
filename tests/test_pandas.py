@@ -23,17 +23,22 @@ def test_dummy_scores():
     assert r_scores['mean_squared_error'] - 0.5710743801652893 < 1e-12
 
 
-def test_imbalance_metrics():
+def test_imbalance():
+    is_imbalanced = c.redflag.is_imbalanced()
+    assert is_imbalanced
+
     minorities = c.redflag.minority_classes()
     assert 2 in minorities and 3 in minorities
 
     imb_degree = c.redflag.imbalance_degree()
     assert imb_degree - 1.25 < 1e-9
 
+
 def test_is_ordered():
     assert c.redflag.is_ordered()
     with pytest.raises(ValueError, match="Cannot check order of continuous data."):
         r.redflag.is_ordered()
+
 
 def test_warnings():
     with pytest.warns(UserWarning, match="The Series does not seem categorical."):
