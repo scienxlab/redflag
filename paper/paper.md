@@ -132,6 +132,6 @@ prediction models that are safer by design.
 # Acknowledgements
 
 Thanks to the [Software Underground](https://softwareunderground.org) community
-for conversations and feedback over the years.
+for discussion and feedback over the years.
 
 # References
