@@ -30,8 +30,7 @@ predictions. _Redflag_ offers accessible ways for users to integrate safety
 checks into their workflows by providing `scikit-learn` transformers, `pandas`
 accessors, and standalone functions. These components can easily be
 incorporated into existing workflows, helping identify issues and enhance the
-quality and safety of predictive models. _Redflag_ empowers users to design and
-implement high-quality models that prioritize safety from the start.
+quality and safety of predictive models.
 
 Redflag is distributed under the [Apache 2.0
 license](https://www.apache.org/licenses/LICENSE-2.0). The source code is
@@ -84,7 +83,7 @@ In the Python machine learning world, [`pandas`](https://pandas.pydata.org/)
 [`scikit-learn`](https://scikit-learn.org/) [@pedregosa-etal-2011] is the
 preeminent prototyping and implementation framework. By integrating with these
 packages by providing accessors and transformers respectively, _Redflag_ aims
-to be as simple to include in existing workflows as possible.
+to be easy to learn and adopt.
 
 _Redflag_ offers three ways for users to insert safety checks into their
 machine learning workflows:
@@ -133,7 +132,6 @@ prediction models that are safer by design.
 # Acknowledgements
 
 Thanks to the [Software Underground](https://softwareunderground.org) community
-for conversations and feedback over the years, shaping the purpose and design
-of this package.
+for conversations and feedback over the years.
 
 # References
