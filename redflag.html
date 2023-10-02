@@ -1463,6 +1463,23 @@ the threshold will be used to compute <cite>p</cite>.</p></li>
 <span id="redflag-pandas-module"></span><h2>redflag.pandas module<a class="headerlink" href="#module-redflag.pandas" title="Permalink to this heading">#</a></h2>
 <p>Pandas accessors.</p>
 <dl class="py class">
+<dt class="sig sig-object py" id="redflag.pandas.DataFrameAccessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.pandas.</span></span><span class="sig-name descname"><span class="pre">DataFrameAccessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pandas_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.DataFrameAccessor" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.DataFrameAccessor.correlation_detector">
+<span class="sig-name descname"><span class="pre">correlation_detector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.DataFrameAccessor.correlation_detector" title="Permalink to this definition">#</a></dt>
+<dd><p>This is an experimental feature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.DataFrameAccessor.feature_importances">
+<span class="sig-name descname"><span class="pre">feature_importances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.DataFrameAccessor.feature_importances" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.pandas.</span></span><span class="sig-name descname"><span class="pre">SeriesAccessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pandas_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -1474,6 +1491,11 @@ the threshold will be used to compute <cite>p</cite>.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.imbalance_degree">
 <span class="sig-name descname"><span class="pre">imbalance_degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.imbalance_degree" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="redflag.pandas.SeriesAccessor.is_imbalanced">
+<span class="sig-name descname"><span class="pre">is_imbalanced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.pandas.SeriesAccessor.is_imbalanced" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2609,15 +2631,21 @@ Default: 0.95.</p></li>
 <span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">deprecated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instructions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.utils.deprecated" title="Permalink to this definition">#</a></dt>
 <dd><p>Flags a method as deprecated. This decorator can be used to mark functions
 as deprecated. It will result in a warning being emitted when the function
-is used.
-:param instructions: A human-friendly string of instructions, such
-:type instructions: str
-:param as: ‘Please migrate to add_proxy() ASAP.’</p>
+is used.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The decorated function.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>instructions</strong> (<em>str</em>) – A human-friendly string of instructions.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The decorated function.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="redflag.utils.docstring_from">
+<span class="sig-prename descclassname"><span class="pre">redflag.utils.</span></span><span class="sig-name descname"><span class="pre">docstring_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.utils.docstring_from" title="Permalink to this definition">#</a></dt>
+<dd><p>Decorator copying the docstring one function to another.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -3291,9 +3319,15 @@ per column.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-redflag.pandas">redflag.pandas module</a><ul>
+<li><a class="reference internal" href="#redflag.pandas.DataFrameAccessor"><code class="docutils literal notranslate"><span class="pre">DataFrameAccessor</span></code></a><ul>
+<li><a class="reference internal" href="#redflag.pandas.DataFrameAccessor.correlation_detector"><code class="docutils literal notranslate"><span class="pre">DataFrameAccessor.correlation_detector()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.pandas.DataFrameAccessor.feature_importances"><code class="docutils literal notranslate"><span class="pre">DataFrameAccessor.feature_importances()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor</span></code></a><ul>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.dummy_scores"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.dummy_scores()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.imbalance_degree"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.imbalance_degree()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.is_imbalanced"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.is_imbalanced()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.is_ordered"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.is_ordered()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.minority_classes"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.minority_classes()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.pandas.SeriesAccessor.report"><code class="docutils literal notranslate"><span class="pre">SeriesAccessor.report()</span></code></a></li>
@@ -3390,6 +3424,7 @@ per column.</p>
 <li><a class="reference internal" href="#redflag.utils.consecutive"><code class="docutils literal notranslate"><span class="pre">consecutive()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.cv"><code class="docutils literal notranslate"><span class="pre">cv()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.deprecated"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+<li><a class="reference internal" href="#redflag.utils.docstring_from"><code class="docutils literal notranslate"><span class="pre">docstring_from()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.ecdf"><code class="docutils literal notranslate"><span class="pre">ecdf()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.flatten"><code class="docutils literal notranslate"><span class="pre">flatten()</span></code></a></li>
 <li><a class="reference internal" href="#redflag.utils.generate_data"><code class="docutils literal notranslate"><span class="pre">generate_data()</span></code></a></li>

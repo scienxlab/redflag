@@ -234,7 +234,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.1.dev1+ge232c7c&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.4.1rc1&#39;
 </pre></div>
 </div>
 </div>
@@ -430,8 +430,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.2524892777480305,
- &#39;roc_auc&#39;: 0.4979209844527886,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.25007984231068947,
+ &#39;roc_auc&#39;: 0.49767532533465725,
  &#39;strategy&#39;: &#39;stratified&#39;,
  &#39;task&#39;: &#39;classification&#39;}
 </pre></div>
@@ -464,8 +464,8 @@
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Continuous data suitable for regression
 Outliers:    [  34   35  140  141  142  143  175  532  581  583  633  662  757  768
-  769  801 1316 1498 1547 1744 1754 1756 1778 1779 1780 1784 1785 1788
- 1808 1812 2884 2932 2973 2974 3004 3087 3094 3095 3100 3109]
+  769  801 1316 1547 1744 1754 1756 1778 1779 1780 1784 1785 1788 1808
+ 1812 2884 2932 2973 2974 3004 3087 3094 3109]
 Correlated:  True
 Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, &#39;r2&#39;: 0.0}}
 </pre></div>
@@ -476,7 +476,36 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 </section>
 <section id="dataframe-accessor">
 <h2>DataFrame accessor<a class="headerlink" href="#dataframe-accessor" title="Permalink to this heading">#</a></h2>
-<p>Coming soon!</p>
+<p>Experimental feature: so far only <code class="docutils literal notranslate"><span class="pre">feature_importances</span></code> and <code class="docutils literal notranslate"><span class="pre">correlation_detector</span></code> are implemented.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;GR&#39;</span><span class="p">,</span> <span class="s1">&#39;RHOB&#39;</span><span class="p">,</span> <span class="s1">&#39;PE&#39;</span><span class="p">,</span> <span class="s1">&#39;ILD_log10&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">redflag</span><span class="o">.</span><span class="n">feature_importances</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">&#39;Lithology&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.22960132, 0.1342979 , 0.28202349, 0.35407729])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">redflag</span><span class="o">.</span><span class="n">correlation_detector</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature 0 appears to be autocorrelated.
+Feature 1 appears to be autocorrelated.
+Feature 2 appears to be autocorrelated.
+Feature 3 appears to be autocorrelated.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, all of these features are correlated.</p>
 </section>
 </section>
 
