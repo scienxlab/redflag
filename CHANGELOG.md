@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1, 3 October 2023
+
+- This is a minor release intended to preview new `pandas`-related features for version 0.5.0.
+- Added another `pandas` Series accessor, `is_imbalanced()`.
+- Added two `pandas` DataFrame accessors, `feature_importances()` and `correlation_detector()`. These are experimental features.
+
+
 ## 0.4.0, 28 September 2023
 
 - `redflag` can now be installed by the `conda` package and environment manager. To do so, use `conda install -c conda-forge redflag`.

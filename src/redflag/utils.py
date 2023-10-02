@@ -34,14 +34,30 @@ from scipy.optimize import fsolve
 from scipy.spatial.distance import pdist
 
 
+def docstring_from(source_func):
+    """
+    Decorator copying the docstring one function to another.
+    """
+    def decorator(func):
+
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            func.__doc__ = source_func.__doc__
+            return func(*args, **kwargs)
+        return wrapper
+
+    return decorator
+
+
 def deprecated(instructions):
     """
     Flags a method as deprecated. This decorator can be used to mark functions
     as deprecated. It will result in a warning being emitted when the function
     is used.
+
     Args:
-        instructions (str): A human-friendly string of instructions, such
-        as: 'Please migrate to add_proxy() ASAP.'
+        instructions (str): A human-friendly string of instructions.
+
     Returns:
         The decorated function.
     """

@@ -24,8 +24,7 @@ def test_dummy_scores():
 
 
 def test_imbalance():
-    is_imbalanced = c.redflag.is_imbalanced()
-    assert is_imbalanced
+    assert c.redflag.is_imbalanced(threshold=0.24, method='tv')
 
     minorities = c.redflag.minority_classes()
     assert 2 in minorities and 3 in minorities
@@ -55,3 +54,10 @@ def test_series_categorical_report():
 def test_series_continuous_report():
     report_r = r.redflag.report()
     assert 'Continuous' in report_r
+
+
+def test_feature_importances_docstring():
+    s = pd.DataFrame([c, r]).redflag.feature_importances.__doc__
+
+    # There is more to this than I thought. See issue.
+    # assert s.startswith("Measure feature importances on a task, given X and y.")

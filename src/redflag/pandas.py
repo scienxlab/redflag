@@ -19,11 +19,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import warnings
+from typing import Optional
 
 from .imbalance import imbalance_degree, minority_classes, is_imbalanced
+from .importance import feature_importances as feature_importances
 from .outliers import get_outliers
 from .target import *
 from .independence import is_correlated
+from .utils import docstring_from
 
 
 def null_decorator(arg):
@@ -62,34 +65,20 @@ class SeriesAccessor:
     def __init__(self, pandas_obj):
         self._obj = pandas_obj
 
+    @docstring_from(minority_classes)
     def minority_classes(self):
         if is_continuous(self._obj):
             warnings.warn('The Series does not seem categorical.')
         return minority_classes(self._obj)
 
+    @docstring_from(imbalance_degree)
     def imbalance_degree(self):
         if is_continuous(self._obj):
             warnings.warn('The Series does not seem categorical.')
         return imbalance_degree(self._obj)
 
+    @docstring_from(is_imbalanced)
     def is_imbalanced(self, threshold=0.4, method='tv', classes=None):
-        """
-        Check if a dataset is imbalanced by first checking that there are minority
-        classes, then inspecting the fractional part of the imbalance degree metric.
-        The metric is compared to the threshold you provide (default 0.4, same as
-        the sklearn detector ImbalanceDetector).
-
-        Args:
-            a (array): A list of class labels.
-            threshold (float): The threshold to use. Default: 0.5.
-            method (str or function): The method to use.
-            classes (array): A list of classes, in the event that `a` does not
-                contain all of the classes, or if you want to ignore some classes
-                in `a` (not recommended) you can omit them from this list.
-
-        Returns:
-            bool: True if the dataset is imbalanced.
-        """
         if is_continuous(self._obj):
             warnings.warn('The Series does not seem categorical.')
         return is_imbalanced(self._obj,
@@ -98,11 +87,13 @@ class SeriesAccessor:
                              classes=classes
                              )
 
+    @docstring_from(is_ordered)
     def is_ordered(self, q=0.95):
         if is_continuous(self._obj):
             warnings.warn('The Series does not seem categorical.')
         return is_ordered(self._obj, q=q)
 
+    @docstring_from(dummy_scores)
     def dummy_scores(self, task='auto', random_state=None):
         return dummy_scores(self._obj, task=task, random_state=random_state)
 
@@ -123,7 +114,54 @@ class SeriesAccessor:
         return template.format(**results)
 
 
-# @register_dataframe_accessor("redflag")
-# class DataFrameAccessor:
-#     def __init__(self, pandas_obj):
-#         self._obj = pandas_obj
+@register_dataframe_accessor("redflag")
+class DataFrameAccessor:
+    def __init__(self, pandas_obj):
+        self._obj = pandas_obj
+
+    @docstring_from(feature_importances)
+    def feature_importances(self, features=None, target=None,
+                            n: int=3, task: Optional[str]=None,
+                            random_state: Optional[int]=None,
+                            standardize: bool=True):
+        if target is None:
+            raise ValueError('You must provide a target column.')
+        else:
+            y_ = self._obj[target]
+            if is_continuous(y_):
+                task = 'regression'
+            else:
+                task = 'classification'
+        if len(y_.shape) > 1:
+            raise NotImplementedError('Multilabel targets are not supported.')
+        if features is None and target is not None:
+            X_ = self._obj.drop(columns=target)
+        else:
+            X_ = self._obj[features]
+        return feature_importances(X_, y_, n=n, task=task,
+                                   random_state=random_state,
+                                   standardize=standardize)
+
+
+    def correlation_detector(self, features=None, target=None, n=20, s=20, threshold=0.1):
+        """
+        This is an experimental feature.
+        """
+        if target is not None:
+            y_ = self._obj[target]
+            if len(y_.shape) > 1:
+                raise NotImplementedError('Multilabel targets are not supported.')
+            if is_correlated(y_):
+                warnings.warn('The target appears to be autocorrelated.',stacklevel=2)
+
+        if features is None and target is not None:
+            X_ = self._obj.drop(target, axis=1).values
+        else:
+            X_ = self._obj[features].values
+
+        for i, x in enumerate(X_.T):
+            if is_correlated(x, n=n, s=s, threshold=threshold):
+                warnings.warn(f'Feature {i} appears to be autocorrelated.',stacklevel=2)
+
+        # There is probably something more useful to return.
+        return
