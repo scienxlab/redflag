@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.1, 3 October 2023
+## 0.4.1, 2 October 2023
 
 - This is a minor release intended to preview new `pandas`-related features for version 0.5.0.
 - Added another `pandas` Series accessor, `is_imbalanced()`.
