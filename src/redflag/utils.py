@@ -42,8 +42,8 @@ def docstring_from(source_func):
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            func.__doc__ = source_func.__doc__
             return func(*args, **kwargs)
+        wrapper.__doc__ = source_func.__doc__
         return wrapper
 
     return decorator
