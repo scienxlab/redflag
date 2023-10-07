@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.2, 7 October 2023
+
+- Python version `3.12` added to package classifiers
+- Python version `3.12` tested during CI
+
 ## 0.4.1, 2 October 2023
 
 - This is a minor release intended to preview new `pandas`-related features for version 0.5.0.
