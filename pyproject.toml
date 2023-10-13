@@ -33,6 +33,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "setuptools"
     "build",
     "mypy",
     "types-setuptools",
