@@ -4,6 +4,9 @@ _version.py
 # Processed docs
 _notebooks
 
+# API docs are built
+docs/redflag.*.rst
+
 # Other
 .vscode
 

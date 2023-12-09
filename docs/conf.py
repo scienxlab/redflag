@@ -65,7 +65,7 @@ apidoc_module_dir = '../src/redflag'
 apidoc_output_dir = './'
 apidoc_excluded_paths = []
 apidoc_toc_file = False
-apidoc_separate_modules = False
+apidoc_separate_modules = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
