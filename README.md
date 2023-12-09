@@ -14,7 +14,7 @@
 
 You can install this package with `pip`:
 
-    pythno -m pip install redflag
+    python -m pip install redflag
 
 Alternatively, you can use the `conda` package manager, pointed at the `conda-forge` channel:
 
