@@ -52,6 +52,7 @@ User guide
     :caption: User guide
 
     installation
+    what_is_redflag
     _notebooks/Basic_usage.ipynb
     _notebooks/Using_redflag_with_sklearn.ipynb
     _notebooks/Using_redflag_with_Pandas.ipynb
