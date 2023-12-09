@@ -7,7 +7,9 @@ If you'd like to develop `redflag`, this page should help you get started.
 
 You can install this package with `pip` or `conda`. The `dev` option will install the packages you need for testing and building the documentation.
 
-    pip install redflag[dev]
+```shell
+python -m pip install "redflag[dev]"
+```
 
 
 ## Contributing
@@ -19,7 +21,9 @@ If you'd like to contribute pull requests back to the main `redflag ` project, p
 
 You can run the tests (requires `pytest` and `pytest-cov`) with
 
-    pytest
+```shell
+pytest
+```
 
 Most of the tests are `doctest` tests, which are contained in the docstrings of this package's functions. There are further tests in the `tests` folder.
 
@@ -30,7 +34,9 @@ This repo uses PEP 518-style packaging. [Read more about this](https://setuptool
 
 To build `redflag` locally:
 
-    python -m build
+```shell
+python -m build
+```
 
 This builds both `.tar.gz` and `.whl` files, either of which you can install with `pip`.
 
@@ -39,8 +45,10 @@ This builds both `.tar.gz` and `.whl` files, either of which you can install wit
 
 You can build the docs with the following commands:
 
-    cd docs
-    make html
+```shell
+cd docs
+make html
+```
 
 Don't just run `sphinx-build` manually: there is other stuff happening in the `Makefile`.
 

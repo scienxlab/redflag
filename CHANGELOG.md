@@ -1,9 +1,13 @@
 # Changelog
 
-## 0.4.2, 7 October 2023
+## 0.4.2, 10 December 2023
 
+- This is a minor release making changes to the tests and documentation in reponse to the review process for [a submission](https://joss.theoj.org/papers/e1ca575ec0c5344144f87176539ef547) to [The Journal of Open Source Software](https://joss.theoj.org) (JOSS).
+- See the following issues: [#89](https://github.com/scienxlab/redflag/issues/89), [#90](https://github.com/scienxlab/redflag/issues/90), [#91](https://github.com/scienxlab/redflag/issues/91), [#92](https://github.com/scienxlab/redflag/issues/92), [#93](https://github.com/scienxlab/redflag/issues/93), [#94](https://github.com/scienxlab/redflag/issues/94) and [#95](https://github.com/scienxlab/redflag/issues/95).
+- Now building and testing on Windows and MacOS as well as Linux.
 - Python version `3.12` added to package classifiers
 - Python version `3.12` tested during CI
+
 
 ## 0.4.1, 2 October 2023
 

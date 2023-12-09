@@ -14,13 +14,13 @@
 
 You can install this package with `pip`:
 
-    pip install redflag
+    python -m pip install redflag
 
 Alternatively, you can use the `conda` package manager, pointed at the `conda-forge` channel:
 
     conda install -c conda-forge redflag
 
-For developers, there is a `pip` option for installing `dev` dependencies. Use `pip install redflag[dev]` to install all testing and documentation packages.
+For developers, there is a `pip` option for installing `dev` dependencies. Use `pip install "redflag[dev]"` to install all testing and documentation packages.
 
 
 ## Example with `sklearn`
