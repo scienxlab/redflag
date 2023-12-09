@@ -7,7 +7,7 @@ If you'd like to develop `redflag`, this page should help you get started.
 
 You can install this package with `pip` or `conda`. The `dev` option will install the packages you need for testing and building the documentation.
 
-    pip install redflag[dev]
+    python -m pip install "redflag[dev]"
 
 
 ## Contributing

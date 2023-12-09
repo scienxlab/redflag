@@ -22,6 +22,6 @@ conda config --set channel_priority strict
 
 ## Optional dependencies
 
-For developers, there is an option to install `dev` dependencies: `pip install redflag[dev]` to install all testing and documentation packages.
+For developers, there is an option to install `dev` dependencies: `pip install "redflag[dev]"` to install all testing and documentation packages.
 
 If you want to help develop `redflag`, please read [Development](development.md).
