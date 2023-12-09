@@ -96,7 +96,7 @@ method on existing Pandas objects, e.g. `df['target'].redflag.is_imbalanced()`.
 3. **Standalone functions** which the user can compose their own checks and
 tests with, e.g. `redflag.is_imbalanced(y)`.
 
-There are two kinds of `scikit-learn` transformer:
+The `scikit-learn` transformers are of two kinds:
 
 - **Detectors** check every dataset they encounter. For example,
 `redflag.ClippingDetector` checks for clipped data during both model fitting
@@ -121,8 +121,10 @@ services, and a correspondingly large API. Meanwhile,
 [`pandera`](https://github.com/unionai-oss/pandera),
 [`pandas-profiling`](https://github.com/ydataai/ydata-profiling) are all
 oriented around Pandas, Spark or other DataFrame-like structures. Finally,
-[`evidently`](https://github.com/evidentlyai/evidently) provides on a Jupyter
-interface with lots of plots.
+[`evidently`](https://github.com/evidentlyai/evidently) provides a graphical
+dashboard for Jupyter. In comparison, _Redflag_ is easier to set up and use
+than `great_expectations` and `pandera`, and while it is compatible with
+Pandas DataFrames and Jupyter it does not depend on them.
 
 By providing to machine learning practitioners a range of alerts and alarms,
 each of which can easily be inserted into existing workflows and pipelines,
