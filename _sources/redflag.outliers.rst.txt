@@ -1,0 +1,7 @@
+redflag.outliers module
+=======================
+
+.. automodule:: redflag.outliers
+   :members:
+   :undoc-members:
+   :show-inheritance:

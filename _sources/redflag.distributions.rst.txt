@@ -1,0 +1,7 @@
+redflag.distributions module
+============================
+
+.. automodule:: redflag.distributions
+   :members:
+   :undoc-members:
+   :show-inheritance:

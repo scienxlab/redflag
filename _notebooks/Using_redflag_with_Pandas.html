@@ -1,18 +1,18 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="🚩 Tutorial" href="Tutorial.html" /><link rel="prev" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 5.3.0 and Furo 2023.03.27 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>🚩 Using redflag with Pandas</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=645ab05b" />
     
     
 
@@ -146,7 +146,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../_static/redflag_logo.png" alt="Logo"/>
@@ -162,6 +162,7 @@
   <p class="caption" role="heading"><span class="caption-text">User guide</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">🚩 Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../what_is_redflag.html">🚩 What is <code class="docutils literal notranslate"><span class="pre">redflag</span></code>?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Basic_usage.html">🚩 Basic usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Using_redflag_with_sklearn.html">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas</a></li>
@@ -169,7 +170,19 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../redflag.html">redflag package</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../redflag.html">redflag package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of redflag package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.distributions.html">redflag.distributions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.imbalance.html">redflag.imbalance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.importance.html">redflag.importance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.independence.html">redflag.independence module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.markov.html">redflag.markov module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.outliers.html">redflag.outliers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.pandas.html">redflag.pandas module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.sklearn.html">redflag.sklearn module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.target.html">redflag.target module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../redflag.utils.html">redflag.utils module</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other resources</span></p>
 <ul>
@@ -221,8 +234,8 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="using-redflag-with-pandas">
-<h1>🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas<a class="headerlink" href="#using-redflag-with-pandas" title="Permalink to this heading">#</a></h1>
-<p>As well as using <code class="docutils literal notranslate"><span class="pre">redflag</span></code>’s functions directly (see <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Basic_usage.ipynb</span></code></span>), or with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> (see <code class="docutils literal notranslate"><span class="pre">Using_redflag_with_Pandas.ipynb</span></code>), <code class="docutils literal notranslate"><span class="pre">redflag</span></code> has some Pandas ‘accessors’ that give you access to some <code class="docutils literal notranslate"><span class="pre">redflag</span></code> functions almost as if they were methods on Pandas objects.</p>
+<h1>🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas<a class="headerlink" href="#using-redflag-with-pandas" title="Link to this heading">#</a></h1>
+<p>As well as using <code class="docutils literal notranslate"><span class="pre">redflag</span></code>’s functions directly (see <a class="reference internal" href="#%60./Basic_usage.ipynb%60"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Basic_usage.ipynb</span></code></span></a>), or with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> (see <code class="docutils literal notranslate"><span class="pre">Using_redflag_with_Pandas.ipynb</span></code>), <code class="docutils literal notranslate"><span class="pre">redflag</span></code> has some Pandas ‘accessors’ that give you access to some <code class="docutils literal notranslate"><span class="pre">redflag</span></code> functions almost as if they were methods on Pandas objects.</p>
 <p>The best way to get the idea is to look at an example.</p>
 <p>First, even though we may not use it directly, we have to import <code class="docutils literal notranslate"><span class="pre">redflag</span></code> to get access to its functions. As long as you have <code class="docutils literal notranslate"><span class="pre">pandas</span></code> installed, it will register the accessors.</p>
 <div class="cell docutils container">
@@ -234,7 +247,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.4.1&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.4.2rc1&#39;
 </pre></div>
 </div>
 </div>
@@ -243,7 +256,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://geocomp.s3.amazonaws.com/data/Panoma_training_data.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/scienxlab/datasets/main/kgs/Panoma_training_data.csv&#39;</span><span class="p">)</span>
 
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -399,7 +412,7 @@
 </div></div></div>
 </div>
 <section id="series-accessor">
-<h2>Series accessor<a class="headerlink" href="#series-accessor" title="Permalink to this heading">#</a></h2>
+<h2>Series accessor<a class="headerlink" href="#series-accessor" title="Link to this heading">#</a></h2>
 <p>For the time being, there are only accessors on Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects. For example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -430,8 +443,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.25178964495839834,
- &#39;roc_auc&#39;: 0.5033436170842543,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.24642601013909113,
+ &#39;roc_auc&#39;: 0.5071664777645397,
  &#39;strategy&#39;: &#39;stratified&#39;,
  &#39;task&#39;: &#39;classification&#39;}
 </pre></div>
@@ -463,9 +476,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Continuous data suitable for regression
-Outliers:    [  34   35  136  140  141  142  143  181  182  532  583  633  662  757
-  768  769  801  849 1316 1547 1731 1744 1754 1756 1778 1779 1780 1785
- 1788 2884 2932 2973 2974 3004 3079 3080 3087 3094 3109]
+Outliers:    [ 141  142  175  532  575  581  583  633  662  757  768  769  773  801
+ 1316 1498 1547 1744 1745 1754 1756 1778 1779 1780 1784 1785 1788 1808
+ 1809 1812 2884 2932 2973 2974 3004 3087 3094 3095 3100 3109]
 Correlated:  True
 Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, &#39;r2&#39;: 0.0}}
 </pre></div>
@@ -475,7 +488,7 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 <p>This is an experimental feature; future releases will have more functions. Feedback welcome!</p>
 </section>
 <section id="dataframe-accessor">
-<h2>DataFrame accessor<a class="headerlink" href="#dataframe-accessor" title="Permalink to this heading">#</a></h2>
+<h2>DataFrame accessor<a class="headerlink" href="#dataframe-accessor" title="Link to this heading">#</a></h2>
 <p>Experimental feature: so far only <code class="docutils literal notranslate"><span class="pre">feature_importances</span></code> and <code class="docutils literal notranslate"><span class="pre">correlation_detector</span></code> are implemented.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -485,7 +498,7 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.22569119, 0.13811012, 0.28168463, 0.35451406])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.23175155, 0.21627564, 0.34215632, 0.20981648])
 </pre></div>
 </div>
 </div>
@@ -578,14 +591,11 @@ Feature 3 appears to be autocorrelated.
       
     </aside>
   </div>
-</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/furo.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     </body>
 </html>

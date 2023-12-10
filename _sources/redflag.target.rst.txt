@@ -1,0 +1,7 @@
+redflag.target module
+=====================
+
+.. automodule:: redflag.target
+   :members:
+   :undoc-members:
+   :show-inheritance:

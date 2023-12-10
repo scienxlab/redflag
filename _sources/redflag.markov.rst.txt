@@ -1,0 +1,7 @@
+redflag.markov module
+=====================
+
+.. automodule:: redflag.markov
+   :members:
+   :undoc-members:
+   :show-inheritance:

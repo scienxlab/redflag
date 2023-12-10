@@ -1,0 +1,7 @@
+redflag.sklearn module
+======================
+
+.. automodule:: redflag.sklearn
+   :members:
+   :undoc-members:
+   :show-inheritance:

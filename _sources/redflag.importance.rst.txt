@@ -1,0 +1,7 @@
+redflag.importance module
+=========================
+
+.. automodule:: redflag.importance
+   :members:
+   :undoc-members:
+   :show-inheritance:

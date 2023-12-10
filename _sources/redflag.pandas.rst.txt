@@ -1,0 +1,7 @@
+redflag.pandas module
+=====================
+
+.. automodule:: redflag.pandas
+   :members:
+   :undoc-members:
+   :show-inheritance:
