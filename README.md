@@ -1,7 +1,7 @@
 # redflag
 
-[![Build and test](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml)
-[![Documentation](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml)
+[![Tests](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/build-test.yml)
+[![Docs](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml/badge.svg)](https://github.com/scienxlab/redflag/actions/workflows/publish-docs.yml)
 [![PyPI version](https://img.shields.io/pypi/v/redflag.svg)](https://pypi.org/project/redflag/)
 [![Conda Version](https://img.shields.io/conda/vn/conda-forge/redflag.svg)](https://anaconda.org/conda-forge/redflag)
 [![PyPI versions](https://img.shields.io/pypi/pyversions/redflag.svg)](https://pypi.org/project/redflag/)
