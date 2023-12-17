@@ -24,7 +24,22 @@ from numpy.typing import ArrayLike
 
 def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> bool:
     """
-    Check if a dataset is correlated. Uses s chunks of n samples.
+    Check if a dataset is auto-correlated. This function returns True if
+    the 1D input array `a` appears to be correlated to itself, perhaps
+    because it consists of measurements sampled at neighbouring points
+    in time or space, at a spacing short enough that samples are correlated.
+
+    If samples are correlated in this way, then the records in your dataset
+    may break the IID assumption implicit in much of statistics (though not
+    in specialist geostatistics or timeseries algorithms). This is not
+    necessarily a bit problem, but it does mean you need to be careful
+    about how you split your data, for example a random split between train
+    and test will leak information from train to test, because neighbouring
+    samples are correlated.
+
+    This function inspects s random chunks of n samples, averaging the
+    autocorrelation coefficients across chunks. If the mean first non-zero
+    lag is greater than the threshold, the array may be autocorrelated.
 
     Args:
         a (array): The data.
@@ -33,7 +48,7 @@ def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> b
         threshold (float): The auto-correlation threshold.
 
     Returns:
-        bool: True if the data are correlated.
+        bool: True if the data are autocorrelated.
 
     Examples:
         >>> is_correlated([7, 1, 6, 8, 7, 6, 2, 9, 4, 2])
