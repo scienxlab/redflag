@@ -16,8 +16,8 @@ def test_null_decorator():
 
 
 def test_dummy_scores():
-    c_scores = c.redflag.dummy_scores()
-    r_scores = r.redflag.dummy_scores()
+    c_scores = c.redflag.dummy_scores(random_state=42)
+    r_scores = r.redflag.dummy_scores(random_state=42)
 
     assert c_scores['roc_auc'] - 0.6801587301587301 < 1e-12
     assert r_scores['mean_squared_error'] - 0.5710743801652893 < 1e-12
