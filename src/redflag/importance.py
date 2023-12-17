@@ -23,7 +23,7 @@ from typing import Optional
 import numpy as np
 from numpy.typing import ArrayLike
 from sklearn.inspection import permutation_importance
-from sklearn.linear_model import Lasso
+from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import KNeighborsRegressor
@@ -32,31 +32,33 @@ from sklearn.ensemble import RandomForestClassifier
 
 from .target import is_continuous
 from .utils import split_and_standardize
+from .utils import aggregate
 
 
 def feature_importances(X: ArrayLike, y: ArrayLike=None,
-                        n: int=3, task: Optional[str]=None,
+                        task: Optional[str]=None,
                         random_state: Optional[int]=None,
-                        standardize: bool=True) -> np.ndarray:
+    ) -> np.ndarray:
     """
-    Measure feature importances on a task, given X and y.
+    Estimate feature importances on a supervised task, given X and y.
 
     Classification tasks are assessed with logistic regression, a random
     forest, and KNN permutation importance. Regression tasks are assessed with
-    lasso regression, a random forest, and KNN permutation importance. In each
-    case, the `n` normalized importances with the most variance are averaged.
+    lasso regression, a random forest, and KNN permutation importance.
+
+    The scores from these assessments are normalized, and the normalized
+    sum is returned.
+
+    See the Tutorial in the documentation for more information.
 
     Args:
         X (array): an array representing the data.
         y (array or None): an array representing the target. If None, the task
             is assumed to be an unsupervised clustering task.
-        n (int): the number of tests to average. Only the n tests with the
-            highest variance across features are kept.
         task (str or None): either 'classification' or 'regression'. If None,
             the task will be inferred from the labels and a warning will show
             the assumption being made.
         random_state (int or None): the random state to use.
-        standardize (bool): whether to standardize the data. Default is True.
 
     Returns:
         array: The importance of the features, in the order in which they
@@ -66,7 +68,7 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
         >>> X = [[0, 0, 0], [0, 1, 1], [0, 2, 0], [0, 3, 1], [0, 4, 0], [0, 5, 1], [0, 7, 0], [0, 8, 1], [0, 8, 0]]
         >>> y = [5, 15, 25, 35, 45, 55, 80, 85, 90]
         >>> feature_importances(X, y, task='regression', random_state=42)
-        array([0.        , 0.99416839, 0.00583161])
+        array([0.       , 0.9831828, 0.0168172])
         >>> y = ['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c']
         >>> x0, x1, x2 = feature_importances(X, y, task='classification', random_state=42)
         >>> x1 > x2 > x0  # See Issue #49 for why this test is like this.
@@ -79,8 +81,7 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
         task = 'regression' if is_continuous(y) else 'classification'
 
     # Split the data and ensure it is standardized.
-    if standardize:
-        X, X_train, X_val, y, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
+    X, X_train, X_val, y, y_train, y_val = split_and_standardize(X, y, random_state=random_state)
 
     # Train three models and gather the importances.
     imps: list = []
@@ -91,23 +92,16 @@ def feature_importances(X: ArrayLike, y: ArrayLike=None,
         r = permutation_importance(model, X_val, y_val, n_repeats=8, scoring='f1_weighted', random_state=random_state)
         imps.append(r.importances_mean)
     elif task == 'regression':
-        # Need data to be scaled, but don't necessarily want to scale entire dataset.
-        imps.append(np.abs(Lasso(random_state=random_state).fit(X, y).coef_))
+        imps.append(np.abs(LinearRegression().fit(X, y).coef_))
         imps.append(RandomForestRegressor(random_state=random_state).fit(X, y).feature_importances_)
         model = KNeighborsRegressor().fit(X_train, y_train)
         r = permutation_importance(model, X_val, y_val, n_repeats=8, scoring='neg_mean_squared_error', random_state=random_state)
-        if not all(r.importances_mean < 0):
-            r.importances_mean[r.importances_mean < 0] = 1e-9
-            imps.append(r.importances_mean)
+        imps.append(r.importances_mean)
 
+    # Eliminate negative values and aggregate.
     imps = np.array(imps)
-
-    # Normalize the rows by the sum of *only positive* elements.
-    normalizer = np.where(imps>0, imps, 0).sum(axis=1)
-    imps /= normalizer[:, None]
-
-    # Drop imps with smallest variance and take mean of what's left.
-    return np.nanmean(sorted(imps, key=lambda row: np.std(row))[-n:], axis=0)
+    imps[imps < 0] = 0
+    return aggregate(imps, normalize_input=True, normalize_output=True)
 
 
 def least_important_features(importances: ArrayLike,

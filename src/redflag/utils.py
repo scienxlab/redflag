@@ -642,3 +642,97 @@ def has_monotonic(a: ArrayLike, tolerance: int=3) -> np.ndarray:
     zeros = get_idx(np.diff(a) == 0)
     flats = [list(x)+[x[-1]+1, x[-1]+2] for x in consecutive(zeros) if x.size >= tolerance]
     return np.array(list(flatten(flats)), dtype=int)
+
+
+def aggregate(arr,
+              absolute=False,
+              rank_input=False,
+              rank_output=False,
+              normalize_input=False,
+              normalize_output=False,
+    ):
+    """
+    Compute the Borda count ranking from an N x M matrix representing 
+    N sets of rankings (or scores) for M candidates. This function 
+    aggregates the scores for each candidate and optionally normalizes 
+    them so that they sum to 1. The absolute value of the scores is 
+    considered if 'absolute' is set to True.
+
+    If you are providing rankings like [1 (best), 2, 3] and so on,
+    then set `rank=True`. If you also set `normalize_output` to `False`,
+    you will get Borda ranking scores.
+
+    If your score arrays contain negative numbers and you want a
+    large negative number to be considered 'strong', then set
+    `normalize_input` to `True`.
+
+    Arguments:
+        arr (array-like): An N x M matrix where N is the number of sets 
+            of rankings or scores, and M is the number of candidates. Each 
+            element represents the score of a candidate in a particular set.
+
+        absolute (bool, optional): If True, the absolute value of each 
+            score is considered. This is useful when a large negative 
+            number should be considered as a strong score. Defaults to False.
+
+        rank_input (bool, optional): If True, them the input is transformed
+            input ranking (such as [4 (best), 2, 3, ...]). Defaults to False.
+
+        rank_output (bool, optional): If True, the output will be the 
+            rankings of the aggregated scores instead of the scores themselves.
+            This converts the aggregated scores into a rank format (such as 
+            [3 (best), 1, 2, ...]). Defaults to False.
+
+        normalize_input (bool, optional): If True, each row of the input 
+            array will be normalized before aggregation. This is useful when 
+            the input array contains values in different ranges or units and 
+            should be normalized to a common scale. Defaults to False.
+
+        normalize_output (bool, optional): If True, the aggregated scores 
+            will be normalized so that they sum to 1. This is useful to 
+            understand the relative importance of each candidate's score. 
+            Defaults to False.
+
+    Returns:
+        numpy.ndarray: An array of length M containing the aggregated (and 
+            optionally normalized) scores for each of the M candidates.
+
+
+    Example:
+    >>> scores = ([
+    ...     [ 1,  0.25, 0],
+    ...     [ 4,  1.5,  0],
+    ...     [ 1, -0.25, 0]
+    ... ])
+    >>> aggregate(scores, normalize_output=True)
+    array([0.8, 0.2, 0. ])
+    >>> aggregate(scores, absolute=True, normalize_output=True)
+    array([0.75, 0.25, 0.  ])
+    >>> scores = ([
+    ...     [ 1,  0.25, 0],
+    ...     [ 4,  1.5,  0],
+    ...     [ 1, -0.25, 0]
+    ... ])
+    >>> aggregate(scores, rank_input=True, rank_output=True)
+    array([2, 1, 0])
+    """
+    arr = np.abs(arr) if absolute else np.array(arr)
+
+    if rank_input:
+        arr = np.argsort(np.argsort(arr, axis=1), axis=1)
+
+    if normalize_input:
+        s = arr.sum(axis=1)
+        s[s == 0] = 1e-12  # Division by zero.
+        arr = (arr.T / s).T
+        return aggregate(arr, normalize_output=normalize_output)
+
+    scores = np.atleast_2d(arr).sum(axis=0)
+
+    if rank_output:
+        scores = np.argsort(np.argsort(scores))
+    elif normalize_output:
+        s = np.sum(scores) or 1e-12
+        scores = scores / s
+
+    return scores

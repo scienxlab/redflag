@@ -58,4 +58,4 @@ def test_series_continuous_report():
 
 def test_feature_importances_docstring():
     s = pd.DataFrame([c, r]).redflag.feature_importances.__doc__
-    assert s.strip().startswith("Measure feature importances on a task, given X and y.")
+    assert s.strip().startswith("Estimate feature importances on a supervised task, given X and y.")
