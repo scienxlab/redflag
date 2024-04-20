@@ -4,7 +4,7 @@ Functions related to understanding the target and the type of task.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -272,8 +272,13 @@ def dummy_regression_scores(y: ArrayLike) -> dict:
 
 def dummy_scores(y: ArrayLike, task='auto', random_state:Optional[int]=None) -> dict:
     """
-    Automatically decide whether y is continuous or categorical and call the
-    appropriate scoring function.
+    Provide scores from a 'dummy' (naive) model. This can be useful for
+    understanding the difficulty of the task. For example, if the dummy
+    model does well, then the task is probably easy and you should be
+    suspicious of any model that does not do well.
+
+    The function automatically decides whether y is continuous or categorical
+    and calls the appropriate scoring function.
 
     Args:
         y (array): A list of class labels.

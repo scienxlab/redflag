@@ -35,7 +35,10 @@ def test_imbalance():
 
 def test_is_ordered():
     assert c.redflag.is_ordered()
-    with pytest.raises(ValueError, match="Cannot check order of continuous data."):
+
+
+def test_is_ordered_warns_for_continuous_data():
+    with pytest.raises(ValueError, match='Cannot check order of continuous data.'):
         r.redflag.is_ordered()
 
 

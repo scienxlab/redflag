@@ -5,7 +5,7 @@ https://github.com/agilescientific/striplog.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Matt Hall
+Copyright 2024 Matt Hall
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +28,25 @@ import scipy.stats
 def observations(seq_of_seqs, states, step=1, include_self=False):
     """
     Compute observation matrix.
+
+    Returns the matrix of transition counts between states.
+
+    Args:
+        seq_of_seqs (list-like): A list-like, or list-like of list-likes.
+            The inner list-likes represent sequences of states.
+            For example, can be a string or list of strings, or
+            a list or list of lists.
+        states (list-like): A list or array of the names of the states.
+            If not provided, it will be inferred from the data.
+        step (integer): The distance to step. Default is 1: use
+            the previous state only. If 2, then the previous-but-
+            one state is used as well as the previous state (and
+            the matrix has one more dimension).
+        include_self (bool): Whether to include self-to-self
+            transitions (default is `False`: do not include them).
+
+    Returns:
+        ndarray. The observation matrix.
     """
     O = np.zeros(tuple(states.size for _ in range(step+1)))
     for seq in seq_of_seqs:
@@ -42,7 +61,7 @@ def observations(seq_of_seqs, states, step=1, include_self=False):
 
 def hollow_matrix(M):
     """
-    Return hollow matrix (zeros on diagonal).
+    Utility funtion to return hollow matrix (zeros on diagonal).
 
     Args
         M (ndarray): a 'square' ndarray.
@@ -155,32 +174,50 @@ class Markov_chain:
 
     @staticmethod
     def _stop_iter(a, b, tol=0.01):
+        """
+        Stopping criterion for Powers & Easterling method.
+        """
         a_small = np.all(np.abs(a[-1] - a[-2]) < tol*a[-1])
         b_small = np.all(np.abs(b[-1] - b[-2]) < tol*b[-1])
         return (a_small and b_small)
 
     @property
     def _index_dict(self):
+        """
+        A dictionary mapping the states to their indices.
+        """
         if self.states is None:
             return {}
         return {self.states[index]: index for index in range(len(self.states))}
 
     @property
     def _state_dict(self):
+        """
+        A dictionary mapping the indices to their states.
+        """
         if self.states is None:
             return {}
         return {index: self.states[index] for index in range(len(self.states))}
 
     @property
     def observed_freqs(self):
+        """
+        The observed frequencies of each state, given the previous state.
+        """
         return self._compute_freqs(self.observed_counts)
 
     @property
     def expected_freqs(self):
+        """
+        The expected frequencies of each state, given the previous state.
+        """
         return self._compute_freqs(self.expected_counts)
 
     @property
     def _state_counts(self):
+        """
+        The number of times each state occurs.
+        """
         s = self.observed_counts.copy()
 
         # Deal with more than 2 dimensions.
@@ -193,10 +230,16 @@ class Markov_chain:
 
     @property
     def _state_probs(self):
+        """
+        The probability of each state.
+        """
         return self._state_counts / np.sum(self._state_counts)
 
     @property
     def normalized_difference(self):
+        """
+        The normalized difference between observed and expected counts.
+        """
         O = self.observed_counts
         E = self.expected_counts
         epsilon = 1e-12
@@ -213,7 +256,7 @@ class Markov_chain:
         """
         Parse a sequence and make the transition matrix of the specified order.
 
-        **Provide sequence(s) ordered in upwards direction.**
+        You must provide sequence(s) in causal order (e.g. time order).
 
         Args:
             sequence (list-like): A list-like, or list-like of list-likes.
@@ -273,7 +316,7 @@ class Markov_chain:
                                 p=self._conditional_probs(current_state)
                                 )
 
-    def generate_states(self, n=10, current_state=None):
+    def generate_states(self, n: int = 10, current_state=None):
         """
         Generates the next states of the system.
 
@@ -307,7 +350,7 @@ class Markov_chain:
 
         return E
 
-    def _compute_expected_mc(self, n=100000):
+    def _compute_expected_mc(self, n: int = 100000):
         """
         If we can't use Powers & Easterling's method, and it's possible there's
         a way to extend it to higher dimensions (which we have for step > 1),
@@ -324,7 +367,7 @@ class Markov_chain:
             E = hollow_matrix(E)
         return np.sum(self.observed_counts) * E / np.sum(E)
 
-    def _compute_expected_pe(self, max_iter=100):
+    def _compute_expected_pe(self, max_iter: int = 100):
         """
         Compute the independent trials matrix, using method of
         Powers & Easterling 1982.
@@ -361,7 +404,7 @@ class Markov_chain:
         m = len(self.states)
         return (m - 1)**2 - m
 
-    def _chi_squared_critical(self, q=0.95, df=None):
+    def _chi_squared_critical(self, q: float = 0.95, df: int = None) -> float:
         """
         The chi-squared critical value for a confidence level q
         and degrees of freedom df.
@@ -370,16 +413,16 @@ class Markov_chain:
             df = self.degrees_of_freedom
         return scipy.stats.chi2.ppf(q=q, df=df)
 
-    def _chi_squared_percentile(self, x, df=None):
+    def _chi_squared_percentile(self, x: float, df: int = None) -> float:
         """
-        The chi-squared critical value for a confidence level q
-        and degrees of freedom df.
+        The chi-squared percentile for a value x and degrees of
+        freedom df.
         """
         if df is None:
             df = self.degrees_of_freedom
         return scipy.stats.chi2.cdf(x, df=df)
 
-    def chi_squared(self, q=0.95):
+    def chi_squared(self, q: float = 0.95) -> tuple:
         """
         The chi-squared statistic for the given transition
         frequencies.

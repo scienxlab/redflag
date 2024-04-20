@@ -4,7 +4,7 @@ Functions related to understanding features.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,7 +35,12 @@ from .utils import get_idx
 
 def mahalanobis(X: ArrayLike, correction: bool=False) -> np.ndarray:
     """
-    Compute the Mahalanobis distances of a dataset.
+    Compute the Mahalanobis distances of every record (row) in a 2D dataset.
+
+    If X has a single feature, this is equivalent to computing the Z-scores
+    of the data. For more features, the Mahalanobis distance is the distance
+    of each point from the centroid of the data, in units analogous to the
+    standard deviation. It is a multivariate analog of the Z-score.
 
     The empirical covariance correction factor suggested by Rousseeuw and
     Van Driessen may be optionally applied by setting `correction=True`.
@@ -75,12 +80,13 @@ def mahalanobis_outliers(X: ArrayLike,
     Find outliers given samples and a threshold in multiples of stdev.
     Returns -1 for outliers and 1 for inliers (to match the sklearn API).
 
-    For univariate data, we expect this many points outside:
-        - 1 sd: expect 31.7 points in 100
-        - 2 sd: 4.55 in 100
-        - 3 sd: 2.70 in 1000
-        - 4 sd: 6.3 in 100,000
-        - 4.89163847 sd: 1 in 1 million
+    For univariate data, we expect this many points outside (in units of
+    standard deviation, and with equivalent p-values):
+        - 1 sd: expect 31.7 points in 100 (p = 1 - 0.317 = 0.683)
+        - 2 sd: 4.55 in 100 (p = 1 - 0.0455 = 0.9545)
+        - 3 sd: 2.70 in 1000 (p = 1 - 0.0027 = 0.9973)
+        - 4 sd: 6.3 in 100,000 (p = 1 - 0.000063 = 0.999937)
+        - 4.89163847 sd: 1 in 1 million (p = 1 - 0.000001 = 0.999999)
         - 5 sd: 5.7 in 10 million datapoints
         - 6 sd: 2.0 in 1 billion points
 
@@ -135,20 +141,21 @@ def get_outliers(a: ArrayLike,
     as an outlier is determined by the threshold, which is in multiples of
     the standard deviation. (The conversion to 'contamination' is approximate.)
 
-    This function requires the scikit-learn package.
-
-    Methods: 'iso' (isolation forest), 'lof' (local outlier factor), 'ee'
-    (elliptic envelope), or 'mah' (Mahanalobis distance, the default), or pass
-    a function that returns an array of outlier flags (-1 for outliers and 1
+    Methods: 'iso' (isolation forest, the default), 'lof' (local outlier factor),
+    'ee' (elliptic envelope), or 'mah' (Mahanalobis distance, the default), or
+    pass a function that returns an array of outlier flags (-1 for outliers and 1
     for inliers, matching the `sklearn` convention). You can also pass 'any',
     which will try all three outlier detection methods and return the outliers
     which are detected by any of them, or 'all', which will return the outliers
-    which are common to all four methods.
+    which are common to all four methods. That is, 'all' is a rather conservative
+    outlier detector, 'any' is rather liberal, and both of these are slower
+    than choosing a single algorithm.
 
     Args:
         a (array): The data.
-        method (str): The method to use. Can be 'iso', 'lof', 'ee', 'mah',
-            or a function that returns a Boolean array of outlier flags.
+        method (str): The method to use. Can be 'iso' (default), 'lof', 'ee',
+           'mah', 'any', 'all', or a function that returns a Boolean array of
+           outlier flags.
         p (float): The probability threshold, in the range [0, 1]. This value
             is ignored if `threshold` is not None; in this case, `p` will be
             computed using `utils.stdev_to_proportion(threshold)`.
@@ -206,7 +213,13 @@ def expected_outliers(n: int,
                       threshold: Optional[float]=None,
                       ) -> int:
     """
-    Expected number of outliers in a dataset.
+    Expected number of outliers in a dataset, under the assumption that the
+    data are multivariate-normally distributed. What counts as an outlier is
+    determined by the threshold, which is in multiples of the standard
+    deviation, or by the p-value, which is the probability of a point being
+    an outlier. Note that passing p = 0.99 does not necessarily mean that
+    1% of the points will be outliers, only that 1% of the points are expected
+    to be outliers, on average, if the data are normally distributed.
     
     Args:
         n (int): The number of samples.
@@ -239,9 +252,11 @@ def has_outliers(a: ArrayLike,
     """
     Use Mahalanobis distance to determine if there are more outliers than
     expected at the given confidence level or Mahalanobis distance threshold.
+    A Boolean wrapper around `expected_outliers` and `get_outliers`.
 
     Args:
-        a (array): The data.
+        a (array): The data. If 2D, the rows are samples and the columns are
+            features. If 1D, the data are assumed to be univariate.
         p (float): The probability threshold, in the range [0, 1]. This value
             is ignored if `threshold` is not None and `p` will be computed
             using `utils.stdev_to_proportion(threshold)`. Default: 0.99.

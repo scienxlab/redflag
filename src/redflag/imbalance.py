@@ -10,7 +10,7 @@ https://doi.org/10.1016/j.patrec.2017.08.002
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -132,14 +132,15 @@ def major_minor(a: ArrayLike, classes: Optional[ArrayLike]=None) -> tuple[int, i
 
 def divergence(method: str='hellinger') -> Callable:
     """
-    Compute the divergence between two discrete probability distributions. 
+    Provides a function for computing the divergence between two discrete
+    probability distributions. Used by `imbalance_degree()`.
 
     `method` can be a string from:
-        -  hellinger: Recommended.
-        - euclidean: Not recommended.
-        - manhattan: Recommended.
-        - kl: Not recommended.
-        - tv: Recommended.
+        - `hellinger`: Recommended by Ortigosa-Hernandez et al. (2017).
+        - `euclidean`: Not recommended.
+        - `manhattan`: Recommended.
+        - `kl`: Not recommended.
+        - `tv`: Recommended.
 
     If `method` is a function, this function just hands it back.
 
@@ -166,7 +167,8 @@ def divergence(method: str='hellinger') -> Callable:
 
 def furthest_distribution(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np.ndarray:
     """
-    Compute the IR. Equation 6 in Ortigosa-Hernandez et al. (2017).
+    Compute the furthest distribution from `a`; used by `imbalance_degree()`.
+    See Ortigosa-Hernandez et al. (2017).
 
     Args:
         a (array): A list of class labels.
@@ -249,7 +251,8 @@ def imbalance_degree(a: ArrayLike,
 
 def minority_classes(a: ArrayLike, classes: Optional[ArrayLike]=None) -> np.ndarray:
     """
-    Get the minority classes.
+    Get the minority classes, based on the empirical distribution.
+    The classes are listed in order of increasing frequency.
 
     Args:
         a (array): A list of class labels.

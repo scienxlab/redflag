@@ -4,7 +4,7 @@ Pandas accessors.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -89,8 +89,6 @@ class SeriesAccessor:
 
     @docstring_from(is_ordered)
     def is_ordered(self, q=0.95):
-        if is_continuous(self._obj):
-            warnings.warn('The Series does not seem categorical.')
         return is_ordered(self._obj, q=q)
 
     @docstring_from(dummy_scores)

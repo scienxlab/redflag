@@ -4,7 +4,7 @@ Feature importance metrics.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -108,7 +108,8 @@ def least_important_features(importances: ArrayLike,
                              threshold: Optional[float]=None) -> np.ndarray:
     """
     Returns the least important features, in order of importance (least
-        important first).
+    important first). The threshold controls how many features are returned.
+    Set it to None to set it automatically.
 
     Args:
         importances (array): the importance of the features, in the order in
@@ -142,7 +143,8 @@ def most_important_features(importances: ArrayLike,
                              threshold: Optional[float]=None) -> np.ndarray         :
     """
     Returns the indices of the most important features, in reverse order of
-        importance (most important first).
+    importance (most important first). The threshold controls how many features
+    are returned. Set it to None to set it automatically.
  
     Args:
         importances (array): the importance of the features, in the order in

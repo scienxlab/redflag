@@ -4,7 +4,7 @@ Functions related to understanding distributions.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -46,7 +46,14 @@ def best_distribution(a: ArrayLike, bins: Optional[int]=None) -> NamedTuple:
     """
     Model data by finding best fit distribution to data.
 
-    Returns the best fit distribution and its parameters.
+    By default, the following distributions are tried: normal, cosine,
+    exponential, exponential power, gamma, left-skewed Gumbel, right-skewed
+    Gumbel, power law, triangular, trapezoidal, and uniform.
+
+    The best fit is determined by the sum of squared errors (SSE) between the
+    histogram and the probability density function (PDF) of the distribution.
+
+    Returns the best fit distribution and its parameters in a named tuple.
 
     Args:
         a (array): The data.
@@ -90,7 +97,12 @@ def best_distribution(a: ArrayLike, bins: Optional[int]=None) -> NamedTuple:
 def wasserstein_ovr(a: ArrayLike, groups: ArrayLike=None, standardize: bool=False) -> np.ndarray:
     """
     First Wasserstein distance between each group in `a` vs the rest of `a`
-    ('one vs rest' or OVR).
+    ('one vs rest' or OVR). The groups are provided by `groups`, which must be
+    a 1D array of group labels, the same length as `a`.
+
+    The Wasserstein distance is a measure of the distance between two
+    probability distributions. It is also known as the earth mover's distance.
+    This function uses the implementation in `scipy.stats.wasserstein_distance`.
 
     The results are in `np.unique(a)` order.
 
@@ -125,7 +137,12 @@ def wasserstein_ovr(a: ArrayLike, groups: ArrayLike=None, standardize: bool=Fals
 def wasserstein_ovo(a: ArrayLike, groups: ArrayLike=None, standardize: bool=False) -> np.ndarray:
     """
     First Wasserstein distance between each group in `a` vs each other group
-    ('one vs one' or OVO).
+    ('one vs one' or OVO). The groups are provided by `groups`, which must be
+    a 1D array of group labels, the same length as `a`.
+
+    The Wasserstein distance is a measure of the distance between two
+    probability distributions. It is also known as the earth mover's distance.
+    This function uses the implementation in `scipy.stats.wasserstein_distance`.
 
     The results are in the order given by `combinations(np.unique(groups),
     r=2)`, which matches the order of `scipy.spatial.distance` metrics.
@@ -165,24 +182,6 @@ def wasserstein_ovo(a: ArrayLike, groups: ArrayLike=None, standardize: bool=Fals
     return np.array(dists)
 
 
-def wasserstein_multi(X: ArrayLike, groups: ArrayLike=None) -> np.ndarray:
-    """
-    Compute the multivariate (first) Wasserstein distance between groups.
-
-    Returns the distance matrix for all pairwise distances ('squareform').
-
-    Args:
-        X (array): The data. Must be a 2D array, or a sequence of 2D arrays.
-            If the latter, then the groups are implicitly assumed to be the
-            datasets in the sequence and the `groups` argument is ignored.
-        groups (array): The group labels.
-
-    Returns:
-        array: The 2D array of pairwise Wasserstein distance scores.
-    """
-    raise NotImplementedError()
-
-
 def wasserstein(X: ArrayLike,
                 groups: ArrayLike=None,
                 method: str='ovr', 
@@ -198,6 +197,10 @@ def wasserstein(X: ArrayLike,
     against each other, either pass the identity function (`lambda x: x`,
     which adds an axis) or use `wasserstein_ovo()` directly, one feature at
     a time. Default function: `np.mean`.
+
+    The Wasserstein distance is a measure of the distance between two
+    probability distributions. It is also known as the earth mover's distance.
+    This function uses the implementation in `scipy.stats.wasserstein_distance`.
 
     Args:
         X (array): The data. Must be a 2D array, or a sequence of 2D arrays.
@@ -266,9 +269,6 @@ def wasserstein(X: ArrayLike,
     if n_groups < 2:
         raise ValueError("Must have 2 or more groups.")
 
-    if method == 'multi':
-        return wasserstein_multi(X, groups=groups)
-
     methods = {
         'ovr': wasserstein_ovr,
         'ovo': wasserstein_ovo,
@@ -292,7 +292,8 @@ def wasserstein(X: ArrayLike,
 
 def bw_silverman(a: ArrayLike) -> float:
     """
-    Calculate the Silverman bandwidth.
+    Calculate the Silverman bandwidth, a popular rule of thumb for kernel
+    density estimation bandwidth.
 
     Silverman, BW (1981), "Using kernel density estimates to investigate
     multimodality", Journal of the Royal Statistical Society. Series B Vol. 43,
@@ -315,7 +316,8 @@ def bw_silverman(a: ArrayLike) -> float:
 
 def bw_scott(a: ArrayLike) -> float:
     """
-    Calculate the Scott bandwidth.
+    Calculate the Scott bandwidth, a popular rule of thumb for kernel
+    density estimation bandwidth.
 
     Args:
         a (array): The data.
@@ -336,6 +338,9 @@ def cv_kde(a: ArrayLike, n_bandwidths: int=20, cv: int=10) -> float:
     """
     Run a cross validation grid search to identify the optimal bandwidth for
     the kernel density estimation.
+
+    Searches between half the minimum of the Silverman and Scott bandwidths,
+    and twice the maximum. Checks `n_bandwidths` bandwidths, default 20.
 
     Args:
         a (array): The data.
@@ -416,7 +421,12 @@ def fit_kde(a: ArrayLike, bandwidth: float=1.0, kernel: str='gaussian') -> tuple
 
 def get_kde(a: ArrayLike, method: str='scott') -> tuple[np.ndarray, np.ndarray]:
     """
-    Get the kernel density estimation for the data.
+    Get a kernel density estimation for the data. By default, the bandwidth is
+    estimated using the Scott rule of thumb. Other options are the Silverman
+    rule of thumb, or cross validation (using the `cv_kde()` function).
+
+    This function is a wrapper for `fit_kde()`, with convenient options for
+    bandwidth estimation.
 
     Args:
         a (array): The data.
@@ -447,6 +457,9 @@ def find_large_peaks(x: ArrayLike, y: ArrayLike, threshold: float=0.1) -> tuple[
     Find the peaks in the array. Returns the values of x and y at the largest
     peaks, using threshold &times; max(peak amplitudes) as the cut-off. That is,
     peaks smaller than that are not returned.
+
+    Uses `scipy.signal.find_peaks()`, with convenient options for thresholding,
+    and returns the x and y values of the peaks in a named tuple.
 
     Args:
         x (array): The x values.
@@ -479,7 +492,13 @@ def find_large_peaks(x: ArrayLike, y: ArrayLike, threshold: float=0.1) -> tuple[
 
 def kde_peaks(a: ArrayLike, method: str='scott', threshold: float=0.1) -> tuple[np.ndarray, np.ndarray]:
     """
-    Find the peaks in the kernel density estimation.
+    Find the peaks in the kernel density estimation. This might help you
+    identify the modes in the data.
+
+    Wraps `get_kde()` and  `find_large_peaks()` to find the peaks in the
+    kernel density estimation. By default, the bandwidth is estimated using
+    the Scott rule of thumb. Other options are the Silverman rule of thumb, or
+    cross validation (using the `cv_kde()` function).        
 
     Args:
         a (array): The data.
@@ -508,7 +527,14 @@ def is_multimodal(a: ArrayLike,
                   method: str='scott',
                   threshold: float=0.1) -> Union[bool, np.ndarray]:
     """
-    Test if the data is multimodal.
+    Test if the data is multimodal by looking for peaks in the kernel density
+    estimation. If there is more than one peak, the data are considered
+    multimodal.
+
+    If groups are passed, the data are partitioned by group and tested
+    separately. The result is an array of booleans, one per group.
+
+    Wraps `kde_peaks()` to find the peaks in the kernel density estimation.
 
     Args:
         a (array): The data.

@@ -4,7 +4,7 @@ Functions related to understanding row independence.
 Author: Matt Hall, scienxlab.org
 Licence: Apache 2.0
 
-Copyright 2023 Redflag contributors
+Copyright 2024 Redflag contributors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> b
     If samples are correlated in this way, then the records in your dataset
     may break the IID assumption implicit in much of statistics (though not
     in specialist geostatistics or timeseries algorithms). This is not
-    necessarily a bit problem, but it does mean you need to be careful
+    necessarily a big problem, but it does mean you need to be careful
     about how you split your data, for example a random split between train
     and test will leak information from train to test, because neighbouring
     samples are correlated.
@@ -40,6 +40,9 @@ def is_correlated(a: ArrayLike, n: int=20, s: int=20, threshold: float=0.1) -> b
     This function inspects s random chunks of n samples, averaging the
     autocorrelation coefficients across chunks. If the mean first non-zero
     lag is greater than the threshold, the array may be autocorrelated.
+
+    See the Tutorial in the documentation for more about how to use this
+    function.
 
     Args:
         a (array): The data.
