@@ -1,5 +1,13 @@
 # Changelog
 
+
+## 0.4.3, coming April 2024
+
+- This is a minor release making more changes to the tests and documentation in reponse to the review process for [the submission](https://joss.theoj.org/papers/e1ca575ec0c5344144f87176539ef547) to JOSS (see below).
+- In particular, see the following issue: [#97](https://github.com/scienxlab/redflag/issues/97)
+- Changed the method of handling dynamic versionin. For now the package `__version__` attribute is still defined, but it is deprecated and will be removed in `0.5.0`. Use `from importlib.metadata.version('redflag')` to get the version information instead.
+
+
 ## 0.4.2, 10 December 2023
 
 - This is a minor release making changes to the tests and documentation in reponse to the review process for [a submission](https://joss.theoj.org/papers/e1ca575ec0c5344144f87176539ef547) to [The Journal of Open Source Software](https://joss.theoj.org) (JOSS).

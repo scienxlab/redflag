@@ -55,7 +55,7 @@ dev = [
 "repository" = "https://github.com/scienxlab/redflag"
 
 [tool.setuptools_scm]
-write_to = "src/redflag/_version.py"
+# Empty section, required for dynamic versioning.
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -77,5 +77,4 @@ filterwarnings = [
 # coverage configuration: https://coverage.readthedocs.io/
 omit = [
     "src/redflag/__init__.py",
-    "src/redflag/_version.py",
 ]
