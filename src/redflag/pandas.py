@@ -159,7 +159,7 @@ class DataFrameAccessor:
 
         for i, x in enumerate(X_.T):
             if is_correlated(x, n=n, s=s, threshold=threshold):
-                warnings.warn(f'Feature {i} appears to be autocorrelated.',stacklevel=2)
+                warnings.warn(f'🚩 Feature {i} appears to be autocorrelated.', stacklevel=2)
 
         # There is probably something more useful to return.
         return
