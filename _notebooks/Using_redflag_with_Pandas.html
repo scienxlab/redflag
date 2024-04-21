@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="🚩 Tutorial" href="Tutorial.html" /><link rel="prev" title="🚩 Using redflag with sklearn" href="Using_redflag_with_sklearn.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.01.29 -->
         <title>🚩 Using redflag with Pandas</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
@@ -234,8 +234,8 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="using-redflag-with-pandas">
-<h1>🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas<a class="headerlink" href="#using-redflag-with-pandas" title="Link to this heading">#</a></h1>
-<p>As well as using <code class="docutils literal notranslate"><span class="pre">redflag</span></code>’s functions directly (see <a class="reference internal" href="#%60./Basic_usage.ipynb%60"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Basic_usage.ipynb</span></code></span></a>), or with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> (see <code class="docutils literal notranslate"><span class="pre">Using_redflag_with_Pandas.ipynb</span></code>), <code class="docutils literal notranslate"><span class="pre">redflag</span></code> has some Pandas ‘accessors’ that give you access to some <code class="docutils literal notranslate"><span class="pre">redflag</span></code> functions almost as if they were methods on Pandas objects.</p>
+<h1>🚩 Using <code class="docutils literal notranslate"><span class="pre">redflag</span></code> with Pandas<a class="headerlink" href="#using-redflag-with-pandas" title="Link to this heading">¶</a></h1>
+<p>As well as using <code class="docutils literal notranslate"><span class="pre">redflag</span></code>’s functions directly (see <code class="docutils literal notranslate"><span class="pre">Basic_usage.ipynb</span></code>), or with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> (see <code class="docutils literal notranslate"><span class="pre">Using_redflag_with_Pandas.ipynb</span></code>), <code class="docutils literal notranslate"><span class="pre">redflag</span></code> has some Pandas ‘accessors’ that give you access to some <code class="docutils literal notranslate"><span class="pre">redflag</span></code> functions almost as if they were methods on Pandas objects.</p>
 <p>The best way to get the idea is to look at an example.</p>
 <p>First, even though we may not use it directly, we have to import <code class="docutils literal notranslate"><span class="pre">redflag</span></code> to get access to its functions. As long as you have <code class="docutils literal notranslate"><span class="pre">pandas</span></code> installed, it will register the accessors.</p>
 <div class="cell docutils container">
@@ -247,7 +247,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.4.2&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.5.0rc1&#39;
 </pre></div>
 </div>
 </div>
@@ -256,7 +256,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/scienxlab/datasets/main/kgs/Panoma_training_data.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/scienxlab/datasets/main/kgs/panoma-training-data.csv&#39;</span><span class="p">)</span>
 
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -412,7 +412,7 @@
 </div></div></div>
 </div>
 <section id="series-accessor">
-<h2>Series accessor<a class="headerlink" href="#series-accessor" title="Link to this heading">#</a></h2>
+<h2>Series accessor<a class="headerlink" href="#series-accessor" title="Link to this heading">¶</a></h2>
 <p>For the time being, there are only accessors on Pandas <code class="docutils literal notranslate"><span class="pre">Series</span></code> objects. For example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -443,8 +443,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.2411344733492839,
- &#39;roc_auc&#39;: 0.5030196416166594,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;f1&#39;: 0.2456652937970971,
+ &#39;roc_auc&#39;: 0.5051604923725436,
  &#39;strategy&#39;: &#39;stratified&#39;,
  &#39;task&#39;: &#39;classification&#39;}
 </pre></div>
@@ -476,9 +476,27 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Continuous data suitable for regression
-Outliers:    [  34   35  136  140  141  142  143  145  175  180  181  182  581  633
-  662  768  769  801 1316 1547 1731 1732 1744 1754 1756 1778 1779 1780
- 1784 1788 1808 1812 2884 2973 2974 3004 3079 3080 3087 3109]
+Outliers:    [  95   96  132  175  176  177  222  223  263  526  527  531  532  533
+  534  575  576  577  578  579  580  581  582  583  584  585  586  587
+  588  621  622  633  634  635  636  652  653  654  660  661  662  663
+  711  712  713  756  757  758  759  760  768  769  770  771  772  773
+  774  775  776  777  778  779  780  781  782  800  801  802  803  804
+  818  819  821  822  823  824  835  836  841  842  843  844  845  846
+  849  850  934  935  936  937  938 1039 1040 1044 1048 1049 1113 1114
+ 1115 1116 1145 1146 1147 1148 1149 1150 1151 1216 1217 1218 1221 1222
+ 1223 1224 1225 1304 1313 1314 1315 1316 1368 1369 1370 1371 1372 1373
+ 1374 1375 1446 1447 1496 1497 1498 1499 1546 1547 1548 1549 1567 1568
+ 1622 1623 1624 1662 1663 1664 1665 1666 1722 1723 1724 1725 1726 1735
+ 1739 1740 1741 1742 1743 1744 1745 1746 1747 1748 1753 1754 1755 1756
+ 1757 1777 1778 1779 1780 1781 1782 1783 1784 1785 1786 1787 1788 1789
+ 1790 1805 1806 1807 1808 1809 1810 1812 1813 1866 1868 1869 1870 1981
+ 1982 2054 2055 2139 2327 2415 2416 2417 2418 2488 2489 2490 2867 2868
+ 2869 2870 2871 2872 2873 2882 2883 2884 2888 2889 2921 2922 2923 2924
+ 2925 2926 2927 2928 2929 2930 2931 2932 2933 2972 2973 2974 2975 2976
+ 3004 3087 3088 3089 3090 3091 3092 3093 3094 3095 3096 3097 3098 3099
+ 3100 3101 3102 3109 3110 3111 3112 3113 3114 3115 3341 3429 3430 3443
+ 3444 3515 3516 3517 3861 3862 3863 3905 3906 3907 3931 3932 3933 3934
+ 3935]
 Correlated:  True
 Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, &#39;r2&#39;: 0.0}}
 </pre></div>
@@ -488,7 +506,7 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 <p>This is an experimental feature; future releases will have more functions. Feedback welcome!</p>
 </section>
 <section id="dataframe-accessor">
-<h2>DataFrame accessor<a class="headerlink" href="#dataframe-accessor" title="Link to this heading">#</a></h2>
+<h2>DataFrame accessor<a class="headerlink" href="#dataframe-accessor" title="Link to this heading">¶</a></h2>
 <p>Experimental feature: so far only <code class="docutils literal notranslate"><span class="pre">feature_importances</span></code> and <code class="docutils literal notranslate"><span class="pre">correlation_detector</span></code> are implemented.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -498,7 +516,7 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.23155584, 0.21912608, 0.33738409, 0.21193399])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.19092144, 0.1857704 , 0.35986442, 0.26344374])
 </pre></div>
 </div>
 </div>
@@ -510,10 +528,10 @@ Dummy scores:{&#39;mean&#39;: {&#39;mean_squared_error&#39;: 47528.78263092096, 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature 0 appears to be autocorrelated.
-Feature 1 appears to be autocorrelated.
-Feature 2 appears to be autocorrelated.
-Feature 3 appears to be autocorrelated.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 Feature 0 appears to be autocorrelated.
+🚩 Feature 1 appears to be autocorrelated.
+🚩 Feature 2 appears to be autocorrelated.
+🚩 Feature 3 appears to be autocorrelated.
 </pre></div>
 </div>
 </div>
@@ -551,7 +569,7 @@ Feature 3 appears to be autocorrelated.
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023, The Redflag Authors
+                Copyright &#169; 2024, The Redflag Authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -592,7 +610,7 @@ Feature 3 appears to be autocorrelated.
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>

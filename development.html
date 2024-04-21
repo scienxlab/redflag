@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Contributing" href="contributing.html" /><link rel="prev" title="redflag.utils module" href="redflag.utils.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.01.29 -->
         <title>Development</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -234,21 +234,21 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="development">
-<h1>Development<a class="headerlink" href="#development" title="Link to this heading">#</a></h1>
+<h1>Development<a class="headerlink" href="#development" title="Link to this heading">¶</a></h1>
 <p>If you’d like to develop <code class="docutils literal notranslate"><span class="pre">redflag</span></code>, this page should help you get started.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <p>You can install this package with <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code>. The <code class="docutils literal notranslate"><span class="pre">dev</span></code> option will install the packages you need for testing and building the documentation.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;redflag[dev]&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h2>
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
 <p>If you’d like to contribute pull requests back to the main <code class="docutils literal notranslate"><span class="pre">redflag</span> </code> project, please see <a class="reference external" href="https://github.com/scienxlab/redflag/blob/main/CONTRIBUTING.md"><code class="docutils literal notranslate"><span class="pre">CONTRIBUTING.md</span></code></a>.</p>
 </section>
 <section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">#</a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">¶</a></h2>
 <p>You can run the tests (requires <code class="docutils literal notranslate"><span class="pre">pytest</span></code> and <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code>) with</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest
 </pre></div>
@@ -256,7 +256,7 @@
 <p>Most of the tests are <code class="docutils literal notranslate"><span class="pre">doctest</span></code> tests, which are contained in the docstrings of this package’s functions. There are further tests in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder.</p>
 </section>
 <section id="building-the-package">
-<h2>Building the package<a class="headerlink" href="#building-the-package" title="Link to this heading">#</a></h2>
+<h2>Building the package<a class="headerlink" href="#building-the-package" title="Link to this heading">¶</a></h2>
 <p>This repo uses PEP 518-style packaging. <a class="reference external" href="https://setuptools.pypa.io/en/latest/build_meta.html">Read more about this</a> and <a class="reference external" href="https://packaging.python.org/en/latest/tutorials/packaging-projects/">about Python packaging in general</a>.</p>
 <p>To build <code class="docutils literal notranslate"><span class="pre">redflag</span></code> locally:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>build
@@ -265,7 +265,7 @@
 <p>This builds both <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> and <code class="docutils literal notranslate"><span class="pre">.whl</span></code> files, either of which you can install with <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
 </section>
 <section id="building-the-docs">
-<h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Link to this heading">#</a></h2>
+<h2>Building the docs<a class="headerlink" href="#building-the-docs" title="Link to this heading">¶</a></h2>
 <p>You can build the docs with the following commands:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
 make<span class="w"> </span>html
@@ -275,7 +275,7 @@ make<span class="w"> </span>html
 <p>There is a continuous integration script to update the docs on published releases.</p>
 </section>
 <section id="continuous-integration">
-<h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">#</a></h2>
+<h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">¶</a></h2>
 <p>This repo has two GitHub ‘workflows’ or ‘actions’:</p>
 <ul class="simple">
 <li><p>Push to <code class="docutils literal notranslate"><span class="pre">main</span></code>: Run all tests on all version of Python. This is the <strong>Build and test</strong> workflow.</p></li>
@@ -313,7 +313,7 @@ make<span class="w"> </span>html
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023, The Redflag Authors
+                Copyright &#169; 2024, The Redflag Authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -358,7 +358,7 @@ make<span class="w"> </span>html
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>

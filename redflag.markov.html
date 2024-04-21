@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="redflag.outliers module" href="redflag.outliers.html" /><link rel="prev" title="redflag.independence module" href="redflag.independence.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.01.29 -->
         <title>redflag.markov module</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -234,16 +234,16 @@
         </div>
         <article role="main">
           <section id="module-redflag.markov">
-<span id="redflag-markov-module"></span><h1>redflag.markov module<a class="headerlink" href="#module-redflag.markov" title="Link to this heading">#</a></h1>
+<span id="redflag-markov-module"></span><h1>redflag.markov module<a class="headerlink" href="#module-redflag.markov" title="Link to this heading">¶</a></h1>
 <p>Functions related to Markov chains. This code was originally implemented in
 <a class="reference external" href="https://github.com/agilescientific/striplog">https://github.com/agilescientific/striplog</a>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">Markov_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observed_counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">Markov_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observed_counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.chi_squared">
-<span class="sig-name descname"><span class="pre">chi_squared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.chi_squared" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">chi_squared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#redflag.markov.Markov_chain.chi_squared" title="Link to this definition">¶</a></dt>
 <dd><p>The chi-squared statistic for the given transition
 frequencies.</p>
 <p>Also returns the critical statistic at the given confidence
@@ -267,19 +267,20 @@ Default: 0.95.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.degrees_of_freedom">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">degrees_of_freedom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#redflag.markov.Markov_chain.degrees_of_freedom" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">degrees_of_freedom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#redflag.markov.Markov_chain.degrees_of_freedom" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.expected_freqs">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expected_freqs</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.expected_freqs" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expected_freqs</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.expected_freqs" title="Link to this definition">¶</a></dt>
+<dd><p>The expected frequencies of each state, given the previous state.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.from_sequence">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings_are_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.from_sequence" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings_are_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.from_sequence" title="Link to this definition">¶</a></dt>
 <dd><p>Parse a sequence and make the transition matrix of the specified order.</p>
-<p><strong>Provide sequence(s) ordered in upwards direction.</strong></p>
+<p>You must provide sequence(s) in causal order (e.g. time order).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -310,7 +311,7 @@ the matrix has one more dimension).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.generate_states">
-<span class="sig-name descname"><span class="pre">generate_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.generate_states" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">generate_states</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.Markov_chain.generate_states" title="Link to this definition">¶</a></dt>
 <dd><p>Generates the next states of the system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -327,20 +328,22 @@ the matrix has one more dimension).</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.normalized_difference">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalized_difference</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.normalized_difference" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalized_difference</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.normalized_difference" title="Link to this definition">¶</a></dt>
+<dd><p>The normalized difference between observed and expected counts.</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="redflag.markov.Markov_chain.observed_freqs">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observed_freqs</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.observed_freqs" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observed_freqs</span></span><a class="headerlink" href="#redflag.markov.Markov_chain.observed_freqs" title="Link to this definition">¶</a></dt>
+<dd><p>The observed frequencies of each state, given the previous state.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.markov.hollow_matrix">
-<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">hollow_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.hollow_matrix" title="Link to this definition">#</a></dt>
-<dd><p>Return hollow matrix (zeros on diagonal).</p>
+<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">hollow_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">M</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.hollow_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Utility funtion to return hollow matrix (zeros on diagonal).</p>
 <dl class="simple">
 <dt>Args</dt><dd><p>M (ndarray): a ‘square’ ndarray.</p>
 </dd>
@@ -351,13 +354,35 @@ the matrix has one more dimension).</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.markov.observations">
-<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_of_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.observations" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">observations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_of_seqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_self</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#redflag.markov.observations" title="Link to this definition">¶</a></dt>
 <dd><p>Compute observation matrix.</p>
+<p>Returns the matrix of transition counts between states.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq_of_seqs</strong> (<em>list-like</em>) – A list-like, or list-like of list-likes.
+The inner list-likes represent sequences of states.
+For example, can be a string or list of strings, or
+a list or list of lists.</p></li>
+<li><p><strong>states</strong> (<em>list-like</em>) – A list or array of the names of the states.
+If not provided, it will be inferred from the data.</p></li>
+<li><p><strong>step</strong> (<em>integer</em>) – The distance to step. Default is 1: use
+the previous state only. If 2, then the previous-but-
+one state is used as well as the previous state (and
+the matrix has one more dimension).</p></li>
+<li><p><strong>include_self</strong> (<em>bool</em>) – Whether to include self-to-self
+transitions (default is <cite>False</cite>: do not include them).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray. The observation matrix.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="redflag.markov.regularize">
-<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">regularize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings_are_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#redflag.markov.regularize" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">redflag.markov.</span></span><span class="sig-name descname"><span class="pre">regularize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strings_are_states</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#redflag.markov.regularize" title="Link to this definition">¶</a></dt>
 <dd><p>Turn a sequence or sequence of sequences into a tuple of
 the unique elements in the sequence(s), plus a sequence
 of sequences (sort of equivalent to <cite>np.atleast_2d()</cite>).</p>
@@ -413,7 +438,7 @@ set to True if you provide something like:</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023, The Redflag Authors
+                Copyright &#169; 2024, The Redflag Authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -465,7 +490,7 @@ set to True if you provide something like:</p>
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>

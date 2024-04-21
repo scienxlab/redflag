@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="License" href="license.html" />
 
-    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+    <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.01.29 -->
         <title>Changelog</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -234,9 +234,19 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
+<section id="april-2024">
+<h2>0.5.0, 21 April 2024<a class="headerlink" href="#april-2024" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>This release makes more changes to the tests and documentation in reponse to the review process for <a class="reference external" href="https://joss.theoj.org/papers/e1ca575ec0c5344144f87176539ef547">the submission</a> to JOSS (see below).</p></li>
+<li><p>In particular, see the following issue: <a class="reference external" href="https://github.com/scienxlab/redflag/issues/97">#97</a></p></li>
+<li><p>Changed the method of handling dynamic versioning. For now the package <code class="docutils literal notranslate"><span class="pre">__version__</span></code> attribute is still defined, but it is deprecated and will be removed in <code class="docutils literal notranslate"><span class="pre">0.6.0</span></code>. Use <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">importlib.metadata.version('redflag')</span></code> to get the version information instead.</p></li>
+<li><p>Changed the default <code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code> method from isolation forest (<code class="docutils literal notranslate"><span class="pre">'iso'</span></code>) to Mahalanobis (<code class="docutils literal notranslate"><span class="pre">'mah'</span></code>) to match other functions, eg <code class="docutils literal notranslate"><span class="pre">has_outliers()</span></code> and the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> pipeline object.</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">actions/setup-python</span></code> to use v5.</p></li>
+</ul>
+</section>
 <section id="december-2023">
-<h2>0.4.2, 10 December 2023<a class="headerlink" href="#december-2023" title="Link to this heading">#</a></h2>
+<h2>0.4.2, 10 December 2023<a class="headerlink" href="#december-2023" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>This is a minor release making changes to the tests and documentation in reponse to the review process for <a class="reference external" href="https://joss.theoj.org/papers/e1ca575ec0c5344144f87176539ef547">a submission</a> to <a class="reference external" href="https://joss.theoj.org">The Journal of Open Source Software</a> (JOSS).</p></li>
 <li><p>See the following issues: <a class="reference external" href="https://github.com/scienxlab/redflag/issues/89">#89</a>, <a class="reference external" href="https://github.com/scienxlab/redflag/issues/90">#90</a>, <a class="reference external" href="https://github.com/scienxlab/redflag/issues/91">#91</a>, <a class="reference external" href="https://github.com/scienxlab/redflag/issues/92">#92</a>, <a class="reference external" href="https://github.com/scienxlab/redflag/issues/93">#93</a>, <a class="reference external" href="https://github.com/scienxlab/redflag/issues/94">#94</a> and <a class="reference external" href="https://github.com/scienxlab/redflag/issues/95">#95</a>.</p></li>
@@ -246,7 +256,7 @@
 </ul>
 </section>
 <section id="october-2023">
-<h2>0.4.1, 2 October 2023<a class="headerlink" href="#october-2023" title="Link to this heading">#</a></h2>
+<h2>0.4.1, 2 October 2023<a class="headerlink" href="#october-2023" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>This is a minor release intended to preview new <code class="docutils literal notranslate"><span class="pre">pandas</span></code>-related features for version 0.5.0.</p></li>
 <li><p>Added another <code class="docutils literal notranslate"><span class="pre">pandas</span></code> Series accessor, <code class="docutils literal notranslate"><span class="pre">is_imbalanced()</span></code>.</p></li>
@@ -254,7 +264,7 @@
 </ul>
 </section>
 <section id="september-2023">
-<h2>0.4.0, 28 September 2023<a class="headerlink" href="#september-2023" title="Link to this heading">#</a></h2>
+<h2>0.4.0, 28 September 2023<a class="headerlink" href="#september-2023" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">redflag</span></code> can now be installed by the <code class="docutils literal notranslate"><span class="pre">conda</span></code> package and environment manager. To do so, use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">redflag</span></code>.</p></li>
 <li><p>All of the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> components can now be instantiated with <code class="docutils literal notranslate"><span class="pre">warn=False</span></code> in order to trigger a <code class="docutils literal notranslate"><span class="pre">ValueException</span></code> instead of a warning. This allows you to build pipelines that will break if a detector is triggered.</p></li>
@@ -266,7 +276,7 @@
 </ul>
 </section>
 <section id="id1">
-<h2>0.3.0, 21 September 2023<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>0.3.0, 21 September 2023<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added some accessors to give access to <code class="docutils literal notranslate"><span class="pre">redflag</span></code> functions directly from <code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> objects, via an ‘accessor’. For example, for a Series <code class="docutils literal notranslate"><span class="pre">s</span></code>, one can call <code class="docutils literal notranslate"><span class="pre">minority_classes</span> <span class="pre">=</span> <span class="pre">s.redflag.minority_classes()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">redflag.minority_classes(s)</span></code>. Other functions include <code class="docutils literal notranslate"><span class="pre">imbalance_degree()</span></code>, <code class="docutils literal notranslate"><span class="pre">dummy_scores()</span></code> (see below). Probably not very useful yet, but future releases will add some reporting functions that wrap multiple Redflag functions. <strong>This is an experimental feature and subject to change.</strong></p></li>
 <li><p>Added a Series accessor <code class="docutils literal notranslate"><span class="pre">report()</span></code> to perform a range of tests and make a small text report suitable for printing. Access for a Series <code class="docutils literal notranslate"><span class="pre">s</span></code> like <code class="docutils literal notranslate"><span class="pre">s.redflag.report()</span></code>. <strong>This is an experimental feature and subject to change.</strong></p></li>
@@ -278,7 +288,7 @@
 </ul>
 </section>
 <section id="id2">
-<h2>0.2.0, 4 September 2023<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>0.2.0, 4 September 2023<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Moved to something more closely resembling semantic versioning, which is the main reason this is version 0.2.0.</p></li>
 <li><p>Builds and tests on Python 3.11 have been successful, so now supporting this version.</p></li>
@@ -296,7 +306,7 @@
 </ul>
 </section>
 <section id="november-2022">
-<h2>0.1.10, 21 November 2022<a class="headerlink" href="#november-2022" title="Link to this heading">#</a></h2>
+<h2>0.1.10, 21 November 2022<a class="headerlink" href="#november-2022" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">redflag.importance.least_important_features()</span></code> and <code class="docutils literal notranslate"><span class="pre">redflag.importance.most_important_features()</span></code>. These functions are complementary (in other words, if the same threshold is used in each, then between them they return all of the features). The default threshold for importance is half the expected value. E.g. if there are 5 features, then the default threshold is half of 0.2, or 0.1. Part of <a class="reference external" href="https://github.com/scienxlab/redflag/issues/2">Issue 2</a>.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.ImportanceDetector</span></code> class, which warns if 1 or 2 features have anomalously high importance, or if some features have anomalously low importance. Part of <a class="reference external" href="https://github.com/scienxlab/redflag/issues/2">Issue 2</a>.</p></li>
@@ -307,7 +317,7 @@
 </ul>
 </section>
 <section id="august-2022">
-<h2>0.1.9, 25 August 2022<a class="headerlink" href="#august-2022" title="Link to this heading">#</a></h2>
+<h2>0.1.9, 25 August 2022<a class="headerlink" href="#august-2022" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added some experimental <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> transformers that implement various <code class="docutils literal notranslate"><span class="pre">redflag</span></code> tests. These do not transform the data in any way, they just inspect the data and emit warnings if tests fail. The main ones are: <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.ClipDetector</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.OutlierDetector</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.CorrelationDetector</span></code>, <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.ImbalanceDetector</span></code>, and <code class="docutils literal notranslate"><span class="pre">redflag.sklearn.DistributionComparator</span></code>.</p></li>
 <li><p>Added tests for the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> transformers. These are in <code class="docutils literal notranslate"><span class="pre">redflag/tests/test_redflag.py</span></code> file, whereas all other tests are doctests. You can run all the tests at once with <code class="docutils literal notranslate"><span class="pre">pytest</span></code>; coverage is currently 94%.</p></li>
@@ -320,7 +330,7 @@
 </ul>
 </section>
 <section id="july-2022">
-<h2>0.1.8, 8 July 2022<a class="headerlink" href="#july-2022" title="Link to this heading">#</a></h2>
+<h2>0.1.8, 8 July 2022<a class="headerlink" href="#july-2022" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added Wasserstein distance comparisons for univariate and multivariate distributions. This works for either a <code class="docutils literal notranslate"><span class="pre">groups</span></code> array, or for multiple dataset splits if that’s more convenient.</p></li>
 <li><p>Improved <code class="docutils literal notranslate"><span class="pre">get_outliers()</span></code>, removing OneClassSVM method and adding EllipticEnvelope and Mahalanobis distance.</p></li>
@@ -336,7 +346,7 @@
 </ul>
 </section>
 <section id="to-0-1-7-911-february-2022">
-<h2>0.1.3 to 0.1.7, 9–11 February 2022<a class="headerlink" href="#to-0-1-7-911-february-2022" title="Link to this heading">#</a></h2>
+<h2>0.1.3 to 0.1.7, 9–11 February 2022<a class="headerlink" href="#to-0-1-7-911-february-2022" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">utils.has_low_distance_stdev</span></code>.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">utils.has_few_samples</span></code>.</p></li>
@@ -348,20 +358,20 @@
 </ul>
 </section>
 <section id="february-2022">
-<h2>0.1.2, 1 February 2022<a class="headerlink" href="#february-2022" title="Link to this heading">#</a></h2>
+<h2>0.1.2, 1 February 2022<a class="headerlink" href="#february-2022" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Early release.</p></li>
 <li><p>Added auto-versioning.</p></li>
 </ul>
 </section>
 <section id="january-2022">
-<h2>0.1.1, 31 January 2022<a class="headerlink" href="#january-2022" title="Link to this heading">#</a></h2>
+<h2>0.1.1, 31 January 2022<a class="headerlink" href="#january-2022" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Early release.</p></li>
 </ul>
 </section>
 <section id="id3">
-<h2>0.1.0, 30 January 2022<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>0.1.0, 30 January 2022<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Early release.</p></li>
 </ul>
@@ -389,7 +399,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023, The Redflag Authors
+                Copyright &#169; 2024, The Redflag Authors
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -416,6 +426,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Changelog</a><ul>
+<li><a class="reference internal" href="#april-2024">0.5.0, 21 April 2024</a></li>
 <li><a class="reference internal" href="#december-2023">0.4.2, 10 December 2023</a></li>
 <li><a class="reference internal" href="#october-2023">0.4.1, 2 October 2023</a></li>
 <li><a class="reference internal" href="#september-2023">0.4.0, 28 September 2023</a></li>
@@ -440,7 +451,7 @@
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
