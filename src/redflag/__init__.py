@@ -18,7 +18,7 @@ from .outliers import *
 # information from the package metadata directly, eg by using
 # importlib.metadata.version (see below).
 #
-# This will be deprecated in v0.5.0 but for now we do this:
+# This will be deprecated in v0.6.0 but for now we do this:
 #
 from importlib.metadata import version
 __version__ = version(__package__ or __name__)

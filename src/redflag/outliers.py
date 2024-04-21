@@ -133,7 +133,7 @@ def mahalanobis_outliers(X: ArrayLike,
 
 
 def get_outliers(a: ArrayLike,
-                 method: Optional[str]=None, # Can change to 'mah' in 0.5.0.
+                 method: Optional[str]=None, # Can change to 'mah' in 0.6.0.
                  p: float=0.99,
                  threshold: Optional[float]=None,
                  ) -> np.ndarray:
