@@ -119,9 +119,9 @@ class DataFrameAccessor:
 
     @docstring_from(feature_importances)
     def feature_importances(self, features=None, target=None,
-                            n: int=3, task: Optional[str]=None,
+                            task: Optional[str]=None,
                             random_state: Optional[int]=None,
-                            standardize: bool=True):
+                            ):
         if target is None:
             raise ValueError('You must provide a target column.')
         else:
@@ -136,9 +136,10 @@ class DataFrameAccessor:
             X_ = self._obj.drop(columns=target)
         else:
             X_ = self._obj[features]
-        return feature_importances(X_, y_, n=n, task=task,
-                                   random_state=random_state,
-                                   standardize=standardize)
+        return feature_importances(X_, y_,
+                                   task=task,
+                                   random_state=random_state
+                                   )
 
 
     def correlation_detector(self, features=None, target=None, n=20, s=20, threshold=0.1):

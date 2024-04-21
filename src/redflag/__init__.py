@@ -13,9 +13,6 @@ from .independence import *
 from .importance import *
 from .outliers import *
 
-from .mypackage import *
-from .cli import cli
-
 # It used to be conventional to define a __version__ attribute.
 # However, it is now considered best practice to get version
 # information from the package metadata directly, eg by using
