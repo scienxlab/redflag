@@ -22,6 +22,7 @@ from __future__ import annotations
 
 from typing import Optional
 from functools import reduce, partial
+import warnings
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -132,7 +133,7 @@ def mahalanobis_outliers(X: ArrayLike,
 
 
 def get_outliers(a: ArrayLike,
-                 method: str='iso',
+                 method: Optional[str]=None, # Can change to 'mah' in 0.5.0.
                  p: float=0.99,
                  threshold: Optional[float]=None,
                  ) -> np.ndarray:
@@ -141,7 +142,7 @@ def get_outliers(a: ArrayLike,
     as an outlier is determined by the threshold, which is in multiples of
     the standard deviation. (The conversion to 'contamination' is approximate.)
 
-    Methods: 'iso' (isolation forest, the default), 'lof' (local outlier factor),
+    Methods: 'iso' (isolation forest), 'lof' (local outlier factor),
     'ee' (elliptic envelope), or 'mah' (Mahanalobis distance, the default), or
     pass a function that returns an array of outlier flags (-1 for outliers and 1
     for inliers, matching the `sklearn` convention). You can also pass 'any',
@@ -153,9 +154,9 @@ def get_outliers(a: ArrayLike,
 
     Args:
         a (array): The data.
-        method (str): The method to use. Can be 'iso' (default), 'lof', 'ee',
-           'mah', 'any', 'all', or a function that returns a Boolean array of
-           outlier flags.
+        method (str): The method to use. Can be 'mah' (the default), 'iso', 'lof',
+            'ee', 'any', 'all', or a function that returns a Boolean array of
+            outlier flags.
         p (float): The probability threshold, in the range [0, 1]. This value
             is ignored if `threshold` is not None; in this case, `p` will be
             computed using `utils.stdev_to_proportion(threshold)`.
@@ -179,6 +180,12 @@ def get_outliers(a: ArrayLike,
         >>> get_outliers(3 * data + [100], method='all')
         array([33])
     """
+    if method is None:
+        # Was called with the default method, which changed in 0.4.3
+        method = 'mah'
+        warnings.warn('The default method for get_outliers has changed to "mah". '
+                      'Please specify the method explicitly to avoid this warning.',
+                      DeprecationWarning, stacklevel=2)
     if p >= 1 or p < 0:
         raise ValueError('p must be in the range [0, 1).')
     a = np.asarray(a)
