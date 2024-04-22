@@ -1389,7 +1389,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 There are more outliers than expected in the training data (349 vs 31).
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ℹ️ Dummy classifier scores: {&#39;f1&#39;: 0.2622742655688646, &#39;roc_auc&#39;: 0.501258039318517} (stratified strategy).
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ℹ️ Dummy classifier scores: {&#39;f1&#39;: 0.25550670712474705, &#39;roc_auc&#39;: 0.49175520455015215} (stratified strategy).
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-3 {
@@ -2770,7 +2770,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>🚩 There is a different number of minority classes (2) compared to the training data (4).
-🚩 The minority classes (dolomite, sandstone) are different from those in the training data (wackestone, dolomite, sandstone, mudstone).
+🚩 The minority classes (sandstone, dolomite) are different from those in the training data (sandstone, dolomite, mudstone, wackestone).
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  66.276     , 2359.73324716,    3.591     ],
@@ -3210,12 +3210,12 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   background-color: var(--sklearn-color-fitted-level-3);
 }
 </style><div id="sk-container-id-6" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;detector&#x27;,
-                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f7224fca480&gt;,
+                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef600&gt;,
                           message=&#x27;are NaNs&#x27;)),
                 (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-43" type="checkbox" ><label for="sk-estimator-id-43" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;detector&#x27;,
-                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f7224fca480&gt;,
+                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef600&gt;,
                           message=&#x27;are NaNs&#x27;)),
-                (&#x27;svc&#x27;, SVC())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-44" type="checkbox" ><label for="sk-estimator-id-44" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">Detector</label><div class="sk-toggleable__content fitted"><pre>Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f7224fca480&gt;,
+                (&#x27;svc&#x27;, SVC())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-44" type="checkbox" ><label for="sk-estimator-id-44" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">Detector</label><div class="sk-toggleable__content fitted"><pre>Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef600&gt;,
          message=&#x27;are NaNs&#x27;)</pre></div> </div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-45" type="checkbox" ><label for="sk-estimator-id-45" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;SVC<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.svm.SVC.html">?<span>Documentation for SVC</span></a></label><div class="sk-toggleable__content fitted"><pre>SVC()</pre></div> </div></div></div></div></div></div></div></div>
 </div>
 <p>There are no NaNs.</p>
@@ -3646,30 +3646,30 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </style><div id="sk-container-id-7" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
                 (&#x27;pipeline&#x27;,
                  Pipeline(steps=[(&#x27;detector-1&#x27;,
-                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4b240&gt;,
+                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef7e0&gt;,
                                            message=&#x27;fail custom func &#x27;
                                                    &#x27;has_nans()&#x27;)),
                                  (&#x27;detector-2&#x27;,
-                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4bf60&gt;,
+                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef9c0&gt;,
                                            message=&#x27;fail custom func &#x27;
                                                    &#x27;has_outliers()&#x27;))])),
                 (&#x27;svc&#x27;, SVC())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-46" type="checkbox" ><label for="sk-estimator-id-46" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;standardscaler&#x27;, StandardScaler()),
                 (&#x27;pipeline&#x27;,
                  Pipeline(steps=[(&#x27;detector-1&#x27;,
-                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4b240&gt;,
+                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef7e0&gt;,
                                            message=&#x27;fail custom func &#x27;
                                                    &#x27;has_nans()&#x27;)),
                                  (&#x27;detector-2&#x27;,
-                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4bf60&gt;,
+                                  Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef9c0&gt;,
                                            message=&#x27;fail custom func &#x27;
                                                    &#x27;has_outliers()&#x27;))])),
                 (&#x27;svc&#x27;, SVC())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-47" type="checkbox" ><label for="sk-estimator-id-47" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;StandardScaler<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></label><div class="sk-toggleable__content fitted"><pre>StandardScaler()</pre></div> </div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-48" type="checkbox" ><label for="sk-estimator-id-48" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;pipeline: Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for pipeline: Pipeline</span></a></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;detector-1&#x27;,
-                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4b240&gt;,
+                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef7e0&gt;,
                           message=&#x27;fail custom func has_nans()&#x27;)),
                 (&#x27;detector-2&#x27;,
-                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4bf60&gt;,
-                          message=&#x27;fail custom func has_outliers()&#x27;))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-49" type="checkbox" ><label for="sk-estimator-id-49" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">Detector</label><div class="sk-toggleable__content fitted"><pre>Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4b240&gt;,
-         message=&#x27;fail custom func has_nans()&#x27;)</pre></div> </div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-50" type="checkbox" ><label for="sk-estimator-id-50" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">Detector</label><div class="sk-toggleable__content fitted"><pre>Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7f721ef4bf60&gt;,
+                 Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef9c0&gt;,
+                          message=&#x27;fail custom func has_outliers()&#x27;))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-49" type="checkbox" ><label for="sk-estimator-id-49" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">Detector</label><div class="sk-toggleable__content fitted"><pre>Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef7e0&gt;,
+         message=&#x27;fail custom func has_nans()&#x27;)</pre></div> </div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-50" type="checkbox" ><label for="sk-estimator-id-50" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">Detector</label><div class="sk-toggleable__content fitted"><pre>Detector(func=&lt;function BaseRedflagDetector.__init__.&lt;locals&gt;.&lt;lambda&gt; at 0x7fca2baef9c0&gt;,
          message=&#x27;fail custom func has_outliers()&#x27;)</pre></div> </div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-51" type="checkbox" ><label for="sk-estimator-id-51" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;SVC<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.svm.SVC.html">?<span>Documentation for SVC</span></a></label><div class="sk-toggleable__content fitted"><pre>SVC()</pre></div> </div></div></div></div></div></div></div></div>
 </div>
 </section>
